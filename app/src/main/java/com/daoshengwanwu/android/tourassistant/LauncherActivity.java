@@ -11,5 +11,6 @@ public class LauncherActivity extends AppCompatActivity {
         setContentView(R.layout.activity_launcher);
 
         //哈哈，我又要测试啦
+        //这是一条冲突注释_BaiHaoran
     }
 }

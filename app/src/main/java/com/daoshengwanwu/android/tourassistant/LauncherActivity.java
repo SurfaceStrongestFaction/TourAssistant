@@ -9,8 +9,7 @@ public class LauncherActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launcher);
+
         //测试注释
-        //添加第二条测试注释
-        //Merge
     }
 }

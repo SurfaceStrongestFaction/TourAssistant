@@ -9,10 +9,5 @@ public class LauncherActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launcher);
-
-        //哈哈，我又要测试啦
-        //这是一条会冲突的注释_Bai_Haoran@outlook.com
-        //这是一条冲突注释_BaiHaoran
-	    //冲突被我解决啦
     }
 }

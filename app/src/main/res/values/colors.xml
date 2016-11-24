@@ -9,4 +9,8 @@
     <color name="darkgrey_color">#a3a3a3</color>
     <color name="blackgrey_color">#d4d4d4</color>
     <color name="green_color">#7de3ba</color>
+    <color name="bhr_tabs_green">#7de3ba</color>
+    <color name="bhr_tabs_background">#F0F3F5</color>
+    <color name="bhr_tabs_text_color">#a3a3a3</color>
+    <color name="bhr_text_black">#4d4d4d</color>
 </resources>

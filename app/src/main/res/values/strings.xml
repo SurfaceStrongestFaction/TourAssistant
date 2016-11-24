@@ -16,4 +16,8 @@
     <string name="sy_viewspot_price">票价：</string>
     <string name="sy_viewspot_time">开放时间：</string>
     <string name="sy_viewspot_btn">前往景点</string>
+    <string name="bhr_tabhost_home_page_text">首页</string>
+    <string name="bhr_tabhost_map_page_text">地图</string>
+    <string name="bhr_tabhost_group_page_text">队伍</string>
+    <string name="bhr_tabhost_my_page_text">我的</string>
 </resources>

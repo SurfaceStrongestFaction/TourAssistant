@@ -14,32 +14,32 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/santa_40dp"
         android:background="@drawable/search_bar"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/Srch_back_btn"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="@dimen/santa_25dp"
+            android:layout_height="@dimen/santa_25dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="@dimen/santa_10dp"
             android:src="@drawable/return1" />
 
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="@dimen/santa_20dp"
+            android:layout_height="@dimen/santa_20dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="30dp"
+            android:layout_marginLeft="@dimen/santa_30dp"
             android:src="@drawable/search" />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="9dp"
+            android:layout_marginBottom="@dimen/santa_5dp"
+            android:layout_marginLeft="@dimen/santa_5dp"
+            android:layout_marginRight="@dimen/santa_20dp"
+            android:layout_marginTop="@dimen/santa_10dp"
             android:background="@null" />
     </LinearLayout>
 
@@ -47,29 +47,29 @@
         android:id="@+id/His_log"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:text="历史记录" />
+        android:layout_marginLeft="@dimen/santa_10dp"
+        android:layout_marginTop="@dimen/santa_10dp"
+        android:text="@string/santa_history" />
 
     <ListView
         android:id="@+id/Lv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginBottom="@dimen/santa_10dp"
+        android:layout_marginTop="@dimen/santa_10dp"
         android:alpha="0.7"
         android:background="#ffffff"></ListView>
 
     <RelativeLayout
         android:id="@+id/Clean_history"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/santa_40dp"
         android:alpha="0.7"
         android:background="#ffffff">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="清除搜索历史"
+            android:text="@string/santa_clean"
             android:layout_centerInParent="true"/>
     </RelativeLayout>
 

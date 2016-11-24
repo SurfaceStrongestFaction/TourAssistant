@@ -1,15 +1,18 @@
-package com.zhouxiuya.android.tourassistant;
+package com.daoshengwanwu.android.tourassistant.zhouxiuya;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.daoshengwanwu.android.tourassistant.R;
 
-public class CollectActivity extends AppCompatActivity {
+public class WelcomeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.zhouxiuya_activity_collect);
+        setContentView(R.layout.zhouxiuya_activity_welcome);
     }
+
 }

@@ -16,7 +16,7 @@
             </intent-filter>
         </activity>
         <activity android:name="com.zhouxiuya.android.tourassistant.WelcomeActivity" />
-        <activity android:name="com.zhouxiuya.android.tourassistant.AboutActivity" />
+        <activity android:name=".zhouxiuya.AboutActivity" />
         <activity android:name="com.zhouxiuya.android.tourassistant.CollectActivity" />
     </application>
 

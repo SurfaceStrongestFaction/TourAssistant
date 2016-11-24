@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.zhouxiuya.android.tourassistant.AboutActivity;
+import com.daoshengwanwu.android.tourassistant.zhouxiuya.AboutActivity;
 
 public class LauncherActivity extends AppCompatActivity {
 

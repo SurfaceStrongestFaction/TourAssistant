@@ -1,7 +1,11 @@
 package com.daoshengwanwu.android.tourassistant;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import zhu.PersonalDataActivity;
+import zhu.SetActivity;
 
 public class LauncherActivity extends AppCompatActivity {
 
@@ -9,10 +13,8 @@ public class LauncherActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launcher);
+        Intent i = SetActivity.newIntent(this, "消息");
+        startActivity(i);
 
-        //哈哈，我又要测试啦
-        //这是一条会冲突的注释_Bai_Haoran@outlook.com
-        //这是一条冲突注释_BaiHaoran
-	//冲突被我解决啦
     }
 }

@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">TourAssistant</string>
+    <string name="bhr_tabhost_home_page_text">首页</string>
+    <string name="bhr_tabhost_map_page_text">地图</string>
+    <string name="bhr_tabhost_group_page_text">队伍</string>
+    <string name="bhr_tabhost_my_page_text">我的</string>
+
 </resources>

@@ -13,9 +13,6 @@ import com.daoshengwanwu.android.tourassistant.R;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by jsd58 on 11/24/2016.
- */
 
 public class HistoryAdapter extends BaseAdapter{
     private Context context;

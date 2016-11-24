@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_alignParentTop="true"
+        android:id="@+id/viewspot_top_ll"
+        android:orientation="horizontal"
+        android:background="@color/pale_color">
+        <ImageView
+            android:layout_width="@dimen/viewspot_backimg_width"
+            android:layout_height="wrap_content"
+            android:src="@drawable/return1"
+            android:layout_gravity="center"
+            android:id="@+id/viewspot_back_img"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="照片"
+            android:textSize="@dimen/viewspot_toptv_size"
+            android:textColor="@color/black_color"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginRight="@dimen/viewspot_backimg_width"/>
+    </LinearLayout>
+    <GridLayout
+        android:id="@+id/picture_picture_gv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10"></GridLayout>
+</LinearLayout>

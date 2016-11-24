@@ -2,4 +2,25 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="santa_5dp">5dp</dimen>
+    <dimen name="santa_10dp">10dp</dimen>
+    <dimen name="santa_15dp">15dp</dimen>
+    <dimen name="santa_20dp">20dp</dimen>
+    <dimen name="santa_25dp">25dp</dimen>
+    <dimen name="santa_30dp">30dp</dimen>
+    <dimen name="santa_35dp">35dp</dimen>
+    <dimen name="santa_40dp">40dp</dimen>
+    <dimen name="santa_45dp">45dp</dimen>
+    <dimen name="santa_50dp">50dp</dimen>
+    <dimen name="santa_55dp">55dp</dimen>
+    <dimen name="santa_60dp">60dp</dimen>
+    <dimen name="santa_65dp">65dp</dimen>
+    <dimen name="santa_70dp">70dp</dimen>
+    <dimen name="santa_75dp">75dp</dimen>
+    <dimen name="santa_80dp">80dp</dimen>
+    <dimen name="santa_100dp">100dp</dimen>
+    <dimen name="santa_200dp">200dp</dimen>
+    <dimen name="santa_dot_height">350dp</dimen>
+    <dimen name="santa_picture_height">250dp</dimen>
+
 </resources>

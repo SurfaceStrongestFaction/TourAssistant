@@ -33,7 +33,7 @@ public class LauncherActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_launcher);
+        setContentView(R.layout.baihaoran_activity_launcher);
 
         //去掉工具栏
         ActionBar actionBar = getSupportActionBar();

@@ -3,4 +3,8 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="wx_btn_press_color">#1bcf87</color>
+    <color name="wx_btn_press1_color">#ffffff</color>
+    <color name="wx_btn_pressed_color">#7de3ba</color>
+    <color name="wx_et_alpha">#00ffffff</color>
 </resources>

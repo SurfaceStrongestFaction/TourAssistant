@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/register">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="320dp"
+        android:layout_height="435dp"
+        android:background="#20ffffff"
+        android:alpha="70"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:layout_marginTop="90dp"></LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="-532dp">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="80dp">
+
+            <Button
+                android:layout_width="120dp"
+                android:layout_height="40dp"
+                android:text="@string/wx_register_mailrs_text"
+                android:id="@+id/rs_mailrs"
+                android:textColor="#ffffff"
+                android:background="@color/wx_btn_pressed_color"
+                android:textSize="18dp" />
+
+            <Button
+                android:layout_width="120dp"
+                android:layout_height="40dp"
+                android:text="@string/wx_register_phoners_text"
+                android:id="@+id/rs_phoners"
+                android:textColor="#555555"
+                android:background="#ffffff"
+                android:textSize="18dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="280dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="80dp">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/rs2_lg"
+                android:src="@drawable/user"
+                android:layout_marginRight="3dp" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="237dp"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rs2_yx"
+                    android:hint="@string/wx_register1_mail_text"
+                    android:textColor="#ffffff"
+                    android:textColorHint="#ffffff"
+                    android:singleLine="false"
+                    android:textSize="18dp"
+                    android:background="@color/wx_et_alpha"
+                    android:paddingLeft="5dp" />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#ffffff"
+                    android:layout_marginTop="5dp">
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="280dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/rs2_pw"
+                android:src="@drawable/lock"
+                android:layout_marginRight="3dp" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="237dp"
+                android:layout_height="match_parent"
+                android:id="@+id/rs2_pwd">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rs_et2"
+                        android:hint="@string/wx_register1_pwd_text"
+                        android:textColor="#ffffff"
+                        android:textColorHint="#ffffff"
+                        android:textSize="18dp"
+                        android:background="@color/wx_et_alpha"
+                        android:paddingLeft="5dp"
+                        android:password="true" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#ffffff"
+                    android:layout_marginTop="5dp"></LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="280dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="30dp" >
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/rs2_lock2"
+                android:src="@drawable/confirm_pwd"
+                android:layout_marginRight="3dp" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="237dp"
+                android:layout_height="wrap_content" >
+
+                <EditText
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rs_et3"
+                    android:hint="@string/wx_register1_pwd2_text"
+                    android:textColor="#ffffff"
+                    android:textColorHint="#ffffff"
+                    android:singleLine="false"
+                    android:textSize="18dp"
+                    android:paddingLeft="5dp"
+                    android:background="@color/wx_et_alpha" />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#ffffff"
+                    android:layout_marginTop="5dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <Button
+            android:layout_width="280dp"
+            android:layout_height="36dp"
+            android:text="注册"
+            android:id="@+id/rs2_bt"
+            android:background="@drawable/add_managebg"
+            android:textColor="#ffffff"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="60dp"
+            android:textSize="20dp"
+            android:hint="@string/wx_login_rs_text" />
+    </LinearLayout>
+
+</LinearLayout>

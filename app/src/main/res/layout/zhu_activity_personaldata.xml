@@ -33,9 +33,9 @@
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:layout_marginTop="20dp"
-            android:background="#b3f3f3f3"
-            android:gravity="center_vertical">
+            android:background="#b3f3f3f3">
             <TextView
+                android:layout_centerVertical="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
@@ -44,16 +44,18 @@
                 android:textSize="18dp"
                 android:textColor="@color/colorSetText"/>
             <ImageView
+                android:layout_centerVertical="true"
                 android:id="@+id/ib_set_ib0"
                 android:layout_alignParentRight="true"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_marginRight="20dp"
                 android:src="@drawable/entry"/>
-            <ImageView
+            <zhu.CircleImageView
+                android:layout_centerVertical="true"
                 android:id="@+id/iv_set_img"
-                android:layout_width="50dp"
-                android:layout_height="25dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:layout_toLeftOf="@+id/ib_set_ib0"
                 android:src="@drawable/user"/>
         </RelativeLayout>

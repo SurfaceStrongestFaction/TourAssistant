@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:id="@+id/evaluate">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/zxy_edit_style"
+            android:inputType="textMultiLine"
+            android:gravity="left|top"
+            android:minLines="6" />
+        <!--注释：-->
+        <!--android:inputType="textMultiLine"//可以显示多行-->
+        <!--android:gravity="left|top"//输入时光标左上角-->
+        <!--android:minLines="6" //最小显示6行-->
+    </ScrollView>
+
+</LinearLayout>

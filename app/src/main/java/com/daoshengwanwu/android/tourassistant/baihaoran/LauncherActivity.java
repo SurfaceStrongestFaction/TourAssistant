@@ -76,10 +76,10 @@ public class LauncherActivity extends AppCompatActivity {
             mTabsMapImg.setImageResource(R.drawable.map);;
             mTabsRanksImg.setImageResource(R.drawable.ranks);;
             mTabsMyImg.setImageResource(R.drawable.my);;
-            mTabsHomeText.setTextColor(ContextCompat.getColor(LauncherActivity.this, android.R.color.black));
-            mTabsMapText.setTextColor(ContextCompat.getColor(LauncherActivity.this, android.R.color.black));
-            mTabsRanksText.setTextColor(ContextCompat.getColor(LauncherActivity.this, android.R.color.black));
-            mTabsMyText.setTextColor(ContextCompat.getColor(LauncherActivity.this, android.R.color.black));
+            mTabsHomeText.setTextColor(ContextCompat.getColor(LauncherActivity.this, R.color.bhr_tabs_text_color));
+            mTabsMapText.setTextColor(ContextCompat.getColor(LauncherActivity.this, R.color.bhr_tabs_text_color));
+            mTabsRanksText.setTextColor(ContextCompat.getColor(LauncherActivity.this, R.color.bhr_tabs_text_color));
+            mTabsMyText.setTextColor(ContextCompat.getColor(LauncherActivity.this, R.color.bhr_tabs_text_color));
 
             switch (view.getId()) {
                 case R.id.tabs_home_page:

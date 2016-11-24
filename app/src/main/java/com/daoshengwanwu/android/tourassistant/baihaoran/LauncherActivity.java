@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.daoshengwanwu.android.tourassistant.R;
+import com.daoshengwanwu.android.tourassistant.jiangshengda.MeFragment;
 
 
 public class LauncherActivity extends AppCompatActivity {
@@ -28,6 +29,7 @@ public class LauncherActivity extends AppCompatActivity {
     private LinearLayout mTabsRanksPage;
     private LinearLayout mTabsMyPage;
     private FragmentManager mFragmentManager;
+    private MeFragment mMeFragment;
 
 
     @Override
@@ -43,6 +45,19 @@ public class LauncherActivity extends AppCompatActivity {
 
         getWidgetsReferences(); //获取所需组件的引用
         setListenersToWidgets(); //为组件设置监听器
+//        initFragment();
+    }
+
+    private void initFragment() {
+        if (null == mMeFragment) {
+            mMeFragment = new MeFragment();
+        }
+
+        if (null != mFragmentManager.findFragmentById(R.id.launcher_fragment_container)) {
+            mFragmentManager.beginTransaction().replace(R.id.launcher_fragment_container, mMeFragment).commit();
+        } else {
+            mFragmentManager.beginTransaction().add(R.id.launcher_fragment_container, mMeFragment).commit();
+        }
     }
 
     private void getWidgetsReferences() {

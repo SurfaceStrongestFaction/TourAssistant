@@ -46,7 +46,7 @@ public class PicturegvAdapter extends BaseAdapter {
         if (null == convertView){
             convertView = LayoutInflater.from(context).inflate(R.layout.shenyue_activity_picgvitem, null);
         }
-        ImageView img = (ImageView)convertView.findViewById(R.id.picgvitem_img);
+        ImageView img = (ImageView)convertView.findViewById(R.id.picgvitem_picture_img);
         img.setImageResource(picgv.get(position).getImgsrc());
         return convertView;
     }

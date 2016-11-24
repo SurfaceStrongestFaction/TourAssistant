@@ -8,6 +8,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="@dimen/santa_picture_height"
+            android:scaleType="fitXY"
             android:src="@drawable/background1"
             android:layout_alignParentTop="true"/>
         <RelativeLayout

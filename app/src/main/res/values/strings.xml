@@ -6,4 +6,14 @@
     <string name="santa_my_collection">我的收集</string>
     <string name="santa_history">历史记录</string>
     <string name="santa_clean">清除搜索历史</string>
+    <string name="sy_picture_title">照片</string>
+    <string name="sy_scenicspot_title">景区详情</string>
+    <string name="sy_scenicspot_recommend">推荐指数：</string>
+    <string name="sy_scenicspot_btn1">前往景区</string>
+    <string name="sy_scenicspot_btn2">探索景区</string>
+    <string name="sy_viewspot_title">景点详情</string>
+    <string name="sy_viewspot_recommend">推荐指数：</string>
+    <string name="sy_viewspot_price">票价：</string>
+    <string name="sy_viewspot_time">开放时间：</string>
+    <string name="sy_viewspot_btn">前往景点</string>
 </resources>

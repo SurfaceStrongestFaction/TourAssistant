@@ -9,3 +9,5 @@
 .externalNativeBuild
 vcs.xml
 misc.xml
+.idea/misc.xml
+.idea/misc.xml

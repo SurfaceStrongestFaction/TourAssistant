@@ -11,5 +11,6 @@ public class ViewspotActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.shenyue_activity_viewspot);
+        getSupportActionBar().hide();
     }
 }

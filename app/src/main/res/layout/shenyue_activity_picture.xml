@@ -20,16 +20,20 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="照片"
+            android:text="@string/sy_picture_title"
             android:textSize="@dimen/viewspot_toptv_size"
             android:textColor="@color/black_color"
             android:layout_gravity="center"
             android:gravity="center"
             android:layout_marginRight="@dimen/viewspot_backimg_width"/>
     </LinearLayout>
-    <GridLayout
+    <GridView
         android:id="@+id/picture_picture_gv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="10"></GridLayout>
+        android:layout_weight="12"
+        android:numColumns="2"
+        android:horizontalSpacing="@dimen/picture_picturegv_horizontalSpacing"
+        android:verticalSpacing="@dimen/picture_picturegv_verticalSpacing"
+        android:padding="@dimen/picture_picturegv_padding"></GridView>
 </LinearLayout>

@@ -20,7 +20,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="景点详情"
+            android:text="@string/sy_viewspot_title"
             android:textSize="@dimen/viewspot_toptv_size"
             android:textColor="@color/black_color"
             android:layout_gravity="center"
@@ -30,12 +30,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="10"
+        android:layout_weight="12"
         android:orientation="vertical">
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="10">
+            android:layout_weight="12">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -110,7 +110,7 @@
                         android:id="@+id/viewspot_recommend_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="推荐指数："
+                        android:text="@string/sy_viewspot_recommend"
                         android:textSize="@dimen/viewspot_recommendtv_size"
                         android:layout_marginTop="@dimen/viewspot_recommendtv_margintop"
                         android:layout_marginBottom="@dimen/viewspot_recommendtv_marginbottom"
@@ -165,7 +165,7 @@
                         android:id="@+id/viewspot_price_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="票价:"
+                        android:text="@string/sy_viewspot_price"
                         android:layout_marginTop="@dimen/viewspot_pricetv_margintop"
                         android:layout_marginBottom="@dimen/viewspot_pricetv_marginbottom"
                         android:layout_marginLeft="@dimen/viewspot_pricetv_marginleft"
@@ -194,7 +194,7 @@
                         android:id="@+id/viewspot_time_tv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="开放时间："
+                        android:text="@string/sy_viewspot_time"
                         android:layout_marginLeft="@dimen/viewspot_timetv_marginleft"
                         android:layout_marginTop="@dimen/viewspot_timetv_margintop"
                         android:textColor="@color/black_color"
@@ -211,18 +211,19 @@
                         android:layout_marginBottom="@dimen/viewspot_timeinftv_marginbottom"
                         android:textSize="@dimen/viewspot_timetv_size"
                         android:textColor="@color/black_color"
-                        android:text="旺季：
-      4月1日-10月31日。
-      开放时间8:30-16:10，16:00停止售票，17:00清场。
-淡季：
-      11月1日-次年3月31日。
-      开放时间8:30-15:40，15:30停止售票，16:30清场。
-除法定节假日和暑期（每年7月1日至8月31日）外，周一全天闭馆。"/>
+                        android:text="旺季：\n
+      4月1日-10月31日。\n
+      开放时间 8:30-16:10，16:00停止售票，17:00清场。\n
+淡季：\n
+      11月1日-次年3月31日。\n
+      开放时间 8:30-15:40，15:30停止售票，16:30清场。\n
+除法定节假日和暑期（每年7月1日至8月31日）外，周一全天闭馆。\n"/>
                 </RelativeLayout>
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/viewspot_introducerl_margintop"
+                    android:layout_marginBottom="@dimen/viewspot_introducerl_marginbottom"
                     android:background="@color/pale_color">
                     <TextView
                         android:id="@+id/viewspot_introduce_tv"
@@ -242,7 +243,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="前往景点"
+                android:text="@string/sy_viewspot_btn"
                 android:textSize="@dimen/viewspot_bottomtv_size"
                 android:background="@color/blackgrey_color"
                 android:gravity="center"/>

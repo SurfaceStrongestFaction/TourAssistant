@@ -13,11 +13,11 @@ public class PicgvItem {
         this.imgsrc = imgsrc;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public int getId() {
+        return id;
     }
 
-    public void setImgsrc(int imgsrc) {
-        this.imgsrc = imgsrc;
+    public int getImgsrc() {
+        return imgsrc;
     }
 }

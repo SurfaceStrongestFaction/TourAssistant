@@ -20,7 +20,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="景区详情"
+            android:text="@string/sy_scenicspot_title"
             android:textSize="@dimen/scenicspot_toptv_size"
             android:textColor="@color/black_color"
             android:layout_gravity="center"
@@ -31,12 +31,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="10"
+        android:layout_weight="12"
         android:orientation="vertical">
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="10">
+            android:layout_weight="12">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -139,7 +139,7 @@
                         android:id="@+id/scenicspot_recommend_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="推荐指数："
+                        android:text="@string/sy_scenicspot_recommend"
                         android:textSize="@dimen/scenicspot_recommendtv_size"
                         android:layout_marginTop="@dimen/scenicspot_recommendtv_margintop"
                         android:layout_marginBottom="@dimen/scenicspot_recommendtv_marginbottom"
@@ -189,6 +189,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/scenicspot_introducerl_margintop"
+                    android:layout_marginBottom="@dimen/scenicspot_introducerl_marginbottom"
                     android:background="@color/pale_color">
                     <TextView
                         android:id="@+id/scenicspot_introduce_tv"
@@ -213,7 +214,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="前往景区"
+                android:text="@string/sy_scenicspot_btn1"
                 android:textSize="@dimen/scenicspot_bottomtv_size"
                 android:background="@color/blackgrey_color"
                 android:gravity="center"/>
@@ -221,7 +222,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="探索景区"
+                android:text="@string/sy_scenicspot_btn2"
                 android:textSize="@dimen/scenicspot_bottomtv_size"
                 android:background="@color/green_color"
                 android:gravity="center"/>

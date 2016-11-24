@@ -11,7 +11,7 @@
         <activity android:name=".shenyue.PictureActivity" >
 
         </activity>
-        <activity android:name=".shenyue.ViewspotActivity" >
+        <activity android:name=".shenyue.ViewspotActivity" />
         <activity android:name=".baihaoran.LauncherActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

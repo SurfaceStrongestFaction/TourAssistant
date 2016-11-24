@@ -8,24 +8,24 @@
         android:layout_height="wrap_content">
         <TableRow>
             <RelativeLayout
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginTop="@dimen/santa_10dp"
+                android:layout_marginBottom="@dimen/santa_10dp"
                 android:layout_width="0dip"
                 android:layout_weight="1">
                 <ImageView
                     android:id="@+id/His_Img"
                     android:src="@drawable/history"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"/>
+                    android:layout_width="@dimen/santa_20dp"
+                    android:layout_height="@dimen/santa_20dp"/>
             </RelativeLayout>
             <RelativeLayout
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginTop="@dimen/santa_10dp"
+                android:layout_marginBottom="@dimen/santa_10dp"
                 android:layout_width="0dip"
                 android:layout_weight="13">
                 <TextView
                     android:layout_centerVertical="true"
-                    android:text="初始化文字"
+                    android:text="@string/santa_initialization_text"
                     android:id="@+id/His_Tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />

@@ -17,6 +17,5 @@ public class LauncherActivity extends AppCompatActivity {
         //我的项目刚刚开始
         //我的项目写好了
 
-        //lalalal
     }
 }

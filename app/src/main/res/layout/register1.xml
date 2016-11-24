@@ -8,7 +8,7 @@
         android:orientation="horizontal"
         android:layout_width="320dp"
         android:layout_height="435dp"
-        android:background="#20ffffff"
+        android:background="@color/wx_bg"
         android:alpha="70"
         android:layout_gravity="center_horizontal"
         android:gravity="center"
@@ -32,7 +32,7 @@
                 android:layout_height="40dp"
                 android:text="@string/wx_register_mailrs_text"
                 android:id="@+id/rs_mailrs"
-                android:textColor="#ffffff"
+                android:textColor="@color/wx_btn_press1_color"
                 android:background="@color/wx_btn_pressed_color"
                 android:textSize="18dp" />
 
@@ -41,8 +41,8 @@
                 android:layout_height="40dp"
                 android:text="@string/wx_register_phoners_text"
                 android:id="@+id/rs_phoners"
-                android:textColor="#555555"
-                android:background="#ffffff"
+                android:textColor="@color/wx_text_gray"
+                android:background="@color/wx_btn_press1_color"
                 android:textSize="18dp" />
         </LinearLayout>
 
@@ -71,8 +71,8 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/rs2_yx"
                     android:hint="@string/wx_register1_mail_text"
-                    android:textColor="#ffffff"
-                    android:textColorHint="#ffffff"
+                    android:textColor="@color/wx_btn_press1_color"
+                    android:textColorHint="@color/wx_btn_press1_color"
                     android:singleLine="false"
                     android:textSize="18dp"
                     android:background="@color/wx_et_alpha"
@@ -82,7 +82,7 @@
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="#ffffff"
+                    android:background="@color/wx_btn_press1_color"
                     android:layout_marginTop="5dp">
 
                 </LinearLayout>
@@ -119,8 +119,8 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/rs_et2"
                         android:hint="@string/wx_register1_pwd_text"
-                        android:textColor="#ffffff"
-                        android:textColorHint="#ffffff"
+                        android:textColor="@color/wx_btn_press1_color"
+                        android:textColorHint="@color/wx_btn_press1_color"
                         android:textSize="18dp"
                         android:background="@color/wx_et_alpha"
                         android:paddingLeft="5dp"
@@ -132,7 +132,7 @@
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="#ffffff"
+                    android:background="@color/wx_btn_press1_color"
                     android:layout_marginTop="5dp"></LinearLayout>
             </LinearLayout>
 
@@ -163,8 +163,9 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/rs_et3"
                     android:hint="@string/wx_register1_pwd2_text"
-                    android:textColor="#ffffff"
-                    android:textColorHint="#ffffff"
+                    android:textColor="@color/wx_btn_press1_color"
+                    android:textColorHint="@color/wx_btn_press1_color"
+                    android:password="true"
                     android:singleLine="false"
                     android:textSize="18dp"
                     android:paddingLeft="5dp"
@@ -174,7 +175,7 @@
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="#ffffff"
+                    android:background="@color/wx_btn_press1_color"
                     android:layout_marginTop="5dp" />
             </LinearLayout>
         </LinearLayout>
@@ -185,7 +186,7 @@
             android:text="注册"
             android:id="@+id/rs2_bt"
             android:background="@drawable/add_managebg"
-            android:textColor="#ffffff"
+            android:textColor="@color/wx_btn_press1_color"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="60dp"
             android:textSize="20dp"

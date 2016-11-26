@@ -49,14 +49,8 @@ public class TeamerMyTeamActivity extends Activity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> paren, View view, int position, long id) {
-               /* String itemName=((TextView)view.findViewById(R.id.itemName)).getText().toString();
-                String itemPic = ((ImageView) view.findViewById(R.id.img)).getDrawable().toString();
-                Intent i = new Intent(Activity1.this, TalkActivity.class);
-                overridePendingTransition(R.anim.zoom_exit,R.anim.zoom_enter);
-                i.putExtra("NAME", itemName);
-                i.putExtra("PIC",itemPic);
-                startActivityForResult(i,1);*/
-
+                Intent i = TeamMemberActivity.newIntent(TeamerMyTeamActivity.this,"李阔");
+                startActivity(i);
             }
         });
     }

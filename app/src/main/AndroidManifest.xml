@@ -12,8 +12,8 @@
 
         </activity>
         <activity android:name=".shenyue.ViewspotActivity" />
-        <activity android:name=".baihaoran.LauncherActivity">
-        <activity android:name=".LoginActivity">
+        <activity android:name=".baihaoran.LauncherActivity" />
+        <activity android:name=".wangxiao.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,15 +23,15 @@
         <activity android:name=".shenyue.ScenicspotActivity">
 
         </activity>
-        <activity android:name="com.zhouxiuya.android.tourassistant.WelcomeActivity" />
+        <activity android:name=".zhouxiuya.WelcomeActivity" />
         <activity android:name=".zhouxiuya.AboutActivity" />
-        <activity android:name="com.zhouxiuya.android.tourassistant.CollectActivity" />
+        <activity android:name=".zhouxiuya.CollectActivity" />
         <activity android:name=".leekuo.MyTeamActivity" />
         <activity android:name=".leekuo.TransferTeamActivity" />
         <activity android:name=".leekuo.TeamMemberActivity" />
-        <activity android:name=".leekuo.TeamerMyTeamActivity"></activity>    </application>
-        <activity android:name=".RegisterActivity"/>
-        <activity android:name=".Register2Activity"/>
+        <activity android:name=".leekuo.TeamerMyTeamActivity"></activity>
+        <activity android:name=".wangxiao.RegisterActivity"/>
+        <activity android:name=".wangxiao.Register2Activity"/>
     </application>
 
 </manifest>

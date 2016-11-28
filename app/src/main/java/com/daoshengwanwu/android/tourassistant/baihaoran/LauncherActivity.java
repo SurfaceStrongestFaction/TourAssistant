@@ -45,7 +45,7 @@ public class LauncherActivity extends AppCompatActivity {
 
         getWidgetsReferences(); //获取所需组件的引用
         setListenersToWidgets(); //为组件设置监听器
-//        initFragment();
+        initFragment();
     }
 
     private void initFragment() {

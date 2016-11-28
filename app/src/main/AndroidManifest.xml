@@ -25,6 +25,9 @@
         <activity android:name="com.zhouxiuya.android.tourassistant.WelcomeActivity" />
         <activity android:name=".zhouxiuya.AboutActivity" />
         <activity android:name="com.zhouxiuya.android.tourassistant.CollectActivity" />
-    </application>
+        <activity android:name=".leekuo.MyTeamActivity" />
+        <activity android:name=".leekuo.TransferTeamActivity" />
+        <activity android:name=".leekuo.TeamMemberActivity" />
+        <activity android:name=".leekuo.TeamerMyTeamActivity"></activity>    </application>
 
 </manifest>

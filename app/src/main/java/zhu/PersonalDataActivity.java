@@ -106,12 +106,6 @@ public class PersonalDataActivity extends AppCompatActivity {
                                             startActivityForResult(cameraIntent, 1001);
                                             break;
                                         case 1:
-                                       /* Intent localIntent=new Intent();
-                                        localIntent.setType("image*//*");
-                                        localIntent.setAction("android.intent.action.GET_CONTENT");
-                                        Intent localIntent2=Intent.createChooser(localIntent, "选择");
-                                        startActivityForResult(localIntent2, 1002);*/
-
                                             Intent intent = new Intent(Intent.ACTION_PICK, null);
                                             intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
                                             startActivityForResult(intent, 1000);
@@ -143,8 +137,6 @@ public class PersonalDataActivity extends AppCompatActivity {
                             })
                             .create()
                             .show();
-
-
                     break;
                 case R.id.rl_set_password:
 
@@ -158,7 +150,6 @@ public class PersonalDataActivity extends AppCompatActivity {
                                     usersex.setText(sexs[i]);
                                 }
                             }).show();
-
                     break;
             }
         }
@@ -191,49 +182,17 @@ public class PersonalDataActivity extends AppCompatActivity {
                 break;
             case 1002:
                 if (bitMap != null && !bitMap.isRecycled()) {
-
                     bitMap.recycle();
-
                 }
-                /*Uri selectedImageUri = data.getData();
-                if(selectedImageUri!=null)
-                {
-                    try
-                    {
-                        bitMap= BitmapFactory.decodeStream(getContentResolver().openInputStream(selectedImageUri));
-                        File file1=new File(pathString, System.currentTimeMillis()+".jpg");
-                        FileOutputStream fos = new FileOutputStream(file1);
-                        byte[] buffer = new byte[1024];
-                        bitMap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-                        fos.write(buffer);
-                        fos.flush();
-                        fos.close();
-                        imageView.setImageBitmap(bitMap);
-                        hasImage = true;
-                    } catch (FileNotFoundException e)
-                    {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    } catch (IOException e)
-                    {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-
-                }
-                else {
-                    return;
-                }*/
                 Bundle extras = data.getExtras();
                 if (extras != null) {
                     Bitmap photo = extras.getParcelable("data");
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    photo.compress(Bitmap.CompressFormat.PNG, 75, stream);// (0-100)压缩文件
+                    photo.compress(Bitmap.CompressFormat.PNG, 75, stream);//(0-100)压缩文件
                     //此处可以把Bitmap保存到sd卡中，具体请看：http://www.cnblogs.com/linjiqin/archive/2011/12/28/2304940.html
                     imageView.setImageBitmap(photo); //把图片显示在ImageView控件上
                 }
                 break;
-
             case 1001:
                 Bundle bundle = data.getExtras();
                 bitMap = (Bitmap)bundle.get("data");

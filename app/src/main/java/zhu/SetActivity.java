@@ -15,7 +15,6 @@ public class SetActivity extends AppCompatActivity {
     private static final String EXTRA_USER_NAME = "SecondActivity.EXTRA_USER_NAME";
     private ImageView back;
     private RelativeLayout personaldata;
-    private RelativeLayout remindway;
     private RelativeLayout model;
     private RelativeLayout aboutus;
     private Button logout;
@@ -39,14 +38,12 @@ public class SetActivity extends AppCompatActivity {
     private void setListener() {
         MyListener myListener=new MyListener();
         personaldata.setOnClickListener(myListener);
-        remindway.setOnClickListener(myListener);
         model.setOnClickListener(myListener);
         aboutus.setOnClickListener(myListener);
     }
 
     private void findView() {
         personaldata=(RelativeLayout)findViewById(R.id.rl_set_personaldata);
-        remindway=(RelativeLayout)findViewById(R.id.rl_set_remindway);
         model=(RelativeLayout)findViewById(R.id.rl_set_model);
         aboutus=(RelativeLayout)findViewById(R.id.rl_set_aboutus);
         back=(ImageView)findViewById(R.id.iv_set_back);
@@ -59,9 +56,6 @@ public class SetActivity extends AppCompatActivity {
                 case R.id.rl_set_personaldata:
                     Intent i = PersonalDataActivity.newIntent(SetActivity.this, "消息");
                     startActivity(i);
-                    break;
-                case R.id.rl_set_remindway:
-
                     break;
                 case R.id.rl_set_model:
 

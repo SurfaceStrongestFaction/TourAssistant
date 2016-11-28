@@ -43,35 +43,11 @@
                 android:text="个人资料"
                 android:textSize="18dp"
                 android:textColor="@color/colorSetText"/>
-            <ImageButton
+            <ImageView
                 android:layout_alignParentRight="true"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_marginRight="20dp"
-                android:background="#b3f8f8f8"
-                android:src="@drawable/entry"/>
-        </RelativeLayout>
-        <RelativeLayout
-            android:id="@+id/rl_set_remindway"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="5dp"
-            android:background="#b3f8f8f8"
-            android:gravity="center_vertical">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:gravity="center"
-                android:text="消息提醒方式"
-                android:textSize="18dp"
-                android:textColor="@color/colorSetText"/>
-            <ImageButton
-                android:layout_alignParentRight="true"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_marginRight="20dp"
-                android:background="#b3f8f8f8"
                 android:src="@drawable/entry"/>
         </RelativeLayout>
         <RelativeLayout
@@ -89,12 +65,11 @@
                 android:text="碎片模式"
                 android:textSize="18dp"
                 android:textColor="@color/colorSetText"/>
-            <ImageButton
+            <ImageView
                 android:layout_alignParentRight="true"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_marginRight="20dp"
-                android:background="#b3f8f8f8"
                 android:src="@drawable/entry"/>
         </RelativeLayout>
         <RelativeLayout
@@ -112,12 +87,11 @@
                 android:text="关于我们"
                 android:textSize="18dp"
                 android:textColor="@color/colorSetText"/>
-            <ImageButton
+            <ImageView
                 android:layout_alignParentRight="true"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_marginRight="20dp"
-                android:background="#b3f8f8f8"
                 android:src="@drawable/entry"/>
         </RelativeLayout>
     </LinearLayout>

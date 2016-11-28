@@ -13,6 +13,7 @@
         </activity>
         <activity android:name=".shenyue.ViewspotActivity" />
         <activity android:name=".baihaoran.LauncherActivity">
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,5 +30,8 @@
         <activity android:name=".leekuo.TransferTeamActivity" />
         <activity android:name=".leekuo.TeamMemberActivity" />
         <activity android:name=".leekuo.TeamerMyTeamActivity"></activity>    </application>
+        <activity android:name=".RegisterActivity"/>
+        <activity android:name=".Register2Activity"/>
+    </application>
 
 </manifest>

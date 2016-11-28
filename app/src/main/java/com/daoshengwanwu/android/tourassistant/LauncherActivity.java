@@ -13,7 +13,6 @@ public class LauncherActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launcher);
 
-        //启动AboutActivity：
         Intent i = AboutActivity.newIntent(this, "");
         startActivity(i);
     }

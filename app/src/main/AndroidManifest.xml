@@ -8,14 +8,14 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".leekuo.MyTeamActivity">
+        <activity android:name=".LauncherActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LauncherActivity" />
+        <activity android:name=".leekuo.MyTeamActivity" />
         <activity android:name=".leekuo.TransferTeamActivity" />
         <activity android:name=".leekuo.TeamMemberActivity" />
         <activity android:name=".leekuo.TeamerMyTeamActivity"></activity>

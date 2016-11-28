@@ -13,4 +13,5 @@
     <color name="bhr_tabs_background">#F0F3F5</color>
     <color name="bhr_tabs_text_color">#a3a3a3</color>
     <color name="bhr_text_black">#4d4d4d</color>
+    <color name="zxy_menu_bg_color">#b3f8f8f8</color>
 </resources>

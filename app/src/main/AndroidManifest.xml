@@ -22,6 +22,9 @@
         <activity android:name=".shenyue.ScenicspotActivity">
 
         </activity>
+        <activity android:name="com.zhouxiuya.android.tourassistant.WelcomeActivity" />
+        <activity android:name=".zhouxiuya.AboutActivity" />
+        <activity android:name="com.zhouxiuya.android.tourassistant.CollectActivity" />
     </application>
 
 </manifest>

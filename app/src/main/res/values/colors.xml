@@ -4,4 +4,5 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="zxy_menu_bg_color">#b3f8f8f8</color>
+    <color name="zxy_text_color">#4d4d4d</color>
 </resources>

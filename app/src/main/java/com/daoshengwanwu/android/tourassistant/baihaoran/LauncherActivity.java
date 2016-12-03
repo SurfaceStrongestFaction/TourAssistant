@@ -1,7 +1,6 @@
 package com.daoshengwanwu.android.tourassistant.baihaoran;
 
 
-import android.graphics.drawable.Drawable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;

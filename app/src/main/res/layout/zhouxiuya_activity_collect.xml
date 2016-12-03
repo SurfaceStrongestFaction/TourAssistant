@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20sp"
-            android:textColor="#4d4d4d"
+            android:textColor="@color/zxy_text_color"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
             android:layout_centerInParent="true"
@@ -38,7 +38,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#4d4d4d"
+            android:textColor="@color/zxy_text_color"
             android:textSize="18sp"
             android:text="当前碎片"/>
         <ImageView
@@ -55,7 +55,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#4d4d4d"
+            android:textColor="@color/zxy_text_color"
             android:textSize="18sp"
             android:text="历史碎片"/>
         <ImageView

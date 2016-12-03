@@ -21,4 +21,5 @@
     <color name="wx_et_alpha">#00ffffff</color>
     <color name="wx_text_gray">#555555</color>
     <color name="wx_bg">#20ffffff</color>
+    <color name="zxy_text_color">#4d4d4d</color>
 </resources>

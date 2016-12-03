@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -27,6 +28,7 @@ public class AboutActivity extends AppCompatActivity {
     private RelativeLayout about_illustration;//特别说明
     private ImageView close;
     private ImageView about_back;
+    private boolean flag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,16 +43,24 @@ public class AboutActivity extends AppCompatActivity {
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id.about_evaluate:
-                    evaluateDialogView(v);
+                    if(!flag){
+                        evaluateDialogView(v);
+                    }
                     break;
                 case R.id.about_version:
-                        versionPopupView();
+                    if(!flag){
+                    versionPopupView();
+                    }
                     break;
                 case R.id.about_agreement:
-                    agreementPopupView();
+                    if(!flag){
+                        agreementPopupView();
+                    }
                     break;
                 case R.id.about_illustration:
-                    illustrationPopupView();
+                    if(!flag){
+                        illustrationPopupView();
+                    }
                     break;
                 case R.id.about_back:
                     //返回设置页面
@@ -85,6 +95,7 @@ public class AboutActivity extends AppCompatActivity {
                 .setPositiveButton("提交", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        flag = false;
                         //将输入的文字提交到服务器
                         //获取文字
                         String text = "";
@@ -96,11 +107,13 @@ public class AboutActivity extends AppCompatActivity {
                 .setNegativeButton("取消", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        flag = false;
                         //
                     }
                 })
                 //创建并显示对话框
                 .create().show();
+        flag = true;
     }
 
 
@@ -108,19 +121,20 @@ public class AboutActivity extends AppCompatActivity {
     private void versionPopupView() {
         //加载R.layout.popup对应的界面布局文件
         View root = this.getLayoutInflater().inflate(R.layout.zhouxiuya_version_popup,null);
-            //创建PopupWindow对象
-//        final PopupWindow popup = new PopupWindow(root,720,720);
-            final PopupWindow popup = new PopupWindow(root, RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-               //将PopupWindow显示在指定位置
-               popup.showAtLocation(about_version, Gravity.CENTER,0,0);
+        //创建PopupWindow对象
+        final PopupWindow popup = new PopupWindow(root,LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+        //将PopupWindow显示在指定位置
+        popup.showAtLocation(about_version, Gravity.CENTER,0,0);
+        flag = true;
 
-            root.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //关闭popuppwindow
-                    popup.dismiss();
-                }
-            });
+        root.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //关闭popuppwindow
+                popup.dismiss();
+                flag = false;
+            }
+        });
 
     }
 
@@ -129,14 +143,16 @@ public class AboutActivity extends AppCompatActivity {
         //加载R.layout.popup对应的界面布局文件
         View root = this.getLayoutInflater().inflate(R.layout.zhouxiuya_agreement_popup,null);
         //创建PopupWindow对象
-        final PopupWindow popup = new PopupWindow(root,RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        //将PopupWindow显示在指定位置
+        final PopupWindow popup = new PopupWindow(root,LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        //2将PopupWindow显示在指定位置
         popup.showAtLocation(about_version, Gravity.CENTER,0,0);
+        flag = true;
         root.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //关闭popuppwindow
                 popup.dismiss();
+                flag = false;
             }
         });
     }
@@ -146,14 +162,16 @@ public class AboutActivity extends AppCompatActivity {
         //加载R.layout.popup对应的界面布局文件
         View root = this.getLayoutInflater().inflate(R.layout.zhouxiuya_illustration_popup,null);
         //创建PopupWindow对象
-        final PopupWindow popup = new PopupWindow(root,RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        final PopupWindow popup = new PopupWindow(root,LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         //将PopupWindow显示在指定位置
         popup.showAtLocation(about_version, Gravity.CENTER,0,0);
+        flag = true;
         root.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //关闭popuppwindow
                 popup.dismiss();
+                flag = false;
             }
         });
     }

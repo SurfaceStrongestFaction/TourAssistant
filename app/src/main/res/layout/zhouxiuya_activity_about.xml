@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20sp"
-            android:textColor="#4d4d4d"
+            android:textColor="@color/zxy_text_color"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
             android:layout_centerInParent="true"
@@ -41,7 +41,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textSize="25sp"
-        android:textColor="#4d4d4d"
+        android:textColor="@color/zxy_text_color"
         android:text="探游"/>
     <TextView
         android:layout_width="match_parent"
@@ -50,7 +50,7 @@
         android:layout_marginBottom="10dp"
         android:gravity="center"
         android:textSize="16sp"
-        android:textColor="#4d4d4d"
+        android:textColor="@color/zxy_text_color"
         android:text="版本号1.0" />
 
     <RelativeLayout
@@ -61,7 +61,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="#4d4d4d"
+            android:textColor="@color/zxy_text_color"
             android:textSize="18sp"
             android:text="给我评价"/>
         <ImageView
@@ -80,7 +80,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#4d4d4d"
+            android:textColor="@color/zxy_text_color"
             android:textSize="18sp"
             android:text="版权信息"/>
         <ImageView
@@ -98,7 +98,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#4d4d4d"
+            android:textColor="@color/zxy_text_color"
             android:textSize="18sp"
             android:text="软件许可使用协议"/>
         <ImageView
@@ -116,7 +116,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#4d4d4d"
+            android:textColor="@color/zxy_text_color"
             android:textSize="18sp"
             android:text="特别说明"/>
         <ImageView

@@ -112,4 +112,5 @@
     <dimen name="picture_picturegv_horizontalSpacing">8dp</dimen>
     <dimen name="picture_picturegv_verticalSpacing">8dp</dimen>
     <dimen name="picture_picturegv_padding">8dp</dimen>
+    <dimen name="bhr_home_title_padding_margin">16dp</dimen>
 </resources>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="bhr_home_title_background">#EBEBEB</color>
     <color name="colorPrimary">#3F51B5</color>
     <color name="black_color">#4d4d4d</color>
     <color name="white_color">#ffffff</color>

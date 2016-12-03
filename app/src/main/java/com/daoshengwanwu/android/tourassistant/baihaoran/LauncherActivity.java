@@ -1,6 +1,7 @@
 package com.daoshengwanwu.android.tourassistant.baihaoran;
 
 
+import android.graphics.drawable.Drawable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
@@ -30,6 +31,7 @@ public class LauncherActivity extends AppCompatActivity {
     private LinearLayout mTabsMyPage;
     private FragmentManager mFragmentManager;
     private MeFragment mMeFragment;
+    private HomeFragment mHomeFragment;
 
 
     @Override
@@ -49,14 +51,14 @@ public class LauncherActivity extends AppCompatActivity {
     }
 
     private void initFragment() {
-        if (null == mMeFragment) {
-            mMeFragment = new MeFragment();
+        if (null == mHomeFragment) {
+            mHomeFragment = HomeFragment.newInstance();
         }
 
         if (null != mFragmentManager.findFragmentById(R.id.launcher_fragment_container)) {
-            mFragmentManager.beginTransaction().replace(R.id.launcher_fragment_container, mMeFragment).commit();
+            mFragmentManager.beginTransaction().replace(R.id.launcher_fragment_container, mHomeFragment).commit();
         } else {
-            mFragmentManager.beginTransaction().add(R.id.launcher_fragment_container, mMeFragment).commit();
+            mFragmentManager.beginTransaction().add(R.id.launcher_fragment_container, mHomeFragment).commit();
         }
     }
 

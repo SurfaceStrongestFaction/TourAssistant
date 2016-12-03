@@ -35,5 +35,7 @@
         <activity android:name=".wangxiao.RegisterActivity"/>
         <activity android:name=".wangxiao.Register2Activity"/>
         <activity android:name=".wangxiao.LoginActivity" />
+
+        <activity android:name=".caizihuan.SearchMemberActivity" />
     </application>
 </manifest>

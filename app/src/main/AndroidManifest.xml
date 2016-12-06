@@ -9,6 +9,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".caizihuan.MyTrackActivity">
+
+        <activity android:name=".baihaoran.LauncherActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,6 +21,26 @@
         <activity android:name=".caizihuan.SearchMemberActivity" />
         <activity android:name=".caizihuan.ChatActivity" />
         <activity android:name=".caizihuan.ChatTableActivity" />
-    </application>
 
+        <activity android:name=".jiangshengda.SearchActivity" />
+
+        <activity android:name=".shenyue.PictureActivity" />
+        <activity android:name=".shenyue.ViewspotActivity" />
+        <activity android:name=".shenyue.ScenicspotActivity" />
+
+        <activity android:name=".zhouxiuya.WelcomeActivity" />
+        <activity android:name=".zhouxiuya.AboutActivity" />
+        <activity android:name=".zhouxiuya.CollectActivity" />
+
+        <activity android:name=".leekuo.MyTeamActivity" />
+        <activity android:name=".leekuo.TransferTeamActivity" />
+        <activity android:name=".leekuo.TeamMemberActivity" />
+        <activity android:name=".leekuo.TeamerMyTeamActivity" />
+
+        <activity android:name=".wangxiao.RegisterActivity"/>
+        <activity android:name=".wangxiao.Register2Activity"/>
+        <activity android:name=".wangxiao.LoginActivity" />
+
+        <activity android:name=".caizihuan.SearchMemberActivity" />
+    </application>
 </manifest>

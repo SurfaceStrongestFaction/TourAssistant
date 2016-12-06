@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/register">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="320dp"
+        android:layout_height="435dp"
+        android:background="@color/wx_bg"
+        android:alpha="70"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:layout_marginTop="90dp" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="-532dp">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="80dp">
+
+            <Button
+                android:layout_width="120dp"
+                android:layout_height="40dp"
+                android:text="@string/wx_register_mailrs_text"
+                android:id="@+id/button3"
+                android:textColor="@color/wx_text_gray"
+                android:background="@color/wx_btn_press1_color"
+                android:textSize="18dp" />
+
+            <Button
+                android:layout_width="120dp"
+                android:layout_height="40dp"
+                android:text="@string/wx_register_phoners_text"
+                android:id="@+id/button4"
+                android:textColor="@color/wx_btn_press1_color"
+                android:background="@color/wx_btn_pressed_color"
+                android:textSize="18dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="280dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="80dp">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/rs_lg"
+                android:src="@drawable/user"
+                android:layout_marginRight="3dp" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="237dp"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rs_et"
+                    android:hint="@string/wx_register2_phone_text"
+                    android:textColor="@color/wx_btn_press1_color"
+                    android:textColorHint="@color/wx_btn_press1_color"
+                    android:singleLine="false"
+                    android:textSize="18dp"
+                    android:background="@color/wx_et_alpha"
+                    android:paddingLeft="5dp" />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/wx_btn_press1_color"
+                    android:layout_marginTop="5dp">
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="280dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="126dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="5dp">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rs_pwd"
+                        android:hint="@string/wx_register2_yzminput_text"
+                        android:textColor="@color/wx_btn_press1_color"
+                        android:textColorHint="@color/wx_btn_press1_color"
+                        android:textSize="16dp"
+                        android:background="@color/wx_et_alpha"
+                        android:paddingLeft="5dp"
+                        android:password="false" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/wx_btn_press1_color"
+                    android:layout_marginTop="5dp" />
+
+            </LinearLayout>
+
+            <Button
+                android:layout_width="88dp"
+                android:layout_height="35dp"
+                android:text="@string/wx_register2_yzm_text"
+                android:id="@+id/button6"
+                android:textSize="14dp"
+                android:background="@drawable/add_managebg1"
+                android:textColor="@color/wx_text_gray"
+                android:layout_gravity="right"
+                android:layout_marginLeft="22dp" />
+
+        </LinearLayout>
+
+        <Button
+            android:layout_width="280dp"
+            android:layout_height="36dp"
+            android:text="@string/wx_login_rs_text"
+            android:id="@+id/button5"
+            android:background="@drawable/add_managebg"
+            android:textColor="@color/wx_btn_press1_color"
+            android:layout_gravity="center_horizontal"
+            android:textSize="20dp"
+            android:layout_marginTop="145dp" />
+    </LinearLayout>
+
+</LinearLayout>

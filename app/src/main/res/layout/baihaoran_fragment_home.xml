@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/bhr_home_title_relative_layout"
+        android:background="@color/bhr_home_title_background"
+        android:paddingStart="12dp"
+        android:paddingEnd="8dp"
+        android:layout_width="match_parent"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/bhr_home_area_select_button"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:gravity="center">
+
+            <TextView
+                android:text="@string/bhr_home_title_area"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <ImageView
+                android:id="@+id/bhr_home_area_img"
+                android:layout_marginLeft="2dp"
+                android:src="@drawable/down_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/bhr_home_loc_img"
+            android:src="@drawable/position"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"/>
+
+        <EditText
+            android:id="@+id/bhr_home_title_edit_text"
+            android:hint="@string/bhr_home_title_search_hint"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:layout_centerInParent="true"
+            android:paddingStart="8dp"
+            android:background="@drawable/bhr_home_search_edittext"
+            android:textSize="14sp"
+            android:textColor="@color/bhr_tabs_text_color"
+            android:drawablePadding="6dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="8dp"
+            android:layout_toStartOf="@id/bhr_home_loc_img"
+            android:layout_toEndOf="@id/bhr_home_area_select_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ScrollView
+            android:scrollbars="none"
+            android:id="@+id/bhr_home_scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+
+                <com.youth.banner.Banner
+                    android:id="@+id/bhr_home_banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp" />
+
+                <LinearLayout
+                    android:id="@+id/bhr_home_scroll_linear_layout"
+                    android:gravity="center"
+                    android:background="@android:color/white"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp">
+
+                    <TextView
+                        android:layout_gravity="center_horizontal"
+                        android:id="@+id/bhr_home_city_recommond_scroll_tv"
+                        android:text="@string/bhr_home_city_recommond"
+                        android:layout_width="wrap_content"
+                        android:textSize="14sp"
+                        android:drawablePadding="4dp"
+                        android:textColor="@color/bhr_tabs_text_color"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/bhr_home_area_recommand_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/bhr_home_hide_show_linear_layout"
+            android:gravity="center"
+            android:background="@android:color/white"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/bhr_home_city_recommond_hide_show_tv"
+                android:text="@string/bhr_home_city_recommond"
+                android:layout_width="wrap_content"
+                android:textSize="14sp"
+                android:drawablePadding="4dp"
+                android:textColor="@color/bhr_tabs_text_color"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </FrameLayout>
+</LinearLayout>

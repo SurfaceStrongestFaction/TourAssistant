@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_launcher"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.daoshengwanwu.android.tourassistant.baihaoran.LauncherActivity">
+
+    <LinearLayout
+        android:id="@+id/launcher_tabs_container"
+        android:orientation="horizontal"
+        android:background="@color/bhr_tabs_background"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/tabs_home_page"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_weight="1.2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"/>
+                <ImageView
+                    android:id="@+id/tabs_home_img"
+                    android:src="@drawable/home1"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:scaleType="centerInside"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="-8dp"/>
+                <TextView
+                    android:layout_weight="1.2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <TextView
+                android:id="@+id/tabs_home_text"
+                android:text="@string/bhr_tabhost_home_page_text"
+                android:textColor="@color/bhr_tabs_text_color"
+                android:textSize="12sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tabs_map_page"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_weight="1.2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"/>
+                <ImageView
+                    android:id="@+id/tabs_map_img"
+                    android:src="@drawable/map"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:scaleType="centerInside"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="-8dp"/>
+                <TextView
+                    android:layout_weight="1.2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tabs_map_text"
+                android:text="@string/bhr_tabhost_map_page_text"
+                android:textSize="12sp"
+                android:textColor="@color/bhr_tabs_text_color"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tabs_ranks_page"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_weight="1.2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"/>
+                <ImageView
+                    android:id="@+id/tabs_ranks_img"
+                    android:src="@drawable/ranks"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:scaleType="centerInside"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="-8dp"/>
+                <TextView
+                    android:layout_weight="1.2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tabs_ranks_text"
+                android:text="@string/bhr_tabhost_group_page_text"
+                android:textSize="12sp"
+                android:textColor="@color/bhr_tabs_text_color"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tabs_my_page"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_weight="1.2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"/>
+                <ImageView
+                    android:id="@+id/tabs_my_img"
+                    android:src="@drawable/my"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:scaleType="centerInside"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="-8dp"/>
+                <TextView
+                    android:layout_weight="1.2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tabs_my_text"
+                android:text="@string/bhr_tabhost_my_page_text"
+                android:textSize="12sp"
+                android:textColor="@color/bhr_tabs_text_color"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/launcher_fragment_container"
+        android:layout_above="@id/launcher_tabs_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:layout_marginBottom="-12dp"/>
+</RelativeLayout>
+

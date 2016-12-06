@@ -3,4 +3,8 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="caizihuan_textcolor_black">#4d4d4d</color>
+    <color name="caizihuan_textcolor_graysmall">#d4d4d4</color>
+    <color name="caizihuan_textcolor_graybig">#a3a3a3</color>
+    <color name="white">#ffffff</color>
 </resources>

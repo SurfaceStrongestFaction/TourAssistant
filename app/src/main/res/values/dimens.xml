@@ -2,4 +2,27 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="caizihuan_trackitem_height">120dp</dimen>
+    <dimen name="caizihuan_trackitem_padding">5dp</dimen>
+    <dimen name="caizihuan_title_textsize">20sp</dimen>
+    <dimen name="caizihuan_title_text_marginright">30sp</dimen>
+    <dimen name="caizihuan_chattable_search_padding">5dp</dimen>
+    <dimen name="caizihuan_chattable_searchimage_margintop">6dp</dimen>
+    <dimen name="caizihuan_chattable_searchimage_marginbotton">4dp</dimen>
+    <dimen name="caizihuan_paddingright">10dp</dimen>
+    <dimen name="caizihuan_activitychat_jianpan_marginleft">5dp</dimen>
+    <dimen name="caizihuan_searchmember_padding">10dp</dimen>
+    <dimen name="caizihuan_paddingleft">10dp</dimen>
+    <dimen name="caizihuan_trackitem_textsize">15sp</dimen>
+    <dimen name="caizihuan_trackitemvalue_textsize">13sp</dimen>
+    <dimen name="caizihuan_trackitem_textmarginbottom">2dp</dimen>
+    <dimen name="caizihuan_chattableitem_timemarginright">5dp</dimen>
+    <dimen name="caizihuan_chattableitem_itemmarginbottom">3dp</dimen>
+    <dimen name="caizihuan_chattableitem_itempadding">5dp</dimen>
+    <dimen name="caizihuan_chattableitem_touxiangwidth">40dp</dimen>
+    <dimen name="caizihuan_chattableitem_textmarginleft">10dp</dimen>
+    <dimen name="caizihuan_chattableitem_touxiangheight">40dp</dimen>
+    <dimen name="caizihuan_chattableitem_touxiangmarginleft">10dp</dimen>
+    <dimen name="caizihuan_chatactivity_putintextsize">13sp</dimen>
+    <dimen name="caizihuan_mytrackactivity_textheight">20dp</dimen>
 </resources>

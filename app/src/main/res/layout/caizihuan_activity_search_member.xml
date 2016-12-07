@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_search_member"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.daoshengwanwu.android.tourassistant.caizihuan.SearchMemberActivity"
+    android:orientation="vertical"
+    android:background="#ffffff">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:background="#f8f8f8"
+        android:padding="@dimen/caizihuan_searchmember_padding">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="7"
+            android:layout_height="match_parent"
+            android:background="@drawable/search1_style">
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:id="@+id/Iv_activitysearchmember_search"
+                android:src="@drawable/search_1"
+                android:layout_gravity="center" />
+            <EditText
+                android:layout_width="0dp"
+                android:layout_weight="7"
+                android:layout_height="match_parent"
+                android:hint="搜索成员"
+                android:textColorHint="@color/caizihuan_textcolor_graysmall"
+                android:textColor="@color/caizihuan_textcolor_black"
+                android:background="@drawable/search1_style"
+                android:gravity="left|center"
+                android:textSize="13sp"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="取消"
+            android:textColor="@color/caizihuan_textcolor_black"
+            android:id="@+id/Tv_activitysearchmember_cancel"
+            android:gravity="right|center_vertical"
+            android:textSize="17sp"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.4"
+        android:text="搜索历史"
+        android:textColor="@color/caizihuan_textcolor_graybig"
+        android:background="#f2f0f2"
+        android:textSize="10sp"
+        android:gravity="left|center_vertical"
+        android:paddingLeft="@dimen/caizihuan_paddingleft"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10.5">
+
+    </LinearLayout>
+
+</LinearLayout>

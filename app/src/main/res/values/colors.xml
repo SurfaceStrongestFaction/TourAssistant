@@ -2,6 +2,12 @@
 <resources>
     <color name="bhr_home_title_background">#EBEBEB</color>
     <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="caizihuan_textcolor_black">#4d4d4d</color>
+    <color name="caizihuan_textcolor_graysmall">#d4d4d4</color>
+    <color name="caizihuan_textcolor_graybig">#a3a3a3</color>
+    <color name="white">#ffffff</color>
     <color name="black_color">#4d4d4d</color>
     <color name="white_color">#ffffff</color>
     <color name="pale_color">#f0f3f5</color>

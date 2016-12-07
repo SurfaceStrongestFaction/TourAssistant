@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_my_track"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.daoshengwanwu.android.tourassistant.caizihuan.MyTrackActivity"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_alignParentTop="true"
+        android:id="@+id/myTeam_top"
+        android:orientation="horizontal"
+        android:background="@drawable/titlebar">
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/back"
+            android:layout_gravity="center"
+            android:id="@+id/Iv_activitysearchmember_back"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="我的足迹"
+            android:textSize="@dimen/caizihuan_title_textsize"
+            android:textColor="@color/caizihuan_textcolor_black"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginRight="@dimen/caizihuan_title_text_marginright"/>
+    </LinearLayout>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="12"
+        android:id="@+id/Lv_activitymytrack_list"
+        android:divider="@color/white">
+
+    </ListView>
+
+</LinearLayout>

@@ -23,4 +23,7 @@ public class SearchMemberActivity extends Activity {
             Intent intent = new Intent(SearchMemberActivity.this,ChatTableActivity.class);
         }
     };
+
+
+
 }

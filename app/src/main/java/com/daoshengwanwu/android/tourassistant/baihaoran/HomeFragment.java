@@ -17,6 +17,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -45,6 +47,9 @@ public class HomeFragment extends Fragment {
     private ScrollView mScrollView;
     private RelativeLayout mTitle;
     private CustomerLinearLayoutManager mLinearLayoutManager;
+    private AutoCompleteTextView acTextView;
+    private String [] arr = {"石家庄","宁波","邢台","保定","盐城","北京","上海","杭州","承德","西安","重庆","长沙"};
+
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -61,6 +66,7 @@ public class HomeFragment extends Fragment {
 
         getWidgetsReferences(v);
         initView();
+
         new Thread() {
             @Override
             public void run() {
@@ -75,7 +81,10 @@ public class HomeFragment extends Fragment {
                 }
             }
         }.start();
-
+        acTextView = (AutoCompleteTextView)v.findViewById(R.id.bhr_home_title_edit_text);
+        ArrayAdapter<String> arrAdapt = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, arr);
+        acTextView.setAdapter(arrAdapt);
+        acTextView.setThreshold(1);//设置输入多少个字符开始自动匹配
         return v;
     }
 

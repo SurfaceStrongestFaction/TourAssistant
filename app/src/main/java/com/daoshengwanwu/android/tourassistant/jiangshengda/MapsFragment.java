@@ -43,12 +43,12 @@ public class MapsFragment extends Fragment implements LocationSource, AMapLocati
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.jiangshengda_fragment_maps, container, false);
         btn = (Button) v.findViewById(R.id.Fog_btn);
+        act_main = (FrameLayout)v.findViewById(R.id.fragment_maps);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Fog
-                act_main = (FrameLayout) v.findViewById(R.id.fragment_maps);
-                myView = new MyView(getActivity());
+                myView = new MyView(getActivity().getApplicationContext());
                 act_main.addView(myView);
                 i = 0;//初始化计数器
                 //aMap.getUiSettings().setAllGesturesEnabled(false);//禁止所有手势操作

@@ -8,8 +8,11 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 
 import com.daoshengwanwu.android.tourassistant.R;
@@ -34,7 +37,6 @@ public class LauncherActivity extends AppCompatActivity {
     private HomeFragment mHomeFragment;
     private MapsFragment mMapsFragment;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,10 +48,13 @@ public class LauncherActivity extends AppCompatActivity {
             actionBar.hide();
         }
 
+
         getWidgetsReferences(); //获取所需组件的引用
         setListenersToWidgets(); //为组件设置监听器
         initFragment();
+
     }
+
 
     private void initFragment() {
         if (null == mHomeFragment) {

@@ -30,7 +30,7 @@
 
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="895e2fcd5291dacdfe17adc167c0fc84" />
+            android:value="c6f919b976553027da271b65df049774" />
 
         <activity android:name=".baihaoran.LauncherActivity">
             <intent-filter>

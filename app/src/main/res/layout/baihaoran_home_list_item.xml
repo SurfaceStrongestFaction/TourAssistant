@@ -9,7 +9,8 @@
         android:layout_marginTop="1px"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:id="@+id/listitem">
 
         <ImageView
             android:id="@+id/bhr_home_item_img"

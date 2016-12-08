@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"/>
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/bhr_home_title_edit_text"
             android:hint="@string/bhr_home_title_search_hint"
             android:paddingTop="5dp"
@@ -102,10 +102,14 @@
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/bhr_home_area_recommand_rv"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/bhr_home_area_recommand_rv"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+
+
             </LinearLayout>
         </ScrollView>
 

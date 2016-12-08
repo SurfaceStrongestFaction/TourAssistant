@@ -1,5 +1,6 @@
 package com.daoshengwanwu.android.tourassistant.wangxiao;
 
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,8 +9,8 @@ import android.widget.Button;
 
 import com.daoshengwanwu.android.tourassistant.R;
 
-public class LoginActivity extends Activity {
 
+public class LoginActivity extends Activity {
     private Button bt;
 
     @Override
@@ -32,7 +33,5 @@ public class LoginActivity extends Activity {
                 startActivity(intent);
             }
         });
-
     }
-
 }

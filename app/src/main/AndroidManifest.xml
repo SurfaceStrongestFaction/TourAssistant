@@ -8,8 +8,6 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".caizihuan.MyTrackActivity">
-
         <activity android:name=".baihaoran.LauncherActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,7 +15,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LauncherActivity" />
+        <activity android:name=".caizihuan.MyTrackActivity" />
         <activity android:name=".caizihuan.SearchMemberActivity" />
         <activity android:name=".caizihuan.ChatActivity" />
         <activity android:name=".caizihuan.ChatTableActivity" />
@@ -40,7 +38,5 @@
         <activity android:name=".wangxiao.RegisterActivity"/>
         <activity android:name=".wangxiao.Register2Activity"/>
         <activity android:name=".wangxiao.LoginActivity" />
-
-        <activity android:name=".caizihuan.SearchMemberActivity" />
     </application>
 </manifest>

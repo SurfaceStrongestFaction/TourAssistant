@@ -19,8 +19,6 @@
     <color name="bhr_tabs_text_color">#a3a3a3</color>
     <color name="bhr_text_black">#4d4d4d</color>
     <color name="zxy_menu_bg_color">#b3f8f8f8</color>
-    <color name="colorPrimaryDark">#207de3ba</color>
-    <color name="colorAccent">#7de3ba</color>
     <color name="wx_btn_press_color">#1bcf87</color>
     <color name="wx_btn_press1_color">#ffffff</color>
     <color name="wx_btn_pressed_color">#7de3ba</color>

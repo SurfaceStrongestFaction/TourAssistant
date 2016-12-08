@@ -66,7 +66,7 @@
                 android:textSize="18dp"
                 android:textColor="@color/colorSetText"/>
             <Switch
-                android:id="@+id/swi_set_on-off"
+                android:id="@+id/swi_set_on_off"
                 android:layout_toLeftOf="@+id/iv_set_i0"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />

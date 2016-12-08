@@ -1,4 +1,4 @@
-package zhu;
+package com.daoshengwanwu.android.tourassistant.zhu;
 
 import android.app.AlertDialog;
 import android.content.Context;

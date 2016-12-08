@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 
 import com.daoshengwanwu.android.tourassistant.R;
 
@@ -17,6 +18,7 @@ public class SetActivity extends AppCompatActivity {
     private RelativeLayout personaldata;
     private RelativeLayout model;
     private RelativeLayout aboutus;
+    private Switch on_off;
     private Button logout;
 
     @Override
@@ -47,6 +49,7 @@ public class SetActivity extends AppCompatActivity {
         model=(RelativeLayout)findViewById(R.id.rl_set_model);
         aboutus=(RelativeLayout)findViewById(R.id.rl_set_aboutus);
         back=(ImageView)findViewById(R.id.iv_set_back);
+        on_off=(Switch)findViewById(R.id.swi_set_on_off);
     }
     private class MyListener implements View.OnClickListener{
 
@@ -61,6 +64,9 @@ public class SetActivity extends AppCompatActivity {
 
                     break;
                 case R.id.rl_set_aboutus:
+
+                    break;
+                case R.id.swi_set_on_off:
 
                     break;
             }

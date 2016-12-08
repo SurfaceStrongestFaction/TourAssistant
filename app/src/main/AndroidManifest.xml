@@ -25,6 +25,8 @@
         <activity android:name=".shenyue.PictureActivity" />
         <activity android:name=".shenyue.ViewspotActivity" />
         <activity android:name=".shenyue.ScenicspotActivity" />
+        <activity android:name="zhu.PersonalDataActivity"></activity>
+        <activity android:name="zhu.SetActivity"></activity>
 
         <activity android:name=".zhouxiuya.WelcomeActivity" />
         <activity android:name=".zhouxiuya.AboutActivity" />

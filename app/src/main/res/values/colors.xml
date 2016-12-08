@@ -26,4 +26,6 @@
     <color name="wx_text_gray">#555555</color>
     <color name="wx_bg">#20ffffff</color>
     <color name="zxy_text_color">#4d4d4d</color>
+    <color name="colorSetText">#4d4d4d</color>
+    <color name="colorSetbg">#b3f8f8f8</color>
 </resources>

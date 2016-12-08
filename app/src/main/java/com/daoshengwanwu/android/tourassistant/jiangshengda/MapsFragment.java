@@ -1,7 +1,7 @@
 package com.daoshengwanwu.android.tourassistant.jiangshengda;
 
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -203,4 +203,7 @@ public class MapsFragment extends Fragment implements LocationSource, AMapLocati
     }
 
 
+    public static MapsFragment newInstance() {
+        return new MapsFragment();
+    }
 }

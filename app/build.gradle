@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'Santa'
+            keyPassword 'jsd003581.'
+            storeFile file('E:/Santa.jks')
+            storePassword 'jsd003581.'
+        }
+    }
     compileSdkVersion 24
     buildToolsVersion "24.0.2"
     defaultConfig {
@@ -17,6 +25,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
 }
 
 dependencies {
@@ -28,5 +41,9 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.youth.banner:banner:1.4.4'
+    compile 'com.android.support:recyclerview-v7:24.0.0'
+    compile files('libs/AMap_Location_V3.1.0_20161027.jar')
+    compile files('libs/AMap_Search_V3.6.0_20161111.jar')
+    compile files('libs/Android_Map3D_SDK_V4.1.2_20161104.jar')
     compile 'com.android.support:recyclerview-v7:24.2.0'
 }

@@ -58,7 +58,7 @@
         android:layout_marginBottom="@dimen/santa_10dp"
         android:layout_marginTop="@dimen/santa_10dp"
         android:alpha="0.7"
-        android:background="#ffffff"></ListView>
+        android:background="#ffffff" />
 
     <RelativeLayout
         android:id="@+id/Clean_history"

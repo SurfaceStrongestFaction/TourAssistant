@@ -1,6 +1,7 @@
 package com.daoshengwanwu.android.tourassistant.baihaoran;
 
 
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
@@ -15,6 +16,7 @@ import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 
 import com.daoshengwanwu.android.tourassistant.R;
+import com.daoshengwanwu.android.tourassistant.jiangshengda.MapsFragment;
 import com.daoshengwanwu.android.tourassistant.jiangshengda.MeFragment;
 
 
@@ -32,8 +34,8 @@ public class LauncherActivity extends AppCompatActivity {
     private LinearLayout mTabsRanksPage;
     private LinearLayout mTabsMyPage;
     private FragmentManager mFragmentManager;
-    private MeFragment mMeFragment;
     private HomeFragment mHomeFragment;
+    private MapsFragment mMapsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +61,8 @@ public class LauncherActivity extends AppCompatActivity {
             mHomeFragment = HomeFragment.newInstance();
         }
 
-        if (null != mFragmentManager.findFragmentById(R.id.launcher_fragment_container)) {
+        Fragment fragment = mFragmentManager.findFragmentById(R.id.launcher_fragment_container);
+        if (null != fragment) {
             mFragmentManager.beginTransaction().replace(R.id.launcher_fragment_container, mHomeFragment).commit();
         } else {
             mFragmentManager.beginTransaction().add(R.id.launcher_fragment_container, mHomeFragment).commit();
@@ -106,10 +109,22 @@ public class LauncherActivity extends AppCompatActivity {
                 case R.id.tabs_home_page:
                     mTabsHomeImg.setImageResource(R.drawable.home1);
                     mTabsHomeText.setTextColor(ContextCompat.getColor(LauncherActivity.this, R.color.bhr_tabs_green));
+
+                    if (null == mMapsFragment) {
+                        mHomeFragment = HomeFragment.newInstance();
+                    }
+                    mFragmentManager.beginTransaction().replace(R.id.launcher_fragment_container, mHomeFragment).commit();
+
                     break;
                 case R.id.tabs_map_page:
                     mTabsMapImg.setImageResource(R.drawable.map1);
                     mTabsMapText.setTextColor(ContextCompat.getColor(LauncherActivity.this, R.color.bhr_tabs_green));
+
+                    if (null == mMapsFragment) {
+                        mMapsFragment = MapsFragment.newInstance();
+                    }
+                    mFragmentManager.beginTransaction().replace(R.id.launcher_fragment_container, mMapsFragment).commit();
+
                     break;
                 case R.id.tabs_ranks_page:
                     mTabsRanksImg.setImageResource(R.drawable.ranks1);

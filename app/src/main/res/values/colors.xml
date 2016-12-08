@@ -31,4 +31,6 @@
     <color name="wx_eggplant">#03A679</color>
     <color name="wx_sienna">#EB6460</color>
 
+    <color name="colorSetText">#4d4d4d</color>
+    <color name="colorSetbg">#b3f8f8f8</color>
 </resources>

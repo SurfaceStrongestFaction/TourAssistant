@@ -26,7 +26,6 @@ public class SearchActivity extends Activity {
         ls.add(new History((long) 4,R.drawable.history,"毛主席纪念堂"));
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

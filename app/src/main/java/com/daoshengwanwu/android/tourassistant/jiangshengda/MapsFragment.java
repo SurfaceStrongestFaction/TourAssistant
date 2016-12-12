@@ -1,7 +1,7 @@
 package com.daoshengwanwu.android.tourassistant.jiangshengda;
 
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,15 +43,15 @@ public class MapsFragment extends Fragment implements LocationSource, AMapLocati
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.jiangshengda_fragment_maps, container, false);
         btn = (Button) v.findViewById(R.id.Fog_btn);
+        act_main = (FrameLayout)v.findViewById(R.id.fragment_maps);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Fog
-                act_main = (FrameLayout) v.findViewById(R.id.fragment_maps);
-                myView = new MyView(getActivity());
+                myView = new MyView(getActivity().getApplicationContext());
                 act_main.addView(myView);
                 i = 0;//初始化计数器
-                //aMap.getUiSettings().setAllGesturesEnabled(false);//禁止所有手势操作
+                aMap.getUiSettings().setAllGesturesEnabled(false);//禁止所有手势操作
             }
         });
         //获取地图控件引用
@@ -203,4 +203,7 @@ public class MapsFragment extends Fragment implements LocationSource, AMapLocati
     }
 
 
+    public static MapsFragment newInstance() {
+        return new MapsFragment();
+    }
 }

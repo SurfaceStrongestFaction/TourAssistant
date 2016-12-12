@@ -172,7 +172,6 @@
                 android:layout_height="wrap_content"/>
         </LinearLayout>
     </LinearLayout>
-
     <FrameLayout
         android:id="@+id/launcher_fragment_container"
         android:layout_above="@id/launcher_tabs_container"

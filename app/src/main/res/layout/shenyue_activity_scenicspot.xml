@@ -48,7 +48,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/scenicspot_imgrl_height">
                     <ImageView
-                        android:id="@+id/scenic"
+                        android:id="@+id/scenicspot_show_img"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:src="@drawable/imperialpalace"
@@ -213,6 +213,7 @@
             android:layout_weight="1"
             android:orientation="horizontal">
             <TextView
+                android:id="@+id/scenicspot_go_tv"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -221,6 +222,7 @@
                 android:background="@color/blackgrey_color"
                 android:gravity="center"/>
             <TextView
+                android:id="@+id/scenicspot_find_tv"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"

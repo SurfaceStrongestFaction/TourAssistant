@@ -1,17 +1,22 @@
 package com.daoshengwanwu.android.tourassistant.baihaoran;
 
 
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 
 import com.daoshengwanwu.android.tourassistant.R;
+import com.daoshengwanwu.android.tourassistant.jiangshengda.MapsFragment;
 import com.daoshengwanwu.android.tourassistant.jiangshengda.MeFragment;
 import com.daoshengwanwu.android.tourassistant.leekuo.BaseActivity;
 
@@ -30,9 +35,8 @@ public class LauncherActivity extends BaseActivity {
     private LinearLayout mTabsRanksPage;
     private LinearLayout mTabsMyPage;
     private FragmentManager mFragmentManager;
-    private MeFragment mMeFragment;
     private HomeFragment mHomeFragment;
-
+    private MapsFragment mMapsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,17 +49,21 @@ public class LauncherActivity extends BaseActivity {
             actionBar.hide();
         }
 
+
         getWidgetsReferences(); //获取所需组件的引用
         setListenersToWidgets(); //为组件设置监听器
         initFragment();
+
     }
+
 
     private void initFragment() {
         if (null == mHomeFragment) {
             mHomeFragment = HomeFragment.newInstance();
         }
 
-        if (null != mFragmentManager.findFragmentById(R.id.launcher_fragment_container)) {
+        Fragment fragment = mFragmentManager.findFragmentById(R.id.launcher_fragment_container);
+        if (null != fragment) {
             mFragmentManager.beginTransaction().replace(R.id.launcher_fragment_container, mHomeFragment).commit();
         } else {
             mFragmentManager.beginTransaction().add(R.id.launcher_fragment_container, mHomeFragment).commit();
@@ -102,10 +110,22 @@ public class LauncherActivity extends BaseActivity {
                 case R.id.tabs_home_page:
                     mTabsHomeImg.setImageResource(R.drawable.home1);
                     mTabsHomeText.setTextColor(ContextCompat.getColor(LauncherActivity.this, R.color.bhr_tabs_green));
+
+                    if (null == mMapsFragment) {
+                        mHomeFragment = HomeFragment.newInstance();
+                    }
+                    mFragmentManager.beginTransaction().replace(R.id.launcher_fragment_container, mHomeFragment).commit();
+
                     break;
                 case R.id.tabs_map_page:
                     mTabsMapImg.setImageResource(R.drawable.map1);
                     mTabsMapText.setTextColor(ContextCompat.getColor(LauncherActivity.this, R.color.bhr_tabs_green));
+
+                    if (null == mMapsFragment) {
+                        mMapsFragment = MapsFragment.newInstance();
+                    }
+                    mFragmentManager.beginTransaction().replace(R.id.launcher_fragment_container, mMapsFragment).commit();
+
                     break;
                 case R.id.tabs_ranks_page:
                     mTabsRanksImg.setImageResource(R.drawable.ranks1);

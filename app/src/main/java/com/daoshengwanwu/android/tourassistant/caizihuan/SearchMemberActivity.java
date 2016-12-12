@@ -1,6 +1,7 @@
 package com.daoshengwanwu.android.tourassistant.caizihuan;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -21,10 +22,13 @@ public class SearchMemberActivity extends BaseActivity {
     View.OnClickListener cancelListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(SearchMemberActivity.this,ChatTableActivity.class);
+            ChatTableActivity.startChatTableActivity(SearchMemberActivity.this);
         }
     };
-
+    public static void startSearchMemberActivity(Context c){
+        Intent i = new Intent(c,SearchMemberActivity.class);
+        c.startActivity(i);
+    }
 
 
 }

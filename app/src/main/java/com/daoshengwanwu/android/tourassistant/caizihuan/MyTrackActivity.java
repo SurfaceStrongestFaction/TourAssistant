@@ -1,6 +1,8 @@
 package com.daoshengwanwu.android.tourassistant.caizihuan;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ListView;
 
@@ -37,5 +39,9 @@ public class MyTrackActivity extends BaseActivity {
         this.mData.add(new item1(1,R.drawable.gugong,"故宫","60%","40%"));
         this.myAdapter = new MyAdapter(MyTrackActivity.this,this.mData);
         this.mlistView.setAdapter(this.myAdapter);
+    }
+    public static void startMyTrackActivity(Context c){
+        Intent i = new Intent(c,MyTrackActivity.class);
+        c.startActivity(i);
     }
 }

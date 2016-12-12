@@ -66,6 +66,11 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <com.example.www.library.PullToRefreshView
+        android:id="@+id/pull_to_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
         <ScrollView
             android:scrollbars="none"
             android:id="@+id/bhr_home_scroll_view"
@@ -107,12 +112,9 @@
                         android:id="@+id/bhr_home_area_recommand_rv"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
-
-
-
             </LinearLayout>
         </ScrollView>
-
+    </com.example.www.library.PullToRefreshView>
         <LinearLayout
             android:id="@+id/bhr_home_hide_show_linear_layout"
             android:gravity="center"
@@ -133,4 +135,5 @@
                 android:layout_height="wrap_content"/>
         </LinearLayout>
     </FrameLayout>
+
 </LinearLayout>

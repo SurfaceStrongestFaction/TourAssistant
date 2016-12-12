@@ -33,9 +33,13 @@ import com.youth.banner.loader.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.example.www.library.PullToRefreshView;
 
 
 public class HomeFragment extends Fragment {
+    public static final int REFRESH_DELAY = 4000;
+
+    private PullToRefreshView mPullToRefreshView;
     private LinearLayout mAreaSelBtn;
     private EditText mSearchEditText;
     private ImageView mLocImg;
@@ -85,6 +89,20 @@ public class HomeFragment extends Fragment {
         ArrayAdapter<String> arrAdapt = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, arr);
         acTextView.setAdapter(arrAdapt);
         acTextView.setThreshold(1);//设置输入多少个字符开始自动匹配
+
+        //refresh
+        mPullToRefreshView = (PullToRefreshView)v.findViewById(R.id.pull_to_refresh);
+        mPullToRefreshView.setOnRefreshListener(new PullToRefreshView.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mPullToRefreshView.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mPullToRefreshView.setRefreshing(false);
+                    }
+                }, REFRESH_DELAY);
+            }
+        });
         return v;
     }
 

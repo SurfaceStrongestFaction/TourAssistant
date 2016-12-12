@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.daoshengwanwu.android.tourassistant.R;
 import com.daoshengwanwu.android.tourassistant.jiangshengda.MapsFragment;
 import com.daoshengwanwu.android.tourassistant.jiangshengda.MeFragment;
+import com.daoshengwanwu.android.tourassistant.wangxiao.LoginActivity;
 
 
 public class LauncherActivity extends AppCompatActivity {
@@ -36,6 +37,7 @@ public class LauncherActivity extends AppCompatActivity {
     private FragmentManager mFragmentManager;
     private HomeFragment mHomeFragment;
     private MapsFragment mMapsFragment;
+    private MeFragment mMeFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,6 +133,22 @@ public class LauncherActivity extends AppCompatActivity {
                     mTabsRanksText.setTextColor(ContextCompat.getColor(LauncherActivity.this, R.color.bhr_tabs_green));
                     break;
                 case R.id.tabs_my_page:
+                    if ("".equals(AppUtil.User.USER_ID)) {
+                        //说明还没有登陆，应该跳转到登录界面
+                        LoginActivity.actionStartActivity(LauncherActivity.this);
+                    } else {
+                        //说明已经登录，进入我的界面
+                        if (null == mMeFragment) {
+                            mMeFragment = new MeFragment();
+                        }
+                        Fragment fragment = mFragmentManager.findFragmentById(R.id.launcher_fragment_container);
+                        if (null == fragment) {
+                            mFragmentManager.beginTransaction().add(R.id.launcher_fragment_container, mMeFragment).commit();
+                        } else {
+                            mFragmentManager.beginTransaction().replace(R.id.launcher_fragment_container, mMeFragment).commit();
+                        }
+                    }
+
                     mTabsMyImg.setImageResource(R.drawable.my1);
                     mTabsMyText.setTextColor(ContextCompat.getColor(LauncherActivity.this, R.color.bhr_tabs_green));
                     break;

@@ -63,7 +63,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener{
                 myView = new MyView(getActivity().getApplicationContext());
                 act_main.addView(myView);
                 i = 0;//初始化计数器
-                //aMap.getUiSettings().setAllGesturesEnabled(false);//禁止所有手势操作
+                aMap.getUiSettings().setAllGesturesEnabled(false);//禁止所有手势操作
             }
         });
 

@@ -1,6 +1,7 @@
 package com.daoshengwanwu.android.tourassistant.caizihuan;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -60,8 +61,11 @@ public class ChatTableActivity extends Activity {
     View.OnClickListener searchListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(ChatTableActivity.this,SearchMemberActivity.class);
-            startActivity(intent);
+            SearchMemberActivity.startSearchMemberActivity(ChatTableActivity.this);
         }
     };
+    public static void startChatTableActivity(Context c){
+        Intent i = new Intent(c,ChatTableActivity.class);
+        c.startActivity(i);
+    }
 }

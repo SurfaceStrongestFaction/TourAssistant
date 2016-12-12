@@ -1,6 +1,7 @@
 package com.daoshengwanwu.android.tourassistant.wangxiao;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -33,6 +34,10 @@ public class RegisterActivity extends Activity {
             }
         });
 
+    }
+
+    public static void actionStartActivity(Context context) {
+        context.startActivity(new Intent(context, RegisterActivity.class));
     }
 
 }

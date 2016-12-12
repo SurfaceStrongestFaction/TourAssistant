@@ -5,8 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.daoshengwanwu.android.tourassistant.R;
+import com.daoshengwanwu.android.tourassistant.leekuo.BaseActivity;
 
-public class ChatActivity extends Activity {
+public class ChatActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

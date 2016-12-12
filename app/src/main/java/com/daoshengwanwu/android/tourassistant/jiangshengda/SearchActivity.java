@@ -9,10 +9,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.daoshengwanwu.android.tourassistant.R;
+import com.daoshengwanwu.android.tourassistant.leekuo.BaseActivity;
 
 import java.util.ArrayList;
 
-public class SearchActivity extends Activity {
+public class SearchActivity extends BaseActivity {
     private TextView log;
     private RelativeLayout btn;
     private ArrayList<History> ls = new ArrayList<History>();

@@ -10,7 +10,7 @@ import android.widget.ImageView;
 
 import com.daoshengwanwu.android.tourassistant.R;
 
-public class TeamMemberActivity extends Activity {
+public class TeamMemberActivity extends BaseActivity {
     private static final String EXTRA_USER_NAME = "SecondActivity.EXTRA_USER_NAME";
     private ImageView back;
 

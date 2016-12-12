@@ -9,11 +9,12 @@ import com.daoshengwanwu.android.tourassistant.caizihuan.track.BaseItem;
 import com.daoshengwanwu.android.tourassistant.caizihuan.track.MyAdapter;
 import com.daoshengwanwu.android.tourassistant.caizihuan.track.item0;
 import com.daoshengwanwu.android.tourassistant.caizihuan.track.item1;
+import com.daoshengwanwu.android.tourassistant.leekuo.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyTrackActivity extends Activity {
+public class MyTrackActivity extends BaseActivity {
     private ListView mlistView;
     //适配器
     private MyAdapter myAdapter = null;

@@ -6,8 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.daoshengwanwu.android.tourassistant.R;
+import com.daoshengwanwu.android.tourassistant.leekuo.BaseActivity;
 
-public class ScenicspotActivity extends AppCompatActivity {
+public class ScenicspotActivity extends BaseActivity {
     private static final String SCENICSPOTEXTRA_ID = "ScenicspotActivity.EXTRA_ID";
 
 

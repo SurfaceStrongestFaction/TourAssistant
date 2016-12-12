@@ -13,7 +13,7 @@ import com.daoshengwanwu.android.tourassistant.R;
 
 import java.util.ArrayList;
 
-public class TeamerMyTeamActivity extends Activity {
+public class TeamerMyTeamActivity extends BaseActivity{
     private ListView lv;
     private ArrayList<TeamerMyTeamItem> items=new ArrayList<>();
     private Button btn1;

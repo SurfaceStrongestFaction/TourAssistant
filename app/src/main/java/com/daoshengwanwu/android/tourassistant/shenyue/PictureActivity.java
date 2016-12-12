@@ -6,10 +6,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.GridView;
 import com.daoshengwanwu.android.tourassistant.R;
+import com.daoshengwanwu.android.tourassistant.leekuo.BaseActivity;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class PictureActivity extends AppCompatActivity {
+public class PictureActivity extends BaseActivity {
 
     List<PicgvItem> ls = new ArrayList<>();
     GridView picgv;

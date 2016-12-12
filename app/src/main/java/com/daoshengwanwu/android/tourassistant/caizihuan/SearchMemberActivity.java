@@ -7,8 +7,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.daoshengwanwu.android.tourassistant.R;
+import com.daoshengwanwu.android.tourassistant.leekuo.BaseActivity;
 
-public class SearchMemberActivity extends Activity {
+public class SearchMemberActivity extends BaseActivity {
     private TextView cancelTextView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

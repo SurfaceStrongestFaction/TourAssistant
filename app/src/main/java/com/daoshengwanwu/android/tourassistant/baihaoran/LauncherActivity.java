@@ -13,9 +13,10 @@ import android.widget.TextView;
 
 import com.daoshengwanwu.android.tourassistant.R;
 import com.daoshengwanwu.android.tourassistant.jiangshengda.MeFragment;
+import com.daoshengwanwu.android.tourassistant.leekuo.BaseActivity;
 
 
-public class LauncherActivity extends AppCompatActivity {
+public class LauncherActivity extends BaseActivity {
     private ImageView mTabsHomeImg;
     private ImageView mTabsMapImg;
     private ImageView mTabsRanksImg;

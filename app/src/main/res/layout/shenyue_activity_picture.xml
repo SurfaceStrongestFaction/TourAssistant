@@ -11,11 +11,11 @@
         android:orientation="horizontal"
         android:background="@color/pale_color">
         <ImageView
+            android:id="@+id/picture_back_img"
             android:layout_width="@dimen/viewspot_backimg_width"
             android:layout_height="wrap_content"
             android:src="@drawable/return1"
             android:layout_gravity="center"
-            android:id="@+id/viewspot_back_img"
             />
         <TextView
             android:layout_width="match_parent"

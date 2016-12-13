@@ -16,7 +16,7 @@ import com.daoshengwanwu.android.tourassistant.R;
 
 import java.util.ArrayList;
 
-public class MyTeamActivity extends Activity {
+public class MyTeamActivity extends BaseActivity {
     private ListView lv;
     private ArrayList<MyTeamItem> items=new ArrayList<>();
     private Button btn1;

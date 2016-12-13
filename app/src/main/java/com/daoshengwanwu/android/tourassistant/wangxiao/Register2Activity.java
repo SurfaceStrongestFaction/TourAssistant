@@ -1,14 +1,16 @@
 package com.daoshengwanwu.android.tourassistant.wangxiao;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
 import com.daoshengwanwu.android.tourassistant.R;
+import com.daoshengwanwu.android.tourassistant.leekuo.BaseActivity;
 
-public class Register2Activity extends Activity {
+public class Register2Activity extends BaseActivity {
 
     private Button bt;
 
@@ -33,6 +35,10 @@ public class Register2Activity extends Activity {
             }
         });
 
+    }
+
+    public static void actionStartActivity(Context context) {
+        context.startActivity(new Intent(context, Register2Activity.class));
     }
 
 }

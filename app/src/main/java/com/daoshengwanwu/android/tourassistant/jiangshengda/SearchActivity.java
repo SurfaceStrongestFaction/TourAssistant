@@ -61,9 +61,4 @@ public class SearchActivity extends Activity {
         });
     }
 
-    public static  void actionStartActivity(Context packageContext) {
-        Intent intent = new Intent(packageContext, SearchActivity.class);
-        packageContext.startActivity(intent);
-    }
-
 }

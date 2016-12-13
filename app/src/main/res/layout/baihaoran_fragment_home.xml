@@ -6,7 +6,7 @@
 
     <RelativeLayout
         android:id="@+id/bhr_home_title_relative_layout"
-        android:background="@color/bhr_home_title_background"
+        android:background="@color/bhr_tabs_background"
         android:paddingStart="12dp"
         android:paddingEnd="8dp"
         android:layout_width="match_parent"

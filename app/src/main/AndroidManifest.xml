@@ -75,6 +75,19 @@
         <service android:name="com.amap.api.location.APSService" />
         <service android:name=".baihaoran.SharingService" />
 
+        <activity android:name=".leekuo.BaseActivity"></activity>
+        <!-- 微信分享回调 -->
+        <!--<activity-->
+            <!--android:name=".wangxiao.wxapi.WXEntryActivity"-->
+            <!--android:theme="@android:style/Theme.Translucent.NoTitleBar"-->
+            <!--android:configChanges="keyboardHidden|orientation|screenSize"-->
+            <!--android:exported="true" />-->
+        <!--<activity-->
+            <!--android:name="com.sina.weibo.sdk.component.WeiboSdkBrowser"-->
+            <!--android:configChanges="keyboardHidden|orientation"-->
+            <!--android:exported="false"-->
+            <!--android:windowSoftInputMode="adjustResize" >-->
+        <!--</activity>-->
         <activity
             android:name="com.sina.weibo.sdk.component.WeiboSdkBrowser"
             android:configChanges="keyboardHidden|orientation"
@@ -82,31 +95,31 @@
             android:windowSoftInputMode="adjustResize" >
         </activity>
 
-        <service
-            android:name="com.sina.weibo.sdk.net.DownloadService"
-            android:exported="false" >
-        </service>
-        <activity
-            android:name="com.tencent.connect.common.AssistActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity
-            android:name=".ReturnActivity"
-            >
-        </activity>
-        <activity
-            android:name="com.tencent.tauth.AuthActivity"
-            android:launchMode="singleTask"
-            android:noHistory="true" >
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="tencent222222" />
-                <!-- 100380359 100381104 222222 -->
-            </intent-filter>
-        </activity>
+        <!--<service-->
+            <!--android:name="com.sina.weibo.sdk.net.DownloadService"-->
+            <!--android:exported="false" >-->
+        <!--</service>-->
+        <!--<activity-->
+            <!--android:name="com.tencent.connect.common.AssistActivity"-->
+            <!--android:configChanges="orientation|keyboardHidden"-->
+            <!--android:screenOrientation="portrait"-->
+            <!--android:theme="@android:style/Theme.Translucent.NoTitleBar" />-->
+        <!--<activity-->
+            <!--android:name=".ReturnActivity"-->
+            <!--&gt;-->
+        <!--</activity>-->
+        <!--<activity-->
+            <!--android:name="com.tencent.tauth.AuthActivity"-->
+            <!--android:launchMode="singleTask"-->
+            <!--android:noHistory="true" >-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.VIEW" />-->
+                <!--<category android:name="android.intent.category.DEFAULT" />-->
+                <!--<category android:name="android.intent.category.BROWSABLE" />-->
+                <!--<data android:scheme="tencent222222" />-->
+                <!--&lt;!&ndash; 100380359 100381104 222222 &ndash;&gt;-->
+            <!--</intent-filter>-->
+        <!--</activity>-->
 
     </application>
     <code class="code">

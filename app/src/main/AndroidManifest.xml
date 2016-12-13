@@ -30,7 +30,7 @@
 
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="895e2fcd5291dacdfe17adc167c0fc84" />
+            android:value="2214f6ab633dcb98ae9dc3e06256b9b5" />
 
         <activity android:name=".baihaoran.LauncherActivity">
             <intent-filter>
@@ -62,8 +62,7 @@
         <activity android:name=".wangxiao.LoginActivity" />
 
         <service android:name="com.amap.api.location.APSService" />
-
-        <activity android:name=".leekuo.BaseActivity"></activity>
+        <service android:name=".baihaoran.SharingService" />
     </application>
 
 </manifest>

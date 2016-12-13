@@ -6,7 +6,9 @@
     android:layout_height="match_parent"
     tools:context="com.daoshengwanwu.android.tourassistant.caizihuan.ChatActivity"
     android:orientation="vertical"
-    android:background="#f2f2f2">
+    android:background="#f2f2f2"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="false">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"

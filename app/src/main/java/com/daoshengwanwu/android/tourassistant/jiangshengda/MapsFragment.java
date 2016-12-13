@@ -1,5 +1,6 @@
 package com.daoshengwanwu.android.tourassistant.jiangshengda;
 
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,7 +10,6 @@ import android.graphics.Point;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import com.amap.api.location.AMapLocation;//定位信息类
 import com.amap.api.location.AMapLocationClient;//定位服务类
@@ -20,12 +20,13 @@ import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.LocationSource;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.Projection;
+import com.amap.api.maps.UiSettings;
 import com.amap.api.maps.model.LatLng;
-
 
 import com.daoshengwanwu.android.tourassistant.R;
 
-public class MapsFragment extends Fragment implements LocationSource, AMapLocationListener{
+
+public class MapsFragment extends Fragment implements AMapLocationListener{
     private int i = 0;
     private MyView myView;
     private double x;
@@ -39,11 +40,22 @@ public class MapsFragment extends Fragment implements LocationSource, AMapLocati
     private LocationSource.OnLocationChangedListener mListener;
     private AMapLocationClient mlocationClient;
     private AMapLocationClientOption mLocationOption;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.jiangshengda_fragment_maps, container, false);
+
         btn = (Button) v.findViewById(R.id.Fog_btn);
         act_main = (FrameLayout)v.findViewById(R.id.fragment_maps);
+        mapView = (MapView) v.findViewById(R.id.map);
+        if (aMap == null) {
+            aMap = mapView.getMap();
+            setUpMap();
+        }
+
+        //在activity执行onCreate时执行mMapView.onCreate(savedInstanceState)，实现地图生命周期管理
+        mapView.onCreate(savedInstanceState);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,23 +66,13 @@ public class MapsFragment extends Fragment implements LocationSource, AMapLocati
                 aMap.getUiSettings().setAllGesturesEnabled(false);//禁止所有手势操作
             }
         });
-        //获取地图控件引用
-        mapView = (MapView) v.findViewById(R.id.map);
-        //在activity执行onCreate时执行mMapView.onCreate(savedInstanceState)，实现地图生命周期管理
-        mapView.onCreate(savedInstanceState);
-        init();
+
+        removeAMapLogo(); //删除高德logo
         //设置使用普通地图
         //aMap.setMapType(AMap.MAP_TYPE_NIGHT);//夜景地图模式
         //aMap.setMapType(AMap.MAP_TYPE_NORMAL);
-        return v;
-    }
 
-    //初始化AMap对象
-    private void init() {
-        if (aMap == null) {
-            aMap = mapView.getMap();
-            setUpMap();
-        }
+        return v;
     }
 
     /*
@@ -79,17 +81,22 @@ public class MapsFragment extends Fragment implements LocationSource, AMapLocati
     private void setUpMap() {
         aMap.getUiSettings().setRotateGesturesEnabled(false);//禁止地图旋转手势
         aMap.getUiSettings().setTiltGesturesEnabled(false);//禁止倾斜手势
-        aMap.setLocationSource(this);// 设置定位监听
+        //aMap.setLocationSource(this);// 设置定位监听
         aMap.getUiSettings().setMyLocationButtonEnabled(false);// 设置默认定位按钮是否显示
         aMap.getUiSettings().setScaleControlsEnabled(true);//显示比例尺控件
         aMap.moveCamera(CameraUpdateFactory.zoomTo(15));//设置比例尺，3-19
         aMap.setMyLocationEnabled(true);// 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
         // 设置定位的类型为定位模式 ，可以由定位、跟随或地图根据面向方向旋转几种
         //aMap.setMyLocationType(AMap.LOCATION_TYPE_MAP_FOLLOW);//跟随模式
-        aMap.setMyLocationType(AMap.LOCATION_TYPE_LOCATE); //定位模式
+       // aMap.setMyLocationType(AMap.LOCATION_TYPE_LOCATE); //定位模式
         //aMap.setMyLocationType(AMap.LOCATION_TYPE_MAP_ROTATE); // 设置定位的类型为根据地图面向方向旋转
     }
 
+    private void removeAMapLogo() {
+        //这两行代码可以隐藏高德地图logo
+        UiSettings uiSettings =  aMap.getUiSettings();
+        uiSettings.setLogoBottomMargin(-50);//隐藏logo
+    }
 
     @Override
     public void onDestroy() {
@@ -99,6 +106,8 @@ public class MapsFragment extends Fragment implements LocationSource, AMapLocati
             mlocationClient.onDestroy();
         }
     }
+
+
 
     @Override
     public void onResume() {
@@ -162,6 +171,7 @@ public class MapsFragment extends Fragment implements LocationSource, AMapLocati
     /*
     激活定位
      */
+    /*
     @Override
     public void activate(LocationSource.OnLocationChangedListener listener) {
         mListener = listener;
@@ -181,10 +191,11 @@ public class MapsFragment extends Fragment implements LocationSource, AMapLocati
             mlocationClient.startLocation();
         }
     }
-
+*/
     /*
     停止定位
      */
+    /*
     @Override
     public void deactivate() {
         mListener = null;
@@ -194,6 +205,7 @@ public class MapsFragment extends Fragment implements LocationSource, AMapLocati
         }
         mlocationClient = null;
     }
+    */
 
     @Override
     public void onSaveInstanceState(Bundle outState) {

@@ -9,15 +9,19 @@ import android.widget.GridView;
 import android.widget.ImageView;
 
 import com.daoshengwanwu.android.tourassistant.R;
+import com.daoshengwanwu.android.tourassistant.leekuo.BaseActivity;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class PictureActivity extends AppCompatActivity {
+public class PictureActivity extends BaseActivity {
     private static final String PICTUREEXTRA_ID = "PictureActivity.EXTRA_ID";
     List<PicgvItem> ls = new ArrayList<>();
     GridView picgv;
     PicturegvAdapter picturegvAdapter;
     ImageView backimg;
+    private Context packageContext;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,10 +65,14 @@ public class PictureActivity extends AppCompatActivity {
     private void setListener(){
         backimg.setOnClickListener(new MyListener());
     }
-    class MyListener implements View.OnClickListener{
-        @Override
-        public void onClick(View v) {
+    class MyListener implements View.OnClickListener {
 
+        @Override
+        public void onClick(View view) {
+         //   public static Intent newIntent(Context packageContext) {
+           //     Intent i = new Intent(packageContext,PictureActivity.class);
+            //    return i;
+            //}
         }
     }
 }

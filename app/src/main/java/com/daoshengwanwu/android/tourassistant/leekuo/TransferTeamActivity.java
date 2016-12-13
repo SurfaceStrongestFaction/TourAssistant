@@ -15,7 +15,7 @@ import com.daoshengwanwu.android.tourassistant.R;
 
 import java.util.ArrayList;
 
-public class TransferTeamActivity extends Activity {
+public class TransferTeamActivity extends BaseActivity {
     private ListView lv;
     private ArrayList<TransferTeamItem> items=new ArrayList<>();
     private static final String EXTRA_USER_NAME = "SecondActivity.EXTRA_USER_NAME";
@@ -41,11 +41,9 @@ public class TransferTeamActivity extends Activity {
         });
     }
 
-    public static Intent newIntent(Context packageContext, String userName) {
-        Intent i = new Intent(packageContext, TransferTeamActivity.class);
-        i.putExtra(EXTRA_USER_NAME, userName);
-
-        return i;
+    public static  void actionStartActivity(Context packageContext) {
+        Intent intent = new Intent(packageContext,  TransferTeamActivity.class);
+        packageContext.startActivity(intent);
     }
 
     public void  getData(){

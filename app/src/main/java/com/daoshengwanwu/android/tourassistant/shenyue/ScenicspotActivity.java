@@ -11,8 +11,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.daoshengwanwu.android.tourassistant.R;
+import com.daoshengwanwu.android.tourassistant.leekuo.BaseActivity;
 
-public class ScenicspotActivity extends AppCompatActivity {
+public class ScenicspotActivity extends BaseActivity {
     private static final String SCENICSPOTEXTRA_ID = "ScenicspotActivity.EXTRA_ID";
     private ImageView backimg;
     private RelativeLayout picturerl;

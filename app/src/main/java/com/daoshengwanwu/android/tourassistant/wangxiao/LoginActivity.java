@@ -400,9 +400,14 @@ public class LoginActivity extends Activity implements OnClickListener{
 
             //	Util.showResultDialog(LoginActivity.this, response.toString(),
             //			"登录成功");
+
+
             JSONObject response1 = (JSONObject) response;
             try {
                 qqid = response1.getString("openid");
+                    qqgender = response1.getString("gender");
+                    qqname = response1.getString("nickname");
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -477,6 +482,7 @@ public class LoginActivity extends Activity implements OnClickListener{
                     s = getSharedPreferences("ty_user",Context.MODE_PRIVATE);
                     SharedPreferences.Editor editer = s.edit();
                     editer.putString("name",name.getText().toString());
+                    editer.putString("pwd","");
                     editer.commit();
                 }
             }

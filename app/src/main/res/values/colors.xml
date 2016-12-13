@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="bhr_home_title_background">#EBEBEB</color>
-    <color name="colorPrimary">#7de3ba</color>
-    <color name="colorPrimaryDark">#7de3ba</color>
+    <color name="colorPrimary">#EBEBEB</color>
+    <color name="colorPrimaryDark">#EBEBEB</color>
     <color name="colorAccent">#7de3ba</color>
     <color name="caizihuan_textcolor_black">#4d4d4d</color>
     <color name="caizihuan_textcolor_graysmall">#d4d4d4</color>

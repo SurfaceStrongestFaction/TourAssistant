@@ -11,8 +11,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.daoshengwanwu.android.tourassistant.R;
+import com.daoshengwanwu.android.tourassistant.leekuo.BaseActivity;
 
-public class ScenicspotActivity extends AppCompatActivity {
+public class ScenicspotActivity extends BaseActivity {
     private static final String SCENICSPOTEXTRA_ID = "ScenicspotActivity.EXTRA_ID";
     private ImageView backimg;
     private RelativeLayout picturerl;
@@ -25,6 +26,8 @@ public class ScenicspotActivity extends AppCompatActivity {
     private ImageView star3img;
     private ImageView star4img;
     private ImageView star5img;
+    private TextView pricenumtv;
+    private TextView timeinf;
     private TextView introducetv;
     private TextView gotv;
     private TextView findtv;
@@ -33,7 +36,6 @@ public class ScenicspotActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.shenyue_activity_scenicspot);
-        getSupportActionBar().hide();
         getViews();
         setListener();
         getIntent().getIntExtra(SCENICSPOTEXTRA_ID, 0);
@@ -60,6 +62,8 @@ public class ScenicspotActivity extends AppCompatActivity {
         star3img = (ImageView)findViewById(R.id.scenicspot_star3_img);
         star4img = (ImageView)findViewById(R.id.scenicspot_star4_img);
         star5img = (ImageView)findViewById(R.id.scenicspot_star5_img);
+        pricenumtv = (TextView)findViewById(R.id.scenicspot_pricenum_tv);
+        timeinf = (TextView)findViewById(R.id.scenicspot_timeinf_tv);
         introducetv = (TextView)findViewById(R.id.scenicspot_introduce_tv);
         gotv = (TextView)findViewById(R.id.scenicspot_go_tv);
         findtv = (TextView)findViewById(R.id.scenicspot_find_tv);

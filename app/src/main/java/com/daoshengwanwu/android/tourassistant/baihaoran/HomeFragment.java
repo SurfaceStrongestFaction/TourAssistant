@@ -137,6 +137,7 @@ public class HomeFragment extends Fragment {
         params.width = (int)(lineHeight * 1.6);
         mLocImg.setLayoutParams(params);
 
+
         //设置搜索栏搜索图标的高度
         Drawable drawStart = ContextCompat.getDrawable(getActivity(), R.drawable.search);
         int drawHNW = (int)(lineHeight);

@@ -18,8 +18,9 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 
 import com.daoshengwanwu.android.tourassistant.R;
+import com.daoshengwanwu.android.tourassistant.leekuo.BaseActivity;
 
-public class AboutActivity extends AppCompatActivity {
+public class AboutActivity extends BaseActivity {
     private static final String EXTRA_USER_NAME = "AboutActivity.EXTRA_USER_NAME";
 
     private RelativeLayout about_evaluate;//给我评价

@@ -8,8 +8,9 @@ import android.view.View;
 import android.widget.Button;
 
 import com.daoshengwanwu.android.tourassistant.R;
+import com.daoshengwanwu.android.tourassistant.leekuo.BaseActivity;
 
-public class Register2Activity extends Activity {
+public class Register2Activity extends BaseActivity {
 
     private Button bt;
 

@@ -32,6 +32,7 @@ public class RegisterActivity extends BaseActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(RegisterActivity.this, Register2Activity.class);
                 startActivity(intent);
+                finish();
             }
         });
 

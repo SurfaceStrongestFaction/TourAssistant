@@ -2,197 +2,201 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_login"
-    android:fitsSystemWindows="true"
-    android:clipToPadding="false">
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="360dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="60dp">
-
+    android:background="@drawable/bg_login">
         <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="280dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center"
-            android:layout_marginBottom="15dp"
-            android:layout_marginTop="110dp">
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:id="@+id/imageView4"
-                android:src="@drawable/user"
-                android:layout_marginRight="3dp" />
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="245dp"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/lg_user"
-                    android:hint="@string/wx_login_user_text"
-                    android:textColor="#ffffff"
-                    android:textColorHint="#ffffff"
-                    android:singleLine="false"
-                    android:textSize="18dp"
-                    android:background="@color/wx_et_alpha"
-                    android:paddingLeft="5dp" />
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="#ffffff"
-                    android:layout_marginTop="5dp">
-
-                </LinearLayout>
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="280dp"
-            android:layout_height="40dp"
+            android:orientation="vertical"
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center">
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:id="@+id/imageView5"
-                android:src="@drawable/lock"
-                android:layout_marginRight="3dp" />
-
             <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="245dp"
-                android:layout_height="match_parent">
+                android:orientation="horizontal"
+                android:layout_width="280dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="130dp">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:id="@+id/imageView4"
+                    android:src="@drawable/user"
+                    android:layout_marginRight="3dp" />
 
                 <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_width="245dp"
                     android:layout_height="wrap_content">
 
                     <EditText
-                        android:layout_width="220dp"
+                        android:layout_width="200dp"
                         android:layout_height="wrap_content"
-                        android:id="@+id/editText3"
-                        android:hint="@string/wx_login_pwd_text"
+                        android:id="@+id/lg_user"
+                        android:hint="@string/wx_login_user_text"
                         android:textColor="#ffffff"
                         android:textColorHint="#ffffff"
+                        android:singleLine="false"
                         android:textSize="18dp"
                         android:background="@color/wx_et_alpha"
-                        android:paddingLeft="5dp"
-                        android:password="true"/>
+                        android:paddingLeft="5dp" />
 
-                    <ImageView
-                        android:layout_width="23dp"
-                        android:layout_height="23dp"
-                        android:id="@+id/imageView6"
-                        android:src="@drawable/forget_pwd" />
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#ffffff"
+                        android:layout_marginTop="5dp">
 
+                    </LinearLayout>
                 </LinearLayout>
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="280dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:id="@+id/imageView5"
+                    android:src="@drawable/lock"
+                    android:layout_marginRight="3dp" />
+
                 <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_width="245dp"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <EditText
+                            android:layout_width="220dp"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/lg_pwd"
+                            android:hint="@string/wx_login_pwd_text"
+                            android:textColor="#ffffff"
+                            android:textColorHint="#ffffff"
+                            android:textSize="18dp"
+                            android:background="@color/wx_et_alpha"
+                            android:paddingLeft="5dp"
+                            android:password="true"/>
+
+                        <ImageView
+                            android:layout_width="23dp"
+                            android:layout_height="23dp"
+                            android:id="@+id/imageView6"
+                            android:src="@drawable/forget_pwd" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#ffffff"
+                        android:layout_marginTop="5dp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/wx_jzmm"
+                android:id="@+id/lg_cb"
+                android:textColor="@color/white_color"
+                android:checked="false"
+                android:layout_gravity="center_horizontal" />
+
+            <Button
+                android:layout_width="280dp"
+                android:layout_height="36dp"
+                android:text="@string/wx_login_lg_text"
+                android:id="@+id/lg_bt"
+                android:background="@drawable/add_managebg"
+                android:textColor="#ffffff"
+                android:layout_marginTop="35dp"
+                android:layout_marginBottom="35dp"
+                android:layout_gravity="center_horizontal"
+                android:textSize="20dp" />
+
+            <Button
+                android:layout_width="280dp"
+                android:layout_height="36dp"
+                android:text="@string/wx_login_rs_text"
+                android:id="@+id/lg_bt2"
+                android:background="@drawable/add_managebg1"
+                android:textColor="@color/wx_text_gray"
+                android:layout_gravity="center_horizontal"
+                android:textSize="20dp" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="40dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="20dp">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="100dp"
                     android:layout_height="1dp"
                     android:background="#ffffff"
-                    android:layout_marginTop="5dp" />
+                    android:layout_marginTop="20dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/wx_login_3lg_text"
+                    android:id="@+id/textView"
+                    android:textColor="#ffffff"
+                    android:layout_marginTop="10dp"
+                    android:paddingLeft="7dp"
+                    android:paddingRight="7dp"
+                    android:textSize="16dp" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="100dp"
+                    android:layout_height="1dp"
+                    android:background="#ffffff"
+                    android:layout_marginTop="20dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="55dp"
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:layout_width="75dp"
+                    android:layout_height="50dp"
+                    android:id="@+id/lg_qq"
+                    android:layout_weight="1"
+                    android:src="@drawable/icon_qq" />
+
+                <ImageView
+                    android:layout_width="75dp"
+                    android:layout_height="50dp"
+                    android:id="@+id/lg_wechat"
+                    android:src="@drawable/icon_weichat"
+                    android:layout_weight="1" />
+                <ImageView
+                    android:layout_width="75dp"
+                    android:layout_height="50dp"
+                    android:id="@+id/lg_weibo"
+                    android:src="@drawable/icon_xinlang"
+                    android:layout_weight="1" />
             </LinearLayout>
 
         </LinearLayout>
-
-        <Button
-            android:layout_width="280dp"
-            android:layout_height="36dp"
-            android:text="@string/wx_login_lg_text"
-            android:id="@+id/lg_bt"
-            android:background="@drawable/add_managebg"
-            android:textColor="#ffffff"
-            android:layout_marginTop="50dp"
-            android:layout_marginBottom="35dp"
-            android:layout_gravity="center_horizontal"
-            android:textSize="20dp" />
-
-        <Button
-            android:layout_width="280dp"
-            android:layout_height="36dp"
-            android:text="@string/wx_login_rs_text"
-            android:id="@+id/lg_bt2"
-            android:background="@drawable/add_managebg1"
-            android:textColor="@color/wx_text_gray"
-            android:layout_gravity="center_horizontal"
-            android:textSize="20dp" />
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginTop="40dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="20dp">
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="100dp"
-                android:layout_height="1dp"
-                android:background="#ffffff"
-                android:layout_marginTop="20dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/wx_login_3lg_text"
-                android:id="@+id/textView"
-                android:textColor="#ffffff"
-                android:layout_marginTop="10dp"
-                android:paddingLeft="7dp"
-                android:paddingRight="7dp"
-                android:textSize="16dp" />
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="100dp"
-                android:layout_height="1dp"
-                android:background="#ffffff"
-                android:layout_marginTop="20dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="55dp"
-            android:layout_gravity="center">
-
-            <ImageView
-                android:layout_width="75dp"
-                android:layout_height="50dp"
-                android:id="@+id/lg_qq"
-                android:layout_weight="1"
-                android:src="@drawable/icon_qq" />
-
-            <ImageView
-                android:layout_width="75dp"
-                android:layout_height="50dp"
-                android:id="@+id/lg_wechat"
-                android:src="@drawable/icon_weichat"
-                android:layout_weight="1" />
-
-            <ImageView
-                android:layout_width="75dp"
-                android:layout_height="50dp"
-                android:id="@+id/lg_weibo"
-                android:src="@drawable/icon_xinlang"
-                android:layout_weight="1" />
-        </LinearLayout>
-
     </LinearLayout>
-</LinearLayout>

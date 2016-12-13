@@ -37,15 +37,14 @@ public class MyTeamActivity extends BaseActivity {
         transfer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = TransferTeamActivity.newIntent(MyTeamActivity.this,"李阔");
-                startActivity(i);
+                TransferTeamActivity.actionStartActivity(MyTeamActivity.this);
             }
         });
 
     }
-    public static Intent newIntent(Context packageContext, String userName) {
-        Intent i = new Intent(packageContext, MyTeamActivity.class);
-        return i;
+    public static  void actionStartActivity(Context packageContext) {
+        Intent intent = new Intent(packageContext,  MyTeamActivity.class);
+        packageContext.startActivity(intent);
     }
     public void  getData(){
         items.add(new MyTeamItem(R.drawable.item_pic2,"申玥"));
@@ -66,8 +65,9 @@ public class MyTeamActivity extends BaseActivity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> paren, View view, int position, long id) {
-                Intent i = TeamMemberActivity.newIntent(MyTeamActivity.this,"李阔");
-                startActivity(i);
+                /*Intent i = TeamMemberActivity.newIntent(MyTeamActivity.this,"李阔");
+                startActivity(i);*/
+                TeamMemberActivity.actionStartActivity(MyTeamActivity.this);
             }
         });
     }

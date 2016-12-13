@@ -43,7 +43,7 @@
             android:name="com.amap.api.v2.apikey"
             android:value="895e2fcd5291dacdfe17adc167c0fc84" />
 
-        <activity android:name=".baihaoran.LauncherActivity">
+        <activity android:name=".leekuo.MyTeamActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -67,7 +67,7 @@
         <activity android:name=".zhouxiuya.AboutActivity" />
         <activity android:name=".zhouxiuya.CollectActivity" />
 
-        <activity android:name=".leekuo.MyTeamActivity" />
+        <activity android:name=".baihaoran.LauncherActivity" />
         <activity android:name=".leekuo.TransferTeamActivity" />
         <activity android:name=".leekuo.TeamMemberActivity" />
         <activity android:name=".leekuo.TeamerMyTeamActivity" />

@@ -29,7 +29,7 @@ public class BaseActivity extends AppCompatActivity {
         tintManager.setNavigationBarTintEnabled(true);
 
         // 自定义颜色
-        tintManager.setTintColor(Color.parseColor("#7de3ba"));
+        tintManager.setTintColor(Color.parseColor("#7f1bcf87"));
 
         //去掉工具栏
         ActionBar actionBar = getSupportActionBar();

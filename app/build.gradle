@@ -47,5 +47,5 @@ dependencies {
     compile files('libs/ShareSDK-Wechat-Core-2.4.0.jar')
     compile files('libs/ShareSDK-Wechat-Moments-2.4.0.jar')
     compile project(':library')
-
+    compile files('libs/libammsdk.jar')
 }

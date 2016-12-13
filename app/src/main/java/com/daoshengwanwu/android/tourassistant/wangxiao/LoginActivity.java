@@ -2,15 +2,10 @@ package com.daoshengwanwu.android.tourassistant.wangxiao;
 
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -27,7 +22,10 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.daoshengwanwu.android.tourassistant.R;
-import com.daoshengwanwu.android.tourassistant.wangxiao.util.Util;
+import com.daoshengwanwu.android.tourassistant.wangxiao.util.Util1;
+import com.daoshengwanwu.android.tourassistant.wangxiao.utils.HttpCallBackListener;
+import com.daoshengwanwu.android.tourassistant.wangxiao.utils.HttpUtil;
+import com.daoshengwanwu.android.tourassistant.wangxiao.utils.PrefParams;
 import com.sina.weibo.sdk.auth.AuthInfo;
 import com.sina.weibo.sdk.auth.Oauth2AccessToken;
 import com.sina.weibo.sdk.auth.WeiboAuthListener;
@@ -38,14 +36,15 @@ import com.sina.weibo.sdk.openapi.UsersAPI;
 import com.sina.weibo.sdk.openapi.models.User;
 import com.tencent.connect.UserInfo;
 import com.tencent.connect.auth.QQAuth;
+import com.tencent.mm.sdk.modelmsg.SendAuth;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import com.daoshengwanwu.android.tourassistant.R;
 
 
 public class LoginActivity extends Activity implements OnClickListener{
@@ -74,12 +73,15 @@ public class LoginActivity extends Activity implements OnClickListener{
         initViews3();
         initEvents();
         initEvents2();
+        wechatlogin();
         s1 = getSharedPreferences("ty_user",Context.MODE_PRIVATE);
         name1 = s1.getString("name", "");
         pwd1 = s1.getString("pwd","");
         name.setText(name1);
         pwd.setText(pwd1);
     }
+
+
 
     private void initViews() {
         bt = (Button)findViewById(R.id.lg_bt2);
@@ -229,13 +231,17 @@ public class LoginActivity extends Activity implements OnClickListener{
         }
     };
 
+
+    /**
+     * QQ第三方登录
+     */
     private static final String TAG = LoginActivity.class.getName();
     public static String mAppid;
     private ImageView mNewLoginButton;
     public static QQAuth mQQAuth;
     private UserInfo mInfo;
     private Tencent mTencent;
-    private final String APP_ID = "222222";// 测试时使用，真正发布的时候要换成自己的APP_ID
+    private final String APP_ID = "1105835094";// 测试时使用，真正发布的时候要换成自己的APP_ID
 
 
     @Override
@@ -253,6 +259,10 @@ public class LoginActivity extends Activity implements OnClickListener{
     protected void onResume() {
         Log.d(TAG, "-->onResume");
         super.onResume();
+        receiveBroadCast = new ReceiveBroadCast();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("authlogin");
+        LoginActivity.this.registerReceiver(receiveBroadCast, filter);
     }
 
     @Override
@@ -271,6 +281,7 @@ public class LoginActivity extends Activity implements OnClickListener{
     protected void onDestroy() {
         Log.d(TAG, "-->onDestroy");
         super.onDestroy();
+        LoginActivity.this.unregisterReceiver(receiveBroadCast);
     }
 
     private void initViews2() {
@@ -308,7 +319,7 @@ public class LoginActivity extends Activity implements OnClickListener{
                             if (json.has("figureurl")) {
                                 Bitmap bitmap = null;
                                 try {
-                                    bitmap = Util.getbitmap(json
+                                    bitmap = Util1.getbitmap(json
                                             .getString("figureurl_qq_2"));
                                 } catch (JSONException e) {
 
@@ -368,8 +379,11 @@ public class LoginActivity extends Activity implements OnClickListener{
                 protected void doComplete(JSONObject values) {
                     updateUserInfo();
                     updateLoginButton();
+                    Toast.makeText(LoginActivity.this, "用户id： " + qqid + "\n用户昵称： " + qqname + "\n用户性别： " + qqgender, Toast.LENGTH_SHORT).show();
                 }
+
             };
+
             mQQAuth.login(this, "all", listener);
             // mTencent.loginWithOEM(this, "all",
             // listener,"10000144","10000144","xxxx");
@@ -379,6 +393,7 @@ public class LoginActivity extends Activity implements OnClickListener{
             updateUserInfo();
             updateLoginButton();
         }
+
     }
 
     public static boolean ready(Context context) {
@@ -398,7 +413,7 @@ public class LoginActivity extends Activity implements OnClickListener{
         @Override
         public void onComplete(Object response) {
 
-            //	Util.showResultDialog(LoginActivity.this, response.toString(),
+            //	Util1.showResultDialog(LoginActivity.this, response.toString(),
             //			"登录成功");
 
 
@@ -411,7 +426,7 @@ public class LoginActivity extends Activity implements OnClickListener{
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            Toast.makeText(LoginActivity.this, "用户id： " + qqid + "\n用户昵称： " + qqname + "\n用户性别： " + qqgender, Toast.LENGTH_SHORT).show();
+
             doComplete((JSONObject) response);
         }
 
@@ -421,14 +436,14 @@ public class LoginActivity extends Activity implements OnClickListener{
 
         @Override
         public void onError(UiError e) {
-            Util.toastMessage(LoginActivity.this, "onError: " + e.errorDetail);
-            Util.dismissDialog();
+            Util1.toastMessage(LoginActivity.this, "onError: " + e.errorDetail);
+            Util1.dismissDialog();
         }
 
         @Override
         public void onCancel() {
-            Util.toastMessage(LoginActivity.this, "onCancel: ");
-            Util.dismissDialog();
+            Util1.toastMessage(LoginActivity.this, "onCancel: ");
+            Util1.dismissDialog();
         }
     }
 
@@ -441,6 +456,7 @@ public class LoginActivity extends Activity implements OnClickListener{
             switch (v.getId()) {
                 case R.id.lg_qq:
                     onClickLogin();
+
                     return;
             }
             if (cls != null) {
@@ -487,6 +503,119 @@ public class LoginActivity extends Activity implements OnClickListener{
                 }
             }
         });
+    }
+
+    /**
+     * 微信第三方登录
+     */
+    public static final String TAG1 = "WeChatLogin";
+
+    private ImageView mLoginWeChat;
+    private IWXAPI api;
+    private ReceiveBroadCast receiveBroadCast;
+
+    private void wechatlogin() {
+
+        mLoginWeChat = (ImageView)findViewById(R.id.lg_wechat);
+        mLoginWeChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                weChatAuth();
+            }
+        });
+    }
+
+    private void weChatAuth() {
+        if (api == null) {
+            api = WXAPIFactory.createWXAPI(this, App.WX_APPID, true);
+        }
+        SendAuth.Req req = new SendAuth.Req();
+        req.scope = "snsapi_userinfo";
+        req.state = "wx_login_duzun";
+        api.sendReq(req);
+    }
+
+    public void getAccessToken() {
+        SharedPreferences WxSp = this.getApplicationContext()
+                .getSharedPreferences(PrefParams.spName, Context.MODE_PRIVATE);
+        String code = WxSp.getString(PrefParams.CODE, "");
+        final SharedPreferences.Editor WxSpEditor = WxSp.edit();
+        Log.d(TAG1, "-----获取到的code----" + code);
+        String url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid="
+                + App.WX_APPID
+                + "&secret="
+                + App.WX_APPSecret
+                + "&code="
+                + code
+                + "&grant_type=authorization_code";
+        Log.d(TAG1, "--------即将获取到的access_token的地址--------");
+        HttpUtil.sendHttpRequest(url, new HttpCallBackListener() {
+            @Override
+            public void onFinish(String response) {
+
+                //解析以及存储获取到的信息
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    Log.d(TAG1, "-----获取到的json数据1-----" + jsonObject.toString());
+                    String access_token = jsonObject.getString("access_token");
+                    Log.d(TAG1, "--------获取到的access_token的地址--------" + access_token);
+                    String openid = jsonObject.getString("openid");
+                    String refresh_token = jsonObject.getString("refresh_token");
+                    if (!access_token.equals("")) {
+                        WxSpEditor.putString(PrefParams.ACCESS_TOKEN, access_token);
+                        WxSpEditor.apply();
+                    }
+                    if (!refresh_token.equals("")) {
+                        WxSpEditor.putString(PrefParams.REFRESH_TOKEN, refresh_token);
+                        WxSpEditor.apply();
+                    }
+                    if (!openid.equals("")) {
+                        WxSpEditor.putString(PrefParams.WXOPENID, openid);
+                        WxSpEditor.apply();
+                        getPersonMessage(access_token, openid);
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(Exception e) {
+                Toast.makeText(LoginActivity.this, "通过code获取数据没有成功", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void getPersonMessage(String access_token, String openid) {
+        String url = "https://api.weixin.qq.com/sns/userinfo?access_token="
+                + access_token
+                + "&openid="
+                + openid;
+        HttpUtil.sendHttpRequest(url, new HttpCallBackListener() {
+            @Override
+            public void onFinish(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    Log.d(TAG1, "------获取到的个人信息------" + jsonObject.toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(Exception e) {
+                Toast.makeText(LoginActivity.this, "通过openid获取数据没有成功", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    class ReceiveBroadCast extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            getAccessToken();
+        }
     }
 
 }

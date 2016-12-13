@@ -9,6 +9,8 @@
     <string name="sy_picture_title">照片</string>
     <string name="sy_scenicspot_title">景区详情</string>
     <string name="sy_scenicspot_recommend">推荐指数：</string>
+    <string name="sy_scenicspot_price">票价：</string>
+    <string name="sy_scenicspot_time">开放时间：</string>
     <string name="sy_scenicspot_btn1">前往景区</string>
     <string name="sy_scenicspot_btn2">探索景区</string>
     <string name="sy_viewspot_title">景点详情</string>

@@ -9,10 +9,12 @@ import android.widget.GridView;
 import android.widget.ImageView;
 
 import com.daoshengwanwu.android.tourassistant.R;
+import com.daoshengwanwu.android.tourassistant.leekuo.BaseActivity;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class PictureActivity extends AppCompatActivity {
+public class PictureActivity extends BaseActivity {
     private static final String PICTUREEXTRA_ID = "PictureActivity.EXTRA_ID";
     List<PicgvItem> ls = new ArrayList<>();
     GridView picgv;
@@ -65,6 +67,8 @@ public class PictureActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
 
-        }
+    public static Intent newIntent(Context packageContext) {
+        Intent i = new Intent(packageContext, PictureActivity.class);
+        return i;
     }
 }

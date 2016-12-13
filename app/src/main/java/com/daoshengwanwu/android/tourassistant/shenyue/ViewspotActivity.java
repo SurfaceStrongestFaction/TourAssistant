@@ -10,8 +10,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.daoshengwanwu.android.tourassistant.R;
+import com.daoshengwanwu.android.tourassistant.leekuo.BaseActivity;
 
-public class ViewspotActivity extends AppCompatActivity {
+public class ViewspotActivity extends BaseActivity {
 
     private static final String VIEWSPOTEXTRA_ID = "ViewspotActivity.EXTRA_ID";
     private ImageView backimg;

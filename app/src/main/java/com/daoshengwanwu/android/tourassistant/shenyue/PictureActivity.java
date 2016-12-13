@@ -20,6 +20,8 @@ public class PictureActivity extends BaseActivity {
     GridView picgv;
     PicturegvAdapter picturegvAdapter;
     ImageView backimg;
+    private Context packageContext;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

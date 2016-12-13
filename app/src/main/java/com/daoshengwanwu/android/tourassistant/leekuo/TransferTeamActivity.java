@@ -41,11 +41,9 @@ public class TransferTeamActivity extends BaseActivity {
         });
     }
 
-    public static Intent newIntent(Context packageContext, String userName) {
-        Intent i = new Intent(packageContext, TransferTeamActivity.class);
-        i.putExtra(EXTRA_USER_NAME, userName);
-
-        return i;
+    public static  void actionStartActivity(Context packageContext) {
+        Intent intent = new Intent(packageContext,  TransferTeamActivity.class);
+        packageContext.startActivity(intent);
     }
 
     public void  getData(){

@@ -480,6 +480,8 @@ public class LoginActivity extends Activity implements OnClickListener{
         name = (EditText)findViewById(R.id.lg_user);
         pwd = (EditText)findViewById(R.id.lg_pwd);
         lgbt = (Button)findViewById(R.id.lg_bt);
+
+
     }
 
     private void initEvents2() {

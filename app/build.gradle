@@ -38,7 +38,7 @@ dependencies {
     compile files('libs/AMap_Search_V3.6.0_20161111.jar')
     compile files('libs/Android_Map3D_SDK_V4.1.2_20161104.jar')
     compile project(path: ':library')
-    compile 'com.android.support:support-v4:24.2.0'
+    compile 'com.android.support:support-v4:25.0.1'
     compile files('libs/weiboSDKCore_3.1.2.jar')
     compile files('libs/weibosdk.jar')
     compile files('libs/open_sdk.jar')

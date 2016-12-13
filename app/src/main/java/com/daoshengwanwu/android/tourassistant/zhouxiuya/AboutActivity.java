@@ -18,6 +18,7 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 
 import com.daoshengwanwu.android.tourassistant.R;
+import com.daoshengwanwu.android.tourassistant.caizihuan.ChatTableActivity;
 import com.daoshengwanwu.android.tourassistant.leekuo.BaseActivity;
 
 public class AboutActivity extends BaseActivity {
@@ -186,9 +187,9 @@ public class AboutActivity extends BaseActivity {
         close = (ImageView)findViewById(R.id.close);
         about_back = (ImageView)findViewById(R.id.about_back);
     }
-    public static Intent newIntent(Context packageContext, String userName) {
+
+    public static void actionStartActivity(Context packageContext, String user_id) {
         Intent i = new Intent(packageContext, AboutActivity.class);
-        i.putExtra(EXTRA_USER_NAME, userName);
-        return i;
+        packageContext.startActivity(i);
     }
 }

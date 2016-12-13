@@ -1,15 +1,23 @@
 package com.daoshengwanwu.android.tourassistant.baihaoran;
 
 
+import android.content.ComponentName;
+import android.content.ServiceConnection;
+import android.os.IBinder;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.daoshengwanwu.android.tourassistant.R;
 import com.daoshengwanwu.android.tourassistant.jiangshengda.MapsFragment;
@@ -35,18 +43,25 @@ public class LauncherActivity extends BaseActivity {
     private HomeFragment mHomeFragment;
     private MapsFragment mMapsFragment;
     private MeFragment mMeFragment;
+    private SharingService.SharingBinder mSharingBinder;
+    private ServiceConnection mServiceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            mSharingBinder = (SharingService.SharingBinder)iBinder;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.baihaoran_activity_launcher);
 
-        //去掉工具栏
-        ActionBar actionBar = getSupportActionBar();
-        if (null != actionBar) {
-            actionBar.hide();
-        }
-
+        bindService(SharingService.newIntent(this), mServiceConnection, BIND_AUTO_CREATE);
 
         getWidgetsReferences(); //获取所需组件的引用
         setListenersToWidgets(); //为组件设置监听器
@@ -120,7 +135,7 @@ public class LauncherActivity extends BaseActivity {
                     mTabsMapText.setTextColor(ContextCompat.getColor(LauncherActivity.this, R.color.bhr_tabs_green));
 
                     if (null == mMapsFragment) {
-                        mMapsFragment = MapsFragment.newInstance();
+                        mMapsFragment = MapsFragment.newInstance(mSharingBinder);
                     }
                     mFragmentManager.beginTransaction().replace(R.id.launcher_fragment_container, mMapsFragment).commit();
 

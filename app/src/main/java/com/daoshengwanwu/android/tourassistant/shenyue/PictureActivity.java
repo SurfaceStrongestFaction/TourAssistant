@@ -66,13 +66,13 @@ public class PictureActivity extends BaseActivity {
         backimg.setOnClickListener(new MyListener());
     }
     class MyListener implements View.OnClickListener {
-
         @Override
-        public void onClick(View view) {
-         //   public static Intent newIntent(Context packageContext) {
-           //     Intent i = new Intent(packageContext,PictureActivity.class);
-            //    return i;
-            //}
+        public void onClick(View v) {
+
         }
+    }
+    public static Intent newIntent(Context packageContext) {
+        Intent i = new Intent(packageContext, PictureActivity.class);
+        return i;
     }
 }

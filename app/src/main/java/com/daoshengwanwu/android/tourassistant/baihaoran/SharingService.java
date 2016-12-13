@@ -71,11 +71,11 @@ public class SharingService extends Service {
         return new Intent(applicationContext, SharingService.class);
     }
 
-    public void actionStartService(Context applicationContext) {
+    public static void actionStartService(Context applicationContext) {
         applicationContext.startService(new Intent(applicationContext, SharingService.class));
     }
 
-    public boolean actionBindService(Context packageContext, ServiceConnection serviceConnection) {
+    public static boolean actionBindService(Context packageContext, ServiceConnection serviceConnection) {
         return packageContext.bindService(newIntent(packageContext), serviceConnection, BIND_AUTO_CREATE);
     }
 

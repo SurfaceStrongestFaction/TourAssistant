@@ -1,7 +1,11 @@
 package com.daoshengwanwu.android.tourassistant.jiangshengda;
 
 
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,9 +28,13 @@ import com.amap.api.maps.UiSettings;
 import com.amap.api.maps.model.LatLng;
 
 import com.daoshengwanwu.android.tourassistant.R;
+import com.daoshengwanwu.android.tourassistant.baihaoran.SharingService;
+
+import java.util.HashMap;
 
 
-public class MapsFragment extends Fragment implements AMapLocationListener{
+public class MapsFragment extends Fragment implements AMapLocationListener, SharingService.SharingLocationListener{
+    //------------------------------胜达-------------------------------
     private int i = 0;
     private MyView myView;
     private double x;
@@ -40,6 +48,26 @@ public class MapsFragment extends Fragment implements AMapLocationListener{
     private LocationSource.OnLocationChangedListener mListener;
     private AMapLocationClient mlocationClient;
     private AMapLocationClientOption mLocationOption;
+    //--------------------------------------------------------------------
+
+    //------------------------------浩然-----------------------------------
+    private SharingService.SharingBinder mSharingBinder;
+    private ServiceConnection mServiceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            mSharingBinder = (SharingService.SharingBinder)service;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            mSharingBinder.stopUploadLocation();
+            mSharingBinder.stopLocationService();
+            mSharingBinder.unregisterLocationListener(MapsFragment.this);
+            mSharingBinder.unregisterSharginLocationListener(MapsFragment.this);
+            mSharingBinder = null;
+        }
+    };
+    //----------------------------------------------------------------------
 
 
     @Override
@@ -71,6 +99,9 @@ public class MapsFragment extends Fragment implements AMapLocationListener{
         //设置使用普通地图
         //aMap.setMapType(AMap.MAP_TYPE_NIGHT);//夜景地图模式
         //aMap.setMapType(AMap.MAP_TYPE_NORMAL);
+
+        SharingService.actionStartService(getActivity());
+        SharingService.actionBindService(getActivity(), mServiceConnection);
 
         return v;
     }
@@ -217,5 +248,10 @@ public class MapsFragment extends Fragment implements AMapLocationListener{
 
     public static MapsFragment newInstance() {
         return new MapsFragment();
+    }
+
+    @Override
+    public void onLocationsDataArrived(HashMap<String, double[]> locationsData) {
+
     }
 }

@@ -46,6 +46,13 @@ import com.tencent.tauth.UiError;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 
 public class LoginActivity extends Activity implements OnClickListener{
     private AuthInfo mAuthInfo;
@@ -62,7 +69,9 @@ public class LoginActivity extends Activity implements OnClickListener{
     private SharedPreferences s,s1;
     private String name1;
     private String pwd1;
-
+    private String user_id;
+    private String user_name;
+    private String user_pwd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,7 +89,47 @@ public class LoginActivity extends Activity implements OnClickListener{
         name.setText(name1);
         pwd.setText(pwd1);
     }
+    Thread login = new Thread(){
+        @Override
+        public void run() {
+            super.run();
+            String result = "";
+            PrintWriter out = null;
+            BufferedReader in = null;
+            try {
 
+                //登录
+                    URL url = new URL("http://192.168.191.1/user/login");
+                    HttpURLConnection con = (HttpURLConnection)url.openConnection();
+                    con.setDoInput(true);
+                    con.setDoOutput(true);
+                    out = new PrintWriter(con.getOutputStream());
+                    out.print(user_name+"\n"+user_pwd);
+                    out.flush();
+                    //定义BufferedReader输入流读取URL响应
+                    in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                    String line;
+                    while ((line = in.readLine()) != null){
+                        result += "\n" +line;
+                    }
+                      user_id = result;
+            }  catch (Exception e) {
+                System.out.println("发送POST请求出现异常！" + e);
+                e.printStackTrace();
+            }  finally {
+                try{
+                    if (out != null){
+                        out.close();
+                    }
+                    if (in != null){
+                        in.close();
+                    }
+                }catch (IOException ex){
+                    ex.printStackTrace();
+                }
+            }
+        }
+    };
 
 
     private void initViews() {
@@ -139,8 +188,14 @@ public class LoginActivity extends Activity implements OnClickListener{
                 // 如果手机安装了微博客户端则使用客户端授权,没有则进行网页授权
                 mSsoHandler.authorize(new AuthListener());
                 break;
+            case R.id.lg_bt:
+                user_name = name.getText().toString();
+                user_pwd = pwd.getText().toString();
+                login.start();
             default:
                 break;
+
+
         }
     }
 

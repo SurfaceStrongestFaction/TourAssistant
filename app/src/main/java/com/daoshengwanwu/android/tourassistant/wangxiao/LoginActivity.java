@@ -27,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.daoshengwanwu.android.tourassistant.R;
+import com.daoshengwanwu.android.tourassistant.leekuo.BaseActivity;
 import com.daoshengwanwu.android.tourassistant.wangxiao.util.Util;
 import com.sina.weibo.sdk.auth.AuthInfo;
 import com.sina.weibo.sdk.auth.Oauth2AccessToken;
@@ -48,7 +49,7 @@ import org.json.JSONObject;
 import com.daoshengwanwu.android.tourassistant.R;
 
 
-public class LoginActivity extends Activity implements OnClickListener{
+public class LoginActivity extends BaseActivity implements OnClickListener{
     private AuthInfo mAuthInfo;
     private ImageView btnweibo;
 

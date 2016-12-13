@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     tools:context="com.daoshengwanwu.android.tourassistant.leekuo.TransferTeamActivity"
     android:orientation="vertical"
-    android:background="#ffffff"
+    android:background="@drawable/background"
     android:fitsSystemWindows="true"
     android:clipToPadding="false">
     <LinearLayout

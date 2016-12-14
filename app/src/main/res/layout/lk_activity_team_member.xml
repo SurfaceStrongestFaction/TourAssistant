@@ -4,7 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.daoshengwanwu.android.tourassistant.leekuo.TeamMemberActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="false"
+    android:background="@drawable/background">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,9 +18,9 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="210dp"
-                android:src="@drawable/lk_atmback"
                 android:scaleType="fitXY"
                 android:id="@+id/one"
+                android:background="#1f000000"
                 />
             <ImageView
                 android:layout_marginTop="10dp"
@@ -69,7 +72,7 @@
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:background="#EDEDED"
+            android:background="#afEDEDED"
             android:orientation="horizontal">
             <TextView
                 android:layout_marginLeft="10dp"
@@ -93,7 +96,7 @@
             android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:background="#EDEDED"
+            android:background="#afEDEDED"
             android:orientation="horizontal">
             <TextView
                 android:layout_marginLeft="10dp"
@@ -117,7 +120,7 @@
             android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:background="#EDEDED"
+            android:background="#afEDEDED"
             android:orientation="horizontal">
             <TextView
                 android:layout_alignParentLeft="true"
@@ -141,7 +144,6 @@
         android:layout_height="50dp"
         android:id="@+id/Team_member_bottom"
         android:layout_alignParentBottom="true"
-        android:background="#ffffff"
         android:orientation="horizontal"
         android:layout_marginBottom="10dp">
         <Button

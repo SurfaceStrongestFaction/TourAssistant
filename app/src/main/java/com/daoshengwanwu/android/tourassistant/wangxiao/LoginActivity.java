@@ -444,7 +444,7 @@ public class LoginActivity extends Activity implements OnClickListener{
 
                     //建立连接
                     AsyncHttpClient client = new AsyncHttpClient();
-                    String Url_add = "http://10.7.84.97:8080/qq/add";
+                    String Url_add = "http://10.7.84.97:8080/qq/login";
                     //获取参数
                     RequestParams params = new RequestParams();
                     params.add("qqid",qqid);

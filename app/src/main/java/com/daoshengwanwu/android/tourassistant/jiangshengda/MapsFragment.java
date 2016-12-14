@@ -2,6 +2,8 @@ package com.daoshengwanwu.android.tourassistant.jiangshengda;
 
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,23 +12,30 @@ import android.graphics.Point;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.amap.api.location.AMapLocation;//定位信息类
-import com.amap.api.location.AMapLocationClient;//定位服务类
-import com.amap.api.location.AMapLocationClientOption;//定位参数设置（在定位服务时需要这些参数）
 import com.amap.api.location.AMapLocationListener;//定位回调接口
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
-import com.amap.api.maps.LocationSource;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.Projection;
 import com.amap.api.maps.UiSettings;
 import com.amap.api.maps.model.LatLng;
 
+import com.amap.api.maps.model.Marker;
+import com.amap.api.maps.model.MarkerOptions;
 import com.daoshengwanwu.android.tourassistant.R;
+import com.daoshengwanwu.android.tourassistant.baihaoran.AppUtil;
+import com.daoshengwanwu.android.tourassistant.baihaoran.SharingService;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 
-public class MapsFragment extends Fragment implements AMapLocationListener{
+public class MapsFragment extends Fragment implements AMapLocationListener, SharingService.SharingLocationListener, View.OnClickListener{
+    //------------------------------胜达-------------------------------
     private int i = 0;
     private MyView myView;
     private double x;
@@ -37,13 +46,91 @@ public class MapsFragment extends Fragment implements AMapLocationListener{
     private Button btn;
     private AMap aMap;
     private MapView mapView;
-    private LocationSource.OnLocationChangedListener mListener;
-    private AMapLocationClient mlocationClient;
-    private AMapLocationClientOption mLocationOption;
+    //--------------------------------------------------------------------
+
+    //------------------------------浩然-----------------------------------
+    private static final String TAG = "MapsFragment";
+    private static final String KEY_BINDER = "MapsFragment.KEY_BINDER";
+    private static final int WHAT_LOCATION_CHANGE = 0;
+    private static final int WHAT_MEMBER_LOC_INFOS_ARRIVE = 1;
+    private static final String MSG_DATA_LATITUDE = "msg_data_latitude";
+    private static final String MSG_DATA_LONGITUDE = "msg_data_longitude";
+    private static final String MSG_DATA_MEMBER_LOC_INFOS = "msg_data_member_loc_infos";
+
+    private Map<String, Marker> mMemberMarkers = new HashMap<>();
+    private Button mStartLocation;
+    private Button mStopLocation;
+    private Button mStartUpload;
+    private Button mStopUpload;
+    private boolean mIsFirstLoc = true;
+    private Marker mUserMarker = null;
+    private SharingService.SharingBinder mSharingBinder;
+    private boolean mIsStartBlack = false;
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+
+            Bundle data = msg.getData();
+            if (null == data) {
+                return;
+            }
+
+            switch (msg.what) {
+                case WHAT_LOCATION_CHANGE: {
+                    double latitude = data.getDouble(MSG_DATA_LATITUDE);
+                    double longitude = data.getDouble(MSG_DATA_LONGITUDE);
+                    LatLng currentLoc = new LatLng(latitude, longitude);
+
+                    if (mIsFirstLoc) {
+                        aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLoc, 15.0f));
+                        mUserMarker = aMap.addMarker(new MarkerOptions().position(currentLoc)
+                                .title(AppUtil.User.USER_NAME)
+                                .snippet("你在这里"));
+                        mIsFirstLoc = false;
+                    }
+
+                    mUserMarker.setPosition(currentLoc);
+                } break;
+                case WHAT_MEMBER_LOC_INFOS_ARRIVE: {
+                    Map<String, double[]> groupMemberLocations = (Map<String, double[]>) data.getSerializable(MSG_DATA_MEMBER_LOC_INFOS);
+                    groupMemberLocations.remove(AppUtil.User.USER_ID);
+
+                    Toast.makeText(getActivity(), "" + groupMemberLocations.toString(), Toast.LENGTH_SHORT).show();
+
+                    for (String user_id : mMemberMarkers.keySet()) {
+                        if (!groupMemberLocations.containsKey(user_id)) {
+                            mMemberMarkers.get(user_id).remove();
+                            mMemberMarkers.remove(user_id);
+                        } else {
+                            double[] latlngs = groupMemberLocations.get(user_id);
+                            groupMemberLocations.remove(user_id);
+                            LatLng latlng = new LatLng(latlngs[0], latlngs[1]);
+                            mMemberMarkers.get(user_id).setPosition(latlng);
+                        }
+                    }
+
+                    for (String user_id : groupMemberLocations.keySet()) {
+                        double[] latlngs = groupMemberLocations.get(user_id);
+                        LatLng currentLoc = new LatLng(latlngs[0], latlngs[1]);
+                        Marker marker = aMap.addMarker(new MarkerOptions().position(currentLoc)
+                                .title("好友")
+                                .snippet("你的好友在这里~"));
+
+                        mMemberMarkers.put(user_id, marker);
+                    }
+
+                } break;
+                default: break;
+            }
+        }
+    };
+    //----------------------------------------------------------------------
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        //-------------------------胜达-------------------------------------------------
         View v = inflater.inflate(R.layout.jiangshengda_fragment_maps, container, false);
 
         btn = (Button) v.findViewById(R.id.Fog_btn);
@@ -60,6 +147,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener{
             @Override
             public void onClick(View v) {
                 //Fog
+                mIsStartBlack = true;
                 myView = new MyView(getActivity().getApplicationContext());
                 act_main.addView(myView);
                 i = 0;//初始化计数器
@@ -71,6 +159,26 @@ public class MapsFragment extends Fragment implements AMapLocationListener{
         //设置使用普通地图
         //aMap.setMapType(AMap.MAP_TYPE_NIGHT);//夜景地图模式
         //aMap.setMapType(AMap.MAP_TYPE_NORMAL);
+        //---------------------------------------------------------------------------------
+
+
+        //-------------------------------浩然----------------------------------------------
+        Bundle args = getArguments();
+        mSharingBinder = (SharingService.SharingBinder)args.getBinder(KEY_BINDER);
+        if (null != mSharingBinder) {
+            mSharingBinder.registerSharingLocationListener(this);
+            mSharingBinder.registerLocationListener(this);
+        }
+
+        mStartLocation = (Button)v.findViewById(R.id.start_location);
+        mStopLocation = (Button)v.findViewById(R.id.stop_location);
+        mStartUpload = (Button)v.findViewById(R.id.start_upload);
+        mStopUpload = (Button)v.findViewById(R.id.stop_upload);
+
+        mStartLocation.setOnClickListener(this);
+        mStopLocation.setOnClickListener(this);
+        mStartUpload.setOnClickListener(this);
+        mStopUpload.setOnClickListener(this);
 
         return v;
     }
@@ -102,18 +210,15 @@ public class MapsFragment extends Fragment implements AMapLocationListener{
     public void onDestroy() {
         super.onDestroy();
         mapView.onDestroy();
-        if (null != mlocationClient) {
-            mlocationClient.onDestroy();
-        }
+        Log.d(TAG, "onDestroy: ");
     }
-
-
 
     @Override
     public void onResume() {
         super.onResume();
         //在activity执行onResume时执行mMapView.onResume ()，实现地图生命周期管理
         mapView.onResume();
+        Log.d(TAG, "onResume: ");
     }
 
     @Override
@@ -121,16 +226,16 @@ public class MapsFragment extends Fragment implements AMapLocationListener{
         super.onPause();
         //在activity执行onPause时执行mMapView.onPause ()，实现地图生命周期管理
         mapView.onPause();
+        Log.d(TAG, "onPause: ");
     }
 
     /*
     定位成功后回调函数
      */
     @Override
-    public void onLocationChanged(final AMapLocation amapLocation) {
-        if (mListener != null && amapLocation != null) {
-            if (amapLocation != null && amapLocation.getErrorCode() == 0) {
-                mListener.onLocationChanged(amapLocation);// 显示系统小蓝点
+    public void onLocationChanged(AMapLocation amapLocation) {
+        if (amapLocation != null && mIsStartBlack) {
+            if (amapLocation.getErrorCode() == 0) {
                 x = amapLocation.getLatitude();//获取纬度
                 y = amapLocation.getLongitude();//获取经度
                 LatLng pos = new LatLng(x,y);
@@ -160,52 +265,21 @@ public class MapsFragment extends Fragment implements AMapLocationListener{
                 //amapLocation.getAdCode();//地区编码
                 //amapLocation.getAoiName();//获取当前定位点的AOI信息
                 //amapLocation.getGpsStatus();//获取GPS的当前状态
-
-            } else {
-                String errText = "定位失败," + amapLocation.getErrorCode() + ": " + amapLocation.getErrorInfo();
-                Log.e("AmapErr", errText);
             }
         }
-    }
 
-    /*
-    激活定位
-     */
-    /*
-    @Override
-    public void activate(LocationSource.OnLocationChangedListener listener) {
-        mListener = listener;
-        if (mlocationClient == null) {
-            mlocationClient = new AMapLocationClient(getActivity());
-            mLocationOption = new AMapLocationClientOption();
-            //设置定位监听
-            mlocationClient.setLocationListener(this);
-            //设置为高精度定位模式
-            mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
-            //设置定位参数
-            mlocationClient.setLocationOption(mLocationOption);
-            // 此方法为每隔固定时间会发起一次定位请求，为了减少电量消耗或网络流量消耗，
-            // 注意设置合适的定位时间的间隔（最小间隔支持为2000ms），并且在合适时间调用stopLocation()方法来取消定位请求
-            // 在定位结束后，在合适的生命周期调用onDestroy()方法
-            // 在单次定位情况下，定位无论成功与否，都无需调用stopLocation()方法移除请求，定位sdk内部会移除
-            mlocationClient.startLocation();
+        if (null != amapLocation) {
+            Message msg = new Message();
+            msg.what = WHAT_LOCATION_CHANGE;
+
+            Bundle data = new Bundle();
+            data.putDouble(MSG_DATA_LATITUDE, amapLocation.getLatitude());
+            data.putDouble(MSG_DATA_LONGITUDE, amapLocation.getLongitude());
+
+            msg.setData(data);
+            mHandler.sendMessage(msg);
         }
     }
-*/
-    /*
-    停止定位
-     */
-    /*
-    @Override
-    public void deactivate() {
-        mListener = null;
-        if (mlocationClient != null) {
-            mlocationClient.stopLocation();
-            mlocationClient.onDestroy();
-        }
-        mlocationClient = null;
-    }
-    */
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -215,7 +289,51 @@ public class MapsFragment extends Fragment implements AMapLocationListener{
     }
 
 
-    public static MapsFragment newInstance() {
-        return new MapsFragment();
+    public static MapsFragment newInstance(SharingService.SharingBinder binder) {
+        MapsFragment fragment = new MapsFragment();
+        Bundle data = new Bundle();
+        data.putBinder(KEY_BINDER, binder);
+        fragment.setArguments(data);
+        return fragment;
+    }
+
+    @Override
+    public void onLocationsDataArrived(HashMap<String, double[]> locationsData) {
+        Message msg = new Message();
+        msg.what = WHAT_MEMBER_LOC_INFOS_ARRIVE;
+
+        Bundle data = new Bundle();
+        data.putSerializable(MSG_DATA_MEMBER_LOC_INFOS, locationsData);
+        msg.setData(data);
+
+        mHandler.sendMessage(msg);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.start_location:
+                mSharingBinder.startLocationService();
+                break;
+            case R.id.stop_location:
+                mSharingBinder.stopLocationService();
+                mUserMarker.remove();
+                mUserMarker = null;
+                mIsFirstLoc = true;
+                break;
+            case R.id.start_upload:
+                try {
+                    Toast.makeText(getActivity(), "start_upload", Toast.LENGTH_SHORT).show();
+                    mSharingBinder.startUploadLocation();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case R.id.stop_upload:
+                mSharingBinder.stopUploadLocation();
+                break;
+            default:
+                break;
+        }
     }
 }

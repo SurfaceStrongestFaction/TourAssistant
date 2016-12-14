@@ -8,6 +8,7 @@ import android.content.ServiceConnection;
 import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.widget.Toast;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
@@ -19,9 +20,11 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.Serializable;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 
@@ -71,11 +74,11 @@ public class SharingService extends Service {
         return new Intent(applicationContext, SharingService.class);
     }
 
-    public void actionStartService(Context applicationContext) {
+    public static void actionStartService(Context applicationContext) {
         applicationContext.startService(new Intent(applicationContext, SharingService.class));
     }
 
-    public boolean actionBindService(Context packageContext, ServiceConnection serviceConnection) {
+    public static boolean actionBindService(Context packageContext, ServiceConnection serviceConnection) {
         return packageContext.bindService(newIntent(packageContext), serviceConnection, BIND_AUTO_CREATE);
     }
 
@@ -85,7 +88,7 @@ public class SharingService extends Service {
     }
 
 
-    public final class SharingBinder extends Binder {
+    public final class SharingBinder extends Binder implements Serializable {
         private boolean mIsUploadStarting = false; //标识当前是否正在开启上传服务
         private boolean mIsStartingLocation = false; //标识当前是否正在开启定位服务
         private boolean mIsUploadStart = false; //标识当前是否已经开启上传服务
@@ -95,7 +98,6 @@ public class SharingService extends Service {
         private BufferedReader mInfoReader = null; //接收服务器端发来的指令
         private BufferedWriter mInfoReporter = null; //向服务器发送指令
         //记录着每个成员的位置信息，key为user的user_id, value是一个double数组，其中double[0]位latitude， double[1]为longitude
-        private HashMap<String, double[]> mGroupMemberLocations = new HashMap<>();
         //保存着所有注册到该服务的监听者
         private Set<AMapLocationListener> mLocationListeners = new HashSet<>();
         private Set<SharingLocationListener> mSharingLocationListeners = new HashSet<>();
@@ -144,8 +146,10 @@ public class SharingService extends Service {
                         mLatitude = aMapLocation.getLatitude();
                         mLongitude = aMapLocation.getLongitude();
                         //调用每个注册的监听者的onLocationChanged方法
+//                        Toast.makeText(SharingService.this, "aMapLocation: " + aMapLocation.toString(), Toast.LENGTH_SHORT).show();
                         for (AMapLocationListener locationListener : mLocationListeners) {
                             locationListener.onLocationChanged(aMapLocation);
+
                         }
                     }
                 });
@@ -212,15 +216,16 @@ public class SharingService extends Service {
                                         switch (getInfoCommand(info)) {
                                             case SharingServer.RECEIVED_MEMBER_LOCATIONS:
                                                 String content = getInfoContent(info);
-                                                analysisLocationData(content);
+                                                HashMap<String, double[]> groupMemberLocations = new HashMap<String, double[]>();
+                                                analysisLocationData(content, groupMemberLocations);
+                                                Toast.makeText(SharingService.this, "Toast for zhi shang", Toast.LENGTH_SHORT).show();
                                                 for (SharingLocationListener listener : mSharingLocationListeners) {
-                                                    listener.onLocationsDataArrived(mGroupMemberLocations);
+                                                    listener.onLocationsDataArrived(groupMemberLocations);
                                                 }
                                                 break;
                                             case SharingServer.REQUEST_STOP:
                                                 mClient.close();
                                                 mClient = null;
-                                                mGroupMemberLocations.clear();
                                                 mInfoReader = null;
                                                 mInfoReporter = null;
                                                 mIsUploadStart = false;
@@ -321,9 +326,9 @@ public class SharingService extends Service {
          *
          * 执行结果：填充私有成员：mGroupMemberLocations
          */
-        private void analysisLocationData(String locationData) {
+        private void analysisLocationData(String locationData, Map<String, double[]> groupMemberLocations) {
             //首先把已经记录的信息清除掉（因为可能已经有其他用户与服务器断开连接了，如果不清除数据，可能会继续在地图上显示出已经离线的用户
-            mGroupMemberLocations.clear();
+            groupMemberLocations.clear();
 
             String[] membersLocation = locationData.split(SharingServer.SEPARATOR_LOCATION_DIFFER_MEMBER);
             for (String memberLoc : membersLocation) {
@@ -335,7 +340,7 @@ public class SharingService extends Service {
                 double longitude = Double.parseDouble(lat_lng_str[1]);
                 double[] lat_lng = {latitude, longitude};
 
-                mGroupMemberLocations.put(user_id, lat_lng);
+                groupMemberLocations.put(user_id, lat_lng);
             }
         }
     }

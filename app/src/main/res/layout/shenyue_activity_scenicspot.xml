@@ -190,6 +190,69 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/scenicspot_pricerl_margintop"
+                    android:background="@color/pale_color">
+                    <TextView
+                        android:id="@+id/scenicspot_price_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sy_scenicspot_price"
+                        android:layout_marginTop="@dimen/scenicspot_pricetv_margintop"
+                        android:layout_marginBottom="@dimen/scenicspot_pricetv_marginbottom"
+                        android:layout_marginLeft="@dimen/scenicspot_pricetv_marginleft"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/black_color"
+                        android:textSize="@dimen/scenicspot_pricetv_size"
+                        />
+                    <TextView
+                        android:id="@+id/scenicspot_pricenum_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="10元"
+                        android:layout_toRightOf="@id/scenicspot_price_tv"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/black_color"
+                        android:textSize="@dimen/scenicspot_pricetv_size"
+                        android:layout_marginLeft="@dimen/scenicspot_pricenumtv_marginleft"
+                        />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/scenicspot_timerl_margintop"
+                    android:background="@color/pale_color">
+                    <TextView
+                        android:id="@+id/scenicspot_time_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sy_scenicspot_time"
+                        android:layout_marginLeft="@dimen/scenicspot_timetv_marginleft"
+                        android:layout_marginTop="@dimen/scenicspot_timetv_margintop"
+                        android:textColor="@color/black_color"
+                        android:textSize="@dimen/scenicspot_timetv_size"
+                        />
+                    <TextView
+                        android:id="@+id/scenicspot_timeinf_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/scenicspot_time_tv"
+                        android:layout_marginLeft="@dimen/scenicspot_timeinftv_marginleft"
+                        android:layout_marginRight="@dimen/scenicspot_timeinftv_marginright"
+                        android:layout_marginTop="@dimen/scenicspot_timeinftv_margintop"
+                        android:layout_marginBottom="@dimen/scenicspot_timeinftv_marginbottom"
+                        android:textSize="@dimen/scenicspot_timetv_size"
+                        android:textColor="@color/black_color"
+                        android:text="旺季：\n
+      4月1日-10月31日。\n
+      开放时间 8:30-16:10，16:00停止售票，17:00清场。\n
+淡季：\n
+      11月1日-次年3月31日。\n
+      开放时间 8:30-15:40，15:30停止售票，16:30清场。\n
+除法定节假日和暑期（每年7月1日至8月31日）外，周一全天闭馆。\n"/>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/scenicspot_introducerl_margintop"
                     android:layout_marginBottom="@dimen/scenicspot_introducerl_marginbottom"
                     android:background="@color/pale_color">

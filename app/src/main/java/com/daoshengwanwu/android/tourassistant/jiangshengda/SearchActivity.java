@@ -45,7 +45,7 @@ public class SearchActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (ls.get(position).equals(1)){
-                    ScenicspotActivity.actionStartActivity(this, UUID.randomUUID().toString());
+                    ScenicspotActivity.actionStartActivity(SearchActivity.this, UUID.randomUUID().toString());
                 }
 
             }

@@ -21,16 +21,9 @@
     <!-- 用于申请调用A-GPS模块 -->
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!-- SDK2.1新增获取用户位置信息 -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:allowBackup="true"
@@ -41,7 +34,7 @@
 
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="2214f6ab633dcb98ae9dc3e06256b9b5" />
+            android:value="c6f919b976553027da271b65df049774" />
 
         <activity android:name=".baihaoran.LauncherActivity">
             <intent-filter>
@@ -71,6 +64,7 @@
         <activity android:name=".wangxiao.RegisterActivity" />
         <activity android:name=".wangxiao.Register2Activity" />
         <activity android:name=".wangxiao.LoginActivity" />
+        <activity android:name=".jiangshengda.poisearch.PoiAroundSearchActivity"/>
 
         <service android:name="com.amap.api.location.APSService" />
         <service android:name=".baihaoran.SharingService" />
@@ -114,17 +108,5 @@
         </activity>
 
     </application>
-    <code class="code">
-        <uses-permission android:name="android.permission.INTERNET"/>
-        <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-        <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-        <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-        <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    </code>
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
 </manifest>

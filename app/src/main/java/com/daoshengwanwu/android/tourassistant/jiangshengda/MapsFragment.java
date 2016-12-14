@@ -1,6 +1,7 @@
 package com.daoshengwanwu.android.tourassistant.jiangshengda;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -28,6 +29,7 @@ import com.amap.api.maps.model.MarkerOptions;
 import com.daoshengwanwu.android.tourassistant.R;
 import com.daoshengwanwu.android.tourassistant.baihaoran.AppUtil;
 import com.daoshengwanwu.android.tourassistant.baihaoran.SharingService;
+import com.daoshengwanwu.android.tourassistant.jiangshengda.poisearch.PoiAroundSearchActivity;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -132,6 +134,15 @@ public class MapsFragment extends Fragment implements AMapLocationListener, Shar
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //-------------------------胜达-------------------------------------------------
         View v = inflater.inflate(R.layout.jiangshengda_fragment_maps, container, false);
+
+        Button sousou = (Button) v.findViewById(R.id.sousou);
+        sousou.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), PoiAroundSearchActivity.class);
+                startActivity(i);
+            }
+        });
 
         btn = (Button) v.findViewById(R.id.Fog_btn);
         act_main = (FrameLayout)v.findViewById(R.id.fragment_maps);

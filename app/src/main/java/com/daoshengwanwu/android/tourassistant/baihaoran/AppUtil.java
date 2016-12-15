@@ -1,6 +1,8 @@
 package com.daoshengwanwu.android.tourassistant.baihaoran;
 
 
+import android.graphics.Bitmap;
+
 public class AppUtil {
     public static final class SharingServer {
         public static final String HOST = "123.206.81.40";//192.168.43.14
@@ -20,10 +22,12 @@ public class AppUtil {
     public static final class User {
         public static String USER_ID = "";
         public static String USER_NAME = "";
+        public static Bitmap USER_IMG;
     }
 
     public static final class Group {
         public static String GROUP_ID = "SurfaceStrongestTeam";
+        public static String GROUP_NAME;
     }
 
 }

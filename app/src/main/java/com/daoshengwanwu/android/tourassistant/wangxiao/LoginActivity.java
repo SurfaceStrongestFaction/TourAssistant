@@ -6,7 +6,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
@@ -21,6 +24,7 @@ import android.widget.Toast;
 import com.daoshengwanwu.android.tourassistant.R;
 import com.daoshengwanwu.android.tourassistant.baihaoran.AppUtil;
 import com.daoshengwanwu.android.tourassistant.baihaoran.LauncherActivity;
+import com.daoshengwanwu.android.tourassistant.jiangshengda.CircleImageView;
 import com.daoshengwanwu.android.tourassistant.wangxiao.utils.HttpCallBackListener;
 import com.daoshengwanwu.android.tourassistant.wangxiao.utils.HttpUtil;
 import com.daoshengwanwu.android.tourassistant.wangxiao.utils.PrefParams;
@@ -49,6 +53,7 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
@@ -74,6 +79,7 @@ public class LoginActivity extends Activity implements OnClickListener{
     private String user_pwd;
     private JSONObject response1;
     public static String  qqresult;
+    public static CircleImageView bimp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -327,15 +333,35 @@ public class LoginActivity extends Activity implements OnClickListener{
                 Message msg = new Message();
                 msg.obj = arg0;
                 msg.what = 0;
-                JSONObject json = (JSONObject) arg0;
+                new Thread() {
+
+                    @Override
+                    public void run() {
+                        JSONObject json = (JSONObject) arg0;
+                        //获取头像
+                        if (json.has("figureurl")) {//判断字段是否为空
+                            Bitmap bitmap = null;
+                            try {
+                                bitmap = getbitmap(json
+                                        .getString("figureurl_qq_2"));
+                            } catch (JSONException e) {
+
+                            }
+                            Message msg = new Message();
+                            msg.obj = bitmap;
+                            msg.what = 1;
+                            mHandler.sendMessage(msg);
+                        }
+                    }
+
+                }.start();
+
                 if (msg.what == 0) {
                     JSONObject response = (JSONObject) msg.obj;
                             if (response.has("nickname")) {
                                 try {
-
                                     qqgender = response.getString("gender").toString();
                                     qqname = response.getString("nickname").toString();
-
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -415,6 +441,39 @@ public class LoginActivity extends Activity implements OnClickListener{
         //要所有权限，不然会再次申请增量权限，这里不要设置成get_user_info,add_t
         mTencent.login(LoginActivity.this, "all", iuilisten);
 
+    }
+   Handler mHandler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == 1) {
+                Bitmap bitmap = (Bitmap) msg.obj;
+                AppUtil.User.USER_IMG = bitmap;
+            }
+        }
+    };
+
+    public static Bitmap getbitmap(String imageUri) {
+        Log.v("Util", "getbitmap:" + imageUri);
+        // 显示网络上的图片
+        Bitmap bitmap = null;
+        try {
+            URL myFileUrl = new URL(imageUri);
+            HttpURLConnection conn = (HttpURLConnection) myFileUrl
+                    .openConnection();
+            conn.setDoInput(true);
+            conn.connect();
+            InputStream is = conn.getInputStream();
+            bitmap = BitmapFactory.decodeStream(is);
+            is.close();
+
+            Log.v("Util", "image download finished." + imageUri);
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.v("Util", "getbitmap bmp fail---");
+            return null;
+        }
+        return bitmap;
     }
 
 

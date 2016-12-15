@@ -5,7 +5,9 @@
     android:id="@+id/activity_launcher"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.daoshengwanwu.android.tourassistant.baihaoran.LauncherActivity">
+    tools:context="com.daoshengwanwu.android.tourassistant.baihaoran.LauncherActivity"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="false">
 
     <LinearLayout
         android:id="@+id/launcher_tabs_container"
@@ -170,7 +172,6 @@
                 android:layout_height="wrap_content"/>
         </LinearLayout>
     </LinearLayout>
-
     <FrameLayout
         android:id="@+id/launcher_fragment_container"
         android:layout_above="@id/launcher_tabs_container"

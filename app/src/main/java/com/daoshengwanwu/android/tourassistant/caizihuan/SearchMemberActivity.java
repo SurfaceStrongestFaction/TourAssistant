@@ -1,14 +1,16 @@
 package com.daoshengwanwu.android.tourassistant.caizihuan;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
 import com.daoshengwanwu.android.tourassistant.R;
+import com.daoshengwanwu.android.tourassistant.leekuo.BaseActivity;
 
-public class SearchMemberActivity extends Activity {
+public class SearchMemberActivity extends BaseActivity {
     private TextView cancelTextView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,10 +22,13 @@ public class SearchMemberActivity extends Activity {
     View.OnClickListener cancelListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(SearchMemberActivity.this,ChatTableActivity.class);
+            ChatTableActivity.startChatTableActivity(SearchMemberActivity.this);
         }
     };
-
+    public static void startSearchMemberActivity(Context c){
+        Intent i = new Intent(c,SearchMemberActivity.class);
+        c.startActivity(i);
+    }
 
 
 }

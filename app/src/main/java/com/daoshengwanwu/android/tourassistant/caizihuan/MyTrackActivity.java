@@ -1,6 +1,8 @@
 package com.daoshengwanwu.android.tourassistant.caizihuan;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ListView;
 
@@ -9,11 +11,12 @@ import com.daoshengwanwu.android.tourassistant.caizihuan.track.BaseItem;
 import com.daoshengwanwu.android.tourassistant.caizihuan.track.MyAdapter;
 import com.daoshengwanwu.android.tourassistant.caizihuan.track.item0;
 import com.daoshengwanwu.android.tourassistant.caizihuan.track.item1;
+import com.daoshengwanwu.android.tourassistant.leekuo.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyTrackActivity extends Activity {
+public class MyTrackActivity extends BaseActivity {
     private ListView mlistView;
     //适配器
     private MyAdapter myAdapter = null;
@@ -36,5 +39,9 @@ public class MyTrackActivity extends Activity {
         this.mData.add(new item1(1,R.drawable.gugong,"故宫","60%","40%"));
         this.myAdapter = new MyAdapter(MyTrackActivity.this,this.mData);
         this.mlistView.setAdapter(this.myAdapter);
+    }
+    public static void startMyTrackActivity(Context c){
+        Intent i = new Intent(c,MyTrackActivity.class);
+        c.startActivity(i);
     }
 }

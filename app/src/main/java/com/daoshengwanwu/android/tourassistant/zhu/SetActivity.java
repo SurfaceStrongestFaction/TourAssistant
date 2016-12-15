@@ -1,4 +1,4 @@
-package zhu;
+package com.daoshengwanwu.android.tourassistant.zhu;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,8 +11,9 @@ import android.widget.RelativeLayout;
 import android.widget.Switch;
 
 import com.daoshengwanwu.android.tourassistant.R;
+import com.daoshengwanwu.android.tourassistant.leekuo.BaseActivity;
 
-public class SetActivity extends AppCompatActivity {
+public class SetActivity extends BaseActivity {
     private static final String EXTRA_USER_NAME = "SecondActivity.EXTRA_USER_NAME";
     private ImageView back;
     private RelativeLayout personaldata;

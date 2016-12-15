@@ -6,7 +6,7 @@
 
     <RelativeLayout
         android:id="@+id/bhr_home_title_relative_layout"
-        android:background="@color/bhr_home_title_background"
+        android:background="@color/bhr_tabs_background"
         android:paddingStart="12dp"
         android:paddingEnd="8dp"
         android:layout_width="match_parent"
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"/>
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/bhr_home_title_edit_text"
             android:hint="@string/bhr_home_title_search_hint"
             android:paddingTop="5dp"
@@ -64,6 +64,11 @@
     </RelativeLayout>
 
     <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.example.www.library.PullToRefreshView
+        android:id="@+id/pull_to_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <ScrollView
@@ -102,13 +107,14 @@
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/bhr_home_area_recommand_rv"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/bhr_home_area_recommand_rv"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
             </LinearLayout>
         </ScrollView>
-
+    </com.example.www.library.PullToRefreshView>
         <LinearLayout
             android:id="@+id/bhr_home_hide_show_linear_layout"
             android:gravity="center"
@@ -129,4 +135,5 @@
                 android:layout_height="wrap_content"/>
         </LinearLayout>
     </FrameLayout>
+
 </LinearLayout>

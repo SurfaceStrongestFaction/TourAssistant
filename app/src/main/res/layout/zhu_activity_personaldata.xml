@@ -3,7 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bgset"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="false">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -51,7 +53,7 @@
                 android:layout_height="25dp"
                 android:layout_marginRight="20dp"
                 android:src="@drawable/entry"/>
-            <zhu.CircleImageView
+            <com.daoshengwanwu.android.tourassistant.zhu.CircleImageView
                 android:layout_centerVertical="true"
                 android:id="@+id/iv_set_img"
                 android:layout_width="100dp"

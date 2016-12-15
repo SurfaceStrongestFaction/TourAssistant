@@ -1,6 +1,7 @@
 package com.daoshengwanwu.android.tourassistant.caizihuan;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,13 +13,14 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 import com.daoshengwanwu.android.tourassistant.R;
+import com.daoshengwanwu.android.tourassistant.leekuo.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ChatTableActivity extends Activity {
+public class ChatTableActivity extends BaseActivity {
     private int[] ImageIds = new int[]{R.drawable.touxiang1,R.drawable.touxiang2};
     private String[] names = new String[]{"我的小队伍","李四四"};
     private String[] dates = new String[]{"10:39","11-13"};
@@ -60,8 +62,11 @@ public class ChatTableActivity extends Activity {
     View.OnClickListener searchListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(ChatTableActivity.this,SearchMemberActivity.class);
-            startActivity(intent);
+            SearchMemberActivity.startSearchMemberActivity(ChatTableActivity.this);
         }
     };
+    public static void startChatTableActivity(Context c){
+        Intent i = new Intent(c,ChatTableActivity.class);
+        c.startActivity(i);
+    }
 }

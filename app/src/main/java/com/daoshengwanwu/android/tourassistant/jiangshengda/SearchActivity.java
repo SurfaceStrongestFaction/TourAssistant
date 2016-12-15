@@ -9,10 +9,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.daoshengwanwu.android.tourassistant.R;
+import com.daoshengwanwu.android.tourassistant.leekuo.BaseActivity;
 
 import java.util.ArrayList;
 
-public class SearchActivity extends Activity {
+public class SearchActivity extends BaseActivity {
     private TextView log;
     private RelativeLayout btn;
     private ArrayList<History> ls = new ArrayList<History>();
@@ -25,7 +26,6 @@ public class SearchActivity extends Activity {
         ls.add(new History((long) 3,R.drawable.history,"天安门广场"));
         ls.add(new History((long) 4,R.drawable.history,"毛主席纪念堂"));
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -399,9 +399,7 @@ public class LoginActivity extends Activity implements OnClickListener{
         } else {
         }
     }
-
     Handler mHandler = new Handler() {
-
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == 0) {
@@ -411,7 +409,7 @@ public class LoginActivity extends Activity implements OnClickListener{
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                if (response.has("nickname")) {
+
                     try {
                         qqgender = response.getString("gender");
                         qqname = response.getString("nickname");
@@ -419,12 +417,11 @@ public class LoginActivity extends Activity implements OnClickListener{
                         // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
-                }
+
             } else if (msg.what == 1) {
                 Bitmap bitmap = (Bitmap) msg.obj;
             }
         }
-
     };
 
     private void onClickLogin() {
@@ -541,7 +538,6 @@ public class LoginActivity extends Activity implements OnClickListener{
         lgbt.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 if(cb.isChecked()){
                     s = getSharedPreferences("ty_user",Context.MODE_PRIVATE);
                     SharedPreferences.Editor editer = s.edit();

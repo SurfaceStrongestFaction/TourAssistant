@@ -22,10 +22,14 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.daoshengwanwu.android.tourassistant.R;
+import com.daoshengwanwu.android.tourassistant.baihaoran.LauncherActivity;
 import com.daoshengwanwu.android.tourassistant.wangxiao.util.Util1;
 import com.daoshengwanwu.android.tourassistant.wangxiao.utils.HttpCallBackListener;
 import com.daoshengwanwu.android.tourassistant.wangxiao.utils.HttpUtil;
 import com.daoshengwanwu.android.tourassistant.wangxiao.utils.PrefParams;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.sina.weibo.sdk.auth.AuthInfo;
 import com.sina.weibo.sdk.auth.Oauth2AccessToken;
 import com.sina.weibo.sdk.auth.WeiboAuthListener;
@@ -43,8 +47,16 @@ import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
 
+import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 
 public class LoginActivity extends Activity implements OnClickListener{
@@ -62,7 +74,9 @@ public class LoginActivity extends Activity implements OnClickListener{
     private SharedPreferences s,s1;
     private String name1;
     private String pwd1;
-
+    private String user_id;
+    private String user_name;
+    private String user_pwd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,7 +94,47 @@ public class LoginActivity extends Activity implements OnClickListener{
         name.setText(name1);
         pwd.setText(pwd1);
     }
+    Thread login = new Thread(){
+        @Override
+        public void run() {
+            super.run();
+            String result = "";
+            PrintWriter out = null;
+            BufferedReader in = null;
+            try {
 
+                //登录
+                    URL url = new URL("http://192.168.191.1/user/login");
+                    HttpURLConnection con = (HttpURLConnection)url.openConnection();
+                    con.setDoInput(true);
+                    con.setDoOutput(true);
+                    out = new PrintWriter(con.getOutputStream());
+                    out.print(user_name+"\n"+user_pwd);
+                    out.flush();
+                    //定义BufferedReader输入流读取URL响应
+                    in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                    String line;
+                    while ((line = in.readLine()) != null){
+                        result += "\n" +line;
+                    }
+                      user_id = result;
+            }  catch (Exception e) {
+                System.out.println("发送POST请求出现异常！" + e);
+                e.printStackTrace();
+            }  finally {
+                try{
+                    if (out != null){
+                        out.close();
+                    }
+                    if (in != null){
+                        in.close();
+                    }
+                }catch (IOException ex){
+                    ex.printStackTrace();
+                }
+            }
+        }
+    };
 
 
     private void initViews() {
@@ -139,8 +193,14 @@ public class LoginActivity extends Activity implements OnClickListener{
                 // 如果手机安装了微博客户端则使用客户端授权,没有则进行网页授权
                 mSsoHandler.authorize(new AuthListener());
                 break;
+            case R.id.lg_bt:
+                user_name = name.getText().toString();
+                user_pwd = pwd.getText().toString();
+                login.start();
             default:
                 break;
+
+
         }
     }
 
@@ -344,9 +404,7 @@ public class LoginActivity extends Activity implements OnClickListener{
         } else {
         }
     }
-
     Handler mHandler = new Handler() {
-
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == 0) {
@@ -356,7 +414,7 @@ public class LoginActivity extends Activity implements OnClickListener{
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                if (response.has("nickname")) {
+
                     try {
                         qqgender = response.getString("gender");
                         qqname = response.getString("nickname");
@@ -364,12 +422,11 @@ public class LoginActivity extends Activity implements OnClickListener{
                         // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
-                }
+
             } else if (msg.what == 1) {
                 Bitmap bitmap = (Bitmap) msg.obj;
             }
         }
-
     };
 
     private void onClickLogin() {
@@ -380,8 +437,50 @@ public class LoginActivity extends Activity implements OnClickListener{
                     updateUserInfo();
                     updateLoginButton();
                     Toast.makeText(LoginActivity.this, "用户id： " + qqid + "\n用户昵称： " + qqname + "\n用户性别： " + qqgender, Toast.LENGTH_SHORT).show();
-                }
+                    final String[] tv = new String[1];
 
+                    //建立连接
+                    AsyncHttpClient client = new AsyncHttpClient();
+                    String Url_add = "http://10.7.84.97:8080/qq/login";
+                    //获取参数
+                    RequestParams params = new RequestParams();
+                    params.add("qqid",qqid);
+                    params.add("qqname",qqname);
+                    params.add("qqgender",qqgender);
+                    //服务器获取参数
+                    client.get(getApplicationContext(), Url_add, params, new AsyncHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int i, Header[] headers, byte[] bytes) {
+                            tv[0] = new String(bytes);
+                            // System.out.print(response);
+//                    try {
+//                        JSONObject result=response.getJSONObject("result");
+//                        JSONObject qq=result.getJSONObject("qq");
+//                        String output= qq.getString("qq")+"\n"
+//                                +qq.getString("nick_name")+"\n"
+//                                +qq.getString("user_id");
+//                        Tv.setText("123");
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+                            String result = tv[0].toString();
+                            Toast.makeText(LoginActivity.this, result, Toast.LENGTH_LONG).show();
+                            if (result.equals("注册成功")) {
+                                Intent intent = new Intent(LoginActivity.this, LauncherActivity.class);
+                                startActivity(intent);
+                            }
+                        }
+
+
+                        @Override
+                        public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+
+                        }
+
+
+                    });
+
+                }
             };
 
             mQQAuth.login(this, "all", listener);
@@ -420,8 +519,10 @@ public class LoginActivity extends Activity implements OnClickListener{
             JSONObject response1 = (JSONObject) response;
             try {
                 qqid = response1.getString("openid");
-                    qqgender = response1.getString("gender");
-                    qqname = response1.getString("nickname");
+                qqgender = response1.getString("gender");
+                qqname = response1.getString("nickname");
+
+
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -488,7 +589,6 @@ public class LoginActivity extends Activity implements OnClickListener{
         lgbt.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 if(cb.isChecked()){
                     s = getSharedPreferences("ty_user",Context.MODE_PRIVATE);
                     SharedPreferences.Editor editer = s.edit();

@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.daoshengwanwu.android.tourassistant.R;
+import com.daoshengwanwu.android.tourassistant.baihaoran.AppUtil;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -60,7 +61,7 @@ public class TeamFragment extends Fragment {
                             str = ed.getText().toString();//获取队伍名
                             Toast.makeText(getActivity(),str,Toast.LENGTH_SHORT).show();
                             //1.向特定URL传输str
-                            String captain="123456";
+                            String captain= AppUtil.User.USER_ID;
                             String members = captain;
                             AsyncHttpClient client=new AsyncHttpClient();
                             RequestParams params=new RequestParams();

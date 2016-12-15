@@ -3,7 +3,7 @@ package com.daoshengwanwu.android.tourassistant.baihaoran;
 
 public class AppUtil {
     public static final class SharingServer {
-        public static final String HOST = "123.206.81.40";//192.168.43.14,123.206.81.40
+        public static final String HOST = "123.206.81.40";//192.168.43.14
         public static final int PORT = 8088;
         public static final String COMMAND_SET_LOCATION = "set_location";
         public static final String REQUEST_MEMBER_LOCATION = "request_location";
@@ -24,6 +24,6 @@ public class AppUtil {
 
     public static final class Group {
         public static String GROUP_ID = "SurfaceStrongestTeam";
-        public static String GROUP_NAME = "SurfaceStrongestTeam";
     }
+
 }

@@ -1,9 +1,6 @@
 package com.daoshengwanwu.android.tourassistant.baihaoran;
 
 
-import java.util.UUID;
-
-
 public class AppUtil {
     public static final class SharingServer {
         public static final String HOST = "123.206.81.40";//192.168.43.14,123.206.81.40
@@ -21,8 +18,8 @@ public class AppUtil {
     }
 
     public static final class User {
-        public static String USER_ID = UUID.randomUUID().toString();
-        public static String USER_NAME = "USER_NAME";
+        public static String USER_ID = "";
+        public static String USER_NAME = "";
     }
 
     public static final class Group {

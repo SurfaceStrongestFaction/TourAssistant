@@ -22,4 +22,8 @@ public class AppUtil {
         public static String USER_ID = UUID.randomUUID().toString();
         public static String USER_NAME = "白浩然";
     }
+
+    public static final class Group {
+        public static String Group_id = "";
+    }
 }

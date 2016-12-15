@@ -63,12 +63,12 @@ public class LauncherActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.baihaoran_activity_launcher);
 
+        //应用启动时即绑定服务
         bindService(SharingService.newIntent(this), mServiceConnection, BIND_AUTO_CREATE);
 
         getWidgetsReferences(); //获取所需组件的引用
         setListenersToWidgets(); //为组件设置监听器
         initFragment();
-
     }
 
 

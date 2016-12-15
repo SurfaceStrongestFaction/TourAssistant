@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.daoshengwanwu.android.tourassistant.R;
 import com.daoshengwanwu.android.tourassistant.jiangshengda.MapsFragment;
 import com.daoshengwanwu.android.tourassistant.jiangshengda.MeFragment;
+import com.daoshengwanwu.android.tourassistant.leekuo.TeamFragment;
 import com.daoshengwanwu.android.tourassistant.wangxiao.LoginActivity;
 import com.daoshengwanwu.android.tourassistant.leekuo.BaseActivity;
 
@@ -42,6 +43,7 @@ public class LauncherActivity extends BaseActivity {
     private FragmentManager mFragmentManager;
     private HomeFragment mHomeFragment;
     private MapsFragment mMapsFragment;
+    private TeamFragment mTeamFragment;
     private MeFragment mMeFragment;
     private SharingService.SharingBinder mSharingBinder;
     private ServiceConnection mServiceConnection = new ServiceConnection() {
@@ -143,6 +145,10 @@ public class LauncherActivity extends BaseActivity {
                 case R.id.tabs_ranks_page:
                     mTabsRanksImg.setImageResource(R.drawable.ranks1);
                     mTabsRanksText.setTextColor(ContextCompat.getColor(LauncherActivity.this, R.color.bhr_tabs_green));
+                    if (null == mTeamFragment) {
+                        mTeamFragment = TeamFragment.newInstance();
+                    }
+                    mFragmentManager.beginTransaction().replace(R.id.launcher_fragment_container, mTeamFragment).commit();
                     break;
                 case R.id.tabs_my_page:
                     if ("".equals(AppUtil.User.USER_ID)) {

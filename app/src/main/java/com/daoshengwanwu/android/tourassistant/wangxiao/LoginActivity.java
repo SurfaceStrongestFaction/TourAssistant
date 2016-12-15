@@ -22,10 +22,14 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.daoshengwanwu.android.tourassistant.R;
+import com.daoshengwanwu.android.tourassistant.baihaoran.LauncherActivity;
 import com.daoshengwanwu.android.tourassistant.wangxiao.util.Util1;
 import com.daoshengwanwu.android.tourassistant.wangxiao.utils.HttpCallBackListener;
 import com.daoshengwanwu.android.tourassistant.wangxiao.utils.HttpUtil;
 import com.daoshengwanwu.android.tourassistant.wangxiao.utils.PrefParams;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.sina.weibo.sdk.auth.AuthInfo;
 import com.sina.weibo.sdk.auth.Oauth2AccessToken;
 import com.sina.weibo.sdk.auth.WeiboAuthListener;
@@ -43,6 +47,7 @@ import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
 
+import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -432,8 +437,50 @@ public class LoginActivity extends Activity implements OnClickListener{
                     updateUserInfo();
                     updateLoginButton();
                     Toast.makeText(LoginActivity.this, "用户id： " + qqid + "\n用户昵称： " + qqname + "\n用户性别： " + qqgender, Toast.LENGTH_SHORT).show();
-                }
+                    final String[] tv = new String[1];
 
+                    //建立连接
+                    AsyncHttpClient client = new AsyncHttpClient();
+                    String Url_add = "http://10.7.84.97:8080/qq/login";
+                    //获取参数
+                    RequestParams params = new RequestParams();
+                    params.add("qqid",qqid);
+                    params.add("qqname",qqname);
+                    params.add("qqgender",qqgender);
+                    //服务器获取参数
+                    client.get(getApplicationContext(), Url_add, params, new AsyncHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int i, Header[] headers, byte[] bytes) {
+                            tv[0] = new String(bytes);
+                            // System.out.print(response);
+//                    try {
+//                        JSONObject result=response.getJSONObject("result");
+//                        JSONObject qq=result.getJSONObject("qq");
+//                        String output= qq.getString("qq")+"\n"
+//                                +qq.getString("nick_name")+"\n"
+//                                +qq.getString("user_id");
+//                        Tv.setText("123");
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+                            String result = tv[0].toString();
+                            Toast.makeText(LoginActivity.this, result, Toast.LENGTH_LONG).show();
+                            if (result.equals("注册成功")) {
+                                Intent intent = new Intent(LoginActivity.this, LauncherActivity.class);
+                                startActivity(intent);
+                            }
+                        }
+
+
+                        @Override
+                        public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+
+                        }
+
+
+                    });
+
+                }
             };
 
             mQQAuth.login(this, "all", listener);
@@ -472,8 +519,10 @@ public class LoginActivity extends Activity implements OnClickListener{
             JSONObject response1 = (JSONObject) response;
             try {
                 qqid = response1.getString("openid");
-                    qqgender = response1.getString("gender");
-                    qqname = response1.getString("nickname");
+                qqgender = response1.getString("gender");
+                qqname = response1.getString("nickname");
+
+
 
             } catch (JSONException e) {
                 e.printStackTrace();

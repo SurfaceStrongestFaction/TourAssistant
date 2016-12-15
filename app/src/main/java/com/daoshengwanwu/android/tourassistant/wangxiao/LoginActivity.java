@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.daoshengwanwu.android.tourassistant.R;
+import com.daoshengwanwu.android.tourassistant.baihaoran.AppUtil;
 import com.daoshengwanwu.android.tourassistant.baihaoran.LauncherActivity;
 import com.daoshengwanwu.android.tourassistant.wangxiao.utils.HttpCallBackListener;
 import com.daoshengwanwu.android.tourassistant.wangxiao.utils.HttpUtil;
@@ -72,6 +73,7 @@ public class LoginActivity extends Activity implements OnClickListener{
     private String user_name;
     private String user_pwd;
     private JSONObject response1;
+    public static String  qqresult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -294,7 +296,8 @@ public class LoginActivity extends Activity implements OnClickListener{
     private Tencent mTencent; //qq主操作对象
     private IUiListener iuilisten;
     private ImageView mNewLoginButton;
-    private String qqname, qqgender, qqid;
+    public static String qqname;
+    private String qqgender, qqid;
 
 
     private void initViews2() {
@@ -316,13 +319,11 @@ public class LoginActivity extends Activity implements OnClickListener{
 
             @Override
             public void onError(UiError arg0) {
-                // TODO 自动生成的方法存根
 
             }
 
             @Override
             public void onComplete(final Object arg0) {
-                // TODO 自动生成的方法存根
                 Message msg = new Message();
                 msg.obj = arg0;
                 msg.what = 0;
@@ -336,13 +337,12 @@ public class LoginActivity extends Activity implements OnClickListener{
                                     qqname = response.getString("nickname").toString();
 
                                 } catch (JSONException e) {
-                                    // TODO Auto-generated catch block
                                     e.printStackTrace();
                                 }
                             }
                 }
 
-                Toast.makeText(LoginActivity.this, "用户id： " + qqid + "\n用户昵称： " + qqname + "\n用户性别： " + qqgender, Toast.LENGTH_SHORT).show();
+             //   Toast.makeText(LoginActivity.this, "用户id： " + qqid + "\n用户昵称： " + qqname + "\n用户性别： " + qqgender, Toast.LENGTH_SHORT).show();
                 //建立连接
                 AsyncHttpClient client = new AsyncHttpClient();
                 String Url_add = "http://10.7.88.106:8080/qq/login";
@@ -355,12 +355,13 @@ public class LoginActivity extends Activity implements OnClickListener{
                 client.get(getApplicationContext(), Url_add, params, new AsyncHttpResponseHandler() {
                     @Override
                     public void onSuccess(int i, Header[] headers, byte[] bytes) {
-                        String result = new String(bytes);
-                        Toast.makeText(LoginActivity.this, result, Toast.LENGTH_LONG).show();
-                        if (result.equals("注册成功")) {
-                            Intent intent = new Intent(LoginActivity.this, LauncherActivity.class);
-                            startActivity(intent);
-                        }
+                        qqresult = new String(bytes);
+                        AppUtil.User.USER_ID = qqresult;
+                        AppUtil.User.USER_NAME = qqname;
+                        Toast.makeText(LoginActivity.this,"登录成功", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(LoginActivity.this, LauncherActivity.class);
+                        startActivity(intent);
+                        finish();
                     }
                     @Override
                     public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
@@ -371,8 +372,6 @@ public class LoginActivity extends Activity implements OnClickListener{
 
             @Override
             public void onCancel() {
-                // TODO 自动生成的方法存根
-
             }
         };
         userInfo.getUserInfo(userInfoListener);
@@ -405,7 +404,6 @@ public class LoginActivity extends Activity implements OnClickListener{
                     e.printStackTrace();
                 }
                 getyh() ;
-
             }
 
             @Override

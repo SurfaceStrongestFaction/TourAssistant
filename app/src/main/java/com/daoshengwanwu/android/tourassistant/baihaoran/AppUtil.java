@@ -18,11 +18,12 @@ public class AppUtil {
     }
 
     public static final class User {
-        public static String USER_ID = "";//UUID.randomUUID().toString();
-        public static String USER_NAME = "USER_NAME";
+        public static String USER_ID = "";
+        public static String USER_NAME = "";
     }
 
     public static final class Group {
         public static String GROUP_ID = "SurfaceStrongestTeam";
     }
+
 }

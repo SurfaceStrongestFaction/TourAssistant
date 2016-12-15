@@ -384,6 +384,7 @@ public class LoginActivity extends Activity implements OnClickListener{
                         qqresult = new String(bytes);
                         AppUtil.User.USER_ID = qqresult;
                         AppUtil.User.USER_NAME = qqname;
+                        AppUtil.User.USER_GENDER = qqgender;
                         Toast.makeText(LoginActivity.this,"登录成功", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(LoginActivity.this, LauncherActivity.class);
                         startActivity(intent);

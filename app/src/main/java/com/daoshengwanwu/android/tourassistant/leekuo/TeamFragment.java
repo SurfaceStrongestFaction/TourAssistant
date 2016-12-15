@@ -61,7 +61,8 @@ public class TeamFragment extends Fragment {
                             str = ed.getText().toString();//获取队伍名
                             Toast.makeText(getActivity(),str,Toast.LENGTH_SHORT).show();
                             //1.向特定URL传输str
-                            String captain= AppUtil.User.USER_ID;
+                           // String captain= AppUtil.User.USER_ID;
+                            String captain= "2";
                             String members = captain;
                             AsyncHttpClient client=new AsyncHttpClient();
                             RequestParams params=new RequestParams();
@@ -76,6 +77,10 @@ public class TeamFragment extends Fragment {
                                 public void onSuccess(int i, Header[] headers, byte[] bytes) {
                                     String str1 = new String(bytes);
                                     Toast.makeText(getActivity(),str1,Toast.LENGTH_SHORT).show();
+                                    if(!str1.equals("创建队伍失败,请重新创建")&&!str1.equals("只能创建一个队伍")){
+                                        AppUtil.Group.Group_id=str1;
+                                        Toast.makeText(getActivity()," AppUtil.Group.Group_id:"+AppUtil.Group.Group_id,Toast.LENGTH_SHORT).show();
+                                    }
                                 }
 
                                 @Override

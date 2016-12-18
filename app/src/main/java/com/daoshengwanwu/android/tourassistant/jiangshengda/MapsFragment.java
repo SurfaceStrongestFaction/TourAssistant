@@ -1,6 +1,7 @@
 package com.daoshengwanwu.android.tourassistant.jiangshengda;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -12,6 +13,7 @@ import android.graphics.Point;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amap.api.location.AMapLocation;//定位信息类
@@ -28,10 +30,16 @@ import com.amap.api.maps.model.MarkerOptions;
 import com.daoshengwanwu.android.tourassistant.R;
 import com.daoshengwanwu.android.tourassistant.baihaoran.AppUtil;
 import com.daoshengwanwu.android.tourassistant.baihaoran.SharingService;
+import com.daoshengwanwu.android.tourassistant.jiangshengda.poisearch.PoiAroundSearchActivity;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.daoshengwanwu.android.tourassistant.baihaoran.AppUtil.Group.GROUP_NAME;
+import static com.daoshengwanwu.android.tourassistant.baihaoran.AppUtil.User.USER_ID;
+import static com.daoshengwanwu.android.tourassistant.baihaoran.AppUtil.User.USER_NAME;
 
 
 public class MapsFragment extends Fragment implements AMapLocationListener, SharingService.SharingLocationListener, View.OnClickListener{
@@ -58,6 +66,8 @@ public class MapsFragment extends Fragment implements AMapLocationListener, Shar
     private static final String MSG_DATA_MEMBER_LOC_INFOS = "msg_data_member_loc_infos";
 
     private Map<String, Marker> mMemberMarkers = new HashMap<>();
+    private boolean mIsStartLocation = false;
+    private boolean mIsStartUpload = false;
     private Button mStartLocation;
     private Button mStopLocation;
     private Button mStartUpload;
@@ -66,6 +76,8 @@ public class MapsFragment extends Fragment implements AMapLocationListener, Shar
     private Marker mUserMarker = null;
     private SharingService.SharingBinder mSharingBinder;
     private boolean mIsStartBlack = false;
+    private TextView mUserNickName = null;
+    private TextView mGroupName = null;
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -78,48 +90,52 @@ public class MapsFragment extends Fragment implements AMapLocationListener, Shar
 
             switch (msg.what) {
                 case WHAT_LOCATION_CHANGE: {
-                    double latitude = data.getDouble(MSG_DATA_LATITUDE);
-                    double longitude = data.getDouble(MSG_DATA_LONGITUDE);
-                    LatLng currentLoc = new LatLng(latitude, longitude);
+                    if (mIsStartLocation) {
+                        double latitude = data.getDouble(MSG_DATA_LATITUDE);
+                        double longitude = data.getDouble(MSG_DATA_LONGITUDE);
+                        LatLng currentLoc = new LatLng(latitude, longitude);
 
-                    if (mIsFirstLoc) {
-                        aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLoc, 15.0f));
-                        mUserMarker = aMap.addMarker(new MarkerOptions().position(currentLoc)
-                                .title(AppUtil.User.USER_NAME)
-                                .snippet("你在这里"));
-                        mIsFirstLoc = false;
+                        if (mIsFirstLoc) {
+                            aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLoc, 15.0f));
+                            mUserMarker = aMap.addMarker(new MarkerOptions().position(currentLoc)
+                                    .title(AppUtil.User.USER_NAME)
+                                    .snippet("你在这里"));
+                            mIsFirstLoc = false;
+                        }
+
+                        mUserMarker.setPosition(currentLoc);
                     }
-
-                    mUserMarker.setPosition(currentLoc);
                 } break;
                 case WHAT_MEMBER_LOC_INFOS_ARRIVE: {
-                    Map<String, double[]> groupMemberLocations = (Map<String, double[]>) data.getSerializable(MSG_DATA_MEMBER_LOC_INFOS);
-                    groupMemberLocations.remove(AppUtil.User.USER_ID);
+                    if (mIsStartUpload) {
+                        Serializable seria = data.getSerializable(MSG_DATA_MEMBER_LOC_INFOS);
+                        if (seria instanceof Map) {
+                            Map<String, double[]> groupMemberLocations = (Map<String, double[]>) seria;
+                            groupMemberLocations.remove(USER_ID);
 
-                    Toast.makeText(getActivity(), "" + groupMemberLocations.toString(), Toast.LENGTH_SHORT).show();
+                            for (String user_id : mMemberMarkers.keySet()) {
+                                if (!groupMemberLocations.containsKey(user_id)) {
+                                    mMemberMarkers.get(user_id).remove();
+                                    mMemberMarkers.remove(user_id);
+                                } else {
+                                    double[] latlngs = groupMemberLocations.get(user_id);
+                                    groupMemberLocations.remove(user_id);
+                                    LatLng latlng = new LatLng(latlngs[0], latlngs[1]);
+                                    mMemberMarkers.get(user_id).setPosition(latlng);
+                                }
+                            }
 
-                    for (String user_id : mMemberMarkers.keySet()) {
-                        if (!groupMemberLocations.containsKey(user_id)) {
-                            mMemberMarkers.get(user_id).remove();
-                            mMemberMarkers.remove(user_id);
-                        } else {
-                            double[] latlngs = groupMemberLocations.get(user_id);
-                            groupMemberLocations.remove(user_id);
-                            LatLng latlng = new LatLng(latlngs[0], latlngs[1]);
-                            mMemberMarkers.get(user_id).setPosition(latlng);
+                            for (String user_id : groupMemberLocations.keySet()) {
+                                double[] latlngs = groupMemberLocations.get(user_id);
+                                LatLng currentLoc = new LatLng(latlngs[0], latlngs[1]);
+                                Marker marker = aMap.addMarker(new MarkerOptions().position(currentLoc)
+                                        .title("好友")
+                                        .snippet("你的好友在这里~"));
+
+                                mMemberMarkers.put(user_id, marker);
+                            }
                         }
                     }
-
-                    for (String user_id : groupMemberLocations.keySet()) {
-                        double[] latlngs = groupMemberLocations.get(user_id);
-                        LatLng currentLoc = new LatLng(latlngs[0], latlngs[1]);
-                        Marker marker = aMap.addMarker(new MarkerOptions().position(currentLoc)
-                                .title("好友")
-                                .snippet("你的好友在这里~"));
-
-                        mMemberMarkers.put(user_id, marker);
-                    }
-
                 } break;
                 default: break;
             }
@@ -132,6 +148,15 @@ public class MapsFragment extends Fragment implements AMapLocationListener, Shar
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //-------------------------胜达-------------------------------------------------
         View v = inflater.inflate(R.layout.jiangshengda_fragment_maps, container, false);
+
+        Button sousou = (Button) v.findViewById(R.id.sousou);
+        sousou.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), PoiAroundSearchActivity.class);
+                startActivity(i);
+            }
+        });
 
         btn = (Button) v.findViewById(R.id.Fog_btn);
         act_main = (FrameLayout)v.findViewById(R.id.fragment_maps);
@@ -174,11 +199,15 @@ public class MapsFragment extends Fragment implements AMapLocationListener, Shar
         mStopLocation = (Button)v.findViewById(R.id.stop_location);
         mStartUpload = (Button)v.findViewById(R.id.start_upload);
         mStopUpload = (Button)v.findViewById(R.id.stop_upload);
+        mUserNickName = (TextView) v.findViewById(R.id.user_nick_name);
+        mGroupName = (TextView)v.findViewById(R.id.group_name);
 
         mStartLocation.setOnClickListener(this);
         mStopLocation.setOnClickListener(this);
         mStartUpload.setOnClickListener(this);
         mStopUpload.setOnClickListener(this);
+
+        updateCurrentInfomation();
 
         return v;
     }
@@ -288,6 +317,15 @@ public class MapsFragment extends Fragment implements AMapLocationListener, Shar
         mapView.onSaveInstanceState(outState);
     }
 
+    private void updateCurrentInfomation() {
+        if (null != USER_NAME && !USER_NAME.equals("")) {
+            mUserNickName.setText("当前用户：" + USER_NAME);
+        }
+        if (null != GROUP_NAME && !GROUP_NAME.equals("")) {
+            mGroupName.setText("所在分组：" + GROUP_NAME);
+        }
+    }
+
 
     public static MapsFragment newInstance(SharingService.SharingBinder binder) {
         MapsFragment fragment = new MapsFragment();
@@ -313,24 +351,56 @@ public class MapsFragment extends Fragment implements AMapLocationListener, Shar
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.start_location:
-                mSharingBinder.startLocationService();
+                updateCurrentInfomation();
+
+                if (mIsStartLocation) {
+                    Toast.makeText(getActivity(), "您开启定位服务无需重复开启...", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), "定位服务开启中...", Toast.LENGTH_SHORT).show();
+                    mSharingBinder.startLocationService();
+                    mIsStartLocation = true;
+                }
                 break;
             case R.id.stop_location:
-                mSharingBinder.stopLocationService();
-                mUserMarker.remove();
-                mUserMarker = null;
-                mIsFirstLoc = true;
+                if (mIsStartLocation) {
+                    mSharingBinder.stopLocationService();
+                    mUserMarker.remove();
+                    mUserMarker = null;
+                    mIsFirstLoc = true;
+                    mIsStartLocation = false;
+                    Toast.makeText(getActivity(), "关闭定位服务...", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), "您尚未开启定位服务...", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.start_upload:
+                updateCurrentInfomation();
+
                 try {
-                    Toast.makeText(getActivity(), "start_upload", Toast.LENGTH_SHORT).show();
-                    mSharingBinder.startUploadLocation();
+                    if (!mIsStartUpload) {
+                        Toast.makeText(getActivity(), "开启位置共享...", Toast.LENGTH_SHORT).show();
+                        mSharingBinder.startUploadLocation();
+                        mIsStartUpload = true;
+                    } else {
+                        Toast.makeText(getActivity(), "您已开启位置共享,无需重复开启...", Toast.LENGTH_SHORT).show();
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
                 break;
             case R.id.stop_upload:
-                mSharingBinder.stopUploadLocation();
+                if (mIsStartUpload) {
+                    Toast.makeText(getActivity(), "正在关闭位置共享...", Toast.LENGTH_SHORT).show();
+                    mSharingBinder.stopUploadLocation();
+                    for (String user_id : mMemberMarkers.keySet()) {
+                        mMemberMarkers.get(user_id).remove();
+                        mMemberMarkers.remove(user_id);
+                        mMemberMarkers.clear();
+                    }
+                    mIsStartUpload = false;
+                } else {
+                    Toast.makeText(getActivity(), "您尚未开启位置共享", Toast.LENGTH_SHORT).show();
+                }
                 break;
             default:
                 break;

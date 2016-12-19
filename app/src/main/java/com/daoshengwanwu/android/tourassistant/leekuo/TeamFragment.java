@@ -32,7 +32,7 @@ public class TeamFragment extends Fragment {
     private RelativeLayout myTeam;
     private RelativeLayout talk;
     private String str; //战队名
-    private final String url = new String("http://10.7.88.19/team/create");
+    private final String url = new String("http://"+AppUtil.SharingServer.HOST2+":"+AppUtil.SharingServer.PORT2+"/team/create");
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

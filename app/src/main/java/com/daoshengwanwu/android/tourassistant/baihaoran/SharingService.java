@@ -8,7 +8,6 @@ import android.content.ServiceConnection;
 import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
-import android.widget.Toast;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
@@ -24,7 +23,6 @@ import java.io.Serializable;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 
@@ -49,7 +47,14 @@ public class SharingService extends Service {
     public void onDestroy() {
         if (null == mUniqueBinder) {
             super.onDestroy();
+            mLatitude = 0.0;
+            mLongitude = 0.0;
+            mLocationClient = null;
             return;
+        }
+
+        if (mUniqueBinder.isUploadStart()) {
+            mUniqueBinder.stopUploadLocation();
         }
 
         if (null != mLocationClient) {
@@ -59,11 +64,6 @@ public class SharingService extends Service {
 
             mLocationClient.onDestroy();
             mLocationClient = null;
-        }
-
-
-        if (mUniqueBinder.isUploadStart()) {
-            mUniqueBinder.stopUploadLocation();
         }
 
         mUniqueBinder = null;
@@ -88,7 +88,7 @@ public class SharingService extends Service {
     }
 
 
-    public final class SharingBinder extends Binder implements Serializable {
+    public final class SharingBinder extends Binder implements Serializable, AMapLocationListener {
         private boolean mIsUploadStarting = false; //标识当前是否正在开启上传服务
         private boolean mIsStartingLocation = false; //标识当前是否正在开启定位服务
         private boolean mIsUploadStart = false; //标识当前是否已经开启上传服务
@@ -138,28 +138,22 @@ public class SharingService extends Service {
         public void startLocationService() {
             mIsStartingLocation = true;
             //获取定位客户端以及开启定位服务
-            if (null == mLocationClient) {
-                mLocationClient = new AMapLocationClient(getApplicationContext()); //首先实例化一个定位客户端（由高德SDK提供）
-                mLocationClient.setLocationListener(new AMapLocationListener() { //设置位置改变时的回调方法
-                    @Override
-                    public void onLocationChanged(AMapLocation aMapLocation) { //这么做的好处是对于位置改变的回调定制可以写在主调对象中
-                        mLatitude = aMapLocation.getLatitude();
-                        mLongitude = aMapLocation.getLongitude();
-                        //调用每个注册的监听者的onLocationChanged方法
-//                        Toast.makeText(SharingService.this, "aMapLocation: " + aMapLocation.toString(), Toast.LENGTH_SHORT).show();
-                        for (AMapLocationListener locationListener : mLocationListeners) {
-                            locationListener.onLocationChanged(aMapLocation);
+            if (!mIsStartLocation) {
+                if (null == mLocationClient) {
+                    mLocationClient = new AMapLocationClient(getApplicationContext()); //首先实例化一个定位客户端（由高德SDK提供）
+                }
 
-                        }
-                    }
-                });
-                mLocationClient.startLocation();
+                if (!mLocationClient.isStarted()) {
+                    mLocationClient.setLocationListener(this);
+                    mLocationClient.startLocation();
+                }
+
                 mIsStartLocation = true;
             }
         }
 
         public void stopLocationService() {
-            if (null == mLocationClient || isUploadStarting() || isUploadStart()) {
+            if (null == mLocationClient || isStartingLocation() || isUploadStarting() || isUploadStart() || !mLocationClient.isStarted()) {
                 return;
             }
 
@@ -193,11 +187,13 @@ public class SharingService extends Service {
                                 获取当前登录的唯一标识用户的user_id
                             由于登录功能还没有实现，所以这里先假定一个user_id
                          */
-                        final String user_id = AppUtil.User.USER_ID; //假定一个用户id
+                        String user_id = AppUtil.User.USER_ID; //假定一个user_id
+                        String group_id = AppUtil.Group.GROUP_ID; //假定一个group_id
 
                         //向服务器发送user_id信息,该步骤为必须步骤，服务器必须接收到该唯一id才可将Socket与id绑定
                         try {
                             sendCommandToServer(SharingServer.COMMAND_SET_USERID, user_id);
+                            sendCommandToServer(SharingServer.COMMAND_SET_GROUPID, group_id);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -216,9 +212,7 @@ public class SharingService extends Service {
                                         switch (getInfoCommand(info)) {
                                             case SharingServer.RECEIVED_MEMBER_LOCATIONS:
                                                 String content = getInfoContent(info);
-                                                HashMap<String, double[]> groupMemberLocations = new HashMap<String, double[]>();
-                                                analysisLocationData(content, groupMemberLocations);
-                                                Toast.makeText(SharingService.this, "Toast for zhi shang", Toast.LENGTH_SHORT).show();
+                                                HashMap<String, double[]> groupMemberLocations = analysisLocationData(content);
                                                 for (SharingLocationListener listener : mSharingLocationListeners) {
                                                     listener.onLocationsDataArrived(groupMemberLocations);
                                                 }
@@ -272,7 +266,7 @@ public class SharingService extends Service {
         }
 
         private String getCurrentLocationString() {
-            return "" + mLatitude + "," + mLongitude;
+            return mLatitude + SharingServer.SEPARATOR_LOCATION_LAT_LON + mLongitude;
         }
 
         private void clearLocationListeners() {
@@ -291,7 +285,7 @@ public class SharingService extends Service {
         }
 
         private void sendCommandToServer(String commandCode, String info) throws IOException { //向服务器发送一条信息
-            info = commandCode + ":" + info + "\n";
+            info = commandCode + SharingServer.SEPARATOR_COMMAND_CONTENT + info + "\n";
             mInfoReporter.write(info);
             mInfoReporter.flush();
         }
@@ -326,9 +320,8 @@ public class SharingService extends Service {
          *
          * 执行结果：填充私有成员：mGroupMemberLocations
          */
-        private void analysisLocationData(String locationData, Map<String, double[]> groupMemberLocations) {
-            //首先把已经记录的信息清除掉（因为可能已经有其他用户与服务器断开连接了，如果不清除数据，可能会继续在地图上显示出已经离线的用户
-            groupMemberLocations.clear();
+        private HashMap<String, double[]> analysisLocationData(String locationData) {
+            HashMap<String, double[]> groupMemberLocations = new HashMap<>();
 
             String[] membersLocation = locationData.split(SharingServer.SEPARATOR_LOCATION_DIFFER_MEMBER);
             for (String memberLoc : membersLocation) {
@@ -341,6 +334,21 @@ public class SharingService extends Service {
                 double[] lat_lng = {latitude, longitude};
 
                 groupMemberLocations.put(user_id, lat_lng);
+            }
+
+            return groupMemberLocations;
+        }
+
+        @Override
+        public void onLocationChanged(AMapLocation aMapLocation) {
+            mLatitude = aMapLocation.getLatitude();
+            mLongitude = aMapLocation.getLongitude();
+
+            //调用每个注册的监听者的onLocationChanged方法
+            //这么做的好处是对于位置改变的回调定制可以写在主调对象中
+            // Toast.makeText(SharingService.this, "aMapLocation: " + aMapLocation.toString(), Toast.LENGTH_SHORT).show();
+            for (AMapLocationListener locationListener : mLocationListeners) {
+                locationListener.onLocationChanged(aMapLocation);
             }
         }
     }

@@ -5,9 +5,9 @@ import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -22,8 +22,9 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.daoshengwanwu.android.tourassistant.R;
+import com.daoshengwanwu.android.tourassistant.baihaoran.AppUtil;
 import com.daoshengwanwu.android.tourassistant.baihaoran.LauncherActivity;
-import com.daoshengwanwu.android.tourassistant.wangxiao.util.Util1;
+import com.daoshengwanwu.android.tourassistant.jiangshengda.CircleImageView;
 import com.daoshengwanwu.android.tourassistant.wangxiao.utils.HttpCallBackListener;
 import com.daoshengwanwu.android.tourassistant.wangxiao.utils.HttpUtil;
 import com.daoshengwanwu.android.tourassistant.wangxiao.utils.PrefParams;
@@ -39,7 +40,6 @@ import com.sina.weibo.sdk.net.RequestListener;
 import com.sina.weibo.sdk.openapi.UsersAPI;
 import com.sina.weibo.sdk.openapi.models.User;
 import com.tencent.connect.UserInfo;
-import com.tencent.connect.auth.QQAuth;
 import com.tencent.mm.sdk.modelmsg.SendAuth;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
@@ -53,10 +53,12 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 
 public class LoginActivity extends Activity implements OnClickListener{
@@ -70,13 +72,16 @@ public class LoginActivity extends Activity implements OnClickListener{
     private SsoHandler mSsoHandler;
     private UsersAPI mUsersAPI;
     private Button bt;
-    private String qqname, qqid,qqgender;
     private SharedPreferences s,s1;
     private String name1;
     private String pwd1;
     private String user_id;
     private String user_name;
     private String user_pwd;
+    private JSONObject response1;
+    public static String  qqresult;
+    public static CircleImageView bimp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -295,280 +300,191 @@ public class LoginActivity extends Activity implements OnClickListener{
     /**
      * QQ第三方登录
      */
-    private static final String TAG = LoginActivity.class.getName();
-    public static String mAppid;
+    private Tencent mTencent; //qq主操作对象
+    private IUiListener iuilisten;
     private ImageView mNewLoginButton;
-    public static QQAuth mQQAuth;
-    private UserInfo mInfo;
-    private Tencent mTencent;
-    private final String APP_ID = "1105835094";// 测试时使用，真正发布的时候要换成自己的APP_ID
+    public static String qqname;
+    private String qqgender, qqid;
 
-
-    @Override
-    protected void onStart() {
-        Log.d(TAG, "-->onStart");
-        final Context context = LoginActivity.this;
-        final Context ctxContext = context.getApplicationContext();
-        mAppid = APP_ID;
-        mQQAuth = QQAuth.createInstance(mAppid, ctxContext);
-        mTencent = Tencent.createInstance(mAppid, LoginActivity.this);
-        super.onStart();
-    }
-
-    @Override
-    protected void onResume() {
-        Log.d(TAG, "-->onResume");
-        super.onResume();
-        receiveBroadCast = new ReceiveBroadCast();
-        IntentFilter filter = new IntentFilter();
-        filter.addAction("authlogin");
-        LoginActivity.this.registerReceiver(receiveBroadCast, filter);
-    }
-
-    @Override
-    protected void onPause() {
-        Log.d(TAG, "-->onPause");
-        super.onPause();
-    }
-
-    @Override
-    protected void onStop() {
-        Log.d(TAG, "-->onStop");
-        super.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        Log.d(TAG, "-->onDestroy");
-        super.onDestroy();
-        LoginActivity.this.unregisterReceiver(receiveBroadCast);
-    }
 
     private void initViews2() {
         mNewLoginButton = (ImageView) findViewById(R.id.lg_qq);
-        OnClickListener listener = new NewClickListener();
-        mNewLoginButton.setOnClickListener(listener);
-        updateLoginButton();
+        mTencent = Tencent.createInstance("1105835094", getApplicationContext());
+        mNewLoginButton.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+
+                System.out.println("登录");
+                qqlogin();//登录
+            }
+        });
     }
+    public void getyh() {
+        UserInfo userInfo = new UserInfo(LoginActivity.this, mTencent.getQQToken());
+        IUiListener userInfoListener = new IUiListener() {
 
-    private void updateLoginButton() {
-        if (mQQAuth != null && mQQAuth.isSessionValid()) {
-        } else {
-        }
-    }
+            @Override
+            public void onError(UiError arg0) {
 
-    private void updateUserInfo() {
-        if (mQQAuth != null && mQQAuth.isSessionValid()) {
-            IUiListener listener = new IUiListener() {
+            }
 
-                @Override
-                public void onError(UiError e) {
+            @Override
+            public void onComplete(final Object arg0) {
+                Message msg = new Message();
+                msg.obj = arg0;
+                msg.what = 0;
+                new Thread() {
 
-                }
-                @Override
-                public void onComplete(final Object response) {
-                    Message msg = new Message();
-                    msg.obj = response;
-                    msg.what = 0;
-                    mHandler.sendMessage(msg);
-                    new Thread() {
+                    @Override
+                    public void run() {
+                        JSONObject json = (JSONObject) arg0;
+                        //获取头像
+                        if (json.has("figureurl")) {//判断字段是否为空
+                            Bitmap bitmap = null;
+                            try {
+                                bitmap = getbitmap(json
+                                        .getString("figureurl_qq_2"));
+                            } catch (JSONException e) {
 
-                        @Override
-                        public void run() {
-                            JSONObject json = (JSONObject) response;
-                            if (json.has("figureurl")) {
-                                Bitmap bitmap = null;
-                                try {
-                                    bitmap = Util1.getbitmap(json
-                                            .getString("figureurl_qq_2"));
-                                } catch (JSONException e) {
-
-                                }
-                                Message msg = new Message();
-                                msg.obj = bitmap;
-                                msg.what = 1;
-                                mHandler.sendMessage(msg);
                             }
+                            Message msg = new Message();
+                            msg.obj = bitmap;
+                            msg.what = 1;
+                            mHandler.sendMessage(msg);
                         }
+                    }
 
-                    }.start();
+                }.start();
+
+                if (msg.what == 0) {
+                    JSONObject response = (JSONObject) msg.obj;
+                            if (response.has("nickname")) {
+                                try {
+                                    qqgender = response.getString("gender").toString();
+                                    qqname = response.getString("nickname").toString();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
                 }
 
-                @Override
-                public void onCancel() {
-                }
-            };
-            mInfo = new UserInfo(this, mQQAuth.getQQToken());
-            mInfo.getUserInfo(listener);
+             //   Toast.makeText(LoginActivity.this, "用户id： " + qqid + "\n用户昵称： " + qqname + "\n用户性别： " + qqgender, Toast.LENGTH_SHORT).show();
+                //建立连接
+                AsyncHttpClient client = new AsyncHttpClient();
+                String Url_add = "http://10.7.88.106:8080/qq/login";
+                //获取参数
+                RequestParams params = new RequestParams();
+                params.add("user_id",qqid);
+                params.add("qq_name",qqname);
+                params.add("sex",qqgender);
+                //服务器获取参数
+                client.get(getApplicationContext(), Url_add, params, new AsyncHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int i, Header[] headers, byte[] bytes) {
+                        qqresult = new String(bytes);
+                        AppUtil.User.USER_ID = qqresult;
+                        AppUtil.User.USER_NAME = qqname;
+                        AppUtil.User.USER_GENDER = qqgender;
+                        Toast.makeText(LoginActivity.this,"登录成功", Toast.LENGTH_LONG).show();
 
-        } else {
-        }
+                        Intent intent = new Intent(LoginActivity.this, LauncherActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                    @Override
+                    public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+
+                    }
+                });
+                if(!AppUtil.Group.GROUP_ID.equals("")){
+                    ArrayList<TeamUser> alTU = new ArrayList<TeamUser>();
+                    AsyncHttpClient gclient = new AsyncHttpClient();
+                    String gUrl_add = "http://10.7.88.106:8080/qq/login";
+                }
+            }
+
+            @Override
+            public void onCancel() {
+            }
+        };
+        userInfo.getUserInfo(userInfoListener);
     }
+    public void qqlogin() {
 
-    Handler mHandler = new Handler() {
+        iuilisten = new IUiListener() {
 
-        @Override
-        public void handleMessage(Message msg) {
-            if (msg.what == 0) {
-                JSONObject response = (JSONObject) msg.obj;
+            @Override
+            public void onCancel() {
+
+            }
+
+            public void onComplete(Object response) {
+
+                if (null == response) {
+                    System.out.println("返回为空登录失败");
+                    return;
+                }
+                JSONObject jsonResponse = (JSONObject) response;
+                if (null != jsonResponse && jsonResponse.length() == 0) {
+                    System.out.println("返回为空登录失败");
+                    return;
+                }
+                System.out.println("登录成功：=" + response);
+                response1 = (JSONObject)response;
                 try {
-                    qqid = response.getString("openid");
+                    qqid =  response1.getString("openid").toString();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                if (response.has("nickname")) {
-                    try {
-                        qqgender = response.getString("gender");
-                        qqname = response.getString("nickname");
-                    } catch (JSONException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-                }
-            } else if (msg.what == 1) {
+                getyh() ;
+            }
+
+            @Override
+            public void onError(UiError arg0) {
+
+            }
+        };
+        //开始qq授权登录
+        //要所有权限，不然会再次申请增量权限，这里不要设置成get_user_info,add_t
+        mTencent.login(LoginActivity.this, "all", iuilisten);
+
+    }
+   Handler mHandler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == 1) {
                 Bitmap bitmap = (Bitmap) msg.obj;
+                AppUtil.User.USER_IMG = bitmap;
             }
         }
-
     };
 
-    private void onClickLogin() {
-        if (!mQQAuth.isSessionValid()) {
-            IUiListener listener = new BaseUiListener() {
-                @Override
-                protected void doComplete(JSONObject values) {
-                    updateUserInfo();
-                    updateLoginButton();
-                    Toast.makeText(LoginActivity.this, "用户id： " + qqid + "\n用户昵称： " + qqname + "\n用户性别： " + qqgender, Toast.LENGTH_SHORT).show();
-                    final String[] tv = new String[1];
+    public static Bitmap getbitmap(String imageUri) {
+        Log.v("Util", "getbitmap:" + imageUri);
+        // 显示网络上的图片
+        Bitmap bitmap = null;
+        try {
+            URL myFileUrl = new URL(imageUri);
+            HttpURLConnection conn = (HttpURLConnection) myFileUrl
+                    .openConnection();
+            conn.setDoInput(true);
+            conn.connect();
+            InputStream is = conn.getInputStream();
+            bitmap = BitmapFactory.decodeStream(is);
+            is.close();
 
-                    //建立连接
-                    AsyncHttpClient client = new AsyncHttpClient();
-                    String Url_add = "http://10.7.84.97:8080/qq/add";
-                    //获取参数
-                    RequestParams params = new RequestParams();
-                    params.add("qqid",qqid);
-                    params.add("qqname",qqname);
-                    params.add("qqgender",qqgender);
-                    //服务器获取参数
-                    client.get(getApplicationContext(), Url_add, params, new AsyncHttpResponseHandler() {
-                        @Override
-                        public void onSuccess(int i, Header[] headers, byte[] bytes) {
-                            tv[0] = new String(bytes);
-                            // System.out.print(response);
-//                    try {
-//                        JSONObject result=response.getJSONObject("result");
-//                        JSONObject qq=result.getJSONObject("qq");
-//                        String output= qq.getString("qq")+"\n"
-//                                +qq.getString("nick_name")+"\n"
-//                                +qq.getString("user_id");
-//                        Tv.setText("123");
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-                            String result = tv[0].toString();
-                            Toast.makeText(LoginActivity.this, result, Toast.LENGTH_LONG).show();
-                            if (result.equals("注册成功")) {
-                                Intent intent = new Intent(LoginActivity.this, LauncherActivity.class);
-                                startActivity(intent);
-                            }
-                        }
-
-
-                        @Override
-                        public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
-
-                        }
-
-
-                    });
-
-                }
-            };
-
-            mQQAuth.login(this, "all", listener);
-            // mTencent.loginWithOEM(this, "all",
-            // listener,"10000144","10000144","xxxx");
-            mTencent.login(this, "all", listener);
-        } else {
-            mQQAuth.logout(this);
-            updateUserInfo();
-            updateLoginButton();
+            Log.v("Util", "image download finished." + imageUri);
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.v("Util", "getbitmap bmp fail---");
+            return null;
         }
-
-    }
-
-    public static boolean ready(Context context) {
-        if (mQQAuth == null) {
-            return false;
-        }
-        boolean ready = mQQAuth.isSessionValid()
-                && mQQAuth.getQQToken().getOpenId() != null;
-        if (!ready)
-            Toast.makeText(context, "login and get openId first, please!",
-                    Toast.LENGTH_SHORT).show();
-        return ready;
-    }
-
-    private class BaseUiListener implements IUiListener {
-
-        @Override
-        public void onComplete(Object response) {
-
-            //	Util1.showResultDialog(LoginActivity.this, response.toString(),
-            //			"登录成功");
-
-
-            JSONObject response1 = (JSONObject) response;
-            try {
-                qqid = response1.getString("openid");
-                qqgender = response1.getString("gender");
-                qqname = response1.getString("nickname");
-
-
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-            doComplete((JSONObject) response);
-        }
-
-        protected void doComplete(JSONObject values) {
-
-        }
-
-        @Override
-        public void onError(UiError e) {
-            Util1.toastMessage(LoginActivity.this, "onError: " + e.errorDetail);
-            Util1.dismissDialog();
-        }
-
-        @Override
-        public void onCancel() {
-            Util1.toastMessage(LoginActivity.this, "onCancel: ");
-            Util1.dismissDialog();
-        }
+        return bitmap;
     }
 
 
-    class NewClickListener implements OnClickListener {
-        @Override
-        public void onClick(View v) {
-            Context context = v.getContext();
-            Class<?> cls = null;
-            switch (v.getId()) {
-                case R.id.lg_qq:
-                    onClickLogin();
-
-                    return;
-            }
-            if (cls != null) {
-                Intent intent = new Intent(context, cls);
-                context.startActivity(intent);
-            }
-        }
-    }
 
     /**
      * 记住密码

@@ -27,7 +27,7 @@ public class AppUtil {
     }
 
     public static final class Group {
-        public static String GROUP_ID = "SurfaceStrongestTeam";
+        public static String GROUP_ID = "";
         public static String GROUP_NAME;
     }
 

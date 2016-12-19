@@ -58,6 +58,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 
 public class LoginActivity extends Activity implements OnClickListener{
@@ -374,9 +375,9 @@ public class LoginActivity extends Activity implements OnClickListener{
                 String Url_add = "http://10.7.88.106:8080/qq/login";
                 //获取参数
                 RequestParams params = new RequestParams();
-                params.add("qqid",qqid);
-                params.add("qqname",qqname);
-                params.add("qqgender",qqgender);
+                params.add("user_id",qqid);
+                params.add("qq_name",qqname);
+                params.add("sex",qqgender);
                 //服务器获取参数
                 client.get(getApplicationContext(), Url_add, params, new AsyncHttpResponseHandler() {
                     @Override
@@ -386,6 +387,7 @@ public class LoginActivity extends Activity implements OnClickListener{
                         AppUtil.User.USER_NAME = qqname;
                         AppUtil.User.USER_GENDER = qqgender;
                         Toast.makeText(LoginActivity.this,"登录成功", Toast.LENGTH_LONG).show();
+
                         Intent intent = new Intent(LoginActivity.this, LauncherActivity.class);
                         startActivity(intent);
                         finish();
@@ -395,6 +397,11 @@ public class LoginActivity extends Activity implements OnClickListener{
 
                     }
                 });
+                if(!AppUtil.Group.GROUP_ID.equals("")){
+                    ArrayList<TeamUser> alTU = new ArrayList<TeamUser>();
+                    AsyncHttpClient gclient = new AsyncHttpClient();
+                    String gUrl_add = "http://10.7.88.106:8080/qq/login";
+                }
             }
 
             @Override

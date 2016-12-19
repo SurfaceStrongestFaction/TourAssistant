@@ -22,6 +22,7 @@ public class SetActivity extends BaseActivity {
     private Switch on_off;
     private Button logout;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

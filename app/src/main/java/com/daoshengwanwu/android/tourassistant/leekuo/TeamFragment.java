@@ -32,7 +32,7 @@ public class TeamFragment extends Fragment {
     private RelativeLayout myTeam;
     private RelativeLayout talk;
     private String str; //战队名
-    private final String url = new String("http://10.7.88.19/team/create");
+    private final String url = new String("http://"+AppUtil.SharingServer.HOST2+":"+AppUtil.SharingServer.PORT2+"/team/create");
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,8 +78,8 @@ public class TeamFragment extends Fragment {
                                     String str1 = new String(bytes);
                                     Toast.makeText(getActivity(),str1,Toast.LENGTH_SHORT).show();
                                     if(!str1.equals("创建队伍失败,请重新创建")&&!str1.equals("只能创建一个队伍")){
-                                        AppUtil.Group.Group_id=str1;
-                                        Toast.makeText(getActivity()," AppUtil.Group.Group_id:"+AppUtil.Group.Group_id,Toast.LENGTH_SHORT).show();
+                                        AppUtil.Group. GROUP_ID=str1;
+                                        Toast.makeText(getActivity()," AppUtil.Group.Group_id:"+AppUtil.Group. GROUP_ID,Toast.LENGTH_SHORT).show();
                                     }
                                 }
 

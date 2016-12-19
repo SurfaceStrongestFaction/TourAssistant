@@ -32,7 +32,8 @@ public class TeamMemberActivity extends BaseActivity {
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ChatActivity.startChatActivity(TeamMemberActivity.this);
+                //ChatActivity.startChatActivity(TeamMemberActivity.this);
+
             }
         });
     }

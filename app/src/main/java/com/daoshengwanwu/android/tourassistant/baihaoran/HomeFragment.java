@@ -12,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -28,12 +29,20 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.daoshengwanwu.android.tourassistant.R;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
 import com.example.www.library.PullToRefreshView;
+
+import org.apache.http.Header;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 public class HomeFragment extends Fragment {
@@ -54,6 +63,7 @@ public class HomeFragment extends Fragment {
     private AutoCompleteTextView acTextView;
     private String [] arr = {"石家庄","宁波","邢台","保定","盐城","北京","上海","杭州","承德","西安","重庆","长沙"};
 
+    private static final String TAG = "HomeFragment";
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -103,7 +113,50 @@ public class HomeFragment extends Fragment {
                 }, REFRESH_DELAY);
             }
         });
+
+        getDataFromServer();
+
         return v;
+    }
+
+    private void getDataFromServer() {
+        AsyncHttpClient client = new AsyncHttpClient();
+        String url = "http://192.168.43.210:80/spot/getspotid";//10.7.88.89,192.168.191.1
+
+        RequestParams params = new RequestParams();
+        params.add("id", "111");
+
+        client.get(getActivity().getApplicationContext(), url, params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                try {
+                    JSONArray jsonArray = response.getJSONArray("jsonArray");
+                    List<String> spotsid = new ArrayList<String>();
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        spotsid.add(jsonArray.getString(i));
+                    }
+
+                    Log.d(TAG, "onSuccess: spotsid:" + spotsid);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                Log.d(TAG, "onFailure: failure");
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                Log.d(TAG, "onFailure: failure");
+            }
+        });
+
     }
 
     private void getWidgetsReferences(View v) {

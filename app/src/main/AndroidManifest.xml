@@ -49,7 +49,7 @@
 
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="2214f6ab633dcb98ae9dc3e06256b9b5" />
+            android:value="c6f919b976553027da271b65df049774" />
 
         <activity android:name=".baihaoran.LauncherActivity">
             <intent-filter>
@@ -79,6 +79,7 @@
         <activity android:name=".wangxiao.RegisterActivity" />
         <activity android:name=".wangxiao.Register2Activity" />
         <activity android:name=".wangxiao.LoginActivity" />
+        <activity android:name=".jiangshengda.poisearch.PoiAroundSearchActivity"/>
 
         <service android:name="com.amap.api.location.APSService" />
         <service android:name=".baihaoran.SharingService" />

@@ -1,19 +1,23 @@
 package com.daoshengwanwu.android.tourassistant.jiangshengda;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.daoshengwanwu.android.tourassistant.R;
-import com.daoshengwanwu.android.tourassistant.leekuo.BaseActivity;
+import com.daoshengwanwu.android.tourassistant.shenyue.ScenicspotActivity;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
-public class SearchActivity extends BaseActivity {
+public class SearchActivity extends Activity {
     private TextView log;
     private RelativeLayout btn;
     private ArrayList<History> ls = new ArrayList<History>();
@@ -36,6 +40,16 @@ public class SearchActivity extends BaseActivity {
         lv = (ListView) findViewById(R.id.Lv);
         log = (TextView) findViewById(R.id.His_log);
         lv.setAdapter(mAdapter);
+        //每个Item的点击事件
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (ls.get(position).equals(1)){
+                    ScenicspotActivity.actionStartActivity(SearchActivity.this, UUID.randomUUID().toString());
+                }
+
+            }
+        });
         btn = (RelativeLayout) findViewById(R.id.Clean_history);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override

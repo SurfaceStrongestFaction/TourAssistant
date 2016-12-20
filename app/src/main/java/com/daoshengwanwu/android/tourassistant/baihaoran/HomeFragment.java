@@ -114,7 +114,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        getDataFromServer();
+//        getDataFromServer();
 
         return v;
     }
@@ -128,32 +128,35 @@ public class HomeFragment extends Fragment {
 
         client.get(getActivity().getApplicationContext(), url, params, new JsonHttpResponseHandler() {
             @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 super.onSuccess(statusCode, headers, response);
-                try {
-                    JSONArray jsonArray = response.getJSONArray("jsonArray");
-                    List<String> spotsid = new ArrayList<String>();
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        spotsid.add(jsonArray.getString(i));
-                    }
 
-                    Log.d(TAG, "onSuccess: spotsid:" + spotsid);
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                if (null == response) {
+                    return;
                 }
 
-            }
+//                try {
+//                    for (int i = 0; i < response.length(); i++) {
+                        String spot_id = "222";
 
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                super.onFailure(statusCode, headers, throwable, errorResponse);
-                Log.d(TAG, "onFailure: failure");
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                super.onFailure(statusCode, headers, responseString, throwable);
-                Log.d(TAG, "onFailure: failure");
+//                        AsyncHttpClient client = new AsyncHttpClient();
+//                        String url = "http://192.168.43.210:80/spot/getrecommend";//10.7.88.89,192.168.191.1
+//
+//                        Log.d(TAG, "onSuccess: spotid:" + spot_id);
+//                        RequestParams params = new RequestParams();
+//                        params.add("id", spot_id);
+//
+//                        client.get(getActivity().getApplicationContext(), url, params, new JsonHttpResponseHandler() {
+//                            @Override
+//                            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+//                                super.onSuccess(statusCode, headers, response);
+//                                Log.d(TAG, "onSuccess: JSONArray:" + response);
+//                            }
+//                        });
+//                    }
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
             }
         });
 

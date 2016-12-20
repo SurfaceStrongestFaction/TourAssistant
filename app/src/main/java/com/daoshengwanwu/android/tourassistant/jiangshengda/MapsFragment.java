@@ -149,14 +149,14 @@ public class MapsFragment extends Fragment implements AMapLocationListener, Shar
         //-------------------------胜达-------------------------------------------------
         View v = inflater.inflate(R.layout.jiangshengda_fragment_maps, container, false);
 
-        Button sousou = (Button) v.findViewById(R.id.sousou);
-        sousou.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getActivity(), PoiAroundSearchActivity.class);
-                startActivity(i);
-            }
-        });
+//        Button sousou = (Button) v.findViewById(R.id.sousou);
+//        sousou.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent i = new Intent(getActivity(), PoiAroundSearchActivity.class);
+//                startActivity(i);
+//            }
+//        });
 
         btn = (Button) v.findViewById(R.id.Fog_btn);
         act_main = (FrameLayout)v.findViewById(R.id.fragment_maps);
@@ -208,6 +208,13 @@ public class MapsFragment extends Fragment implements AMapLocationListener, Shar
         mStopUpload.setOnClickListener(this);
 
         updateCurrentInfomation();
+
+        mSharingBinder.registerTeamChangeListener(new SharingService.OnTeamChangeListener() {
+            @Override
+            public void onTeamChange(String team_id) {
+                updateCurrentInfomation();
+            }
+        });
 
         return v;
     }

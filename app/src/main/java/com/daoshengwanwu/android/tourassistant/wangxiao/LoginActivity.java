@@ -2,8 +2,10 @@ package com.daoshengwanwu.android.tourassistant.wangxiao;
 
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -81,6 +83,7 @@ public class LoginActivity extends Activity implements OnClickListener{
     private JSONObject response1;
     public static String  qqresult;
     public static CircleImageView bimp;
+    private final String xyurl = new String("http://"+AppUtil.SharingServer.HOST2+":"+AppUtil.SharingServer.PORT2+"/team/getInformation");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -317,9 +320,66 @@ public class LoginActivity extends Activity implements OnClickListener{
 
                 System.out.println("登录");
                 qqlogin();//登录
+
             }
         });
     }
+
+    private void getTeamInfo() {
+        if(!AppUtil.Group.GROUP_ID.equals("")){
+            ArrayList<TeamUser> alTU = new ArrayList<TeamUser>();
+            AsyncHttpClient gclient = new AsyncHttpClient();
+            RequestParams params1 = new RequestParams();
+            params1.add("team_id",AppUtil.Group.GROUP_ID);
+            // 2.关闭弹出窗口
+            //3.根据服务器返回值显示创建成功或失败的提示
+
+
+            gclient.get(getApplicationContext(), xyurl,params1, new AsyncHttpResponseHandler() {
+                @Override
+                public void onSuccess(int i, Header[] headers, byte[] bytes) {
+                    String teamInfo = new String(bytes);
+                 //   Toast.makeText(LoginActivity.this, teamInfo, Toast.LENGTH_SHORT).show();
+                    AlertDialog ad = new AlertDialog.Builder(LoginActivity.this).create();
+                    ad.setTitle("TeamInfo");
+                    ad.setMessage(teamInfo);
+                    ad.setButton("确定", new DialogInterface.OnClickListener() {
+
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+                    ad.setButton2("取消", new DialogInterface.OnClickListener() {
+
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+                    ad.show();
+
+//                    JSONObject json = (JSONObject) teamInfo;
+//                    JSONArray users = null;
+//                    try {
+//                        users = jsonObject.getJSONArray("你的key");
+//                        for (int i = 0; i < users.size(); i++) {
+//                            JSONObject attention = users.getJSONObject(i);
+//                            String name = attention.getString("name");
+//                            String account = attention.getString("account");
+//
+//                        }catch(JSONException e){
+//                            e.printStackTrace();
+//                        }
+//
+//                    }
+                }
+                @Override
+                public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+                    Toast.makeText(LoginActivity.this,"获取队伍信息失败",Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+
     public void getyh() {
         UserInfo userInfo = new UserInfo(LoginActivity.this, mTencent.getQQToken());
         IUiListener userInfoListener = new IUiListener() {
@@ -375,7 +435,7 @@ public class LoginActivity extends Activity implements OnClickListener{
                 String Url_add = "http://10.7.88.106:8080/qq/login";
                 //获取参数
                 RequestParams params = new RequestParams();
-                params.add("user_id",qqid);
+                params.add("qq",qqid);
                 params.add("qq_name",qqname);
                 params.add("sex",qqgender);
                 //服务器获取参数
@@ -387,21 +447,17 @@ public class LoginActivity extends Activity implements OnClickListener{
                         AppUtil.User.USER_NAME = qqname;
                         AppUtil.User.USER_GENDER = qqgender;
                         Toast.makeText(LoginActivity.this,"登录成功", Toast.LENGTH_LONG).show();
-
+                        getTeamInfo();
                         Intent intent = new Intent(LoginActivity.this, LauncherActivity.class);
                         startActivity(intent);
                         finish();
                     }
                     @Override
                     public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
-
+                        Toast.makeText(LoginActivity.this,"登录失败", Toast.LENGTH_LONG).show();
                     }
                 });
-                if(!AppUtil.Group.GROUP_ID.equals("")){
-                    ArrayList<TeamUser> alTU = new ArrayList<TeamUser>();
-                    AsyncHttpClient gclient = new AsyncHttpClient();
-                    String gUrl_add = "http://10.7.88.106:8080/qq/login";
-                }
+
             }
 
             @Override

@@ -61,6 +61,9 @@ import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import static com.daoshengwanwu.android.tourassistant.baihaoran.AppUtil.Group.GROUP_ID;
+import static com.daoshengwanwu.android.tourassistant.baihaoran.AppUtil.User.USER_ID;
+
 
 public class LoginActivity extends Activity implements OnClickListener{
     private AuthInfo mAuthInfo;
@@ -124,9 +127,11 @@ public class LoginActivity extends Activity implements OnClickListener{
                     in = new BufferedReader(new InputStreamReader(con.getInputStream()));
                     String line;
                     while ((line = in.readLine()) != null){
-                        result += "\n" +line;
+                        result += line+"\n";
                     }
-                      user_id = result;
+                    String[]results = result.split("/n");
+                    USER_ID = results[0];
+                    GROUP_ID = results[1];
             }  catch (Exception e) {
                 System.out.println("发送POST请求出现异常！" + e);
                 e.printStackTrace();
@@ -327,9 +332,9 @@ public class LoginActivity extends Activity implements OnClickListener{
     }
 
     private void getTeamInfo() {
-        if(!AppUtil.Group.GROUP_ID.equals("")){
+        if(!GROUP_ID.equals("")){
             RequestParams params1 = new RequestParams();
-            params1.add("team_id",AppUtil.Group.GROUP_ID);
+            params1.add("team_id", GROUP_ID);
             // 2.关闭弹出窗口
             //3.根据服务器返回值显示创建成功或失败的提示
 
@@ -343,8 +348,8 @@ public class LoginActivity extends Activity implements OnClickListener{
                     // System.out.print(response);
                     try {
                         String team_id=response.getString("team_id");
-                        AppUtil.Group.GROUP_ID = team_id;
-                        Toast.makeText(LoginActivity.this, AppUtil.Group.GROUP_ID, Toast.LENGTH_SHORT).show();
+                        GROUP_ID = team_id;
+                        Toast.makeText(LoginActivity.this, GROUP_ID, Toast.LENGTH_SHORT).show();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -463,7 +468,7 @@ public class LoginActivity extends Activity implements OnClickListener{
                     @Override
                     public void onSuccess(int i, Header[] headers, byte[] bytes) {
                         qqresult = new String(bytes);
-                        AppUtil.User.USER_ID = qqresult;
+                        USER_ID = qqresult;
                         AppUtil.User.USER_NAME = qqname;
                         AppUtil.User.USER_GENDER = qqgender;
                         xyuser_id = qqresult;

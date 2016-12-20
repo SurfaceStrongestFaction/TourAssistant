@@ -29,8 +29,9 @@ public class AppUtil {
     }
 
     public static final class Group {
-        public static String GROUP_ID = "2ff17b61-b546-4888-a738-b010079acc68";
+        public static String GROUP_ID = "";
         public static String GROUP_NAME;
+        public static String GROUP_CAPTIAN = "4b9a29a5-9fc9-48db-9486-79353106a599";
     }
 
 }

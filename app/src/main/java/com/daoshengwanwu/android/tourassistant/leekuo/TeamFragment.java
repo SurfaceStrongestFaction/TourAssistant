@@ -76,7 +76,7 @@ public class TeamFragment extends Fragment {
                                     Toast.makeText(getActivity(),str1,Toast.LENGTH_SHORT).show();
                                     if(!str1.equals("创建队伍失败,请重新创建")&&!str1.equals("只能创建一个队伍")){
                                         AppUtil.Group.GROUP_ID=str1;
-                                        Toast.makeText(getActivity()," AppUtil.Group.Group_id:"+AppUtil.Group.GROUP_ID,Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getActivity()," AppUtil.Group.GROUP_ID:"+AppUtil.Group.GROUP_ID,Toast.LENGTH_SHORT).show();
                                     }
                                 }
 

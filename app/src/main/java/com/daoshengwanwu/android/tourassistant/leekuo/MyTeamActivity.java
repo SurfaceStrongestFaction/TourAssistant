@@ -1,9 +1,7 @@
 package com.daoshengwanwu.android.tourassistant.leekuo;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,6 +11,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.daoshengwanwu.android.tourassistant.R;
+import com.daoshengwanwu.android.tourassistant.baihaoran.AppUtil;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.apache.http.Header;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -22,13 +29,105 @@ public class MyTeamActivity extends BaseActivity {
     private Button btn1;
     private Button btn2;
     private RelativeLayout transfer;
+    private final String xyurl = new String("http://10.7.88.30/user/getInformation");
+    private final String xyurl2 = new String("http://10.7.88.30/team/getInformation");
+    public String username;
+    public String members;
+    public String[] names;
+    public int i;
+    public MyTeamAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lk_activity_my_team);
         getData();
-        MyTeamAdapter adapter=new MyTeamAdapter(this,items);
+    }
+    public static  void actionStartActivity(Context packageContext) {
+        Intent intent = new Intent(packageContext,  MyTeamActivity.class);
+        packageContext.startActivity(intent);
+    }
+
+    private void getCaptianInfo() {
+        AsyncHttpClient gclient = new AsyncHttpClient();
+        RequestParams params = new RequestParams();
+        params.add("user_id",AppUtil.Group.GROUP_CAPTIAN);
+        gclient.get(getApplicationContext(),xyurl,params,new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                try {
+                    username = response.getString("user_name");
+                    TextView tv1 = (TextView) findViewById(R.id.myTeam_leader);
+                    tv1.setText(username);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                    super.onFailure(statusCode, headers, throwable, errorResponse);
+                }
+            });
+    }
+
+    private void getMembersInfo() {
+        AsyncHttpClient gclient = new AsyncHttpClient();
+        RequestParams params = new RequestParams();
+        params.add("team_id",AppUtil.Group.GROUP_ID);
+        gclient.get(getApplicationContext(),xyurl2,params,new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                try {
+                    members = response.getString("members");
+                    setMembers(members);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+            }
+        });
+    }
+
+    private void setMembers(String members) {
+        names = members.split("\\,");
+        for ( i = 0; i < names.length; i++) {
+            AsyncHttpClient gclient = new AsyncHttpClient();
+            RequestParams params = new RequestParams();
+            params.add("user_id",names[i]);
+            gclient.get(getApplicationContext(),xyurl,params,new JsonHttpResponseHandler(){
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    super.onSuccess(statusCode, headers, response);
+                    try {
+                        String n = response.getString("user_name");
+                        items.add(new MyTeamItem(R.drawable.item_pic2,n));
+                        adapter.notifyDataSetChanged();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                    super.onFailure(statusCode, headers, throwable, errorResponse);
+                }
+            });
+        }
+    }
+
+
+    public void  getData(){
+
+        TextView tv = (TextView) findViewById(R.id.myTeam_name);
+        tv.setText(AppUtil.Group.GROUP_NAME);
+        getCaptianInfo();
+        getMembersInfo();
+        adapter=new MyTeamAdapter(this,items);
         lv=(ListView)findViewById(R.id.myTeam_listView);
         lv.setAdapter(adapter);
         setItemClick();
@@ -40,25 +139,6 @@ public class MyTeamActivity extends BaseActivity {
                 TransferTeamActivity.actionStartActivity(MyTeamActivity.this);
             }
         });
-
-    }
-    public static  void actionStartActivity(Context packageContext) {
-        Intent intent = new Intent(packageContext,  MyTeamActivity.class);
-        packageContext.startActivity(intent);
-    }
-    public void  getData(){
-        items.add(new MyTeamItem(R.drawable.item_pic2,"申玥"));
-        items.add(new MyTeamItem(R.drawable.item_pic2,"申玥"));
-        items.add(new MyTeamItem(R.drawable.item_pic2,"申玥"));
-        items.add(new MyTeamItem(R.drawable.item_pic2,"申玥"));
-        items.add(new MyTeamItem(R.drawable.item_pic2,"申玥"));
-        items.add(new MyTeamItem(R.drawable.item_pic2,"申玥"));
-        items.add(new MyTeamItem(R.drawable.item_pic2,"申玥"));
-        items.add(new MyTeamItem(R.drawable.item_pic2,"申玥"));
-        items.add(new MyTeamItem(R.drawable.item_pic2,"申玥"));
-        items.add(new MyTeamItem(R.drawable.item_pic2,"申玥"));
-
-
     }
 
     public void setItemClick(){

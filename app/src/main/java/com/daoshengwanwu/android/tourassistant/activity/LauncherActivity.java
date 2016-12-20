@@ -3,11 +3,11 @@ package com.daoshengwanwu.android.tourassistant.activity;
 
 import android.content.ComponentName;
 import android.content.ServiceConnection;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -141,7 +141,7 @@ public class LauncherActivity extends BaseActivity {
                     mTabsRanksImg.setImageResource(R.drawable.ranks1);
                     mTabsRanksText.setTextColor(ContextCompat.getColor(LauncherActivity.this, R.color.bhr_tabs_green));
                     if (null == mTeamFragment) {
-                        mTeamFragment = TeamFragment.newInstance();
+                        mTeamFragment = TeamFragment.newInstance(mSharingBinder);
                     }
                     mFragmentManager.beginTransaction().replace(R.id.launcher_fragment_container, mTeamFragment).commit();
                     break;

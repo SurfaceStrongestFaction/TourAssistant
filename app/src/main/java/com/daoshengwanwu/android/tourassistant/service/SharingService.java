@@ -271,6 +271,14 @@ public class SharingService extends Service {
             }
         }
 
+        public void registerOnTeamMemberChangeListener(OnTeamMemberChangeListener listener) {
+            mOnTeamMemberChangeListeners.add(listener);
+        }
+
+        public void unregisterOnTeamMemberChangeListener(OnTeamMemberChangeListener listener) {
+            mOnTeamMemberChangeListeners.remove(listener);
+        }
+
         public void startLocationService() {
             mIsStartingLocation = true;
             //获取定位客户端以及开启定位服务

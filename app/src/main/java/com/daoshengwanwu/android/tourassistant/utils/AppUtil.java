@@ -27,7 +27,7 @@ public class AppUtil {
     }
 
     public static final class User {
-        public static String USER_ID = "1";
+        public static String USER_ID = "";
         public static String USER_NAME = "";
         public static Bitmap USER_IMG;
         public static String USER_GENDER = "男";

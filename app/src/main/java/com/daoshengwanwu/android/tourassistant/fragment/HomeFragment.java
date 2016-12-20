@@ -1,4 +1,4 @@
-package com.daoshengwanwu.android.tourassistant.baihaoran;
+package com.daoshengwanwu.android.tourassistant.fragment;
 
 
 import android.content.Context;
@@ -12,7 +12,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -32,17 +31,18 @@ import com.daoshengwanwu.android.tourassistant.R;
 import com.daoshengwanwu.android.tourassistant.model.HomeModel;
 import com.daoshengwanwu.android.tourassistant.model.Spot;
 import com.daoshengwanwu.android.tourassistant.utils.DisplayUtil;
+import com.example.www.library.PullToRefreshView;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
 
-import java.util.ArrayList;
-import java.util.List;
-import com.example.www.library.PullToRefreshView;
-
 import org.apache.http.Header;
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class HomeFragment extends Fragment {

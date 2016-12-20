@@ -1,36 +1,33 @@
-package com.daoshengwanwu.android.tourassistant.jiangshengda;
+package com.daoshengwanwu.android.tourassistant.fragment;
 
 
-import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.graphics.Point;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.amap.api.location.AMapLocation;//定位信息类
-import com.amap.api.location.AMapLocationListener;//定位回调接口
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.Projection;
 import com.amap.api.maps.UiSettings;
 import com.amap.api.maps.model.LatLng;
-
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.daoshengwanwu.android.tourassistant.R;
-import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
 import com.daoshengwanwu.android.tourassistant.service.SharingService;
-import com.daoshengwanwu.android.tourassistant.activity.PoiAroundSearchActivity;
+import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
 import com.daoshengwanwu.android.tourassistant.view.MyView;
 
 import java.io.IOException;

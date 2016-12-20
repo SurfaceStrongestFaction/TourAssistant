@@ -102,10 +102,8 @@ public class TeamFragment extends Fragment {
                     }
                 });
 
-                Bundle data = getArguments();
-                if (null != data) {
-                    mBinder = (SharingService.SharingBinder)data.getSerializable(KEY_BINDER);
-                }
+
+
 
             }
         });
@@ -120,7 +118,7 @@ public class TeamFragment extends Fragment {
         myTeam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               MyTeamActivity.actionStartActivity(getActivity());
+               MyTeamActivity.actionStartActivity(getActivity(), mBinder);
             }
         });
         talk=(RelativeLayout)view.findViewById(R.id.lk_talk);
@@ -130,6 +128,12 @@ public class TeamFragment extends Fragment {
 
             }
         });
+
+        Bundle data = getArguments();
+        if (null != data) {
+            mBinder = (SharingService.SharingBinder)data.getSerializable(KEY_BINDER);
+        }
+
         return view;
     }
 
@@ -147,9 +151,5 @@ public class TeamFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-    }
-
-    public static TeamFragment newInstance() {
-        return new TeamFragment();
     }
 }

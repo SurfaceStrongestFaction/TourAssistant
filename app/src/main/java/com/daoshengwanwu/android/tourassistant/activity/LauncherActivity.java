@@ -22,7 +22,9 @@ import com.daoshengwanwu.android.tourassistant.service.SharingService;
 import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
 
 
+
 public class LauncherActivity extends BaseActivity {
+    static public boolean fog_draw_pause_judge = true;
     private ImageView mTabsHomeImg;
     private ImageView mTabsMapImg;
     private ImageView mTabsRanksImg;
@@ -53,6 +55,8 @@ public class LauncherActivity extends BaseActivity {
         }
     };
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +70,17 @@ public class LauncherActivity extends BaseActivity {
         initFragment();
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        fog_draw_pause_judge = false;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        fog_draw_pause_judge = true;
+    }
 
     private void initFragment() {
         if (null == mHomeFragment) {

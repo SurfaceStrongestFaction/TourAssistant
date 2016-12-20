@@ -60,6 +60,8 @@ import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import static com.daoshengwanwu.android.tourassistant.baihaoran.AppUtil.User.USER_ID;
+
 
 public class LoginActivity extends Activity implements OnClickListener{
     private AuthInfo mAuthInfo;
@@ -456,10 +458,11 @@ public class LoginActivity extends Activity implements OnClickListener{
                     @Override
                     public void onSuccess(int i, Header[] headers, byte[] bytes) {
                         qqresult = new String(bytes);
-                        AppUtil.User.USER_ID = qqresult;
+                        USER_ID = qqresult;
                         AppUtil.User.USER_NAME = qqname;
                         AppUtil.User.USER_GENDER = qqgender;
                         xyuser_id = qqresult;
+                        USER_ID = qqresult;
                         Toast.makeText(LoginActivity.this,"登录成功", Toast.LENGTH_LONG).show();
                         getTeamInfo();
                         Intent intent = new Intent(LoginActivity.this, LauncherActivity.class);

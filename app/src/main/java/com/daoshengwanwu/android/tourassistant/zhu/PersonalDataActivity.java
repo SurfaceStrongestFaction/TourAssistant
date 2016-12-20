@@ -17,15 +17,23 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.daoshengwanwu.android.tourassistant.R;
 import com.daoshengwanwu.android.tourassistant.leekuo.BaseActivity;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.apache.http.Header;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+import static com.daoshengwanwu.android.tourassistant.baihaoran.AppUtil.User.USER_ID;
 
 public class PersonalDataActivity extends BaseActivity {
     private static final String EXTRA_USER_NAME = "SecondActivity.EXTRA_USER_NAME";
@@ -127,7 +135,28 @@ public class PersonalDataActivity extends BaseActivity {
                             .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    name.setText(e.getText().toString());
+                                    String input_name = e.getText().toString();
+                                    name.setText(input_name);
+                                    //建立连接
+                                    AsyncHttpClient client=new AsyncHttpClient();
+                                    String Url_login = "http://10.7.88.45:8080/user/editNick_name";
+                                    //获取参数
+                                    RequestParams params=new RequestParams();
+                                    params.add("user_id",USER_ID);
+                                    params.add("nick_name",input_name);
+                                    //服务器获取参数
+                                    client.get(getApplicationContext(),Url_login,params,new AsyncHttpResponseHandler(){
+                                        @Override
+                                        public void onSuccess(int statusCode, Header[] headers, byte[] bytes) {
+                                            String result = new String (bytes);
+                                            Toast.makeText(PersonalDataActivity.this,result,Toast.LENGTH_LONG).show();
+                                        }
+                                        @Override
+                                        public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+
+                                        }
+                                    });
+
                                 }
                             })
                             .setNegativeButton("取消", new DialogInterface.OnClickListener() {

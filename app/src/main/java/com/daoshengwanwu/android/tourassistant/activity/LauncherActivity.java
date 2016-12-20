@@ -69,7 +69,7 @@ public class LauncherActivity extends BaseActivity {
         setListenersToWidgets(); //为组件设置监听器
         initFragment();
     }
-
+//---------------------------胜达--------------------------------------------------------------------
     @Override
     protected void onPause() {
         super.onPause();
@@ -81,6 +81,7 @@ public class LauncherActivity extends BaseActivity {
         super.onResume();
         fog_draw_pause_judge = true;
     }
+//--------------------------------------------------------------------------------------------------
 
     private void initFragment() {
         if (null == mHomeFragment) {

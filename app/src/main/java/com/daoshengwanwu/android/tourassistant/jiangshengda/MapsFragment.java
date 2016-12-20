@@ -1,36 +1,33 @@
 package com.daoshengwanwu.android.tourassistant.jiangshengda;
 
 
-import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.graphics.Point;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.amap.api.location.AMapLocation;//定位信息类
-import com.amap.api.location.AMapLocationListener;//定位回调接口
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.Projection;
 import com.amap.api.maps.UiSettings;
 import com.amap.api.maps.model.LatLng;
-
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.daoshengwanwu.android.tourassistant.R;
 import com.daoshengwanwu.android.tourassistant.baihaoran.AppUtil;
 import com.daoshengwanwu.android.tourassistant.baihaoran.SharingService;
-import com.daoshengwanwu.android.tourassistant.jiangshengda.poisearch.PoiAroundSearchActivity;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -148,6 +145,9 @@ public class MapsFragment extends Fragment implements AMapLocationListener, Shar
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //-------------------------胜达-------------------------------------------------
         View v = inflater.inflate(R.layout.jiangshengda_fragment_maps, container, false);
+
+
+
         btn = (Button) v.findViewById(R.id.Fog_btn);
         act_main = (FrameLayout)v.findViewById(R.id.fragment_maps);
         mapView = (MapView) v.findViewById(R.id.map);

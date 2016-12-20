@@ -1,4 +1,4 @@
-package com.daoshengwanwu.android.tourassistant.leekuo;
+package com.daoshengwanwu.android.tourassistant.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,7 +11,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.daoshengwanwu.android.tourassistant.R;
-import com.daoshengwanwu.android.tourassistant.baihaoran.AppUtil;
+import com.daoshengwanwu.android.tourassistant.adapter.MyTeamAdapter;
+import com.daoshengwanwu.android.tourassistant.item.team.MyTeamItem;
+import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -51,7 +53,7 @@ public class MyTeamActivity extends BaseActivity {
     private void getCaptianInfo() {
         AsyncHttpClient gclient = new AsyncHttpClient();
         RequestParams params = new RequestParams();
-        params.add("user_id",AppUtil.Group.GROUP_CAPTIAN);
+        params.add("user_id", AppUtil.Group.GROUP_CAPTIAN);
         gclient.get(getApplicationContext(),xyurl,params,new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {

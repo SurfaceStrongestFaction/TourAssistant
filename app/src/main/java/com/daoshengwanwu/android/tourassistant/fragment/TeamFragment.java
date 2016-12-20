@@ -110,7 +110,7 @@ public class TeamFragment extends Fragment {
         myTeam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MyTeamActivity.actionStartActivity(getActivity());
+               MyTeamActivity.actionStartActivity(getActivity());
             }
         });
         talk=(RelativeLayout)view.findViewById(R.id.lk_talk);

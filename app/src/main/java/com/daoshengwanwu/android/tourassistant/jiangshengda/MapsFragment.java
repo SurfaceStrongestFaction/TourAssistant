@@ -148,16 +148,6 @@ public class MapsFragment extends Fragment implements AMapLocationListener, Shar
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //-------------------------胜达-------------------------------------------------
         View v = inflater.inflate(R.layout.jiangshengda_fragment_maps, container, false);
-
-        Button sousou = (Button) v.findViewById(R.id.sousou);
-        sousou.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getActivity(), PoiAroundSearchActivity.class);
-                startActivity(i);
-            }
-        });
-
         btn = (Button) v.findViewById(R.id.Fog_btn);
         act_main = (FrameLayout)v.findViewById(R.id.fragment_maps);
         mapView = (MapView) v.findViewById(R.id.map);

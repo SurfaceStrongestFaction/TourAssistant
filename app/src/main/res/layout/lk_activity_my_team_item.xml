@@ -5,7 +5,7 @@
     android:background="#afEDEDED"
     android:cacheColorHint="#00000000"
     android:minHeight="50dp">
-    <com.daoshengwanwu.android.tourassistant.leekuo.CircleImageView
+    <com.daoshengwanwu.android.tourassistant.view.CircleImageView
         android:id="@+id/activity_my_team_item_pic"
         android:layout_width="40dp"
         android:layout_height="40dp"

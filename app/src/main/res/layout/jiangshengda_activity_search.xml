@@ -10,7 +10,7 @@
     android:paddingLeft="0dp"
     android:paddingRight="0dp"
     android:paddingTop="0dp"
-    tools:context="com.daoshengwanwu.android.tourassistant.jiangshengda.SearchActivity"
+    tools:context="com.daoshengwanwu.android.tourassistant.activity.SearchActivity"
     android:fitsSystemWindows="true"
     android:clipToPadding="false">
 

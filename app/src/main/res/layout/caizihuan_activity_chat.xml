@@ -4,7 +4,7 @@
     android:id="@+id/activity_chat"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.daoshengwanwu.android.tourassistant.caizihuan.ChatActivity"
+    tools:context="com.daoshengwanwu.android.tourassistant.activity.ChatActivity"
     android:orientation="vertical"
     android:background="#f2f2f2"
     android:fitsSystemWindows="true"

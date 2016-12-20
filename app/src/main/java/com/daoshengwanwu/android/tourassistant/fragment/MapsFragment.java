@@ -1,17 +1,17 @@
 package com.daoshengwanwu.android.tourassistant.fragment;
 
 
+import android.graphics.Point;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.graphics.Point;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -19,8 +19,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.amap.api.location.AMapLocation;//定位信息类
-import com.amap.api.location.AMapLocationListener;//定位回调接口
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
@@ -41,8 +41,8 @@ import com.amap.api.services.core.SuggestionCity;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
 import com.daoshengwanwu.android.tourassistant.R;
-import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
 import com.daoshengwanwu.android.tourassistant.service.SharingService;
+import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
 import com.daoshengwanwu.android.tourassistant.utils.ToastUtil;
 import com.daoshengwanwu.android.tourassistant.view.MyView;
 
@@ -235,7 +235,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
                 myView = new MyView(getActivity().getApplicationContext());
                 act_main.addView(myView);
                 i = 0;//初始化计数器
-                //aMap.getUiSettings().setAllGesturesEnabled(false);//禁止所有手势操作
+                aMap.getUiSettings().setAllGesturesEnabled(false);//禁止所有手势操作
             }
         });
 
@@ -267,6 +267,13 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
         mStopUpload.setOnClickListener(this);
 
         updateCurrentInfomation();
+
+        mSharingBinder.registerTeamChangeListener(new SharingService.OnTeamChangeListener() {
+            @Override
+            public void onTeamChange(String team_id) {
+                updateCurrentInfomation();
+            }
+        });
 
         return v;
     }
@@ -773,16 +780,22 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
             case R.id.start_upload:
                 updateCurrentInfomation();
 
-                try {
-                    if (!mIsStartUpload) {
-                        Toast.makeText(getActivity(), "开启位置共享...", Toast.LENGTH_SHORT).show();
-                        mSharingBinder.startUploadLocation();
-                        mIsStartUpload = true;
-                    } else {
-                        Toast.makeText(getActivity(), "您已开启位置共享,无需重复开启...", Toast.LENGTH_SHORT).show();
+                if (!AppUtil.User.USER_ID.equals("") && !AppUtil.Group.GROUP_ID.equals("")) {
+                    try {
+                        if (!mIsStartUpload) {
+                            Toast.makeText(getActivity(), "开启位置共享...", Toast.LENGTH_SHORT).show();
+                            mSharingBinder.startUploadLocation();
+                            mIsStartUpload = true;
+                        } else {
+                            Toast.makeText(getActivity(), "您已开启位置共享,无需重复开启...", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
+                } else  if (AppUtil.User.USER_ID.equals("")){
+                    Toast.makeText(getActivity(), "请先登录再开启此功能...", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), "请先加入队伍再开启此功能", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.stop_upload:

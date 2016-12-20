@@ -86,6 +86,7 @@ public class LoginActivity extends Activity implements OnClickListener{
     public static String  qqresult;
     public static CircleImageView bimp;
     private final String xyurl = new String("http://10.7.88.30/user/getInformation");
+    private final String xyurl2 = new String("http://10.7.88.30/team/getInformation");
             //("http://"+AppUtil.SharingServer.HOST2+":"+AppUtil.SharingServer.PORT2+"/user/getInformation");
     private String xyuser_id;
 
@@ -330,12 +331,7 @@ public class LoginActivity extends Activity implements OnClickListener{
     }
 
     private void getTeamInfo() {
-        if(!AppUtil.Group.GROUP_ID.equals("")){
-            RequestParams params1 = new RequestParams();
-            params1.add("team_id",AppUtil.Group.GROUP_ID);
-            // 2.关闭弹出窗口
-            //3.根据服务器返回值显示创建成功或失败的提示
-
+        if(!AppUtil.User.USER_ID.equals("")){
             AsyncHttpClient gclient=new AsyncHttpClient();
             RequestParams params=new RequestParams();
             params.add("user_id",xyuser_id);
@@ -343,11 +339,34 @@ public class LoginActivity extends Activity implements OnClickListener{
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     super.onSuccess(statusCode, headers, response);
-                    // System.out.print(response);
                     try {
-                        String team_id=response.getString("team_id");
+                        String team_id = response.getString("team_id");
                         AppUtil.Group.GROUP_ID = team_id;
-                        Toast.makeText(LoginActivity.this, AppUtil.Group.GROUP_ID, Toast.LENGTH_SHORT).show();
+                        getTeamNameInfo();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                    Toast.makeText(LoginActivity.this, "Team_id获取失败" + AppUtil.Group.GROUP_NAME, Toast.LENGTH_SHORT).show();
+                    super.onFailure(statusCode, headers, throwable, errorResponse);
+                }
+            });
+        }
+    }
+    private void getTeamNameInfo() {
+            AsyncHttpClient gclient2 = new AsyncHttpClient();
+            RequestParams params = new RequestParams();
+            params.add("team_id", AppUtil.Group.GROUP_ID);
+            gclient2.get(getApplicationContext(),xyurl2,params,new JsonHttpResponseHandler(){
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    super.onSuccess(statusCode, headers, response);
+                    try {
+                        String team_name = response.getString("name");
+                        AppUtil.Group.GROUP_NAME = team_name;
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -356,51 +375,9 @@ public class LoginActivity extends Activity implements OnClickListener{
                 @Override
                 public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
                     super.onFailure(statusCode, headers, throwable, errorResponse);
+                    Toast.makeText(LoginActivity.this, "Team_name获取失败" + AppUtil.Group.GROUP_NAME, Toast.LENGTH_SHORT).show();
                 }
             });
-//            gclient.get(getApplicationContext(), xyurl,params1, new AsyncHttpResponseHandler() {
-//                @Override
-//                public void onSuccess(int i, Header[] headers, byte[] bytes) {
-//                    String teamInfo = new String(bytes);
-//                 //   Toast.makeText(LoginActivity.this, teamInfo, Toast.LENGTH_SHORT).show();
-//                    AlertDialog ad = new AlertDialog.Builder(LoginActivity.this).create();
-//                    ad.setTitle("TeamInfo");
-//                    ad.setMessage(teamInfo);
-//                    ad.setButton("确定", new DialogInterface.OnClickListener() {
-//
-//                        @Override
-//                        public void onClick(DialogInterface dialog, int which) {
-//                        }
-//                    });
-//                    ad.setButton2("取消", new DialogInterface.OnClickListener() {
-//
-//                        @Override
-//                        public void onClick(DialogInterface dialog, int which) {
-//                        }
-//                    });
-//                    ad.show();
-//
-////                    JSONObject json = (JSONObject) teamInfo;
-////                    JSONArray users = null;
-////                    try {
-////                        users = jsonObject.getJSONArray("你的key");
-////                        for (int i = 0; i < users.size(); i++) {
-////                            JSONObject attention = users.getJSONObject(i);
-////                            String name = attention.getString("name");
-////                            String account = attention.getString("account");
-////
-////                        }catch(JSONException e){
-////                            e.printStackTrace();
-////                        }
-////
-////                    }
-//                }
-//                @Override
-//                public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
-//                    Toast.makeText(LoginActivity.this,"获取队伍信息失败",Toast.LENGTH_SHORT).show();
-//                }
-//            });
-        }
     }
 
     public void getyh() {
@@ -471,19 +448,17 @@ public class LoginActivity extends Activity implements OnClickListener{
                         AppUtil.User.USER_GENDER = qqgender;
                         xyuser_id = qqresult;
                         Toast.makeText(LoginActivity.this,"登录成功", Toast.LENGTH_LONG).show();
-                        getTeamInfo();
                         Intent intent = new Intent(LoginActivity.this, LauncherActivity.class);
                         startActivity(intent);
                         finish();
+                        getTeamInfo();
                     }
                     @Override
                     public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
                         Toast.makeText(LoginActivity.this,"登录失败", Toast.LENGTH_LONG).show();
                     }
                 });
-
             }
-
             @Override
             public void onCancel() {
             }
@@ -493,10 +468,8 @@ public class LoginActivity extends Activity implements OnClickListener{
     public void qqlogin() {
 
         iuilisten = new IUiListener() {
-
             @Override
             public void onCancel() {
-
             }
 
             public void onComplete(Object response) {

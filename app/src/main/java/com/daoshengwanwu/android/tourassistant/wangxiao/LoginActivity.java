@@ -2,6 +2,7 @@ package com.daoshengwanwu.android.tourassistant.wangxiao;
 
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -28,6 +29,10 @@ import com.daoshengwanwu.android.tourassistant.jiangshengda.CircleImageView;
 import com.daoshengwanwu.android.tourassistant.wangxiao.utils.HttpCallBackListener;
 import com.daoshengwanwu.android.tourassistant.wangxiao.utils.HttpUtil;
 import com.daoshengwanwu.android.tourassistant.wangxiao.utils.PrefParams;
+import com.hyphenate.EMCallBack;
+import com.hyphenate.EMError;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.exceptions.HyphenateException;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -125,15 +130,12 @@ public class LoginActivity extends Activity implements OnClickListener{
                         result += "\n" +line;
                     }
                       user_id = result;
-                Log.i("zhu", "user_id: "+result);
-                Log.i("zhu", "user_id: "+user_id);
                 Toast.makeText(LoginActivity.this, ""+user_id, Toast.LENGTH_SHORT).show();
             }  catch (Exception e) {
                 System.out.println("发送POST请求出现异常！" + e);
                 e.printStackTrace();
             }  finally {
                 try{
-                    Log.i("zhu", "user_id: "+user_id);
                     if (out != null){
                         out.close();
                     }
@@ -146,6 +148,167 @@ public class LoginActivity extends Activity implements OnClickListener{
             }
         }
     };
+
+    /**
+     * 环信EM注册方法
+     */
+    private void signUp(final String user_id, final String user_pwd) {
+        //截取US诶、
+        final String nameEM=user_id.substring(0,7);
+        final String pwdEM;
+        if(TextUtils.isEmpty(user_pwd)){
+            //密码为null，EM默认密码为123456
+            pwdEM="123456";
+        }else{
+            pwdEM=user_pwd;
+        }
+        Log.i("zhu", "name,pwd: "+nameEM+","+pwdEM);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    EMClient.getInstance().createAccount(nameEM, pwdEM);
+                } catch (final HyphenateException e) {
+                    e.printStackTrace();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            /**
+                             * 关于错误码可以参考官方api详细说明
+                             * http://www.easemob.com/apidoc/android/chat3.0/classcom_1_1hyphenate_1_1_e_m_error.html
+                             */
+                            int errorCode = e.getErrorCode();
+                            String message = e.getMessage();
+                            Log.d("zhu", String.format("sign up - errorCode:%d, errorMsg:%s", errorCode, e.getMessage()));
+                            switch (errorCode) {
+                                // 网络错误
+                                case EMError.NETWORK_ERROR:
+                                    Toast.makeText(LoginActivity.this, "网络错误 code: " + errorCode + ", message:" + message, Toast.LENGTH_LONG).show();
+                                    break;
+                                // 用户已存在
+                                case EMError.USER_ALREADY_EXIST:
+                                    //Toast.makeText(LoginActivity.this, "用户已存在 code: " + errorCode + ", message:" + message, Toast.LENGTH_LONG).show();
+                                    //用户如果以注册直接转到登录
+                                    signIn(nameEM,pwdEM);
+                                    break;
+                                // 参数不合法，一般情况是username 使用了uuid导致，不能使用uuid注册
+                                case EMError.USER_ILLEGAL_ARGUMENT:
+                                    Toast.makeText(LoginActivity.this, "参数不合法，一般情况是username 使用了uuid导致，不能使用uuid注册 code: " + errorCode + ", message:" + message, Toast.LENGTH_LONG).show();
+                                    break;
+                                // 服务器未知错误
+                                case EMError.SERVER_UNKNOWN_ERROR:
+                                    Toast.makeText(LoginActivity.this, "服务器未知错误 code: " + errorCode + ", message:" + message, Toast.LENGTH_LONG).show();
+                                    break;
+                                case EMError.USER_REG_FAILED:
+                                    Toast.makeText(LoginActivity.this, "账户注册失败 code: " + errorCode + ", message:" + message, Toast.LENGTH_LONG).show();
+                                    break;
+                                default:
+                                    Toast.makeText(LoginActivity.this, "ml_sign_up_failed code: " + errorCode + ", message:" + message, Toast.LENGTH_LONG).show();
+                                    break;
+                            }
+                        }
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }finally {
+                    //转到登录
+                    signIn(nameEM,pwdEM);
+                }
+            }
+        }).start();
+    }
+    /**
+     * 登录方法
+     */
+    private void signIn(final String user_id, final String user_pwd) {
+        Log.i("zhu", "name,pwd: "+user_id+","+user_pwd);
+        EMClient.getInstance().login(user_id, user_pwd, new EMCallBack() {
+            /**
+             * 登陆成功的回调
+             */
+            @Override
+            public void onSuccess() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        // 加载所有会话到内存
+                        EMClient.getInstance().chatManager().loadAllConversations();
+                        // 加载所有群组到内存，如果使用了群组的话
+                        // EMClient.getInstance().groupManager().loadAllGroups();
+                        // 登录成功跳转界面
+                        //Intent intent = new Intent(ECLoginActivity.this, ECMainActivity.class);
+                        //startActivity(intent);
+                        //finish();
+                    }
+                });
+            }
+
+            /**
+             * 登陆错误的回调
+             * @param i
+             * @param s
+             */
+            @Override
+            public void onError(final int i, final String s) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.d("zhu", "登录失败 Error code:" + i + ", message:" + s);
+                        /**
+                         * 关于错误码可以参考官方api详细说明
+                         * http://www.easemob.com/apidoc/android/chat3.0/classcom_1_1hyphenate_1_1_e_m_error.html
+                         */
+                        switch (i) {
+                            // 网络异常 2
+                            case EMError.NETWORK_ERROR:
+                                Toast.makeText(LoginActivity.this, "EM网络错误 code: " + i + ", message:" + s, Toast.LENGTH_LONG).show();
+                                break;
+                            // 无效的用户名 101
+                            case EMError.INVALID_USER_NAME:
+                                Toast.makeText(LoginActivity.this, "EM无效的用户名 code: " + i + ", message:" + s, Toast.LENGTH_LONG).show();
+                                break;
+                            // 无效的密码 102
+                            case EMError.INVALID_PASSWORD:
+                                Toast.makeText(LoginActivity.this, "EM无效的密码 code: " + i + ", message:" + s, Toast.LENGTH_LONG).show();
+                                break;
+                            // 用户认证失败，用户名或密码错误 202
+                            case EMError.USER_AUTHENTICATION_FAILED:
+                                Toast.makeText(LoginActivity.this, "EM用户认证失败，用户名或密码错误 code: " + i + ", message:" + s, Toast.LENGTH_LONG).show();
+                                break;
+                            // 用户不存在 204
+                            case EMError.USER_NOT_FOUND:
+                                Toast.makeText(LoginActivity.this, "EM用户不存在 code: " + i + ", message:" + s, Toast.LENGTH_LONG).show();
+                                break;
+                            // 无法访问到服务器 300
+                            case EMError.SERVER_NOT_REACHABLE:
+                                Toast.makeText(LoginActivity.this, "EM无法访问到服务器 code: " + i + ", message:" + s, Toast.LENGTH_LONG).show();
+                                break;
+                            // 等待服务器响应超时 301
+                            case EMError.SERVER_TIMEOUT:
+                                Toast.makeText(LoginActivity.this, "EM等待服务器响应超时 code: " + i + ", message:" + s, Toast.LENGTH_LONG).show();
+                                break;
+                            // 服务器繁忙 302
+                            case EMError.SERVER_BUSY:
+                                Toast.makeText(LoginActivity.this, "EM服务器繁忙 code: " + i + ", message:" + s, Toast.LENGTH_LONG).show();
+                                break;
+                            // 未知 Server 异常 303 一般断网会出现这个错误
+                            case EMError.SERVER_UNKNOWN_ERROR:
+                                Toast.makeText(LoginActivity.this, "EM未知的服务器异常 code: " + i + ", message:" + s, Toast.LENGTH_LONG).show();
+                                break;
+                            default:
+                                Toast.makeText(LoginActivity.this, "EMml_sign_in_failed code: " + i + ", message:" + s, Toast.LENGTH_LONG).show();
+                                break;
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void onProgress(int i, String s) {
+
+            }
+        });
+    }
 
 
     private void initViews() {
@@ -465,6 +628,9 @@ public class LoginActivity extends Activity implements OnClickListener{
                         AppUtil.User.USER_GENDER = qqgender;
                         xyuser_id = qqresult;
                         Toast.makeText(LoginActivity.this,"登录成功", Toast.LENGTH_LONG).show();
+                        Log.i("zhu", "user_id(all)"+AppUtil.User.USER_ID);
+                        //环信EM注册登录
+                        signUp(AppUtil.User.USER_ID,"");
                         getTeamInfo();
                         Intent intent = new Intent(LoginActivity.this, LauncherActivity.class);
                         startActivity(intent);

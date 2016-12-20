@@ -36,9 +36,10 @@ public class TeamMemberActivity extends BaseActivity {
                 //调用环信EM通讯页
                 Intent intent =new Intent(TeamMemberActivity.this, ECChatActivity.class);
                 //chatId为聊天者的环信id
-                String chatId="zhu1001".trim();
+                String chatId="6337ab9".trim();
                 intent.putExtra("userId", chatId);
                 intent.putExtra("chatType", EaseConstant.CHATTYPE_SINGLE);
+                startActivity(intent);
             }
         });
     }

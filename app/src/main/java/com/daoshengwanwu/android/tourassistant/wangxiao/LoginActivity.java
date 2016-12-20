@@ -375,7 +375,7 @@ public class LoginActivity extends Activity implements OnClickListener{
                 String Url_add = "http://10.7.88.106:8080/qq/login";
                 //获取参数
                 RequestParams params = new RequestParams();
-                params.add("user_id",qqid);
+                params.add("qq",qqid);
                 params.add("qq_name",qqname);
                 params.add("sex",qqgender);
                 //服务器获取参数

@@ -51,57 +51,75 @@
             android:name="com.amap.api.v2.apikey"
             android:value="c6f919b976553027da271b65df049774" />
 
-        <activity android:name=".baihaoran.LauncherActivity">
+        <activity android:name=".activity.LauncherActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".caizihuan.MyTrackActivity" />
-        <activity android:name=".caizihuan.SearchMemberActivity" />
-        <activity android:name=".caizihuan.ChatActivity" />
-        <activity android:name=".caizihuan.ChatTableActivity" />
-        <activity android:name=".jiangshengda.SearchActivity" />
-        <activity android:name=".shenyue.PictureActivity" />
-        <activity android:name=".shenyue.ViewspotActivity" />
-        <activity android:name=".shenyue.ScenicspotActivity" />
-        <activity android:name="com.daoshengwanwu.android.tourassistant.zhu.PersonalDataActivity" />
-        <activity android:name="com.daoshengwanwu.android.tourassistant.zhu.SetActivity" />
+        <activity android:name=".activity.MyTrackActivity" />
+        <activity android:name=".activity.SearchMemberActivity" />
+        <activity android:name=".activity.ChatActivity" />
+        <activity android:name=".activity.ChatTableActivity" />
+        <activity android:name=".activity.SearchActivity" />
+        <activity android:name=".activity.PictureActivity" />
+        <activity android:name=".activity.ViewspotActivity" />
+        <activity android:name=".activity.ScenicspotActivity" />
+        <activity android:name="com.daoshengwanwu.android.tourassistant.activity.PersonalDataActivity" />
+        <activity android:name="com.daoshengwanwu.android.tourassistant.activity.SetActivity" />
 
-        <activity android:name=".zhouxiuya.WelcomeActivity" />
-        <activity android:name=".zhouxiuya.AboutActivity" />
-        <activity android:name=".zhouxiuya.CollectActivity" />
-        <activity android:name=".leekuo.MyTeamActivity" />
-        <activity android:name=".leekuo.TransferTeamActivity" />
-        <activity android:name=".leekuo.TeamMemberActivity" />
-        <activity android:name=".leekuo.TeamerMyTeamActivity" />
-        <activity android:name=".wangxiao.RegisterActivity" />
-        <activity android:name=".wangxiao.Register2Activity" />
-        <activity android:name=".wangxiao.LoginActivity" />
-        <activity android:name=".jiangshengda.poisearch.PoiAroundSearchActivity"/>
+        <activity android:name=".activity.WelcomeActivity" />
+        <activity android:name=".activity.AboutActivity" />
+        <activity android:name=".activity.CollectActivity" />
+        <activity android:name=".activity.MyTeamActivity" />
+        <activity android:name=".activity.TransferTeamActivity" />
+        <activity android:name=".activity.TeamMemberActivity" />
+        <activity android:name=".activity.TeamerMyTeamActivity" />
+        <activity android:name=".activity.RegisterActivity" />
+        <activity android:name=".activity.Register2Activity" />
+        <activity android:name=".activity.LoginActivity" />
+        <activity android:name=".activity.PoiAroundSearchActivity"/>
 
         <service android:name="com.amap.api.location.APSService" />
-        <service android:name=".baihaoran.SharingService" />
+        <service android:name=".service.SharingService" />
 
          <!--微信分享回调 -->
         <activity
-            android:name=".wangxiao.wxapi.WXEntryActivity"
+            android:name=".activity.WXEntryActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true" />
-        <activity android:name=".leekuo.BaseActivity"></activity>
+        <activity android:name=".activity.BaseActivity"></activity>
+        <activity
+            android:name=".activity.WXEntryActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true" />
         <activity
             android:name="com.sina.weibo.sdk.component.WeiboSdkBrowser"
             android:configChanges="keyboardHidden|orientation"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" >
         </activity>
+
+        <service
+            android:name="com.sina.weibo.sdk.net.DownloadService"
+            android:exported="false" >
+        </service>
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name=".ReturnActivity"
+            >
+        </activity>
         <activity
             android:name="com.tencent.tauth.AuthActivity"
             android:launchMode="singleTask"
             android:noHistory="true" >
-
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -110,16 +128,31 @@
                 <!-- 100380359 100381104 222222 -->
             </intent-filter>
         </activity>
+
         <service
             android:name="com.sina.weibo.sdk.net.DownloadService"
             android:exported="false" >
-        </service>
-
-        <activity
+        </service><activity
             android:name="com.tencent.connect.common.AssistActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name=".ReturnActivity"
+            >
+        </activity>
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="tencent222222" />
+                <!-- 100380359 100381104 222222 -->
+            </intent-filter>
+        </activity>
 
 
     </application>

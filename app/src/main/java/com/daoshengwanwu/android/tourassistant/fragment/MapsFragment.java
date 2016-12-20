@@ -1,4 +1,4 @@
-package com.daoshengwanwu.android.tourassistant.fragment;
+package com.daoshengwanwu.android.tourassistant.jiangshengda;
 
 
 import android.content.Intent;
@@ -201,6 +201,13 @@ public class MapsFragment extends Fragment implements AMapLocationListener, Shar
 
         updateCurrentInfomation();
 
+        mSharingBinder.registerTeamChangeListener(new SharingService.OnTeamChangeListener() {
+            @Override
+            public void onTeamChange(String team_id) {
+                updateCurrentInfomation();
+            }
+        });
+
         return v;
     }
 
@@ -368,16 +375,22 @@ public class MapsFragment extends Fragment implements AMapLocationListener, Shar
             case R.id.start_upload:
                 updateCurrentInfomation();
 
-                try {
-                    if (!mIsStartUpload) {
-                        Toast.makeText(getActivity(), "开启位置共享...", Toast.LENGTH_SHORT).show();
-                        mSharingBinder.startUploadLocation();
-                        mIsStartUpload = true;
-                    } else {
-                        Toast.makeText(getActivity(), "您已开启位置共享,无需重复开启...", Toast.LENGTH_SHORT).show();
+                if (!AppUtil.User.USER_ID.equals("") && !AppUtil.Group.GROUP_ID.equals("")) {
+                    try {
+                        if (!mIsStartUpload) {
+                            Toast.makeText(getActivity(), "开启位置共享...", Toast.LENGTH_SHORT).show();
+                            mSharingBinder.startUploadLocation();
+                            mIsStartUpload = true;
+                        } else {
+                            Toast.makeText(getActivity(), "您已开启位置共享,无需重复开启...", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
+                } else  if (AppUtil.User.USER_ID.equals("")){
+                    Toast.makeText(getActivity(), "请先登录再开启此功能...", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), "请先加入队伍再开启此功能", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.stop_upload:

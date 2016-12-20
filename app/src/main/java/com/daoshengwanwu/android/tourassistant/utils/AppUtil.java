@@ -21,15 +21,20 @@ public class AppUtil {
         public static final String RECEIVED_MEMBER_LOCATIONS = "member_locations";
     }
 
+    public static final class JFinalServer {
+        public static final String HOST = "10.7.88.30";
+        public static final int PORT = 80;
+    }
+
     public static final class User {
-        public static String USER_ID = "";
+        public static String USER_ID = "1";
         public static String USER_NAME = "";
         public static Bitmap USER_IMG;
         public static String USER_GENDER = "男";
     }
 
     public static final class Group {
-        public static String GROUP_ID = "";
+        public static String GROUP_ID = "SurfaceStrongestTeam";
         public static String GROUP_NAME;
         public static String GROUP_CAPTIAN = "4b9a29a5-9fc9-48db-9486-79353106a599";
     }

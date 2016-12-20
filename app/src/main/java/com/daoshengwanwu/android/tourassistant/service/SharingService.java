@@ -8,12 +8,15 @@ import android.content.ServiceConnection;
 import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationListener;
 import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
 import com.daoshengwanwu.android.tourassistant.utils.AppUtil.SharingServer;
+
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -22,9 +25,17 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Serializable;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 
 public class SharingService extends Service {
@@ -32,6 +43,10 @@ public class SharingService extends Service {
     private double mLongitude = 0.0;
     private SharingBinder mUniqueBinder = null;
     private AMapLocationClient mLocationClient = null;
+    private boolean mNeedRequestTeam = true;
+    private Set<OnTeamChangeListener> mOnTeamChangeListeners = new HashSet<>();
+    private Set<OnTeamMemberChangeListener> mOnTeamMemberChangeListeners = new HashSet<>();
+    private static final String TAG = "SharingService";
 
 
     @Nullable
@@ -68,7 +83,105 @@ public class SharingService extends Service {
         }
 
         mUniqueBinder = null;
+
+        stopRequestTeamInfo();
         super.onDestroy();
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        startRequestTeamInfo();
+    }
+
+    public void stopRequestTeamInfo() {
+        mNeedRequestTeam = false;
+    }
+
+    public void startRequestTeamInfo() {
+        mNeedRequestTeam = true;
+
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+
+                try {
+
+                    OkHttpClient client = new OkHttpClient();
+                    List<String> oldMemInfo = generateMemIdsList(new String[0]);
+
+                    while (mNeedRequestTeam) {
+                        String user_id = AppUtil.User.USER_ID;
+
+                        if (user_id != null && !user_id.equals("")) {
+                            RequestBody requestBody = new FormBody.Builder().add("user_id", user_id).build();
+                            Request request = new Request.Builder()
+                                    .url("http://" + AppUtil.JFinalServer.HOST + ":" + AppUtil.JFinalServer.PORT + "/user/getInformation")
+                                    .post(requestBody)
+                                    .build();
+
+                            Response response = client.newCall(request).execute();
+                            String responseData = response.body().string();
+
+                            JSONObject jObj = new JSONObject(responseData);
+                            String team_id = (String)jObj.get("team_id");
+
+                            String old_team_id = AppUtil.Group.GROUP_ID;
+                            if (!team_id.equals(old_team_id)) {
+                                AppUtil.Group.GROUP_ID = team_id;
+
+                                synchronized (mOnTeamChangeListeners) {
+                                    for (OnTeamChangeListener listener : mOnTeamChangeListeners) {
+                                        listener.onTeamChange(team_id);
+                                    }
+                                }//sync
+                            }//if
+
+                            requestBody = new FormBody.Builder().add("team_id", team_id).build();
+                            request = new Request.Builder()
+                                    .url("http://" + AppUtil.JFinalServer.HOST + ":" + AppUtil.JFinalServer.PORT + "/team/getInformation")
+                                    .post(requestBody)
+                                    .build();
+
+                            response = client.newCall(request).execute();
+                            responseData = response.body().string();
+
+                            Log.d(TAG, "run: team:" + responseData);
+                            jObj = new JSONObject(responseData);
+
+                            String membersInfo = jObj.getString("members");
+                            List<String> memInfos = generateMemIdsList(membersInfo.split(","));
+
+                            Log.d(TAG, "run: membersInfo: " + membersInfo);
+
+                            if (!memInfos.equals(oldMemInfo)) {
+                                Log.d(TAG, "run: 进入if");
+                                for (OnTeamMemberChangeListener listener : mOnTeamMemberChangeListeners) {
+                                    listener.onTeamMemberChange(team_id, memInfos);
+                                }
+
+                                oldMemInfo = memInfos;
+                            }
+                        }//if
+
+                        Thread.sleep(1000);
+                    }//while
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }//try-catch
+            } //run
+        }.start();
+    }//startRequestTeamInfo
+
+    private List<String> generateMemIdsList(String[] members_id_array) {
+        List<String> list = new ArrayList<>();
+
+        for (String member_id : members_id_array) {
+            list.add(member_id);
+        }
+
+        return list;
     }
 
     public static Intent newIntent(Context applicationContext) {
@@ -86,6 +199,16 @@ public class SharingService extends Service {
 
     public interface SharingLocationListener {
         void onLocationsDataArrived(HashMap<String, double[]> locationsData);
+    }
+
+
+    public interface OnTeamChangeListener {
+        void onTeamChange(String team_id);
+    }
+
+
+    public interface OnTeamMemberChangeListener {
+        void onTeamMemberChange(String team_id, List<String> memberIds);
     }
 
 
@@ -134,6 +257,18 @@ public class SharingService extends Service {
 
         public void unregisterSharginLocationListener(SharingLocationListener listener) {
             mSharingLocationListeners.remove(listener);
+        }
+
+        public void registerTeamChangeListener(OnTeamChangeListener listener) {
+            synchronized (mOnTeamChangeListeners) {
+                mOnTeamChangeListeners.add(listener);
+            }
+        }
+
+        public void unregisterTeamChangeListener(OnTeamChangeListener listener) {
+            synchronized (mOnTeamChangeListeners) {
+                mOnTeamChangeListeners.remove(listener);
+            }
         }
 
         public void startLocationService() {

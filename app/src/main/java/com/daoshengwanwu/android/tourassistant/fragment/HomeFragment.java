@@ -1,4 +1,4 @@
-package com.daoshengwanwu.android.tourassistant.fragment;
+package com.daoshengwanwu.android.tourassistant.baihaoran;
 
 
 import android.content.Context;
@@ -12,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -38,6 +39,11 @@ import java.util.ArrayList;
 import java.util.List;
 import com.example.www.library.PullToRefreshView;
 
+import org.apache.http.Header;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 
 public class HomeFragment extends Fragment {
     public static final int REFRESH_DELAY = 4000;
@@ -57,6 +63,7 @@ public class HomeFragment extends Fragment {
     private AutoCompleteTextView acTextView;
     private String [] arr = {"石家庄","宁波","邢台","保定","盐城","北京","上海","杭州","承德","西安","重庆","长沙"};
 
+    private static final String TAG = "HomeFragment";
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -106,7 +113,53 @@ public class HomeFragment extends Fragment {
                 }, REFRESH_DELAY);
             }
         });
+
+//        getDataFromServer();
+
         return v;
+    }
+
+    private void getDataFromServer() {
+        AsyncHttpClient client = new AsyncHttpClient();
+        String url = "http://192.168.43.210:80/spot/getspotid";//10.7.88.89,192.168.191.1
+
+        RequestParams params = new RequestParams();
+        params.add("id", "111");
+
+        client.get(getActivity().getApplicationContext(), url, params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                super.onSuccess(statusCode, headers, response);
+
+                if (null == response) {
+                    return;
+                }
+
+//                try {
+//                    for (int i = 0; i < response.length(); i++) {
+                        String spot_id = "222";
+
+//                        AsyncHttpClient client = new AsyncHttpClient();
+//                        String url = "http://192.168.43.210:80/spot/getrecommend";//10.7.88.89,192.168.191.1
+//
+//                        Log.d(TAG, "onSuccess: spotid:" + spot_id);
+//                        RequestParams params = new RequestParams();
+//                        params.add("id", spot_id);
+//
+//                        client.get(getActivity().getApplicationContext(), url, params, new JsonHttpResponseHandler() {
+//                            @Override
+//                            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+//                                super.onSuccess(statusCode, headers, response);
+//                                Log.d(TAG, "onSuccess: JSONArray:" + response);
+//                            }
+//                        });
+//                    }
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+            }
+        });
+
     }
 
     private void getWidgetsReferences(View v) {

@@ -10,7 +10,7 @@
         android:background="#f8f8f8"
         android:layout_marginBottom="@dimen/caizihuan_chattableitem_itemmarginbottom"
         android:padding="@dimen/caizihuan_chattableitem_itempadding">
-        <com.daoshengwanwu.android.tourassistant.caizihuan.CircleImageView
+        <com.daoshengwanwu.android.tourassistant.view.CircleImageView
             android:id="@+id/chattable_item_touxiang"
             android:layout_width="@dimen/caizihuan_chattableitem_touxiangwidth"
             android:layout_height="@dimen/caizihuan_chattableitem_touxiangheight"

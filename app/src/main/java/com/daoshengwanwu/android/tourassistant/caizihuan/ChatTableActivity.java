@@ -1,14 +1,11 @@
 package com.daoshengwanwu.android.tourassistant.caizihuan;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
@@ -55,7 +52,7 @@ public class ChatTableActivity extends BaseActivity {
     AdapterView.OnItemClickListener itemListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            Intent intent = new Intent(ChatTableActivity.this,ChatActivity.class);
+            Intent intent = new Intent(ChatTableActivity.this,ECChatActivity.class);
             startActivity(intent);
         }
     };

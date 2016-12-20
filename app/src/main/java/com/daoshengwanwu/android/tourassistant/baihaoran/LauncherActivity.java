@@ -64,7 +64,7 @@ public class LauncherActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.baihaoran_activity_launcher);
-
+        //环信easeUI初始化
         EaseUI.getInstance().init(this,null);
         EMClient.getInstance().setDebugMode(true);
 

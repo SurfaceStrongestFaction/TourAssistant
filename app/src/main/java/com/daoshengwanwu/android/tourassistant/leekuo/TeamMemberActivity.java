@@ -1,21 +1,21 @@
 package com.daoshengwanwu.android.tourassistant.leekuo;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
 import com.daoshengwanwu.android.tourassistant.R;
-import com.daoshengwanwu.android.tourassistant.caizihuan.ChatActivity;
+import com.daoshengwanwu.android.tourassistant.caizihuan.ECChatActivity;
+import com.hyphenate.easeui.EaseConstant;
 
 public class TeamMemberActivity extends BaseActivity {
     private static final String EXTRA_USER_NAME = "SecondActivity.EXTRA_USER_NAME";
     private ImageView back;
     private Button button1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +32,13 @@ public class TeamMemberActivity extends BaseActivity {
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //ChatActivity.startChatActivity(TeamMemberActivity.this);
-
+                //ECChatActivity.startChatActivity(TeamMemberActivity.this);
+                //调用环信EM通讯页
+                Intent intent =new Intent(TeamMemberActivity.this, ECChatActivity.class);
+                //chatId为聊天者的环信id
+                String chatId="zhu1001".trim();
+                intent.putExtra("userId", chatId);
+                intent.putExtra("chatType", EaseConstant.CHATTYPE_SINGLE);
             }
         });
     }

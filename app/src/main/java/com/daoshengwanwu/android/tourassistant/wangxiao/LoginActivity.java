@@ -122,11 +122,15 @@ public class LoginActivity extends Activity implements OnClickListener{
                         result += "\n" +line;
                     }
                       user_id = result;
+                Log.i("zhu", "user_id: "+result);
+                Log.i("zhu", "user_id: "+user_id);
+                Toast.makeText(LoginActivity.this, ""+user_id, Toast.LENGTH_SHORT).show();
             }  catch (Exception e) {
                 System.out.println("发送POST请求出现异常！" + e);
                 e.printStackTrace();
             }  finally {
                 try{
+                    Log.i("zhu", "user_id: "+user_id);
                     if (out != null){
                         out.close();
                     }

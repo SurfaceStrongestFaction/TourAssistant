@@ -119,7 +119,7 @@
         </activity>
         <activity android:name=".caizihuan.MyTrackActivity" />
         <activity android:name=".caizihuan.SearchMemberActivity" />
-        <activity android:name=".caizihuan.ChatActivity" />
+        <activity android:name=".caizihuan.ECChatActivity" />
         <activity android:name=".caizihuan.ChatTableActivity" />
         <activity android:name=".jiangshengda.SearchActivity" />
         <activity android:name=".shenyue.PictureActivity" />

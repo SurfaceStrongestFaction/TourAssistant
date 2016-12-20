@@ -49,6 +49,7 @@ import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
 
 import org.apache.http.Header;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -81,7 +82,8 @@ public class LoginActivity extends Activity implements OnClickListener{
     private JSONObject response1;
     public static String  qqresult;
     public static CircleImageView bimp;
-    private final String xyurl = new String("http://"+AppUtil.SharingServer.HOST2+":"+AppUtil.SharingServer.PORT2+"/team/getInformation");
+    private final String xyurl = new String("http://10.7.88.30/user/getInformation");
+            //("http://"+AppUtil.SharingServer.HOST2+":"+AppUtil.SharingServer.PORT2+"/user/getInformation");
     private String xyuser_id;
 
     @Override
@@ -346,6 +348,11 @@ public class LoginActivity extends Activity implements OnClickListener{
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                    super.onFailure(statusCode, headers, throwable, errorResponse);
                 }
             });
 //            gclient.get(getApplicationContext(), xyurl,params1, new AsyncHttpResponseHandler() {

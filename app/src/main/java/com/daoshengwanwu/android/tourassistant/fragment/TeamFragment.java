@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.daoshengwanwu.android.tourassistant.R;
 import com.daoshengwanwu.android.tourassistant.activity.MyTeamActivity;
+import com.daoshengwanwu.android.tourassistant.service.SharingService;
 import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -25,6 +26,9 @@ import org.apache.http.Header;
  * Created by LK on 2016/12/14.
  */
 public class TeamFragment extends Fragment {
+    private static final String KEY_BINDER = "TeamFragment.KEY_BINDER";
+    private SharingService.SharingBinder mBinder;
+
     private RelativeLayout createTeam;
     private RelativeLayout joinTeam;
     private RelativeLayout myTeam;
@@ -97,6 +101,12 @@ public class TeamFragment extends Fragment {
                         dialog.dismiss();
                     }
                 });
+
+                Bundle data = getArguments();
+                if (null != data) {
+                    mBinder = (SharingService.SharingBinder)data.getSerializable(KEY_BINDER);
+                }
+
             }
         });
         joinTeam=(RelativeLayout)view.findViewById(R.id.lk_joinTeam);
@@ -121,6 +131,17 @@ public class TeamFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    public static TeamFragment newInstance(SharingService.SharingBinder binder) {
+        TeamFragment teamFragment = new TeamFragment();
+
+        Bundle data = new Bundle();
+        data.putSerializable(KEY_BINDER, binder);
+
+        teamFragment.setArguments(data);
+
+        return teamFragment;
     }
 
     @Override

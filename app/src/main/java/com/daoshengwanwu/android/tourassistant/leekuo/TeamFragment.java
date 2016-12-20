@@ -1,17 +1,14 @@
 package com.daoshengwanwu.android.tourassistant.leekuo;
 
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -78,8 +75,8 @@ public class TeamFragment extends Fragment {
                                     String str1 = new String(bytes);
                                     Toast.makeText(getActivity(),str1,Toast.LENGTH_SHORT).show();
                                     if(!str1.equals("创建队伍失败,请重新创建")&&!str1.equals("只能创建一个队伍")){
-                                        AppUtil.Group.Group_id=str1;
-                                        Toast.makeText(getActivity()," AppUtil.Group.Group_id:"+AppUtil.Group.Group_id,Toast.LENGTH_SHORT).show();
+                                        AppUtil.Group.GROUP_ID=str1;
+                                        Toast.makeText(getActivity()," AppUtil.Group.Group_id:"+AppUtil.Group.GROUP_ID,Toast.LENGTH_SHORT).show();
                                     }
                                 }
 

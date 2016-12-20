@@ -30,6 +30,7 @@ import com.daoshengwanwu.android.tourassistant.wangxiao.utils.HttpUtil;
 import com.daoshengwanwu.android.tourassistant.wangxiao.utils.PrefParams;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.sina.weibo.sdk.auth.AuthInfo;
 import com.sina.weibo.sdk.auth.Oauth2AccessToken;
@@ -80,6 +81,8 @@ public class LoginActivity extends Activity implements OnClickListener{
     private JSONObject response1;
     public static String  qqresult;
     public static CircleImageView bimp;
+    private final String xyurl = new String("http://"+AppUtil.SharingServer.HOST2+":"+AppUtil.SharingServer.PORT2+"/team/getInformation");
+    private String xyuser_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -320,9 +323,80 @@ public class LoginActivity extends Activity implements OnClickListener{
 
                 System.out.println("登录");
                 qqlogin();//登录
+
             }
         });
     }
+
+    private void getTeamInfo() {
+        if(!AppUtil.Group.GROUP_ID.equals("")){
+            RequestParams params1 = new RequestParams();
+            params1.add("team_id",AppUtil.Group.GROUP_ID);
+            // 2.关闭弹出窗口
+            //3.根据服务器返回值显示创建成功或失败的提示
+
+            AsyncHttpClient gclient=new AsyncHttpClient();
+            RequestParams params=new RequestParams();
+            params.add("user_id",xyuser_id);
+            gclient.get(getApplicationContext(),xyurl,params,new JsonHttpResponseHandler(){
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    super.onSuccess(statusCode, headers, response);
+                    // System.out.print(response);
+                    try {
+                        String team_id=response.getString("team_id");
+                        AppUtil.Group.GROUP_ID = team_id;
+                        Toast.makeText(LoginActivity.this, AppUtil.Group.GROUP_ID, Toast.LENGTH_SHORT).show();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+//            gclient.get(getApplicationContext(), xyurl,params1, new AsyncHttpResponseHandler() {
+//                @Override
+//                public void onSuccess(int i, Header[] headers, byte[] bytes) {
+//                    String teamInfo = new String(bytes);
+//                 //   Toast.makeText(LoginActivity.this, teamInfo, Toast.LENGTH_SHORT).show();
+//                    AlertDialog ad = new AlertDialog.Builder(LoginActivity.this).create();
+//                    ad.setTitle("TeamInfo");
+//                    ad.setMessage(teamInfo);
+//                    ad.setButton("确定", new DialogInterface.OnClickListener() {
+//
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                        }
+//                    });
+//                    ad.setButton2("取消", new DialogInterface.OnClickListener() {
+//
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                        }
+//                    });
+//                    ad.show();
+//
+////                    JSONObject json = (JSONObject) teamInfo;
+////                    JSONArray users = null;
+////                    try {
+////                        users = jsonObject.getJSONArray("你的key");
+////                        for (int i = 0; i < users.size(); i++) {
+////                            JSONObject attention = users.getJSONObject(i);
+////                            String name = attention.getString("name");
+////                            String account = attention.getString("account");
+////
+////                        }catch(JSONException e){
+////                            e.printStackTrace();
+////                        }
+////
+////                    }
+//                }
+//                @Override
+//                public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+//                    Toast.makeText(LoginActivity.this,"获取队伍信息失败",Toast.LENGTH_SHORT).show();
+//                }
+//            });
+        }
+    }
+
     public void getyh() {
         UserInfo userInfo = new UserInfo(LoginActivity.this, mTencent.getQQToken());
         IUiListener userInfoListener = new IUiListener() {
@@ -378,9 +452,9 @@ public class LoginActivity extends Activity implements OnClickListener{
                 String Url_add = "http://10.7.88.106:8080/qq/login";
                 //获取参数
                 RequestParams params = new RequestParams();
-                params.add("qqid",qqid);
-                params.add("qqname",qqname);
-                params.add("qqgender",qqgender);
+                params.add("qq",qqid);
+                params.add("qq_name",qqname);
+                params.add("sex",qqgender);
                 //服务器获取参数
                 client.get(getApplicationContext(), Url_add, params, new AsyncHttpResponseHandler() {
                     @Override
@@ -389,16 +463,19 @@ public class LoginActivity extends Activity implements OnClickListener{
                         AppUtil.User.USER_ID = qqresult;
                         AppUtil.User.USER_NAME = qqname;
                         AppUtil.User.USER_GENDER = qqgender;
+                        xyuser_id = qqresult;
                         Toast.makeText(LoginActivity.this,"登录成功", Toast.LENGTH_LONG).show();
+                        getTeamInfo();
                         Intent intent = new Intent(LoginActivity.this, LauncherActivity.class);
                         startActivity(intent);
                         finish();
                     }
                     @Override
                     public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
-
+                        Toast.makeText(LoginActivity.this,"登录失败", Toast.LENGTH_LONG).show();
                     }
                 });
+
             }
 
             @Override

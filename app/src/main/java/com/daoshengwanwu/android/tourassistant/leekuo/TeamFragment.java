@@ -1,17 +1,14 @@
 package com.daoshengwanwu.android.tourassistant.leekuo;
 
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -32,7 +29,7 @@ public class TeamFragment extends Fragment {
     private RelativeLayout myTeam;
     private RelativeLayout talk;
     private String str; //战队名
-    private final String url = new String("http://10.7.88.19/team/create");
+    private final String url = new String("http://"+AppUtil.SharingServer.HOST2+":"+AppUtil.SharingServer.PORT2+"/team/create");
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

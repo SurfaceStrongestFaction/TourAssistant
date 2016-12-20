@@ -7,6 +7,8 @@ public class AppUtil {
     public static final class SharingServer {
         public static final String HOST = "123.206.81.40";//192.168.43.14
         public static final int PORT = 8088;
+        public static final String HOST2 = "10.7.88.30";//zhouxiuya's ip
+        public static final int PORT2 = 80;//zhouxiuya's port
         public static final String COMMAND_SET_LOCATION = "set_location";
         public static final String REQUEST_MEMBER_LOCATION = "request_location";
         public static final String REQUEST_STOP = "over";
@@ -27,7 +29,7 @@ public class AppUtil {
     }
 
     public static final class Group {
-        public static String GROUP_ID = "SurfaceStrongestTeam";
+        public static String GROUP_ID = "2ff17b61-b546-4888-a738-b010079acc68";
         public static String GROUP_NAME;
     }
 

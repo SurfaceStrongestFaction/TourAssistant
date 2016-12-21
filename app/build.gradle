@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'Santa'
+            keyPassword 'jsd003581.'
+            storeFile file('E:/Santa.jks')
+            storePassword 'jsd003581.'
+        }
+    }
     compileSdkVersion 24
     buildToolsVersion "24.0.2"
     defaultConfig {

@@ -79,7 +79,6 @@
         <activity android:name=".activity.RegisterActivity" />
         <activity android:name=".activity.Register2Activity" />
         <activity android:name=".activity.LoginActivity" />
-        <activity android:name=".activity.PoiAroundSearchActivity"/>
 
         <service android:name="com.amap.api.location.APSService" />
         <service android:name=".service.SharingService" />
@@ -119,16 +118,7 @@
                 <!-- 100380359 100381104 222222 -->
             </intent-filter>
         </activity>
-
-
     </application>
-    <code class="code">
-        <uses-permission android:name="android.permission.INTERNET"/>
-        <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-        <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-        <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-        <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    </code>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />

@@ -530,7 +530,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
                 if (mamap == null)
                     return;
                 LatLngBounds bounds = getLatLngBounds();
-                mamap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100));
+                //mamap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100));
             }
         }
 

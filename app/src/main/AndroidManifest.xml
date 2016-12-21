@@ -65,7 +65,13 @@
         <activity android:name=".activity.SearchActivity" />
         <activity android:name=".activity.PictureActivity" />
         <activity android:name=".activity.ViewspotActivity" />
-        <activity android:name=".activity.ScenicspotActivity" />
+        <activity android:name=".activity.ScenicspotActivity" >
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
         <activity android:name="com.daoshengwanwu.android.tourassistant.activity.PersonalDataActivity" />
         <activity android:name="com.daoshengwanwu.android.tourassistant.activity.SetActivity" />
 

@@ -1,5 +1,6 @@
-package com.daoshengwanwu.android.tourassistant.activity;
+package com.daoshengwanwu.android.tourassistant.leekuo;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,12 +10,10 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.daoshengwanwu.android.tourassistant.R;
-import com.daoshengwanwu.android.tourassistant.adapter.TeamerMyTeamAdapter;
-import com.daoshengwanwu.android.tourassistant.item.team.TeamerMyTeamItem;
 
 import java.util.ArrayList;
 
-public class TeamerMyTeamActivity extends BaseActivity{
+public class TeamerMyTeamActivity extends Activity {
     private ListView lv;
     private ArrayList<TeamerMyTeamItem> items=new ArrayList<>();
     private Button btn1;
@@ -29,9 +28,9 @@ public class TeamerMyTeamActivity extends BaseActivity{
         lv.setAdapter(adapter);
         setItemClick();
     }
-    public static  void actionStartActivity(Context packageContext) {
-        Intent intent = new Intent(packageContext, TeamerMyTeamActivity.class);
-        packageContext.startActivity(intent);
+    public static Intent newIntent(Context packageContext, String userName) {
+        Intent i = new Intent(packageContext, TeamerMyTeamActivity.class);
+        return i;
     }
     public void  getData(){
         items.add(new TeamerMyTeamItem(R.drawable.item_pic2,"申玥"));
@@ -50,8 +49,8 @@ public class TeamerMyTeamActivity extends BaseActivity{
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> paren, View view, int position, long id) {
-                TeamMemberActivity.actionStartActivity(TeamerMyTeamActivity.this);
-                overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
+                Intent i = TeamMemberActivity.newIntent(TeamerMyTeamActivity.this,"李阔");
+                startActivity(i);
             }
         });
     }

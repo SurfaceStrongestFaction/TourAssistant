@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -43,6 +44,7 @@ public class MyTeamActivity extends BaseActivity {
     public String[] names;
     public int i;
     public MyTeamAdapter adapter;
+    private ImageView back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +52,6 @@ public class MyTeamActivity extends BaseActivity {
         setContentView(R.layout.lk_activity_my_team);
         getData();
         mBinder = (SharingService.SharingBinder)getIntent().getSerializableExtra(KEY_BINDER);
-
         mBinder.registerOnTeamMemberChangeListener(new SharingService.OnTeamMemberChangeListener() {
             @Override
             public void onTeamMemberChange(String team_id, List<String> memberIds) {
@@ -80,6 +81,13 @@ public class MyTeamActivity extends BaseActivity {
             }
         });
     }
+
+    public static  void actionStartActivity(Context packageContext) {
+        Intent intent = new Intent(packageContext,  MyTeamActivity.class);
+        packageContext.startActivity(intent);
+    }
+
+
 
     private void getCaptianInfo(String groupcaptian) {
         AsyncHttpClient gclient = new AsyncHttpClient();
@@ -155,7 +163,13 @@ public class MyTeamActivity extends BaseActivity {
 
 
     public void  getData(){
-
+        back=(ImageView)findViewById(R.id.myTeam_back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MyTeamActivity.this.finish();
+            }
+        });
         TextView tv = (TextView) findViewById(R.id.myTeam_name);
         tv.setText(AppUtil.Group.GROUP_NAME);
         getCaptianInfo(AppUtil.Group.GROUP_CAPTIAN);
@@ -170,6 +184,7 @@ public class MyTeamActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 TransferTeamActivity.actionStartActivity(MyTeamActivity.this);
+                overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
             }
         });
     }
@@ -181,6 +196,7 @@ public class MyTeamActivity extends BaseActivity {
                 /*Intent i = TeamMemberActivity.newIntent(MyTeamActivity.this,"李阔");
                 startActivity(i);*/
                 TeamMemberActivity.actionStartActivity(MyTeamActivity.this);
+                overridePendingTransition(R.anim.push_up_in,R.anim.push_up_out);
             }
         });
     }

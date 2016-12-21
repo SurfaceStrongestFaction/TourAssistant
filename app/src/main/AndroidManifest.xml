@@ -51,7 +51,7 @@
             android:name="com.amap.api.v2.apikey"
             android:value="2214f6ab633dcb98ae9dc3e06256b9b5" />
 
-        <activity android:name=".activity.LauncherActivity">
+        <activity android:name=".activity.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -69,7 +69,9 @@
         <activity android:name="com.daoshengwanwu.android.tourassistant.activity.PersonalDataActivity" />
         <activity android:name="com.daoshengwanwu.android.tourassistant.activity.SetActivity" />
 
-        <activity android:name=".activity.WelcomeActivity" />
+        <activity android:name=".activity.LauncherActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+            android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".activity.AboutActivity" />
         <activity android:name=".activity.CollectActivity" />
         <activity android:name=".activity.MyTeamActivity" />

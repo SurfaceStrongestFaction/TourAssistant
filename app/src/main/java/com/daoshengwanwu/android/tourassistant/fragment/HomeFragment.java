@@ -1,4 +1,4 @@
-package com.daoshengwanwu.android.tourassistant.baihaoran;
+package com.daoshengwanwu.android.tourassistant.fragment;
 
 
 import android.content.Context;
@@ -32,6 +32,9 @@ import com.daoshengwanwu.android.tourassistant.R;
 import com.daoshengwanwu.android.tourassistant.model.HomeModel;
 import com.daoshengwanwu.android.tourassistant.model.Spot;
 import com.daoshengwanwu.android.tourassistant.utils.DisplayUtil;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
 

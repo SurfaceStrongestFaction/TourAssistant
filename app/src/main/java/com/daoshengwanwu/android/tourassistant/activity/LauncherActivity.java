@@ -2,6 +2,8 @@ package com.daoshengwanwu.android.tourassistant.activity;
 
 
 import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.support.v4.app.Fragment;
@@ -66,7 +68,10 @@ public class LauncherActivity extends BaseActivity {
         initFragment();
     }
 
-
+    public static  void actionStartActivity(Context packageContext) {
+        Intent intent = new Intent(packageContext,  LauncherActivity.class);
+        packageContext.startActivity(intent);
+    }
     private void initFragment() {
         if (null == mHomeFragment) {
             mHomeFragment = HomeFragment.newInstance();
@@ -149,6 +154,7 @@ public class LauncherActivity extends BaseActivity {
                     if ("".equals(AppUtil.User.USER_ID)) {
                         //说明还没有登陆，应该跳转到登录界面
                         LoginActivity.actionStartActivity(LauncherActivity.this);
+                        overridePendingTransition(R.anim.slide_left,R.anim.slide_right);
                     } else {
                         //说明已经登录，进入我的界面
                         if (null == mMeFragment) {

@@ -1,4 +1,4 @@
-package com.daoshengwanwu.android.tourassistant.jiangshengda;
+package com.daoshengwanwu.android.tourassistant.fragment;
 
 
 import android.content.Intent;

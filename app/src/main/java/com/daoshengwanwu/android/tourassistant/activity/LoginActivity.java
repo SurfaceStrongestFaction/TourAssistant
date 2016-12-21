@@ -79,6 +79,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
     private SsoHandler mSsoHandler;
     private UsersAPI mUsersAPI;
     private Button bt;
+    private Button btl;
     private SharedPreferences s,s1;
     private String name1;
     private String pwd1;
@@ -120,7 +121,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
             try {
 
                 //登录
-                    URL url = new URL("http://192.168.191.1/user/login");
+                    URL url = new URL("http://10.7.88.89/user/login");
                     HttpURLConnection con = (HttpURLConnection)url.openConnection();
                     con.setDoInput(true);
                     con.setDoOutput(true);
@@ -133,6 +134,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
                     while ((line = in.readLine()) != null){
                         result += "\n" +line;
                     }
+
                       user_id = result;
             }  catch (Exception e) {
                 System.out.println("发送POST请求出现异常！" + e);
@@ -155,14 +157,34 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 
     private void initViews() {
         bt = (Button)findViewById(R.id.lg_bt2);
-
+        btl = (Button)findViewById(R.id.lg_bt);
+        btl.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                System.out.println("haha");
+                Toast.makeText(LoginActivity.this,"haha",Toast.LENGTH_LONG).show();
+            }
+        });
         btnweibo = (ImageView) findViewById(R.id.lg_weibo);
 
     }
 
     private void initEvents() {
         btnweibo.setOnClickListener(this);
-        bt.setOnClickListener(new View.OnClickListener() {
+//        btl.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+//                startActivity(intent);
+////                user_name = name.getText().toString();
+////                user_pwd = pwd.getText().toString();
+////                System.out.println("haha");
+////                System.out.println(user_name);
+////                System.out.println(user_pwd);
+////                login.start();
+//            }
+//        });
+        btl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
@@ -210,10 +232,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
                 // 如果手机安装了微博客户端则使用客户端授权,没有则进行网页授权
                 mSsoHandler.authorize(new AuthListener());
                 break;
-            case R.id.lg_bt:
-                user_name = name.getText().toString();
-                user_pwd = pwd.getText().toString();
-                login.start();
             default:
                 break;
 

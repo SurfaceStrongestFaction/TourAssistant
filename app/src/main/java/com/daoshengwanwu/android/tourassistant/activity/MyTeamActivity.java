@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.daoshengwanwu.android.tourassistant.R;
 import com.daoshengwanwu.android.tourassistant.adapter.MyTeamAdapter;
 import com.daoshengwanwu.android.tourassistant.item.team.MyTeamItem;
+import com.daoshengwanwu.android.tourassistant.service.SharingService;
 import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -25,8 +26,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MyTeamActivity extends BaseActivity {
+    private static String KEY_BINDER = "MyTeamactivity.KEY_BINDER";
+    private SharingService.SharingBinder mBinder;
+
     private ListView lv;
     private ArrayList<MyTeamItem> items=new ArrayList<>();
     private Button btn1;
@@ -46,6 +51,7 @@ public class MyTeamActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lk_activity_my_team);
         getData();
+        mBinder = (SharingService.SharingBinder)getIntent().getSerializableExtra(KEY_BINDER);
 
     }
     public static  void actionStartActivity(Context packageContext) {
@@ -53,10 +59,40 @@ public class MyTeamActivity extends BaseActivity {
         packageContext.startActivity(intent);
     }
 
-    private void getCaptianInfo() {
+        mBinder.registerOnTeamMemberChangeListener(new SharingService.OnTeamMemberChangeListener() {
+            @Override
+            public void onTeamMemberChange(String team_id, List<String> memberIds) {
+                getCaptianInfo(AppUtil.Group.GROUP_CAPTIAN);
+                for ( i = 0; i <  memberIds.size(); i++) {
+                    AsyncHttpClient gclient = new AsyncHttpClient();
+                    RequestParams params = new RequestParams();
+                    params.add("user_id", memberIds.get(i));
+                    gclient.get(getApplicationContext(),xyurl,params,new JsonHttpResponseHandler(){
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                            super.onSuccess(statusCode, headers, response);
+                            try {
+                                String n = response.getString("user_name");
+                                items.add(new MyTeamItem(R.drawable.item_pic2,n));
+                                adapter.notifyDataSetChanged();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                            super.onFailure(statusCode, headers, throwable, errorResponse);
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    private void getCaptianInfo(String groupcaptian) {
         AsyncHttpClient gclient = new AsyncHttpClient();
         RequestParams params = new RequestParams();
-        params.add("user_id", AppUtil.Group.GROUP_CAPTIAN);
+        params.add("user_id", groupcaptian);
         gclient.get(getApplicationContext(),xyurl,params,new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -76,10 +112,10 @@ public class MyTeamActivity extends BaseActivity {
             });
     }
 
-    private void getMembersInfo() {
+    private void getMembersInfo(String groupid) {
         AsyncHttpClient gclient = new AsyncHttpClient();
         RequestParams params = new RequestParams();
-        params.add("team_id",AppUtil.Group.GROUP_ID);
+        params.add("team_id",groupid);
         gclient.get(getApplicationContext(),xyurl2,params,new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -136,14 +172,14 @@ public class MyTeamActivity extends BaseActivity {
         });
         TextView tv = (TextView) findViewById(R.id.myTeam_name);
         tv.setText(AppUtil.Group.GROUP_NAME);
-        getCaptianInfo();
-        getMembersInfo();
-        adapter=new MyTeamAdapter(this,items);
-        lv=(ListView)findViewById(R.id.myTeam_listView);
+        getCaptianInfo(AppUtil.Group.GROUP_CAPTIAN);
+        getMembersInfo(AppUtil.Group.GROUP_ID);
+        adapter = new MyTeamAdapter(this,items);
+        lv = (ListView)findViewById(R.id.myTeam_listView);
         lv.setAdapter(adapter);
         setItemClick();
-        btn2=(Button)findViewById(R.id.myTeam_button2);
-        transfer=(RelativeLayout)findViewById(R.id.myTeam_transfer);
+        btn2 = (Button)findViewById(R.id.myTeam_button2);
+        transfer = (RelativeLayout)findViewById(R.id.myTeam_transfer);
         transfer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -163,5 +199,12 @@ public class MyTeamActivity extends BaseActivity {
                 overridePendingTransition(R.anim.push_up_in,R.anim.push_up_out);
             }
         });
+    }
+
+
+    public static void actionStartActivity(Context packageContext, SharingService.SharingBinder binder) {
+        Intent intent = new Intent(packageContext, MyTeamActivity.class);
+        intent.putExtra(KEY_BINDER, binder);
+        packageContext.startActivity(intent);
     }
 }

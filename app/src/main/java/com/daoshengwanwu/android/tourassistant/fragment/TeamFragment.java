@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.daoshengwanwu.android.tourassistant.R;
 import com.daoshengwanwu.android.tourassistant.activity.MyTeamActivity;
+import com.daoshengwanwu.android.tourassistant.service.SharingService;
 import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -25,6 +26,9 @@ import org.apache.http.Header;
  * Created by LK on 2016/12/14.
  */
 public class TeamFragment extends Fragment {
+    private static final String KEY_BINDER = "TeamFragment.KEY_BINDER";
+    private SharingService.SharingBinder mBinder;
+
     private RelativeLayout createTeam;
     private RelativeLayout joinTeam;
     private RelativeLayout myTeam;
@@ -97,6 +101,10 @@ public class TeamFragment extends Fragment {
                         dialog.dismiss();
                     }
                 });
+
+
+
+
             }
         });
         joinTeam=(RelativeLayout)view.findViewById(R.id.lk_joinTeam);
@@ -110,7 +118,7 @@ public class TeamFragment extends Fragment {
         myTeam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               MyTeamActivity.actionStartActivity(getActivity());
+               MyTeamActivity.actionStartActivity(getActivity(), mBinder);
             }
         });
         talk=(RelativeLayout)view.findViewById(R.id.lk_talk);
@@ -120,15 +128,28 @@ public class TeamFragment extends Fragment {
 
             }
         });
+
+        Bundle data = getArguments();
+        if (null != data) {
+            mBinder = (SharingService.SharingBinder)data.getSerializable(KEY_BINDER);
+        }
+
         return view;
+    }
+
+    public static TeamFragment newInstance(SharingService.SharingBinder binder) {
+        TeamFragment teamFragment = new TeamFragment();
+
+        Bundle data = new Bundle();
+        data.putSerializable(KEY_BINDER, binder);
+
+        teamFragment.setArguments(data);
+
+        return teamFragment;
     }
 
     @Override
     public void onPause() {
         super.onPause();
-    }
-
-    public static TeamFragment newInstance() {
-        return new TeamFragment();
     }
 }

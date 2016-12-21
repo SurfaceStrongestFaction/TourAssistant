@@ -332,6 +332,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
                         poiOverlay.addToMap();
                         poiOverlay.zoomToSpan();
 
+                        /*
                         aMap.addMarker(new MarkerOptions()
                                 .anchor(0.5f, 0.5f)
                                 .icon(BitmapDescriptorFactory
@@ -344,7 +345,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
                                         lp.getLongitude())).radius(5000)
                                 .strokeColor(Color.BLUE)
                                 .fillColor(Color.argb(50, 1, 1, 1))
-                                .strokeWidth(2));
+                                .strokeWidth(2));*/
 
                     } else if (suggestionCities != null
                             && suggestionCities.size() > 0) {
@@ -531,7 +532,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
                 if (mamap == null)
                     return;
                 LatLngBounds bounds = getLatLngBounds();
-                mamap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100));
+                //mamap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100));
             }
         }
 
@@ -656,18 +657,16 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
      */
     @Override
     public void onLocationChanged(AMapLocation amapLocation) {
+        x = amapLocation.getLatitude();//获取纬度
+        y = amapLocation.getLongitude();//获取经度
+        //与高德Demo的接口，通过更改定点lp的值达到不用修改原代码的目的
+        lp.setLatitude(x);
+        lp.setLongitude(y);
+        //aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lp.getLatitude(), lp.getLongitude()), 14));
         if (amapLocation != null && mIsStartBlack) {
             if (amapLocation.getErrorCode() == 0) {
                 //迷雾追踪部分代码
-                x = amapLocation.getLatitude();//获取纬度
-                y = amapLocation.getLongitude();//获取经度
                 pos = new LatLng(x,y);
-
-                //与高德Demo的接口，通过更改定点lp的值达到不用修改原代码的目的
-                lp.setLatitude(x);
-                lp.setLongitude(y);
-                //aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lp.getLatitude(), lp.getLongitude()), 14));
-
                 Projection projection = aMap.getProjection();
                 //将地图的点，转换为屏幕上的点 
                 Point dot = projection.toScreenLocation(pos);
@@ -681,6 +680,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
                     }
                     i++;
                 }
+                Toast.makeText(getActivity(), "Latitude:" + x + ", Longitude:" + y, Toast.LENGTH_SHORT).show();
 
                 //amapLocation.getLocationType();//获取当前定位结果来源，如网络定位结果，详见定位类型表
                 //amapLocation.getLatitude();//获取纬度

@@ -1,4 +1,4 @@
-package com.daoshengwanwu.android.tourassistant.jiangshengda;
+package com.daoshengwanwu.android.tourassistant.fragment;
 
 
 import android.content.Intent;
@@ -22,6 +22,7 @@ import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.Projection;
+import com.amap.api.maps.TextureMapView;
 import com.amap.api.maps.UiSettings;
 import com.amap.api.maps.model.LatLng;
 
@@ -54,7 +55,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener, Shar
     private FrameLayout act_main;
     private Button btn;
     private AMap aMap;
-    private MapView mapView;
+    private TextureMapView mapView;
     //--------------------------------------------------------------------
 
     //------------------------------浩然-----------------------------------
@@ -152,7 +153,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener, Shar
 
         btn = (Button) v.findViewById(R.id.Fog_btn);
         act_main = (FrameLayout)v.findViewById(R.id.fragment_maps);
-        mapView = (MapView) v.findViewById(R.id.map);
+        mapView = (TextureMapView) v.findViewById(R.id.map);
         if (aMap == null) {
             aMap = mapView.getMap();
             setUpMap();

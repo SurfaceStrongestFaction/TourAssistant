@@ -68,7 +68,7 @@ import static com.daoshengwanwu.android.tourassistant.utils.AppUtil.Group.GROUP_
 import static com.daoshengwanwu.android.tourassistant.utils.AppUtil.User.USER_ID;
 
 
-public class LoginActivity extends Activity implements OnClickListener{
+public class LoginActivity extends BaseActivity implements OnClickListener{
     private AuthInfo mAuthInfo;
     private ImageView btnweibo;
 
@@ -167,6 +167,7 @@ public class LoginActivity extends Activity implements OnClickListener{
             public void onClick(View view) {
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.push_up_in,R.anim.push_up_out);
             }
         });
 

@@ -19,12 +19,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.amap.api.location.AMapLocation;
-import com.amap.api.location.AMapLocationListener;
+import com.amap.api.location.AMapLocation;//定位信息类
+import com.amap.api.location.AMapLocationListener;//定位回调接口
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.Projection;
+import com.amap.api.maps.TextureMapView;
 import com.amap.api.maps.UiSettings;
 import com.amap.api.maps.model.BitmapDescriptor;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
@@ -41,8 +42,8 @@ import com.amap.api.services.core.SuggestionCity;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
 import com.daoshengwanwu.android.tourassistant.R;
-import com.daoshengwanwu.android.tourassistant.service.SharingService;
 import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
+import com.daoshengwanwu.android.tourassistant.service.SharingService;
 import com.daoshengwanwu.android.tourassistant.utils.ToastUtil;
 import com.daoshengwanwu.android.tourassistant.view.MyView;
 
@@ -75,7 +76,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
     private FrameLayout act_main;
     private Button btn;
     private AMap aMap;
-    private MapView mapView;
+    private TextureMapView mapView;
 
     private PoiResult poiResult; // poi返回的结果
     private int currentPage = 0;// 当前页面，从0开始计数
@@ -189,7 +190,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
 
         btn = (Button) v.findViewById(R.id.Fog_btn);
         act_main = (FrameLayout)v.findViewById(R.id.fragment_maps);
-        mapView = (MapView) v.findViewById(R.id.map);
+        mapView = (TextureMapView) v.findViewById(R.id.map);
         if (aMap == null) {
             aMap = mapView.getMap();
             aMap.setOnMapClickListener(this);
@@ -330,6 +331,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
                         poiOverlay.addToMap();
                         poiOverlay.zoomToSpan();
 
+                        /*
                         aMap.addMarker(new MarkerOptions()
                                 .anchor(0.5f, 0.5f)
                                 .icon(BitmapDescriptorFactory
@@ -342,7 +344,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
                                         lp.getLongitude())).radius(5000)
                                 .strokeColor(Color.BLUE)
                                 .fillColor(Color.argb(50, 1, 1, 1))
-                                .strokeWidth(2));
+                                .strokeWidth(2));*/
 
                     } else if (suggestionCities != null
                             && suggestionCities.size() > 0) {
@@ -529,7 +531,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
                 if (mamap == null)
                     return;
                 LatLngBounds bounds = getLatLngBounds();
-                mamap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100));
+                //mamap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100));
             }
         }
 
@@ -654,18 +656,16 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
      */
     @Override
     public void onLocationChanged(AMapLocation amapLocation) {
+        x = amapLocation.getLatitude();//获取纬度
+        y = amapLocation.getLongitude();//获取经度
+        //与高德Demo的接口，通过更改定点lp的值达到不用修改原代码的目的
+        lp.setLatitude(x);
+        lp.setLongitude(y);
+        //aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lp.getLatitude(), lp.getLongitude()), 14));
         if (amapLocation != null && mIsStartBlack) {
             if (amapLocation.getErrorCode() == 0) {
                 //迷雾追踪部分代码
-                x = amapLocation.getLatitude();//获取纬度
-                y = amapLocation.getLongitude();//获取经度
                 pos = new LatLng(x,y);
-
-                //与高德Demo的接口，通过更改定点lp的值达到不用修改原代码的目的
-                lp.setLatitude(x);
-                lp.setLongitude(y);
-                //aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lp.getLatitude(), lp.getLongitude()), 14));
-
                 Projection projection = aMap.getProjection();
                 //将地图的点，转换为屏幕上的点 
                 Point dot = projection.toScreenLocation(pos);
@@ -679,6 +679,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
                     }
                     i++;
                 }
+                Toast.makeText(getActivity(), "Latitude:" + x + ", Longitude:" + y, Toast.LENGTH_SHORT).show();
 
                 //amapLocation.getLocationType();//获取当前定位结果来源，如网络定位结果，详见定位类型表
                 //amapLocation.getLatitude();//获取纬度

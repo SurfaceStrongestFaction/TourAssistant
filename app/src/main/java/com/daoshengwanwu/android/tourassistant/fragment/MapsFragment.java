@@ -25,6 +25,7 @@ import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.Projection;
+import com.amap.api.maps.TextureMapView;
 import com.amap.api.maps.UiSettings;
 import com.amap.api.maps.model.BitmapDescriptor;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
@@ -41,8 +42,8 @@ import com.amap.api.services.core.SuggestionCity;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
 import com.daoshengwanwu.android.tourassistant.R;
-import com.daoshengwanwu.android.tourassistant.service.SharingService;
 import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
+import com.daoshengwanwu.android.tourassistant.service.SharingService;
 import com.daoshengwanwu.android.tourassistant.utils.ToastUtil;
 import com.daoshengwanwu.android.tourassistant.view.MyView;
 
@@ -75,7 +76,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
     private FrameLayout act_main;
     private Button btn;
     private AMap aMap;
-    private MapView mapView;
+    private TextureMapView mapView;
 
     private PoiResult poiResult; // poi返回的结果
     private int currentPage = 0;// 当前页面，从0开始计数
@@ -194,6 +195,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
         mapView = (MapView) v.findViewById(R.id.map);
         mQuit_fog_btn = (Button) v.findViewById(R.id.Quit_Fog_btn);
         mQuit_fog_btn.setVisibility(mQuit_fog_btn.GONE);
+        mapView = (TextureMapView) v.findViewById(R.id.map);
         if (aMap == null) {
             aMap = mapView.getMap();
             aMap.setOnMapClickListener(this);

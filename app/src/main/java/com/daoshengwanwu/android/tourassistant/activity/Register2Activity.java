@@ -30,6 +30,7 @@ public class Register2Activity extends BaseActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(Register2Activity.this, RegisterActivity.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
                 finish();
             }
         });

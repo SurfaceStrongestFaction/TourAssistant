@@ -12,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -30,6 +31,7 @@ import com.bumptech.glide.Glide;
 import com.daoshengwanwu.android.tourassistant.R;
 import com.daoshengwanwu.android.tourassistant.model.HomeModel;
 import com.daoshengwanwu.android.tourassistant.model.Spot;
+import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
 import com.daoshengwanwu.android.tourassistant.utils.DisplayUtil;
 import com.example.www.library.PullToRefreshView;
 import com.loopj.android.http.AsyncHttpClient;
@@ -40,9 +42,18 @@ import com.youth.banner.loader.ImageLoader;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 
 public class HomeFragment extends Fragment {
@@ -114,14 +125,14 @@ public class HomeFragment extends Fragment {
             }
         });
 
-//        getDataFromServer();
+        getDataFromServer();
 
         return v;
     }
 
     private void getDataFromServer() {
-        AsyncHttpClient client = new AsyncHttpClient();
-        String url = "http://192.168.43.210:80/spot/getspotid";//10.7.88.89,192.168.191.1
+        final AsyncHttpClient client = new AsyncHttpClient();
+        String url = "http://10.7.88.89:80/spot/getspotid";//10.7.88.89,192.168.191.1
 
         RequestParams params = new RequestParams();
         params.add("id", "111");
@@ -132,34 +143,45 @@ public class HomeFragment extends Fragment {
                 super.onSuccess(statusCode, headers, response);
 
                 if (null == response) {
-                    return;
+                    return ;
                 }
 
-//                try {
-//                    for (int i = 0; i < response.length(); i++) {
-                        String spot_id = "222";
+                mListData.clear();
+                Log.d(TAG, "onSuccess: response:" + response);
+                for (int i = 0; i < response.length(); i++) {
+                    try {
+                        String spot_id = response.getString(i);
 
-//                        AsyncHttpClient client = new AsyncHttpClient();
-//                        String url = "http://192.168.43.210:80/spot/getrecommend";//10.7.88.89,192.168.191.1
-//
-//                        Log.d(TAG, "onSuccess: spotid:" + spot_id);
-//                        RequestParams params = new RequestParams();
-//                        params.add("id", spot_id);
-//
-//                        client.get(getActivity().getApplicationContext(), url, params, new JsonHttpResponseHandler() {
-//                            @Override
-//                            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-//                                super.onSuccess(statusCode, headers, response);
-//                                Log.d(TAG, "onSuccess: JSONArray:" + response);
-//                            }
-//                        });
-//                    }
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
+                        String url = "http://10.7.88.89:80/spot/getrecommend";//10.7.88.89,192.168.191.1
+
+                        RequestParams params = new RequestParams();
+                        params.add("id", spot_id);
+
+                        client.get(getActivity().getApplicationContext(), url, params, new JsonHttpResponseHandler() {
+                            @Override
+                            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                                super.onSuccess(statusCode, headers, response);
+                                Spot spot = new Spot(R.drawable.gugong);
+                                try {
+                                    spot.setSpotName(response.getString("cn_name"));
+                                    spot.setSpotEnName(response.getString("en_name"));
+                                    spot.setDistance(100);
+                                    spot.setRecommandNum(Integer.parseInt(response.getString("recommend_index")));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                                mListData.add(spot);
+                            }
+                        });
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                mRecyclerView.getAdapter().notifyDataSetChanged();
             }
         });
-
     }
 
     private void getWidgetsReferences(View v) {

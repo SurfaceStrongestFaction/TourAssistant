@@ -44,7 +44,6 @@ import com.amap.api.services.poisearch.PoiSearch;
 import com.daoshengwanwu.android.tourassistant.R;
 import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
 import com.daoshengwanwu.android.tourassistant.service.SharingService;
-import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
 import com.daoshengwanwu.android.tourassistant.utils.ToastUtil;
 import com.daoshengwanwu.android.tourassistant.view.MyView;
 
@@ -77,7 +76,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
     private FrameLayout act_main;
     private Button btn;
     private AMap aMap;
-    private MapView mapView;
+    private TextureMapView mapView;
 
     private PoiResult poiResult; // poi返回的结果
     private int currentPage = 0;// 当前页面，从0开始计数
@@ -191,7 +190,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
 
         btn = (Button) v.findViewById(R.id.Fog_btn);
         act_main = (FrameLayout)v.findViewById(R.id.fragment_maps);
-        mapView = (MapView) v.findViewById(R.id.map);
+        mapView = (TextureMapView) v.findViewById(R.id.map);
         if (aMap == null) {
             aMap = mapView.getMap();
             aMap.setOnMapClickListener(this);

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragment_maps"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:id="@+id/fragment_maps">
+    android:orientation="vertical">
 
     <com.amap.api.maps.MapView
         android:id="@+id/map"
@@ -75,7 +75,7 @@
         <TextView
             android:id="@+id/poi_name"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
+            android:layout_height="35dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_marginLeft="12dp"
@@ -116,74 +116,98 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:layout_gravity="bottom"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginTop="350dp"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:orientation="vertical">
 
             <Button
                 android:id="@+id/Fog_btn"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="迷雾模式" />
+                android:alpha="0.9"
+                android:layout_width="@dimen/santa_60dp"
+                android:layout_height="@dimen/santa_35dp"
+                android:layout_marginBottom="@dimen/santa_5dp"
+                android:background="@drawable/shape"
+                android:text="迷雾模式"
+                android:textSize="9dp" />
+
+            <Button
+                android:id="@+id/Quit_Fog_btn"
+                android:alpha="0.9"
+                android:layout_width="@dimen/santa_60dp"
+                android:layout_height="@dimen/santa_35dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/shape"
+                android:text="正常模式"
+                android:textSize="9dp" />
 
             <Button
                 android:id="@+id/start_location"
+                android:alpha="0.9"
+                android:layout_width="@dimen/santa_60dp"
+                android:layout_height="@dimen/santa_35dp"
+                android:layout_marginBottom="@dimen/santa_5dp"
+                android:background="@drawable/shape"
                 android:text="开启定位"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"/>
+                android:textSize="9dp" />
 
             <Button
-                android:text="停止定位"
                 android:id="@+id/stop_location"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"/>
+                android:alpha="0.9"
+                android:layout_width="@dimen/santa_60dp"
+                android:layout_height="@dimen/santa_35dp"
+                android:layout_marginBottom="@dimen/santa_5dp"
+                android:background="@drawable/shape"
+                android:text="停止定位"
+
+                android:textSize="9dp" />
         </LinearLayout>
 
+        <Button
+            android:id="@+id/start_upload"
+            android:alpha="0.9"
+            android:layout_width="@dimen/santa_80dp"
+            android:layout_height="@dimen/santa_35dp"
+            android:layout_marginBottom="@dimen/santa_5dp"
+            android:background="@drawable/shape"
+
+            android:text="开启位置共享"
+            android:textSize="9dp" />
+
+        <Button
+            android:id="@+id/stop_upload"
+            android:alpha="0.9"
+            android:layout_width="@dimen/santa_80dp"
+            android:layout_height="@dimen/santa_35dp"
+            android:layout_marginBottom="@dimen/santa_5dp"
+            android:background="@drawable/shape"
+
+            android:text="停止位置共享"
+            android:textSize="9dp" />
+
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <Button
-                android:id="@+id/start_upload"
-                android:text="开启位置共享"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"/>
-
-            <Button
-                android:text="停止位置共享"
-                android:id="@+id/stop_upload"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_gravity="end"
-            android:orientation="vertical"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/user_nick_name"
-                android:layout_gravity="end"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_gravity="end" />
 
             <TextView
                 android:id="@+id/group_name"
-                android:layout_gravity="end"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_gravity="end" />
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>

@@ -92,6 +92,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
     private TextView mPoiName, mPoiAddress;
     private String keyWord = "";
     private EditText mSearchText;
+    private Button mQuit_fog_btn;
     //--------------------------------------------------------------------
 
     //------------------------------浩然-----------------------------------
@@ -188,8 +189,11 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
         View v = inflater.inflate(R.layout.jiangshengda_fragment_maps, container, false);
 
         btn = (Button) v.findViewById(R.id.Fog_btn);
+        btn.setVisibility(btn.GONE);
         act_main = (FrameLayout)v.findViewById(R.id.fragment_maps);
         mapView = (MapView) v.findViewById(R.id.map);
+        mQuit_fog_btn = (Button) v.findViewById(R.id.Quit_Fog_btn);
+        mQuit_fog_btn.setVisibility(mQuit_fog_btn.GONE);
         if (aMap == null) {
             aMap = mapView.getMap();
             aMap.setOnMapClickListener(this);
@@ -230,12 +234,23 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                btn.setVisibility(btn.GONE);
+                mQuit_fog_btn.setVisibility(mQuit_fog_btn.VISIBLE);
                 //Fog
                 mIsStartBlack = true;
                 myView = new MyView(getActivity().getApplicationContext());
                 act_main.addView(myView);
                 i = 0;//初始化计数器
                 aMap.getUiSettings().setAllGesturesEnabled(false);//禁止所有手势操作
+            }
+        });
+
+        mQuit_fog_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myView.setVisibility(myView.GONE);
+                btn.setVisibility(btn.VISIBLE);
+                mQuit_fog_btn.setVisibility(mQuit_fog_btn.GONE);
             }
         });
 
@@ -260,6 +275,10 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
         mStopUpload = (Button)v.findViewById(R.id.stop_upload);
         mUserNickName = (TextView) v.findViewById(R.id.user_nick_name);
         mGroupName = (TextView)v.findViewById(R.id.group_name);
+        //-------------------------------胜达-----------------------------------------------
+        mStopLocation.setVisibility(mStopLocation.GONE);
+        mStopUpload.setVisibility(mStopUpload.GONE);
+        //---------------------------------------------------------------------------------
 
         mStartLocation.setOnClickListener(this);
         mStopLocation.setOnClickListener(this);
@@ -678,7 +697,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
                     }
                     i++;
                 }
-                Toast.makeText(getActivity(), "Latitude:" + x + ", Longitude:" + y, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "Latitude:" + x + ", Longitude:" + y, Toast.LENGTH_SHORT).show();
 
                 //amapLocation.getLocationType();//获取当前定位结果来源，如网络定位结果，详见定位类型表
                 //amapLocation.getLatitude();//获取纬度
@@ -755,6 +774,11 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
                 doSearchQuery();
                 break;
             case R.id.start_location:
+                //-------------------------胜达-------------------------------------
+                btn.setVisibility(btn.VISIBLE);
+                mStartLocation.setVisibility(mStartLocation.GONE);
+                mStopLocation.setVisibility(mStopLocation.VISIBLE);
+                //-----------------------------------------------------------------
                 updateCurrentInfomation();
 
                 if (mIsStartLocation) {
@@ -766,6 +790,16 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
                 }
                 break;
             case R.id.stop_location:
+                //-------------------------胜达-------------------------------------
+                if (btn.getVisibility() == View.GONE){
+                    myView.setVisibility(myView.GONE);
+                    mQuit_fog_btn.setVisibility(btn.GONE);
+                }else {
+                    btn.setVisibility(btn.GONE);
+                }
+                mStartLocation.setVisibility(mStartLocation.VISIBLE);
+                mStopLocation.setVisibility(mStopLocation.GONE);
+                //-----------------------------------------------------------------
                 if (mIsStartLocation) {
                     mSharingBinder.stopLocationService();
                     mUserMarker.remove();
@@ -778,6 +812,10 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
                 }
                 break;
             case R.id.start_upload:
+                //-----------------------胜达------------------------------------------------
+                mStartUpload.setVisibility(mStartUpload.GONE);
+                mStopUpload.setVisibility(mStopUpload.VISIBLE);
+                //--------------------------------------------------------------------------
                 updateCurrentInfomation();
 
                 if (!AppUtil.User.USER_ID.equals("") && !AppUtil.Group.GROUP_ID.equals("")) {
@@ -799,6 +837,10 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
                 }
                 break;
             case R.id.stop_upload:
+                //-----------------------胜达------------------------------------------------
+                mStartUpload.setVisibility(mStartUpload.VISIBLE);
+                mStopUpload.setVisibility(mStopUpload.GONE);
+                //--------------------------------------------------------------------------
                 if (mIsStartUpload) {
                     Toast.makeText(getActivity(), "正在关闭位置共享...", Toast.LENGTH_SHORT).show();
                     mSharingBinder.stopUploadLocation();

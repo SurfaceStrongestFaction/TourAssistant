@@ -52,13 +52,6 @@ public class MyTeamActivity extends BaseActivity {
         setContentView(R.layout.lk_activity_my_team);
         getData();
         mBinder = (SharingService.SharingBinder)getIntent().getSerializableExtra(KEY_BINDER);
-
-    }
-    public static  void actionStartActivity(Context packageContext) {
-        Intent intent = new Intent(packageContext,  MyTeamActivity.class);
-        packageContext.startActivity(intent);
-    }
-
         mBinder.registerOnTeamMemberChangeListener(new SharingService.OnTeamMemberChangeListener() {
             @Override
             public void onTeamMemberChange(String team_id, List<String> memberIds) {
@@ -88,6 +81,13 @@ public class MyTeamActivity extends BaseActivity {
             }
         });
     }
+
+    public static  void actionStartActivity(Context packageContext) {
+        Intent intent = new Intent(packageContext,  MyTeamActivity.class);
+        packageContext.startActivity(intent);
+    }
+
+
 
     private void getCaptianInfo(String groupcaptian) {
         AsyncHttpClient gclient = new AsyncHttpClient();

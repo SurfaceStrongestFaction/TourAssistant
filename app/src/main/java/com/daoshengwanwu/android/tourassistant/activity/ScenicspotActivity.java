@@ -10,7 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.daoshengwanwu.android.tourassistant.R;
-import com.daoshengwanwu.android.tourassistant.leekuo.BaseActivity;
+import com.daoshengwanwu.android.tourassistant.activity.BaseActivity;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -124,6 +124,66 @@ public class ScenicspotActivity extends BaseActivity {
         introducetv = (TextView)findViewById(R.id.scenicspot_introduce_tv);
         gotv = (TextView)findViewById(R.id.scenicspot_go_tv);
         findtv = (TextView)findViewById(R.id.scenicspot_find_tv);
+    }
+    /**
+     * 给界面控件赋值
+     */
+    private void setViews(){
+        nametv.setText(cnname);
+        positiontv.setText(position);
+        picturenumtv.setText(num+"张");
+        pricenumtv.setText(price);
+        timeinf.setText(time);
+        introducetv.setText(introduction);
+        int i=0;
+        if (recommendindex.equals("0")){
+            i=0;
+        }
+        if (recommendindex.equals("1")){
+            i=1;
+        }
+        if (recommendindex.equals("2")){
+            i=2;
+        }
+        if (recommendindex.equals("3")){
+            i=3;
+        }
+        if (recommendindex.equals("4")){
+            i=4;
+        }
+        if (recommendindex.equals("5")){
+            i=5;
+        }
+        switch (i){
+            case 0:
+                star1img.setImageResource(R.drawable.star1);
+                star2img.setImageResource(R.drawable.star1);
+                star3img.setImageResource(R.drawable.star1);
+                star4img.setImageResource(R.drawable.star1);
+                star5img.setImageResource(R.drawable.star1);
+                break;
+            case 1:
+                star2img.setImageResource(R.drawable.star1);
+                star3img.setImageResource(R.drawable.star1);
+                star4img.setImageResource(R.drawable.star1);
+                star5img.setImageResource(R.drawable.star1);
+                break;
+            case 2:
+                star3img.setImageResource(R.drawable.star1);
+                star4img.setImageResource(R.drawable.star1);
+                star5img.setImageResource(R.drawable.star1);
+                break;
+            case 3:
+                star4img.setImageResource(R.drawable.star1);
+                star5img.setImageResource(R.drawable.star1);
+                break;
+            case 4:
+                star5img.setImageResource(R.drawable.star1);
+                break;
+            default:
+                break;
+
+        }
     }
     /**
      * 注册事件监听器

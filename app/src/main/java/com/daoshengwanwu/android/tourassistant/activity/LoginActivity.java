@@ -64,8 +64,8 @@ import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import static com.daoshengwanwu.android.tourassistant.baihaoran.AppUtil.Group.GROUP_ID;
-import static com.daoshengwanwu.android.tourassistant.baihaoran.AppUtil.User.USER_ID;
+import static com.daoshengwanwu.android.tourassistant.utils.AppUtil.Group.GROUP_ID;
+import static com.daoshengwanwu.android.tourassistant.utils.AppUtil.User.USER_ID;
 
 
 public class LoginActivity extends Activity implements OnClickListener{
@@ -334,35 +334,35 @@ public class LoginActivity extends Activity implements OnClickListener{
     }
 
     private void getTeamInfo() {
-        if(!GROUP_ID.equals("")){
+        if(!GROUP_ID.equals("")) {
             RequestParams params1 = new RequestParams();
             params1.add("team_id", GROUP_ID);
             // 2.关闭弹出窗口
             //3.根据服务器返回值显示创建成功或失败的提示
 
-        if(!AppUtil.User.USER_ID.equals("")){
-            AsyncHttpClient gclient=new AsyncHttpClient();
-            RequestParams params=new RequestParams();
-            params.add("user_id",xyuser_id);
-            gclient.get(getApplicationContext(),xyurl,params,new JsonHttpResponseHandler(){
-                @Override
-                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                    super.onSuccess(statusCode, headers, response);
-                    try {
-                        String team_id = response.getString("team_id");
-                        AppUtil.Group.GROUP_ID = team_id;
-                        getTeamNameInfo();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+            if (!AppUtil.User.USER_ID.equals("")) {
+                AsyncHttpClient gclient = new AsyncHttpClient();
+                RequestParams params = new RequestParams();
+                params.add("user_id", xyuser_id);
+                gclient.get(getApplicationContext(), xyurl, params, new JsonHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                        super.onSuccess(statusCode, headers, response);
+                        try {
+                            String team_id = response.getString("team_id");
+                            GROUP_ID = team_id;
+                            getTeamNameInfo();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
-                }
 
-                @Override
-                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                    Toast.makeText(LoginActivity.this, "Team_id获取失败" + AppUtil.Group.GROUP_NAME, Toast.LENGTH_SHORT).show();
-                    super.onFailure(statusCode, headers, throwable, errorResponse);
-                }
-            });
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                        Toast.makeText(LoginActivity.this, "Team_id获取失败" + AppUtil.Group.GROUP_NAME, Toast.LENGTH_SHORT).show();
+                        super.onFailure(statusCode, headers, throwable, errorResponse);
+                    }
+                });
 //            gclient.get(getApplicationContext(), xyurl,params1, new AsyncHttpResponseHandler() {
 //                @Override
 //                public void onSuccess(int i, Header[] headers, byte[] bytes) {
@@ -405,12 +405,13 @@ public class LoginActivity extends Activity implements OnClickListener{
 //                    Toast.makeText(LoginActivity.this,"获取队伍信息失败",Toast.LENGTH_SHORT).show();
 //                }
 //            });
+            }
         }
     }
     private void getTeamNameInfo() {
             AsyncHttpClient gclient2 = new AsyncHttpClient();
             RequestParams params = new RequestParams();
-            params.add("team_id", AppUtil.Group.GROUP_ID);
+            params.add("team_id", GROUP_ID);
             gclient2.get(getApplicationContext(),xyurl2,params,new JsonHttpResponseHandler(){
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {

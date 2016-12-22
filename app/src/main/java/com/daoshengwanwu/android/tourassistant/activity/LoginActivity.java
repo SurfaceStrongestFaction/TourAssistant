@@ -113,7 +113,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
     }
     public void synhttprequestlogin(){
         AsyncHttpClient client = new AsyncHttpClient();
-        String Url = "http://192.168.191.1/user/login";
+        String Url = "http://123.206.14.122/user/login";
         RequestParams params = new RequestParams();
         params.add("user_name", user_name);
         params.add("user_pwd", user_pwd);
@@ -123,72 +123,27 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
                 super.onSuccess(statusCode, headers, response);
                 try {
                     System.out.println(response);
+                    user_id = response.getString("user_id");
+                    if (user_id.equals("false")){
+                        Toast.makeText(LoginActivity.this, "用户名或密码不正确", Toast.LENGTH_LONG).show();
+                    }else {
+                        Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_LONG).show();
+                        USER_ID = user_id;
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
 
             @Override
-            public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                super.onSuccess(statusCode, headers, responseString);
-                System.out.println(responseString);
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
             }
         });
     }
-//    Thread login = new Thread(){
-//        @Override
-//        public void run() {
-//            super.run();
-//            String result = "";
-//            PrintWriter out = null;
-//            BufferedReader in = null;
-//            try {
-//
-//                //登录
-//                    URL url = new URL("http://10.7.88.89/user/login");
-//                    HttpURLConnection con = (HttpURLConnection)url.openConnection();
-//                    con.setDoInput(true);
-//                    con.setDoOutput(true);
-//                    out = new PrintWriter(con.getOutputStream());
-//                    out.print(user_name+"\n"+user_pwd);
-//                    out.flush();
-//                    //定义BufferedReader输入流读取URL响应
-//                    in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-//                    String line;
-//                    while ((line = in.readLine()) != null){
-//                        result += "\n" +line;
-//                    }
-//
-//                      user_id = result;
-//            }  catch (Exception e) {
-//                System.out.println("发送POST请求出现异常！" + e);
-//                e.printStackTrace();
-//            }  finally {
-//                try{
-//                    if (out != null){
-//                        out.close();
-//                    }
-//                    if (in != null){
-//                        in.close();
-//                    }
-//                }catch (IOException ex){
-//                    ex.printStackTrace();
-//                }
-//            }
-//        }
-//    };
-
 
     private void initViews() {
         bt = (Button)findViewById(R.id.lg_bt2);
-        btl = (Button)findViewById(R.id.lg_bt);
-        btl.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                System.out.println("haha");
-                Toast.makeText(LoginActivity.this,"haha",Toast.LENGTH_LONG).show();
-            }
-        });
         btnweibo = (ImageView) findViewById(R.id.lg_weibo);
 
     }
@@ -648,8 +603,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
             public void onClick(View view) {
                 user_name = name.getText().toString();
                 user_pwd = pwd.getText().toString();
-                System.out.println(user_name);
-                System.out.println(user_pwd);
                 synhttprequestlogin();
                 if(cb.isChecked()){
                     s = getSharedPreferences("ty_user",Context.MODE_PRIVATE);

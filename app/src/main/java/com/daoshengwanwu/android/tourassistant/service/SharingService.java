@@ -455,6 +455,10 @@ public class SharingService extends Service {
         }
 
         private String getInfoCommand(String info) {
+            if (null == info) {
+                return "";
+            }
+
             return info.split(":")[0];
         }
 

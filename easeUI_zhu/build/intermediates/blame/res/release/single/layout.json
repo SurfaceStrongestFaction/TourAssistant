@@ -84,12 +84,12 @@
         "source": "E:\\android\\shixun\\TourAssistant\\easeUI_zhu\\src\\main\\res\\layout\\ease_row_sent_voice.xml"
     },
     {
-        "merged": "E:\\android\\shixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\release\\layout\\ease_row_received_video_call.xml",
-        "source": "E:\\android\\shixun\\TourAssistant\\easeUI_zhu\\src\\main\\res\\layout\\ease_row_received_video_call.xml"
-    },
-    {
         "merged": "E:\\android\\shixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\release\\layout\\ease_layout_chat_primary_menu.xml",
         "source": "E:\\android\\shixun\\TourAssistant\\easeUI_zhu\\src\\main\\res\\layout\\ease_layout_chat_primary_menu.xml"
+    },
+    {
+        "merged": "E:\\android\\shixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\release\\layout\\ease_row_received_video_call.xml",
+        "source": "E:\\android\\shixun\\TourAssistant\\easeUI_zhu\\src\\main\\res\\layout\\ease_row_received_video_call.xml"
     },
     {
         "merged": "E:\\android\\shixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\release\\layout\\ease_chat_menu_item.xml",

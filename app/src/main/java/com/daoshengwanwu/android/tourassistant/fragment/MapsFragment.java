@@ -295,6 +295,28 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
             }
         });
 
+        if (null != savedInstanceState) {
+            mIsStartLocation = savedInstanceState.getBoolean(KEY_START_LOCATION);
+            mIsStartUpload = savedInstanceState.getBoolean(KEY_START_UPLOAD);
+            mIsStartBlack = savedInstanceState.getBoolean(KEY_START_BLACK);
+
+            if (mIsStartLocation) {
+                mSharingBinder.startLocationService();
+            }
+
+            if (mIsStartUpload) {
+                try {
+                    mSharingBinder.startUploadLocation();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            if (mIsStartBlack) {
+
+            }
+        }
+
         return v;
     }
 

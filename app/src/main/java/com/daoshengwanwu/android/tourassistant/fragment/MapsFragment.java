@@ -237,14 +237,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btn.setVisibility(btn.GONE);
-                mQuit_fog_btn.setVisibility(mQuit_fog_btn.VISIBLE);
-                //Fog
-                mIsStartBlack = true;
-                myView = new MyView(getActivity().getApplicationContext());
-                act_main.addView(myView);
-                i = 0;//初始化计数器
-                aMap.getUiSettings().setAllGesturesEnabled(false);//禁止所有手势操作
+                startFogModel();
             }
         });
 
@@ -318,6 +311,17 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
         }
 
         return v;
+    }
+
+    private void startFogModel(){
+        btn.setVisibility(btn.GONE);
+        mQuit_fog_btn.setVisibility(mQuit_fog_btn.VISIBLE);
+        //Fog
+        mIsStartBlack = true;
+        myView = new MyView(getActivity().getApplicationContext());
+        act_main.addView(myView);
+        i = 0;//初始化计数器
+        aMap.getUiSettings().setAllGesturesEnabled(false);//禁止所有手势操作
     }
 
     private void stopFogModel(){

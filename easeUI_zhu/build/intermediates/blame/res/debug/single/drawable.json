@@ -24,12 +24,12 @@
         "source": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable\\ease_btn_cancel_bj.xml"
     },
     {
-        "merged": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\debug\\drawable\\ease_chatfrom_bg.xml",
-        "source": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable\\ease_chatfrom_bg.xml"
-    },
-    {
         "merged": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\debug\\drawable\\ease_chat_send_btn_selector.xml",
         "source": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable\\ease_chat_send_btn_selector.xml"
+    },
+    {
+        "merged": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\debug\\drawable\\ease_chatfrom_bg.xml",
+        "source": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable\\ease_chatfrom_bg.xml"
     },
     {
         "merged": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\debug\\drawable\\ease_btn_cancel_normal_shape.xml",

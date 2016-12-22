@@ -72,20 +72,20 @@
         "source": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable-hdpi\\ee_13.png"
     },
     {
-        "merged": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ee_26.png",
-        "source": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable-hdpi\\ee_26.png"
-    },
-    {
         "merged": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ease_chatto_voice_playing_f1.png",
         "source": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable-hdpi\\ease_chatto_voice_playing_f1.png"
     },
     {
-        "merged": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ease_msg_state_fail_resend.png",
-        "source": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable-hdpi\\ease_msg_state_fail_resend.png"
+        "merged": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ee_26.png",
+        "source": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable-hdpi\\ee_26.png"
     },
     {
         "merged": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ease_search_bar_icon_normal.png",
         "source": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable-hdpi\\ease_search_bar_icon_normal.png"
+    },
+    {
+        "merged": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ease_msg_state_fail_resend.png",
+        "source": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable-hdpi\\ease_msg_state_fail_resend.png"
     },
     {
         "merged": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ease_record_animate_13.png",

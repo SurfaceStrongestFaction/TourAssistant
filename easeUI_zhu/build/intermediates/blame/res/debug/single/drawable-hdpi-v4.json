@@ -8,20 +8,20 @@
         "source": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable-hdpi\\ee_4.png"
     },
     {
-        "merged": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ease_slidetab_bg_press.9.png",
-        "source": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable-hdpi\\ease_slidetab_bg_press.9.png"
-    },
-    {
         "merged": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ease_default_avatar.png",
         "source": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable-hdpi\\ease_default_avatar.png"
     },
     {
-        "merged": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ease_chatting_setmode_keyboard_btn_pressed.png",
-        "source": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable-hdpi\\ease_chatting_setmode_keyboard_btn_pressed.png"
+        "merged": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ease_slidetab_bg_press.9.png",
+        "source": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable-hdpi\\ease_slidetab_bg_press.9.png"
     },
     {
         "merged": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ease_input_bar_bg_normal.9.png",
         "source": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable-hdpi\\ease_input_bar_bg_normal.9.png"
+    },
+    {
+        "merged": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ease_chatting_setmode_keyboard_btn_pressed.png",
+        "source": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable-hdpi\\ease_chatting_setmode_keyboard_btn_pressed.png"
     },
     {
         "merged": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ease_record_animate_14.png",
@@ -64,12 +64,12 @@
         "source": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable-hdpi\\ease_login_error_icon.png"
     },
     {
-        "merged": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ee_19.png",
-        "source": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable-hdpi\\ee_19.png"
-    },
-    {
         "merged": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ease_msg_state_fail_resend_pressed.png",
         "source": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable-hdpi\\ease_msg_state_fail_resend_pressed.png"
+    },
+    {
+        "merged": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ee_19.png",
+        "source": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable-hdpi\\ee_19.png"
     },
     {
         "merged": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ee_35.png",
@@ -124,36 +124,36 @@
         "source": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable-hdpi\\ease_mm_listitem_disable.9.png"
     },
     {
-        "merged": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ease_chatfrom_voice_playing_f1.png",
-        "source": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable-hdpi\\ease_chatfrom_voice_playing_f1.png"
-    },
-    {
         "merged": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ee_1.png",
         "source": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable-hdpi\\ee_1.png"
     },
     {
-        "merged": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ease_show_head_toast_bg.9.png",
-        "source": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable-hdpi\\ease_show_head_toast_bg.9.png"
+        "merged": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ease_chatfrom_voice_playing_f1.png",
+        "source": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable-hdpi\\ease_chatfrom_voice_playing_f1.png"
     },
     {
         "merged": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ease_dx_checkbox_off.png",
         "source": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable-hdpi\\ease_dx_checkbox_off.png"
     },
     {
-        "merged": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ease_contact_list_selected.png",
-        "source": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable-hdpi\\ease_contact_list_selected.png"
+        "merged": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ease_show_head_toast_bg.9.png",
+        "source": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable-hdpi\\ease_show_head_toast_bg.9.png"
     },
     {
         "merged": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ease_mm_listitem_grey_normal.9.png",
         "source": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable-hdpi\\ease_mm_listitem_grey_normal.9.png"
     },
     {
-        "merged": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ee_29.png",
-        "source": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable-hdpi\\ee_29.png"
+        "merged": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ease_contact_list_selected.png",
+        "source": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable-hdpi\\ease_contact_list_selected.png"
     },
     {
         "merged": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ease_video_play_btn_small_nor.png",
         "source": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable-hdpi\\ease_video_play_btn_small_nor.png"
+    },
+    {
+        "merged": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ee_29.png",
+        "source": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable-hdpi\\ee_29.png"
     },
     {
         "merged": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ease_record_animate_03.png",
@@ -168,12 +168,12 @@
         "source": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable-hdpi\\ease_chat_face_normal.png"
     },
     {
-        "merged": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ee_23.png",
-        "source": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable-hdpi\\ee_23.png"
-    },
-    {
         "merged": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ease_chatto_bg_focused.9.png",
         "source": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable-hdpi\\ease_chatto_bg_focused.9.png"
+    },
+    {
+        "merged": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ee_23.png",
+        "source": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable-hdpi\\ee_23.png"
     },
     {
         "merged": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ease_mm_title_back.png",

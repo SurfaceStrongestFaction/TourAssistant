@@ -1,11 +1,11 @@
 [
     {
-        "merged": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\debug\\layout\\ease_widget_switch_button.xml",
-        "source": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\src\\main\\res\\layout\\ease_widget_switch_button.xml"
-    },
-    {
         "merged": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\debug\\layout\\ease_activity_baidumap.xml",
         "source": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\src\\main\\res\\layout\\ease_activity_baidumap.xml"
+    },
+    {
+        "merged": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\debug\\layout\\ease_widget_switch_button.xml",
+        "source": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\src\\main\\res\\layout\\ease_widget_switch_button.xml"
     },
     {
         "merged": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\debug\\layout\\ease_row_sent_bigexpression.xml",
@@ -68,12 +68,12 @@
         "source": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\src\\main\\res\\layout\\ease_row_received_video_call.xml"
     },
     {
-        "merged": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\debug\\layout\\ease_conversation_item.xml",
-        "source": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\src\\main\\res\\layout\\ease_conversation_item.xml"
-    },
-    {
         "merged": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\debug\\layout\\ease_row_chat_history.xml",
         "source": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\src\\main\\res\\layout\\ease_row_chat_history.xml"
+    },
+    {
+        "merged": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\debug\\layout\\ease_conversation_item.xml",
+        "source": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\src\\main\\res\\layout\\ease_conversation_item.xml"
     },
     {
         "merged": "D:\\AndroidPracticalTraining\\Kaixin\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\debug\\layout\\ease_showvideo_activity.xml",

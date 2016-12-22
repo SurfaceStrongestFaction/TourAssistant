@@ -251,12 +251,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
         mQuit_fog_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myView.setVisibility(myView.GONE);
-                btn.setVisibility(btn.VISIBLE);
-                mQuit_fog_btn.setVisibility(mQuit_fog_btn.GONE);
-                aMap.getUiSettings().setAllGesturesEnabled(true);//允许所有手势操作
-                aMap.getUiSettings().setRotateGesturesEnabled(false);//禁止地图旋转手势
-                aMap.getUiSettings().setTiltGesturesEnabled(false);//禁止倾斜手势
+                stopFogModel();
             }
         });
 
@@ -301,6 +296,15 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
         });
 
         return v;
+    }
+
+    private void stopFogModel(){
+        myView.setVisibility(myView.GONE);
+        btn.setVisibility(btn.VISIBLE);
+        mQuit_fog_btn.setVisibility(mQuit_fog_btn.GONE);
+        aMap.getUiSettings().setAllGesturesEnabled(true);//允许所有手势操作
+        aMap.getUiSettings().setRotateGesturesEnabled(false);//禁止地图旋转手势
+        aMap.getUiSettings().setTiltGesturesEnabled(false);//禁止倾斜手势
     }
 
 //-----------------------------Serach--------------------------------------------------

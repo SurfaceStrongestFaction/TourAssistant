@@ -66,6 +66,8 @@ import java.net.URL;
 
 import static com.daoshengwanwu.android.tourassistant.utils.AppUtil.Group.GROUP_ID;
 import static com.daoshengwanwu.android.tourassistant.utils.AppUtil.User.USER_ID;
+import static com.daoshengwanwu.android.tourassistant.baihaoran.AppUtil.User.USER_ID;
+
 
 
 public class LoginActivity extends BaseActivity implements OnClickListener{
@@ -525,10 +527,11 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
                     @Override
                     public void onSuccess(int i, Header[] headers, byte[] bytes) {
                         qqresult = new String(bytes);
-                        AppUtil.User.USER_ID = qqresult;
+                        USER_ID = qqresult;
                         AppUtil.User.USER_NAME = qqname;
                         AppUtil.User.USER_GENDER = qqgender;
                         xyuser_id = qqresult;
+                        USER_ID = qqresult;
                         Toast.makeText(LoginActivity.this,"登录成功", Toast.LENGTH_LONG).show();
                         getTeamInfo();
                         Intent intent = new Intent(LoginActivity.this, LauncherActivity.class);

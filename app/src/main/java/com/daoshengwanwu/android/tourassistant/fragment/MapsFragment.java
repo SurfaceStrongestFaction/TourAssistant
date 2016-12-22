@@ -1,8 +1,8 @@
 package com.daoshengwanwu.android.tourassistant.fragment;
 
 
-import android.graphics.BitmapFactory;
 import android.graphics.Point;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -22,12 +22,15 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
+import com.amap.api.maps.MapView;
 import com.amap.api.maps.Projection;
 import com.amap.api.maps.TextureMapView;
 import com.amap.api.maps.UiSettings;
 import com.amap.api.maps.model.BitmapDescriptor;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
+import com.amap.api.maps.model.CircleOptions;
 import com.amap.api.maps.model.LatLng;
+
 import com.amap.api.maps.model.LatLngBounds;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
@@ -38,8 +41,9 @@ import com.amap.api.services.core.SuggestionCity;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
 import com.daoshengwanwu.android.tourassistant.R;
-import com.daoshengwanwu.android.tourassistant.service.SharingService;
+import com.daoshengwanwu.android.tourassistant.model.MapsFragmentSaveData;
 import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
+import com.daoshengwanwu.android.tourassistant.service.SharingService;
 import com.daoshengwanwu.android.tourassistant.utils.ToastUtil;
 import com.daoshengwanwu.android.tourassistant.view.MyView;
 
@@ -100,6 +104,10 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
     private static final String MSG_DATA_LATITUDE = "msg_data_latitude";
     private static final String MSG_DATA_LONGITUDE = "msg_data_longitude";
     private static final String MSG_DATA_MEMBER_LOC_INFOS = "msg_data_member_loc_infos";
+    private static final String KEY_START_LOCATION = "MapsFragment.KEY_START_LOCATION";
+    private static final String KEY_START_UPLOAD = "MapsFragment.KEY_START_UPLOAD";
+    private static final String KEY_START_BLACK = "MapsFragment.KEY_START_BLACK";
+    private static final String KEY_SAVE_DATA = "MapsFragment.KEY_SAVE_DATA";
 
     private Map<String, Marker> mMemberMarkers = new HashMap<>();
     private boolean mIsStartLocation = false;
@@ -127,11 +135,13 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
             switch (msg.what) {
                 case WHAT_LOCATION_CHANGE: {
                     if (mIsStartLocation) {
+                        Log.d(TAG, "handleMessage: shoudaoweizhixinxi");
                         double latitude = data.getDouble(MSG_DATA_LATITUDE);
                         double longitude = data.getDouble(MSG_DATA_LONGITUDE);
                         LatLng currentLoc = new LatLng(latitude, longitude);
 
                         if (mIsFirstLoc) {
+                            Log.d(TAG, "handleMessage: 第一次定位");
                             aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLoc, 15.0f));
                             mUserMarker = aMap.addMarker(new MarkerOptions().position(currentLoc)
                                     .title(AppUtil.User.USER_NAME)
@@ -179,6 +189,15 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
     };
     //----------------------------------------------------------------------
 
+
+    public MapsFragmentSaveData getCurrentState() {
+        MapsFragmentSaveData data = new MapsFragmentSaveData();
+        data.setStartBlack(mIsStartBlack);
+        data.setStartLocation(mIsStartLocation);
+        data.setStartUpload(mIsStartUpload);
+
+        return data;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -231,23 +250,14 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btn.setVisibility(btn.GONE);
-                mQuit_fog_btn.setVisibility(mQuit_fog_btn.VISIBLE);
-                //Fog
-                mIsStartBlack = true;
-                myView = new MyView(getActivity().getApplicationContext());
-                act_main.addView(myView);
-                i = 0;//初始化计数器
-                aMap.getUiSettings().setAllGesturesEnabled(false);//禁止所有手势操作
+                startFogModel();
             }
         });
 
         mQuit_fog_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myView.setVisibility(myView.GONE);
-                btn.setVisibility(btn.VISIBLE);
-                mQuit_fog_btn.setVisibility(mQuit_fog_btn.GONE);
+                stopFogModel();
             }
         });
 
@@ -291,7 +301,42 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
             }
         });
 
+        MapsFragmentSaveData saveData = (MapsFragmentSaveData)getArguments().getSerializable(KEY_SAVE_DATA);
+        if (null != saveData) {
+            if (saveData.isStartLocation()) {
+                mStartLocation.callOnClick();
+            }
+
+            if (saveData.isStartUpload()) {
+                mStartUpload.callOnClick();
+            }
+
+            if (saveData.isStartBlack()) {
+                startFogModel();
+            }
+        }
+
         return v;
+    }
+
+    private void startFogModel(){
+        btn.setVisibility(btn.GONE);
+        mQuit_fog_btn.setVisibility(mQuit_fog_btn.VISIBLE);
+        //Fog
+        mIsStartBlack = true;
+        myView = new MyView(getActivity().getApplicationContext());
+        act_main.addView(myView);
+        i = 0;//初始化计数器
+        aMap.getUiSettings().setAllGesturesEnabled(false);//禁止所有手势操作
+    }
+
+    private void stopFogModel(){
+        myView.setVisibility(myView.GONE);
+        btn.setVisibility(btn.VISIBLE);
+        mQuit_fog_btn.setVisibility(mQuit_fog_btn.GONE);
+        aMap.getUiSettings().setAllGesturesEnabled(true);//允许所有手势操作
+        aMap.getUiSettings().setRotateGesturesEnabled(false);//禁止地图旋转手势
+        aMap.getUiSettings().setTiltGesturesEnabled(false);//禁止倾斜手势
     }
 
 //-----------------------------Serach--------------------------------------------------
@@ -648,6 +693,22 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
         super.onDestroy();
         mapView.onDestroy();
         Log.d(TAG, "onDestroy: ");
+
+
+        if (mIsStartUpload) {
+            mSharingBinder.stopUploadLocation();
+        }
+
+        if (mIsStartBlack) {
+            stopFogModel();
+        }
+
+        if (mIsStartLocation) {
+            mSharingBinder.stopLocationService();
+            Log.d(TAG, "onStop: guanbi location");
+        }
+
+        mIsFirstLoc = true;
     }
 
     @Override
@@ -727,12 +788,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
         }
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        //在activity执行onSaveInstanceState时执行mMapView.onSaveInstanceState (outState)，实现地图生命周期管理
-        mapView.onSaveInstanceState(outState);
-    }
+
 
     private void updateCurrentInfomation() {
         if (null != USER_NAME && !USER_NAME.equals("")) {
@@ -744,11 +800,14 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
     }
 
 
-    public static MapsFragment newInstance(SharingService.SharingBinder binder) {
+    public static MapsFragment newInstance(SharingService.SharingBinder binder, MapsFragmentSaveData saveData) {
         MapsFragment fragment = new MapsFragment();
+
         Bundle data = new Bundle();
         data.putBinder(KEY_BINDER, binder);
+        data.putSerializable(KEY_SAVE_DATA, saveData);
         fragment.setArguments(data);
+
         return fragment;
     }
 
@@ -796,6 +855,9 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
                 }
                 mStartLocation.setVisibility(mStartLocation.VISIBLE);
                 mStopLocation.setVisibility(mStopLocation.GONE);
+                aMap.getUiSettings().setAllGesturesEnabled(true);//允许所有手势操作
+                aMap.getUiSettings().setRotateGesturesEnabled(false);//禁止地图旋转手势
+                aMap.getUiSettings().setTiltGesturesEnabled(false);//禁止倾斜手势
                 //-----------------------------------------------------------------
                 if (mIsStartLocation) {
                     mSharingBinder.stopLocationService();
@@ -854,5 +916,24 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.d(TAG, "onStop: ()");
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        //在activity执行onSaveInstanceState时执行mMapView.onSaveInstanceState (outState)，实现地图生命周期管理
+        mapView.onSaveInstanceState(outState);
+
+        outState.putBoolean(KEY_START_BLACK, mIsStartBlack);
+        outState.putBoolean(KEY_START_LOCATION, mIsStartLocation);
+        outState.putBoolean(KEY_START_UPLOAD, mIsStartUpload);
+
+        Log.d(TAG, "onSaveInstanceState: ");
     }
 }

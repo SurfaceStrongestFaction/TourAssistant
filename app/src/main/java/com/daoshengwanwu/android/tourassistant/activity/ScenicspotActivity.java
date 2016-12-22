@@ -79,16 +79,16 @@ public class ScenicspotActivity extends BaseActivity {
                     imgs = response.getString("imgs");
                     urls = imgs.split(",");
                     num = urls.length;
-                    System.out.println(recommendimgs);
-                    System.out.println(cnname);
-                    System.out.println(recommendindex);
-                    System.out.println(position);
-                    System.out.println(price);
-                    System.out.println(time);
-                    System.out.println(introduction);
-                    System.out.println(imgs);
-                    System.out.println(urls);
-                    System.out.println(num);
+//                    System.out.println(recommendimgs);
+//                    System.out.println(cnname);
+//                    System.out.println(recommendindex);
+//                    System.out.println(position);
+//                    System.out.println(price);
+//                    System.out.println(time);
+//                    System.out.println(introduction);
+//                    System.out.println(imgs);
+//                    System.out.println(urls);
+//                    System.out.println(num);
                     setViews();
                 } catch (JSONException e) {
                     e.printStackTrace();

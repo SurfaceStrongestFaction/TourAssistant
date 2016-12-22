@@ -45,7 +45,7 @@ public class TransferTeamAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         convertView= LayoutInflater.from(context).inflate(R.layout.lk_activity_transfer_team_item,null);
         ImageView pic=(ImageView)convertView.findViewById(R.id.activity_transfer_team_item_pic);
-        pic.setImageResource(items.get(position).getPic());
+        pic.setImageBitmap(items.get(position).getPic());
         TextView name=(TextView)convertView.findViewById(R.id.activity_transfer_team_item_text);
         name.setText(items.get(position).getName());
         return convertView;

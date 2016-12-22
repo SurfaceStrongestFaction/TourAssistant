@@ -123,7 +123,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
             try {
 
                 //登录
-                    URL url = new URL("http://10.7.88.89/user/login");
+                    URL url = new URL("http://123.206.14.122/user/login");
                     HttpURLConnection con = (HttpURLConnection)url.openConnection();
                     con.setDoInput(true);
                     con.setDoOutput(true);

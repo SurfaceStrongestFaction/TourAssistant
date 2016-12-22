@@ -1,0 +1,86 @@
+[
+    {
+        "merged": "F:\\JAVA\\shixun\\shixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\release\\anim\\slide_out_to_bottom.xml",
+        "source": "F:\\JAVA\\shixun\\shixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\anim\\slide_out_to_bottom.xml"
+    },
+    {
+        "merged": "F:\\JAVA\\shixun\\shixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\release\\anim\\push_in.xml",
+        "source": "F:\\JAVA\\shixun\\shixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\anim\\push_in.xml"
+    },
+    {
+        "merged": "F:\\JAVA\\shixun\\shixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\release\\anim\\fade.xml",
+        "source": "F:\\JAVA\\shixun\\shixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\anim\\fade.xml"
+    },
+    {
+        "merged": "F:\\JAVA\\shixun\\shixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\release\\anim\\hold.xml",
+        "source": "F:\\JAVA\\shixun\\shixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\anim\\hold.xml"
+    },
+    {
+        "merged": "F:\\JAVA\\shixun\\shixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\release\\anim\\bottom_window_exit.xml",
+        "source": "F:\\JAVA\\shixun\\shixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\anim\\bottom_window_exit.xml"
+    },
+    {
+        "merged": "F:\\JAVA\\shixun\\shixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\release\\anim\\bottom_push_out.xml",
+        "source": "F:\\JAVA\\shixun\\shixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\anim\\bottom_push_out.xml"
+    },
+    {
+        "merged": "F:\\JAVA\\shixun\\shixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\release\\anim\\slide_in_from_bottom.xml",
+        "source": "F:\\JAVA\\shixun\\shixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\anim\\slide_in_from_bottom.xml"
+    },
+    {
+        "merged": "F:\\JAVA\\shixun\\shixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\release\\anim\\null_anim.xml",
+        "source": "F:\\JAVA\\shixun\\shixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\anim\\null_anim.xml"
+    },
+    {
+        "merged": "F:\\JAVA\\shixun\\shixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\release\\anim\\slide_in_from_top.xml",
+        "source": "F:\\JAVA\\shixun\\shixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\anim\\slide_in_from_top.xml"
+    },
+    {
+        "merged": "F:\\JAVA\\shixun\\shixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\release\\anim\\bottom_push_out_keyboard.xml",
+        "source": "F:\\JAVA\\shixun\\shixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\anim\\bottom_push_out_keyboard.xml"
+    },
+    {
+        "merged": "F:\\JAVA\\shixun\\shixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\release\\anim\\right_push_out.xml",
+        "source": "F:\\JAVA\\shixun\\shixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\anim\\right_push_out.xml"
+    },
+    {
+        "merged": "F:\\JAVA\\shixun\\shixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\release\\anim\\slide_out_to_top.xml",
+        "source": "F:\\JAVA\\shixun\\shixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\anim\\slide_out_to_top.xml"
+    },
+    {
+        "merged": "F:\\JAVA\\shixun\\shixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\release\\anim\\bottom_window_enter.xml",
+        "source": "F:\\JAVA\\shixun\\shixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\anim\\bottom_window_enter.xml"
+    },
+    {
+        "merged": "F:\\JAVA\\shixun\\shixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\release\\anim\\push_out.xml",
+        "source": "F:\\JAVA\\shixun\\shixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\anim\\push_out.xml"
+    },
+    {
+        "merged": "F:\\JAVA\\shixun\\shixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\release\\anim\\right_push_in.xml",
+        "source": "F:\\JAVA\\shixun\\shixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\anim\\right_push_in.xml"
+    },
+    {
+        "merged": "F:\\JAVA\\shixun\\shixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\release\\anim\\slide_in_right.xml",
+        "source": "F:\\JAVA\\shixun\\shixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\anim\\slide_in_right.xml"
+    },
+    {
+        "merged": "F:\\JAVA\\shixun\\shixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\release\\anim\\bottom_push_in.xml",
+        "source": "F:\\JAVA\\shixun\\shixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\anim\\bottom_push_in.xml"
+    },
+    {
+        "merged": "F:\\JAVA\\shixun\\shixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\release\\anim\\bottom_push_in_keyboard.xml",
+        "source": "F:\\JAVA\\shixun\\shixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\anim\\bottom_push_in_keyboard.xml"
+    },
+    {
+        "merged": "F:\\JAVA\\shixun\\shixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\release\\anim\\left_push_in.xml",
+        "source": "F:\\JAVA\\shixun\\shixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\anim\\left_push_in.xml"
+    },
+    {
+        "merged": "F:\\JAVA\\shixun\\shixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\release\\anim\\slide_out_left.xml",
+        "source": "F:\\JAVA\\shixun\\shixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\anim\\slide_out_left.xml"
+    },
+    {
+        "merged": "F:\\JAVA\\shixun\\shixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\release\\anim\\left_push_out.xml",
+        "source": "F:\\JAVA\\shixun\\shixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\anim\\left_push_out.xml"
+    }
+]

@@ -1,9 +1,8 @@
 package com.daoshengwanwu.android.tourassistant.fragment;
 
 
-import android.graphics.Point;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -23,15 +22,12 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
-import com.amap.api.maps.MapView;
 import com.amap.api.maps.Projection;
 import com.amap.api.maps.TextureMapView;
 import com.amap.api.maps.UiSettings;
 import com.amap.api.maps.model.BitmapDescriptor;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
-import com.amap.api.maps.model.CircleOptions;
 import com.amap.api.maps.model.LatLng;
-
 import com.amap.api.maps.model.LatLngBounds;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
@@ -42,8 +38,8 @@ import com.amap.api.services.core.SuggestionCity;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
 import com.daoshengwanwu.android.tourassistant.R;
-import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
 import com.daoshengwanwu.android.tourassistant.service.SharingService;
+import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
 import com.daoshengwanwu.android.tourassistant.utils.ToastUtil;
 import com.daoshengwanwu.android.tourassistant.view.MyView;
 
@@ -192,7 +188,6 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
         btn = (Button) v.findViewById(R.id.Fog_btn);
         btn.setVisibility(btn.GONE);
         act_main = (FrameLayout)v.findViewById(R.id.fragment_maps);
-        mapView = (MapView) v.findViewById(R.id.map);
         mQuit_fog_btn = (Button) v.findViewById(R.id.Quit_Fog_btn);
         mQuit_fog_btn.setVisibility(mQuit_fog_btn.GONE);
         mapView = (TextureMapView) v.findViewById(R.id.map);

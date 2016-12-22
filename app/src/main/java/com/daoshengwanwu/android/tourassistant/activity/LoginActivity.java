@@ -126,6 +126,24 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
         name.setText(name1);
         pwd.setText(pwd1);
     }
+    public void synhttprequestlogin(){
+        AsyncHttpClient client = new AsyncHttpClient();
+        String Url = "http://123.206.14.122/user/login";
+        RequestParams params = new RequestParams();
+        params.add("user_name", user_name);
+        params.add("user_pwd", user_pwd);
+        client.get(Url, params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                try {
+                    System.out.println(response);
+                    user_id = response.getString("user_id");
+                    if (user_id.equals("false")){
+                        Toast.makeText(LoginActivity.this, "用户名或密码不正确", Toast.LENGTH_LONG).show();
+                    }else {
+                        Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_LONG).show();
+                        USER_ID = user_id;
     Thread login = new Thread(){
         @Override
         public void run() {
@@ -165,10 +183,10 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
                     }
                 }catch (IOException ex){
                     ex.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
-        }
-    };
 
     /**
      * 环信EM注册方法
@@ -337,11 +355,14 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
         btl = (Button)findViewById(R.id.lg_bt);
         btl.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v) {
-                System.out.println("haha");
-                Toast.makeText(LoginActivity.this,"haha",Toast.LENGTH_LONG).show();
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
             }
         });
+    }
+
+    private void initViews() {
+        bt = (Button)findViewById(R.id.lg_bt2);
         btnweibo = (ImageView) findViewById(R.id.lg_weibo);
         mLoginButton = (Button)findViewById(R.id.lg_bt);
         Log.d(TAG, "initViews: loginButton yi jing huo qu dao:" + mLoginButton.toString());
@@ -357,20 +378,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 
     private void initEvents() {
         btnweibo.setOnClickListener(this);
-//        btl.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-//                startActivity(intent);
-////                user_name = name.getText().toString();
-////                user_pwd = pwd.getText().toString();
-////                System.out.println("haha");
-////                System.out.println(user_name);
-////                System.out.println(user_pwd);
-////                login.start();
-//            }
-//        });
-        btl.setOnClickListener(new View.OnClickListener() {
+        bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
@@ -825,6 +833,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
         lgbt.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                user_name = name.getText().toString();
+                user_pwd = pwd.getText().toString();
+                synhttprequestlogin();
                 Toast.makeText(LoginActivity.this, "tanchu toast", Toast.LENGTH_SHORT).show();
                 if(cb.isChecked()){
                     s = getSharedPreferences("ty_user",Context.MODE_PRIVATE);

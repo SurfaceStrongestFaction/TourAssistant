@@ -216,7 +216,7 @@ public class PersonalDataActivity extends BaseActivity {
                                     String input_pwd1 =Et_pwd2.getText().toString();
                                     if(!input_pwd0.equals(input_pwd1)){
                                         finish();
-                                        Toast.makeText(PersonalDataActivity.this,"新密码不一致",Toast.LENGTH_SHORT);
+                                        Toast.makeText(PersonalDataActivity.this,"密码不一致",Toast.LENGTH_SHORT);
                                     }
                                     //建立连接
                                     AsyncHttpClient client=new AsyncHttpClient();

@@ -41,6 +41,7 @@ import com.amap.api.services.core.SuggestionCity;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
 import com.daoshengwanwu.android.tourassistant.R;
+import com.daoshengwanwu.android.tourassistant.model.MapsFragmentSaveData;
 import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
 import com.daoshengwanwu.android.tourassistant.service.SharingService;
 import com.daoshengwanwu.android.tourassistant.utils.ToastUtil;
@@ -106,6 +107,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
     private static final String KEY_START_LOCATION = "MapsFragment.KEY_START_LOCATION";
     private static final String KEY_START_UPLOAD = "MapsFragment.KEY_START_UPLOAD";
     private static final String KEY_START_BLACK = "MapsFragment.KEY_START_BLACK";
+    private static final String KEY_SAVE_DATA = "MapsFragment.KEY_SAVE_DATA";
 
     private Map<String, Marker> mMemberMarkers = new HashMap<>();
     private boolean mIsStartLocation = false;
@@ -133,11 +135,13 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
             switch (msg.what) {
                 case WHAT_LOCATION_CHANGE: {
                     if (mIsStartLocation) {
+                        Log.d(TAG, "handleMessage: shoudaoweizhixinxi");
                         double latitude = data.getDouble(MSG_DATA_LATITUDE);
                         double longitude = data.getDouble(MSG_DATA_LONGITUDE);
                         LatLng currentLoc = new LatLng(latitude, longitude);
 
                         if (mIsFirstLoc) {
+                            Log.d(TAG, "handleMessage: 第一次定位");
                             aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLoc, 15.0f));
                             mUserMarker = aMap.addMarker(new MarkerOptions().position(currentLoc)
                                     .title(AppUtil.User.USER_NAME)
@@ -185,6 +189,15 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
     };
     //----------------------------------------------------------------------
 
+
+    public MapsFragmentSaveData getCurrentState() {
+        MapsFragmentSaveData data = new MapsFragmentSaveData();
+        data.setStartBlack(mIsStartBlack);
+        data.setStartLocation(mIsStartLocation);
+        data.setStartUpload(mIsStartUpload);
+
+        return data;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -288,25 +301,18 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
             }
         });
 
-        if (null != savedInstanceState) {
-            mIsStartLocation = savedInstanceState.getBoolean(KEY_START_LOCATION);
-            mIsStartUpload = savedInstanceState.getBoolean(KEY_START_UPLOAD);
-            mIsStartBlack = savedInstanceState.getBoolean(KEY_START_BLACK);
-
-            if (mIsStartLocation) {
-                mSharingBinder.startLocationService();
+        MapsFragmentSaveData saveData = (MapsFragmentSaveData)getArguments().getSerializable(KEY_SAVE_DATA);
+        if (null != saveData) {
+            if (saveData.isStartLocation()) {
+                mStartLocation.callOnClick();
             }
 
-            if (mIsStartUpload) {
-                try {
-                    mSharingBinder.startUploadLocation();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            if (saveData.isStartUpload()) {
+                mStartUpload.callOnClick();
             }
 
-            if (mIsStartBlack) {
-
+            if (saveData.isStartBlack()) {
+                startFogModel();
             }
         }
 
@@ -687,6 +693,22 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
         super.onDestroy();
         mapView.onDestroy();
         Log.d(TAG, "onDestroy: ");
+
+
+        if (mIsStartUpload) {
+            mSharingBinder.stopUploadLocation();
+        }
+
+        if (mIsStartBlack) {
+            stopFogModel();
+        }
+
+        if (mIsStartLocation) {
+            mSharingBinder.stopLocationService();
+            Log.d(TAG, "onStop: guanbi location");
+        }
+
+        mIsFirstLoc = true;
     }
 
     @Override
@@ -778,11 +800,14 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
     }
 
 
-    public static MapsFragment newInstance(SharingService.SharingBinder binder) {
+    public static MapsFragment newInstance(SharingService.SharingBinder binder, MapsFragmentSaveData saveData) {
         MapsFragment fragment = new MapsFragment();
+
         Bundle data = new Bundle();
         data.putBinder(KEY_BINDER, binder);
+        data.putSerializable(KEY_SAVE_DATA, saveData);
         fragment.setArguments(data);
+
         return fragment;
     }
 
@@ -896,17 +921,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
     @Override
     public void onStop() {
         super.onStop();
-        if (mIsStartUpload) {
-            mSharingBinder.stopUploadLocation();
-        }
-
-        if (mIsStartBlack) {
-            stopFogModel();
-        }
-
-        if (mIsStartLocation) {
-            mSharingBinder.stopLocationService();
-        }
+        Log.d(TAG, "onStop: ()");
     }
 
     @Override
@@ -918,5 +933,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
         outState.putBoolean(KEY_START_BLACK, mIsStartBlack);
         outState.putBoolean(KEY_START_LOCATION, mIsStartLocation);
         outState.putBoolean(KEY_START_UPLOAD, mIsStartUpload);
+
+        Log.d(TAG, "onSaveInstanceState: ");
     }
 }

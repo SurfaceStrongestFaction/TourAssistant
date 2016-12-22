@@ -59,6 +59,7 @@ public class SetActivity extends BaseActivity {
                 case R.id.rl_set_personaldata:
                     Intent i = PersonalDataActivity.newIntent(SetActivity.this, "消息");
                     startActivity(i);
+                    overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
                     break;
                 case R.id.rl_set_model:
 

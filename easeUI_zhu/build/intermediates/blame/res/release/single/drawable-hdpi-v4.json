@@ -344,12 +344,12 @@
         "source": "E:\\android\\shixun\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable-hdpi\\ease_input_bar_bg_normal.9.png"
     },
     {
-        "merged": "E:\\android\\shixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ee_17.png",
-        "source": "E:\\android\\shixun\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable-hdpi\\ee_17.png"
-    },
-    {
         "merged": "E:\\android\\shixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ee_34.png",
         "source": "E:\\android\\shixun\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable-hdpi\\ee_34.png"
+    },
+    {
+        "merged": "E:\\android\\shixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ee_17.png",
+        "source": "E:\\android\\shixun\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable-hdpi\\ee_17.png"
     },
     {
         "merged": "E:\\android\\shixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\ease_record_animate_12.png",

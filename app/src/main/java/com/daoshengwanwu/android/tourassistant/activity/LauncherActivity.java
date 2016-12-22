@@ -2,12 +2,14 @@ package com.daoshengwanwu.android.tourassistant.activity;
 
 
 import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
 import android.content.ServiceConnection;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -29,7 +31,9 @@ import com.daoshengwanwu.android.tourassistant.service.SharingService;
 import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
 
 
+
 public class LauncherActivity extends BaseActivity {
+    static public boolean fog_draw_pause_judge = true;
     private ImageView mTabsHomeImg;
     private ImageView mTabsMapImg;
     private ImageView mTabsRanksImg;
@@ -60,6 +64,8 @@ public class LauncherActivity extends BaseActivity {
         }
     };
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,7 +81,23 @@ public class LauncherActivity extends BaseActivity {
 
         initFragment();
     }
+//---------------------------胜达--------------------------------------------------------------------
+    @Override
+    protected void onPause() {
+        super.onPause();
+        fog_draw_pause_judge = false;
+    }
 
+    public static  void actionStartActivity(Context packageContext) {
+        Intent intent = new Intent(packageContext,  LauncherActivity.class);
+        packageContext.startActivity(intent);
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        fog_draw_pause_judge = true;
+    }
+//--------------------------------------------------------------------------------------------------
 
     private void initFragment() {
         if (null == mHomeFragment) {
@@ -151,7 +173,7 @@ public class LauncherActivity extends BaseActivity {
                     mTabsRanksImg.setImageResource(R.drawable.ranks1);
                     mTabsRanksText.setTextColor(ContextCompat.getColor(LauncherActivity.this, R.color.bhr_tabs_green));
                     if (null == mTeamFragment) {
-                        mTeamFragment = TeamFragment.newInstance();
+                        mTeamFragment = TeamFragment.newInstance(mSharingBinder);
                     }
                     mFragmentManager.beginTransaction().replace(R.id.launcher_fragment_container, mTeamFragment).commit();
                     break;
@@ -159,6 +181,7 @@ public class LauncherActivity extends BaseActivity {
                     if ("".equals(AppUtil.User.USER_ID)) {
                         //说明还没有登陆，应该跳转到登录界面
                         LoginActivity.actionStartActivity(LauncherActivity.this);
+                        overridePendingTransition(R.anim.slide_left,R.anim.slide_right);
                     } else {
                         //说明已经登录，进入我的界面
                         if (null == mMeFragment) {

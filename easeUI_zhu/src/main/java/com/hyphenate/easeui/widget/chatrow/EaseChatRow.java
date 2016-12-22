@@ -21,6 +21,7 @@ import com.hyphenate.easeui.adapter.EaseMessageAdapter;
 import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.easeui.widget.EaseChatMessageList;
 import com.hyphenate.easeui.widget.EaseChatMessageList.MessageListItemClickListener;
+import com.hyphenate.exceptions.HyphenateException;
 import com.hyphenate.util.DateUtils;
 
 import java.util.Date;
@@ -119,7 +120,12 @@ public abstract class EaseChatRow extends LinearLayout {
             EaseUserUtils.setUserAvatar(context, EMClient.getInstance().getCurrentUser(), userAvatarView);
         }else{
             EaseUserUtils.setUserAvatar(context, message.getFrom(), userAvatarView);
-            EaseUserUtils.setUserNick(message.getFrom(), usernickView);
+            //EaseUserUtils.setUserNick(message.getFrom(), usernickView);
+            try {
+                EaseUserUtils.setUserNick(message.getStringAttribute("name"), usernickView);
+            } catch (HyphenateException e) {
+                e.printStackTrace();
+            }
         }
         
         if(deliveredView != null){

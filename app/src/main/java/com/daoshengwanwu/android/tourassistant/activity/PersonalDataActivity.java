@@ -22,9 +22,18 @@ import android.widget.Toast;
 import com.daoshengwanwu.android.tourassistant.R;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+
 import com.loopj.android.http.RequestParams;
 
 import org.apache.http.Header;
+
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.apache.http.Header;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -32,11 +41,14 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import static com.daoshengwanwu.android.tourassistant.utils.AppUtil.User.USER_ID;
+
 public class PersonalDataActivity extends BaseActivity {
     private static final String EXTRA_USER_NAME = "SecondActivity.EXTRA_USER_NAME";
     private Bitmap bitMap;
     private boolean hasImage;
     private ImageView imageView;
+    private ImageView imageView_back;
     private Button button;
     private String pathString;
     private RelativeLayout head;
@@ -47,6 +59,7 @@ public class PersonalDataActivity extends BaseActivity {
     private TextView usersex;
     private EditText editName;
     private String[] sexs=new String[2];
+    private String pri_userpwd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +74,7 @@ public class PersonalDataActivity extends BaseActivity {
         }
         findView();
         setListener();
+        inint();
 
     }
     public static Intent newIntent(Context packageContext, String userName) {
@@ -86,8 +100,34 @@ public class PersonalDataActivity extends BaseActivity {
         usersex=(TextView)findViewById(R.id.tv_set_sex);
         name=(TextView)findViewById(R.id.tv_set_nickname);
         editName=(EditText)findViewById(R.id.et_namedialog_edit);
+        imageView_back = (ImageView)findViewById(R.id.iv_personal_back) ;
         sexs[0]="男";
         sexs[1]="女";
+    }
+    private void inint(){
+        //建立连接
+        AsyncHttpClient client=new AsyncHttpClient();
+        String url = "http://10.7.88.30/user/getInformation";
+        //传送参数
+        RequestParams params=new RequestParams();
+        params.add("user_id",USER_ID);
+        client.get(getApplicationContext(),url,params,new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                try {
+                    String nick_name=response.getString("nick_name");
+                    String sex = response.getString("sex");
+                    pri_userpwd = response.getString("user_pwd");
+                    name.setText(nick_name);
+                    usersex.setText(sex);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+
     }
 
     private class MyListener implements View.OnClickListener{
@@ -110,11 +150,13 @@ public class PersonalDataActivity extends BaseActivity {
                                         case 0:
                                             Intent cameraIntent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                                             startActivityForResult(cameraIntent, 1001);
+                                            overridePendingTransition(R.anim.push_up_in,R.anim.push_up_out);
                                             break;
                                         case 1:
                                             Intent intent = new Intent(Intent.ACTION_PICK, null);
                                             intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
                                             startActivityForResult(intent, 1000);
+                                            overridePendingTransition(R.anim.push_up_in,R.anim.push_up_out);
                                             break;
                                         default:
 
@@ -132,7 +174,27 @@ public class PersonalDataActivity extends BaseActivity {
                             .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    name.setText(e.getText().toString());
+                                    String input_name =e.getText().toString();
+                                    name.setText(input_name);
+                                    //建立连接
+                                    AsyncHttpClient client=new AsyncHttpClient();
+                                    String Url_login = "http://10.7.88.45:8080/user/editNick_name";
+                                    //传送参数
+                                    RequestParams params=new RequestParams();
+                                    params.add("user_id",USER_ID);
+                                    params.add("nick_name",input_name);
+                                    //服务器获取参数
+                                    client.get(getApplicationContext(),Url_login,params,new AsyncHttpResponseHandler(){
+                                        @Override
+                                        public void onSuccess(int statusCode, Header[] headers, byte[] bytes) {
+                                            String result = new String (bytes);
+                                            Toast.makeText(PersonalDataActivity.this,result,Toast.LENGTH_LONG).show();
+                                        }
+                                        @Override
+                                        public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+
+                                        }
+                                    });
                                 }
                             })
                             .setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -145,7 +207,53 @@ public class PersonalDataActivity extends BaseActivity {
                             .show();
                     break;
                 case R.id.rl_set_password:
+                    TextView Tv_pwd1 = new TextView(PersonalDataActivity.this);
+                    final EditText Et_pwd1 = new EditText(PersonalDataActivity.this);
+                    TextView Tv_pwd2 = new TextView(PersonalDataActivity.this);
+                    final EditText Et_pwd2 = new EditText(PersonalDataActivity.this);
+                    Tv_pwd1.setText("密码：");
+                    Tv_pwd2.setText("确认密码");
+                    new AlertDialog.Builder(PersonalDataActivity.this)
+                            .setTitle("设置密码")
+                    .setView(Tv_pwd1).setView(Et_pwd1).setView(Tv_pwd2).setView(Et_pwd2)
+                            .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    String input_pwd0 =Et_pwd1.getText().toString();
+                                    String input_pwd1 =Et_pwd2.getText().toString();
+                                    if(!input_pwd0.equals(input_pwd1)){
+                                        finish();
+                                        Toast.makeText(PersonalDataActivity.this,"新密码不一致",Toast.LENGTH_SHORT);
+                                    }
+                                    //建立连接
+                                    AsyncHttpClient client=new AsyncHttpClient();
+                                    String Url_login = "http://10.7.88.45:8080/user/editUser_pwd";
+                                    //传送参数
+                                    RequestParams params=new RequestParams();
+                                    params.add("user_id",USER_ID);
+                                    params.add("user_pwd",input_pwd1);
+                                    //服务器获取参数
+                                    client.get(getApplicationContext(),Url_login,params,new AsyncHttpResponseHandler(){
+                                        @Override
+                                        public void onSuccess(int statusCode, Header[] headers, byte[] bytes) {
+                                            String result = new String (bytes);
+                                            Toast.makeText(PersonalDataActivity.this,result,Toast.LENGTH_LONG).show();
+                                        }
+                                        @Override
+                                        public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
 
+                                        }
+                                    });
+                                }
+                            })
+                            .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                }
+                            })
+                            .create()
+                            .show();
                     break;
                 case R.id.rl_set_sex:
                     new AlertDialog.Builder(PersonalDataActivity.this).
@@ -154,9 +262,30 @@ public class PersonalDataActivity extends BaseActivity {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     usersex.setText(sexs[i]);
+                                    //建立连接
+                                    AsyncHttpClient client=new AsyncHttpClient();
+                                    String Url_login = "http://10.7.88.45:8080/user/editNick_name";
+                                    //传送参数
+                                    RequestParams params=new RequestParams();
+                                    params.add("user_id",USER_ID);
+                                    params.add("sex",sexs[i]);
+                                    //服务器获取参数
+                                    client.get(getApplicationContext(),Url_login,params,new AsyncHttpResponseHandler(){
+                                        @Override
+                                        public void onSuccess(int statusCode, Header[] headers, byte[] bytes) {
+                                            String result = new String (bytes);
+                                            Toast.makeText(PersonalDataActivity.this,result,Toast.LENGTH_LONG).show();
+                                        }
+                                        @Override
+                                        public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+
+                                        }
+                                    });
                                 }
                             }).show();
                     break;
+                case R.id.iv_personal_back:
+                    finish();
             }
         }
     }
@@ -231,17 +360,18 @@ public class PersonalDataActivity extends BaseActivity {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers,
                                           byte[] responseBody) {
-                        if (statusCode == 200) {
+                       /* if (statusCode == 200) {
                             Toast.makeText(getApplicationContext(), "上次成功", Toast.LENGTH_SHORT)
                                     .show();
-                        }
-                        Log.i("tag",new String(responseBody));
+                        }*/
+                        Log.i("zhu","onSuccess");
                     }
 
                     @Override
                     public void onFailure(int statusCode, Header[] headers,
                                           byte[] responseBody, Throwable error) {
-                        error.printStackTrace();
+                      /*  error.printStackTrace();*/
+                        Log.i("zhu", "onFailure: ");
                     }
                 });
 
@@ -269,6 +399,5 @@ public class PersonalDataActivity extends BaseActivity {
             default:
                 break;
         }
-//    	super.onActivityResult(requestCode, resultCode, data);
     }
 }

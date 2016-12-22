@@ -30,6 +30,7 @@ public class TeamMemberActivity extends BaseActivity {
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 //ECChatActivity.startChatActivity(TeamMemberActivity.this);
                 //调用环信EM通讯页
                 Intent intent =new Intent(TeamMemberActivity.this, ECChatActivity.class);
@@ -38,6 +39,10 @@ public class TeamMemberActivity extends BaseActivity {
                 intent.putExtra("userId", chatId);
                 intent.putExtra("chatType", EaseConstant.CHATTYPE_SINGLE);
                 startActivity(intent);
+
+                //ChatActivity.startChatActivity(TeamMemberActivity.this);
+                overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
+
             }
         });
     }

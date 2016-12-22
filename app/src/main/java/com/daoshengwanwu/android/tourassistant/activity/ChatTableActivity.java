@@ -59,6 +59,7 @@ public class ChatTableActivity extends BaseActivity {
         @Override
         public void onClick(View view) {
             SearchMemberActivity.startSearchMemberActivity(ChatTableActivity.this);
+            overridePendingTransition(R.anim.push_left_in,R.anim.push_up_out);
         }
     };
     public static void startChatTableActivity(Context c){

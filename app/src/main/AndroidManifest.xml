@@ -77,7 +77,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/logo"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -125,9 +125,9 @@
             android:value="lTm3oo5q4Mr4c1lYnUxGpUniVARYBDNV" />
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="c6f919b976553027da271b65df049774" />
+            android:value="2214f6ab633dcb98ae9dc3e06256b9b5" />
 
-        <activity android:name=".activity.LauncherActivity">
+        <activity android:name=".activity.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -148,12 +148,25 @@
         <activity android:name=".activity.SearchMemberActivity" />
         <activity android:name=".activity.ChatTableActivity" />
         <activity android:name=".activity.SearchActivity" />
+        <activity android:name=".activity.CaptureActivity" />
         <activity android:name=".activity.PictureActivity" />
         <activity android:name=".activity.ViewspotActivity" />
         <activity android:name=".activity.ScenicspotActivity" />
         <activity android:name=".activity.PersonalDataActivity" />
         <activity android:name=".activity.SetActivity" />
-        <activity android:name=".activity.WelcomeActivity" />
+        <activity android:name=".activity.ScenicspotActivity" >
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
+        <activity android:name="com.daoshengwanwu.android.tourassistant.activity.PersonalDataActivity" />
+        <activity android:name="com.daoshengwanwu.android.tourassistant.activity.SetActivity" />
+
+        <activity android:name=".activity.LauncherActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+            android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".activity.AboutActivity" />
         <activity android:name=".activity.CollectActivity" />
         <activity android:name=".activity.MyTeamActivity" />
@@ -163,6 +176,7 @@
         <activity android:name=".activity.RegisterActivity" />
         <activity android:name=".activity.Register2Activity" />
         <activity android:name=".activity.LoginActivity" />
+
         <activity android:name=".activity.PoiAroundSearchActivity" />
 
         <service android:name="com.amap.api.location.APSService" />
@@ -176,6 +190,7 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity android:name=".activity.BaseActivity" />
         <activity
+
             android:name=".activity.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
@@ -235,7 +250,24 @@
                 <!-- 100380359 100381104 222222 -->
             </intent-filter>
         </activity>
+
         <activity android:name=".activity.ConversationActivity"></activity>
     </application>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.CAMERA"></uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.FLASHLIGHT"/>
 
 </manifest>

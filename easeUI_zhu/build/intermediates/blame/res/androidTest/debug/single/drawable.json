@@ -1,11 +1,11 @@
 [
     {
-        "merged": "E:\\android\\shixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\ease_chat_location_selector.xml",
-        "source": "E:\\android\\shixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\bundles\\debug\\res\\drawable\\ease_chat_location_selector.xml"
-    },
-    {
         "merged": "E:\\android\\shixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\ease_type_select_btn.xml",
         "source": "E:\\android\\shixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\bundles\\debug\\res\\drawable\\ease_type_select_btn.xml"
+    },
+    {
+        "merged": "E:\\android\\shixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\ease_chat_location_selector.xml",
+        "source": "E:\\android\\shixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\bundles\\debug\\res\\drawable\\ease_chat_location_selector.xml"
     },
     {
         "merged": "E:\\android\\shixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\ease_sidebar_background_pressed.xml",

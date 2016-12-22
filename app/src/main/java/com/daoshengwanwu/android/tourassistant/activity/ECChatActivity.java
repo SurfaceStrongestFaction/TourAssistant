@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.daoshengwanwu.android.tourassistant.R;
+import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMGroup;
 import com.hyphenate.chat.EMMessage;
@@ -44,7 +45,7 @@ public class ECChatActivity extends AppCompatActivity {
             @Override
             public void onSetMessageAttributes(EMMessage message) {
                 //设置消息拓展
-                String name="小朱";
+                String name= AppUtil.User.USER_NAME;
                 message.setAttribute("name",name);
             }
             //点击标题栏右侧图表

@@ -75,8 +75,13 @@ import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import static com.daoshengwanwu.android.tourassistant.utils.AppUtil.Group.GROUP_ID;
+import static com.daoshengwanwu.android.tourassistant.utils.AppUtil.User.USER_ID;
+//import static com.daoshengwanwu.android.tourassistant.baihaoran.AppUtil.User.USER_ID;
 
-public class LoginActivity extends Activity implements OnClickListener{
+
+
+public class LoginActivity extends BaseActivity implements OnClickListener{
     private AuthInfo mAuthInfo;
     private ImageView btnweibo;
 
@@ -87,6 +92,7 @@ public class LoginActivity extends Activity implements OnClickListener{
     private SsoHandler mSsoHandler;
     private UsersAPI mUsersAPI;
     private Button bt;
+    private Button btl;
     private SharedPreferences s,s1;
     private String name1;
     private String pwd1;
@@ -96,9 +102,12 @@ public class LoginActivity extends Activity implements OnClickListener{
     private JSONObject response1;
     public static String  qqresult;
     public static CircleImageView bimp;
-    private final String xyurl = new String("http://10.7.88.30/user/getInformation");
+    private final String xyurl = new String("http://123.206.14.122/user/getInformation");
+    private final String xyurl2 = new String("http://123.206.14.122/team/getInformation");
             //("http://"+AppUtil.SharingServer.HOST2+":"+AppUtil.SharingServer.PORT2+"/user/getInformation");
     private String xyuser_id;
+    private Button mLoginButton;
+    private static final String TAG = "LoginActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,7 +136,7 @@ public class LoginActivity extends Activity implements OnClickListener{
             try {
 
                 //登录
-                    URL url = new URL("http://192.168.191.1/user/login");
+                    URL url = new URL("http://123.206.14.122/user/login");
                     HttpURLConnection con = (HttpURLConnection)url.openConnection();
                     con.setDoInput(true);
                     con.setDoOutput(true);
@@ -140,6 +149,7 @@ public class LoginActivity extends Activity implements OnClickListener{
                     while ((line = in.readLine()) != null){
                         result += "\n" +line;
                     }
+
                       user_id = result;
                 Toast.makeText(LoginActivity.this, ""+user_id, Toast.LENGTH_SHORT).show();
             }  catch (Exception e) {
@@ -324,18 +334,48 @@ public class LoginActivity extends Activity implements OnClickListener{
 
     private void initViews() {
         bt = (Button)findViewById(R.id.lg_bt2);
-
+        btl = (Button)findViewById(R.id.lg_bt);
+        btl.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                System.out.println("haha");
+                Toast.makeText(LoginActivity.this,"haha",Toast.LENGTH_LONG).show();
+            }
+        });
         btnweibo = (ImageView) findViewById(R.id.lg_weibo);
+        mLoginButton = (Button)findViewById(R.id.lg_bt);
+        Log.d(TAG, "initViews: loginButton yi jing huo qu dao:" + mLoginButton.toString());
+        mLoginButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: ");
+                Toast.makeText(LoginActivity.this, "login is clicked!", Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
     private void initEvents() {
         btnweibo.setOnClickListener(this);
-        bt.setOnClickListener(new View.OnClickListener() {
+//        btl.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+//                startActivity(intent);
+////                user_name = name.getText().toString();
+////                user_pwd = pwd.getText().toString();
+////                System.out.println("haha");
+////                System.out.println(user_name);
+////                System.out.println(user_pwd);
+////                login.start();
+//            }
+//        });
+        btl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.push_up_in,R.anim.push_up_out);
             }
         });
 
@@ -378,10 +418,6 @@ public class LoginActivity extends Activity implements OnClickListener{
                 // 如果手机安装了微博客户端则使用客户端授权,没有则进行网页授权
                 mSsoHandler.authorize(new AuthListener());
                 break;
-            case R.id.lg_bt:
-                user_name = name.getText().toString();
-                user_pwd = pwd.getText().toString();
-                login.start();
             default:
                 break;
 
@@ -503,34 +539,35 @@ public class LoginActivity extends Activity implements OnClickListener{
     }
 
     private void getTeamInfo() {
-        if(!AppUtil.Group.GROUP_ID.equals("")){
+        if(!GROUP_ID.equals("")) {
             RequestParams params1 = new RequestParams();
-            params1.add("team_id",AppUtil.Group.GROUP_ID);
+            params1.add("team_id", GROUP_ID);
             // 2.关闭弹出窗口
             //3.根据服务器返回值显示创建成功或失败的提示
 
-            AsyncHttpClient gclient=new AsyncHttpClient();
-            RequestParams params=new RequestParams();
-            params.add("user_id",xyuser_id);
-            gclient.get(getApplicationContext(),xyurl,params,new JsonHttpResponseHandler(){
-                @Override
-                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                    super.onSuccess(statusCode, headers, response);
-                    // System.out.print(response);
-                    try {
-                        String team_id=response.getString("team_id");
-                        AppUtil.Group.GROUP_ID = team_id;
-                        Toast.makeText(LoginActivity.this, AppUtil.Group.GROUP_ID, Toast.LENGTH_SHORT).show();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+            if (!AppUtil.User.USER_ID.equals("")) {
+                AsyncHttpClient gclient = new AsyncHttpClient();
+                RequestParams params = new RequestParams();
+                params.add("user_id", xyuser_id);
+                gclient.get(getApplicationContext(), xyurl, params, new JsonHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                        super.onSuccess(statusCode, headers, response);
+                        try {
+                            String team_id = response.getString("team_id");
+                            GROUP_ID = team_id;
+                            getTeamNameInfo();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
-                }
 
-                @Override
-                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                    super.onFailure(statusCode, headers, throwable, errorResponse);
-                }
-            });
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                        Toast.makeText(LoginActivity.this, "Team_id获取失败" + AppUtil.Group.GROUP_NAME, Toast.LENGTH_SHORT).show();
+                        super.onFailure(statusCode, headers, throwable, errorResponse);
+                    }
+                });
 //            gclient.get(getApplicationContext(), xyurl,params1, new AsyncHttpResponseHandler() {
 //                @Override
 //                public void onSuccess(int i, Header[] headers, byte[] bytes) {
@@ -573,7 +610,31 @@ public class LoginActivity extends Activity implements OnClickListener{
 //                    Toast.makeText(LoginActivity.this,"获取队伍信息失败",Toast.LENGTH_SHORT).show();
 //                }
 //            });
+            }
         }
+    }
+    private void getTeamNameInfo() {
+            AsyncHttpClient gclient2 = new AsyncHttpClient();
+            RequestParams params = new RequestParams();
+            params.add("team_id", GROUP_ID);
+            gclient2.get(getApplicationContext(),xyurl2,params,new JsonHttpResponseHandler(){
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    super.onSuccess(statusCode, headers, response);
+                    try {
+                        String team_name = response.getString("name");
+                        AppUtil.Group.GROUP_NAME = team_name;
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                    super.onFailure(statusCode, headers, throwable, errorResponse);
+                    Toast.makeText(LoginActivity.this, "Team_name获取失败" + AppUtil.Group.GROUP_NAME, Toast.LENGTH_SHORT).show();
+                }
+            });
     }
 
     public void getyh() {
@@ -628,7 +689,7 @@ public class LoginActivity extends Activity implements OnClickListener{
              //   Toast.makeText(LoginActivity.this, "用户id： " + qqid + "\n用户昵称： " + qqname + "\n用户性别： " + qqgender, Toast.LENGTH_SHORT).show();
                 //建立连接
                 AsyncHttpClient client = new AsyncHttpClient();
-                String Url_add = "http://10.7.88.106:8080/qq/login";
+                String Url_add = "http://123.206.14.122/qq/login";
                 //获取参数
                 RequestParams params = new RequestParams();
                 params.add("qq",qqid);
@@ -639,10 +700,11 @@ public class LoginActivity extends Activity implements OnClickListener{
                     @Override
                     public void onSuccess(int i, Header[] headers, byte[] bytes) {
                         qqresult = new String(bytes);
-                        AppUtil.User.USER_ID = qqresult;
+                        USER_ID = qqresult;
                         AppUtil.User.USER_NAME = qqname;
                         AppUtil.User.USER_GENDER = qqgender;
                         xyuser_id = qqresult;
+                        USER_ID = qqresult;
                         Toast.makeText(LoginActivity.this,"登录成功", Toast.LENGTH_LONG).show();
                         Log.i("zhu", "user_id(all)"+AppUtil.User.USER_ID);
                         //环信EM注册登录
@@ -651,6 +713,7 @@ public class LoginActivity extends Activity implements OnClickListener{
                         Intent intent = new Intent(LoginActivity.this, LauncherActivity.class);
                         startActivity(intent);
                         finish();
+                        getTeamInfo();
                     }
                     @Override
                     public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
@@ -762,7 +825,7 @@ public class LoginActivity extends Activity implements OnClickListener{
         lgbt.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Toast.makeText(LoginActivity.this, "tanchu toast", Toast.LENGTH_SHORT).show();
                 if(cb.isChecked()){
                     s = getSharedPreferences("ty_user",Context.MODE_PRIVATE);
                     SharedPreferences.Editor editer = s.edit();

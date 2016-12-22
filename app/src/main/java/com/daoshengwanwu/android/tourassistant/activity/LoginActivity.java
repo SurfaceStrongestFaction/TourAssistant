@@ -66,7 +66,6 @@ import java.net.URL;
 
 import static com.daoshengwanwu.android.tourassistant.utils.AppUtil.Group.GROUP_ID;
 import static com.daoshengwanwu.android.tourassistant.utils.AppUtil.User.USER_ID;
-import static com.daoshengwanwu.android.tourassistant.baihaoran.AppUtil.User.USER_ID;
 
 
 

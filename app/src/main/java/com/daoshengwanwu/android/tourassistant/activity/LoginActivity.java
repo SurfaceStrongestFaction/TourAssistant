@@ -77,10 +77,11 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
     private Oauth2AccessToken mAccessToken;
 
     /** 注意：SsoHandler 仅当 SDK 支持 SSO 时有效 */
+    private static final String USER_NAME = "loginActivity.EXTRA_NAME";
+    private static final String USER_PWD = "loginActivity.EXTRA_PWD";
     private SsoHandler mSsoHandler;
     private UsersAPI mUsersAPI;
     private Button bt;
-    private Button btl;
     private SharedPreferences s,s1;
     private String name1;
     private String pwd1;
@@ -113,6 +114,14 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
         pwd1 = s1.getString("pwd","");
         name.setText(name1);
         pwd.setText(pwd1);
+        registerinf ();
+    }
+    public void registerinf (){
+        Intent i = getIntent();
+        String username = i.getStringExtra(USER_NAME);
+        String userpwd = i.getStringExtra(USER_PWD);
+        name.setText(username);
+        pwd.setText(userpwd);
     }
     public void synhttprequestlogin(){
         AsyncHttpClient client = new AsyncHttpClient();
@@ -127,47 +136,21 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
                 try {
                     System.out.println(response);
                     user_id = response.getString("user_id");
-                    if (user_id.equals("false")){
+                    if (user_id.equals("false")) {
                         Toast.makeText(LoginActivity.this, "用户名或密码不正确", Toast.LENGTH_LONG).show();
-                    }else {
+                    } else {
                         Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_LONG).show();
                         USER_ID = user_id;
-    Thread login = new Thread(){
-        @Override
-        public void run() {
-            super.run();
-            String result = "";
-            PrintWriter out = null;
-            BufferedReader in = null;
-            try {
-
-                //登录
-                    URL url = new URL("http://123.206.14.122/user/login");
-                    HttpURLConnection con = (HttpURLConnection)url.openConnection();
-                    con.setDoInput(true);
-                    con.setDoOutput(true);
-                    out = new PrintWriter(con.getOutputStream());
-                    out.print(user_name+"\n"+user_pwd);
-                    out.flush();
-                    //定义BufferedReader输入流读取URL响应
-                    in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-                    String line;
-                    while ((line = in.readLine()) != null){
-                        result += "\n" +line;
+                        LauncherActivity.actionStartActivity(LoginActivity.this);
                     }
-                } catch (Exception e) {
+
+                }catch (JSONException e) {
                     e.printStackTrace();
                 }
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                super.onFailure(statusCode, headers, throwable, errorResponse);
-            }
+        }
         });
     }
-
-    private void initViews() {
+        private void initViews() {
         bt = (Button)findViewById(R.id.lg_bt2);
         btnweibo = (ImageView) findViewById(R.id.lg_weibo);
         mLoginButton = (Button)findViewById(R.id.lg_bt);
@@ -183,7 +166,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
     }
 
     private void initEvents() {
-        btnweibo.setOnClickListener(this);
+        btnweibo.setOnClickListener(LoginActivity.this);
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -198,7 +181,12 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
     public static void actionStartActivity(Context context) {
         context.startActivity(new Intent(context, LoginActivity.class));
     }
-
+    public static void actionStartActivityRegister(Context context, String username, String userpwd) {
+        Intent i = new Intent(context, LoginActivity.class);
+        i.putExtra(USER_NAME, username);
+        i.putExtra(USER_PWD, userpwd);
+        context.startActivity(i);
+    }
     /**
      * 进行微博授权初始化操作
      */

@@ -85,10 +85,12 @@ public class LoginActivity extends Activity implements OnClickListener{
     private JSONObject response1;
     public static String  qqresult;
     public static CircleImageView bimp;
-    private final String xyurl = new String("http://10.7.88.30/user/getInformation");
-    private final String xyurl2 = new String("http://10.7.88.30/team/getInformation");
+    private final String xyurl = new String("http://123.206.14.122/user/getInformation");
+    private final String xyurl2 = new String("http://123.206.14.122/team/getInformation");
             //("http://"+AppUtil.SharingServer.HOST2+":"+AppUtil.SharingServer.PORT2+"/user/getInformation");
     private String xyuser_id;
+    private Button mLoginButton;
+    private static final String TAG = "LoginActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,6 +156,15 @@ public class LoginActivity extends Activity implements OnClickListener{
         bt = (Button)findViewById(R.id.lg_bt2);
 
         btnweibo = (ImageView) findViewById(R.id.lg_weibo);
+        mLoginButton = (Button)findViewById(R.id.lg_bt);
+        Log.d(TAG, "initViews: loginButton yi jing huo qu dao:" + mLoginButton.toString());
+        mLoginButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: ");
+                Toast.makeText(LoginActivity.this, "login is clicked!", Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
@@ -432,7 +443,7 @@ public class LoginActivity extends Activity implements OnClickListener{
              //   Toast.makeText(LoginActivity.this, "用户id： " + qqid + "\n用户昵称： " + qqname + "\n用户性别： " + qqgender, Toast.LENGTH_SHORT).show();
                 //建立连接
                 AsyncHttpClient client = new AsyncHttpClient();
-                String Url_add = "http://10.7.88.106:8080/qq/login";
+                String Url_add = "http://123.206.14.122/qq/login";
                 //获取参数
                 RequestParams params = new RequestParams();
                 params.add("qq",qqid);
@@ -559,7 +570,7 @@ public class LoginActivity extends Activity implements OnClickListener{
         lgbt.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Toast.makeText(LoginActivity.this, "tanchu toast", Toast.LENGTH_SHORT).show();
                 if(cb.isChecked()){
                     s = getSharedPreferences("ty_user",Context.MODE_PRIVATE);
                     SharedPreferences.Editor editer = s.edit();

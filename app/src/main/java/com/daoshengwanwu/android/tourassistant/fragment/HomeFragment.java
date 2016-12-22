@@ -132,7 +132,7 @@ public class HomeFragment extends Fragment {
 
     private void getDataFromServer() {
         final AsyncHttpClient client = new AsyncHttpClient();
-        String url = "http://10.7.88.89:80/spot/getspotid";//10.7.88.89,192.168.191.1
+        String url = "http://123.206.14.122/spot/getspotid";//10.7.88.89,192.168.191.1
 
         RequestParams params = new RequestParams();
         params.add("id", "111");
@@ -152,7 +152,7 @@ public class HomeFragment extends Fragment {
                     try {
                         String spot_id = response.getString(i);
 
-                        String url = "http://10.7.88.89:80/spot/getrecommend";//10.7.88.89,192.168.191.1
+                        String url = "http://123.206.14.122/spot/getrecommend";//10.7.88.89,192.168.191.1
 
                         RequestParams params = new RequestParams();
                         params.add("id", spot_id);

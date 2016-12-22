@@ -1,21 +1,23 @@
 package com.daoshengwanwu.android.tourassistant.item.team;
 
+import android.graphics.Bitmap;
+
 /**
  * Created by LK on 2016/11/22.
  */
 public class TransferTeamItem {
-    private int pic;
+    private Bitmap pic;
     private String name;
 
-    public TransferTeamItem(int pic, String name) {
+    public TransferTeamItem(Bitmap pic, String name) {
         this.pic = pic;
         this.name = name;
     }
-    public int getPic() {
+    public Bitmap getPic() {
         return pic;
     }
 
-    public void setPic(int pic) {
+    public void setPic(Bitmap pic) {
         this.pic = pic;
     }
 

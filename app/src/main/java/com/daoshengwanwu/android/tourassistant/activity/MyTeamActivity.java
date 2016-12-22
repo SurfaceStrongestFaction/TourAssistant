@@ -66,7 +66,7 @@ public class MyTeamActivity extends BaseActivity {
                             super.onSuccess(statusCode, headers, response);
                             try {
                                 String n = response.getString("user_name");
-                                items.add(new MyTeamItem(R.drawable.item_pic2,n));
+                                items.add(new MyTeamItem(AppUtil.User.USER_IMG,n));
                                 adapter.notifyDataSetChanged();
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -147,7 +147,7 @@ public class MyTeamActivity extends BaseActivity {
                     super.onSuccess(statusCode, headers, response);
                     try {
                         String n = response.getString("user_name");
-                        items.add(new MyTeamItem(R.drawable.item_pic2,n));
+                        items.add(new MyTeamItem(AppUtil.User.USER_IMG,n));
                         adapter.notifyDataSetChanged();
                     } catch (JSONException e) {
                         e.printStackTrace();

@@ -103,11 +103,13 @@ public class PersonalDataActivity extends BaseActivity {
                                         case 0:
                                             Intent cameraIntent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                                             startActivityForResult(cameraIntent, 1001);
+                                            overridePendingTransition(R.anim.push_up_in,R.anim.push_up_out);
                                             break;
                                         case 1:
                                             Intent intent = new Intent(Intent.ACTION_PICK, null);
                                             intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
                                             startActivityForResult(intent, 1000);
+                                            overridePendingTransition(R.anim.push_up_in,R.anim.push_up_out);
                                             break;
                                         default:
 

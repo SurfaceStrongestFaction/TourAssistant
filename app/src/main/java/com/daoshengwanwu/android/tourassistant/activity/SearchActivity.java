@@ -45,6 +45,7 @@ public class SearchActivity extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (ls.get(position).equals(1)){
                     ScenicspotActivity.actionStartActivity(SearchActivity.this, UUID.randomUUID().toString());
+                    overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
                 }
 
             }

@@ -30,6 +30,7 @@ public class TeamMemberActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 ChatActivity.startChatActivity(TeamMemberActivity.this);
+                overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
             }
         });
     }

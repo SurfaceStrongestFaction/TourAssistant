@@ -11,6 +11,7 @@ import android.widget.ListView;
 import com.daoshengwanwu.android.tourassistant.R;
 import com.daoshengwanwu.android.tourassistant.adapter.TransferTeamAdapter;
 import com.daoshengwanwu.android.tourassistant.item.team.TransferTeamItem;
+import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
 
 import java.util.ArrayList;
 
@@ -46,12 +47,12 @@ public class TransferTeamActivity extends BaseActivity {
     }
 
     public void  getData(){
-        items.add(new TransferTeamItem(R.drawable.item_pic2,"申玥"));
-        items.add(new TransferTeamItem(R.drawable.item_pic2,"申玥"));
-        items.add(new TransferTeamItem(R.drawable.item_pic2,"申玥"));
-        items.add(new TransferTeamItem(R.drawable.item_pic2,"申玥"));
-        items.add(new TransferTeamItem(R.drawable.item_pic2,"申玥"));
-        items.add(new TransferTeamItem(R.drawable.item_pic2,"申玥"));
+        items.add(new TransferTeamItem(AppUtil.User.USER_IMG,AppUtil.User.USER_NAME));
+        items.add(new TransferTeamItem(AppUtil.User.USER_IMG,AppUtil.User.USER_NAME));
+        items.add(new TransferTeamItem(AppUtil.User.USER_IMG,AppUtil.User.USER_NAME));
+        items.add(new TransferTeamItem(AppUtil.User.USER_IMG,AppUtil.User.USER_NAME));
+        items.add(new TransferTeamItem(AppUtil.User.USER_IMG,AppUtil.User.USER_NAME));
+        items.add(new TransferTeamItem(AppUtil.User.USER_IMG,AppUtil.User.USER_NAME));
 
 
     }

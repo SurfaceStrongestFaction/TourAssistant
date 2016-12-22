@@ -137,7 +137,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:gravity="center"
-                android:text="密码修改"
+                android:text="设置密码"
                 android:textSize="18dp"
                 android:textColor="@color/colorSetText"/>
             <TextView

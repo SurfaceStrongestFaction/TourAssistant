@@ -163,9 +163,8 @@ public class LauncherActivity extends BaseActivity {
                         mMapsFragmentSaveData = mMapsFragment.getCurrentState();
                     }
 
-                    if (null == mHomeFragment) {
-                        mHomeFragment = HomeFragment.newInstance();
-                    }
+                    mHomeFragment = HomeFragment.newInstance();
+
                     mFragmentManager.beginTransaction().replace(R.id.launcher_fragment_container, mHomeFragment).commit();
 
                     break;

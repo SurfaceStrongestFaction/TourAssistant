@@ -2,7 +2,6 @@ package com.daoshengwanwu.android.tourassistant.activity;
 
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -23,16 +22,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.daoshengwanwu.android.tourassistant.R;
-/*import com.daoshengwanwu.android.tourassistant.baihaoran.AppUtil;
-import com.daoshengwanwu.android.tourassistant.baihaoran.LauncherActivity;
-import com.daoshengwanwu.android.tourassistant.jiangshengda.CircleImageView;
-import com.daoshengwanwu.android.tourassistant.wangxiao.utils.HttpCallBackListener;
-import com.daoshengwanwu.android.tourassistant.wangxiao.utils.HttpUtil;
-import com.daoshengwanwu.android.tourassistant.wangxiao.utils.PrefParams;*/
-import com.hyphenate.EMCallBack;
-import com.hyphenate.EMError;
-import com.hyphenate.chat.EMClient;
-import com.hyphenate.exceptions.HyphenateException;
 import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
 import com.daoshengwanwu.android.tourassistant.utils.HttpCallBackListener;
 import com.daoshengwanwu.android.tourassistant.utils.HttpUtil;
@@ -77,7 +66,6 @@ import java.net.URL;
 
 import static com.daoshengwanwu.android.tourassistant.utils.AppUtil.Group.GROUP_ID;
 import static com.daoshengwanwu.android.tourassistant.utils.AppUtil.User.USER_ID;
-//import static com.daoshengwanwu.android.tourassistant.baihaoran.AppUtil.User.USER_ID;
 
 
 
@@ -89,10 +77,11 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
     private Oauth2AccessToken mAccessToken;
 
     /** 注意：SsoHandler 仅当 SDK 支持 SSO 时有效 */
+    private static final String USER_NAME = "loginActivity.EXTRA_NAME";
+    private static final String USER_PWD = "loginActivity.EXTRA_PWD";
     private SsoHandler mSsoHandler;
     private UsersAPI mUsersAPI;
     private Button bt;
-    private Button btl;
     private SharedPreferences s,s1;
     private String name1;
     private String pwd1;
@@ -104,7 +93,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
     public static CircleImageView bimp;
     private final String xyurl = new String("http://123.206.14.122/user/getInformation");
     private final String xyurl2 = new String("http://123.206.14.122/team/getInformation");
-            //("http://"+AppUtil.SharingServer.HOST2+":"+AppUtil.SharingServer.PORT2+"/user/getInformation");
+    //("http://"+AppUtil.SharingServer.HOST2+":"+AppUtil.SharingServer.PORT2+"/user/getInformation");
     private String xyuser_id;
     private Button mLoginButton;
     private static final String TAG = "LoginActivity";
@@ -125,6 +114,14 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
         pwd1 = s1.getString("pwd","");
         name.setText(name1);
         pwd.setText(pwd1);
+        registerinf ();
+    }
+    public void registerinf (){
+        Intent i = getIntent();
+        String username = i.getStringExtra(USER_NAME);
+        String userpwd = i.getStringExtra(USER_PWD);
+        name.setText(username);
+        pwd.setText(userpwd);
     }
     public void synhttprequestlogin(){
         AsyncHttpClient client = new AsyncHttpClient();
@@ -139,228 +136,20 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
                 try {
                     System.out.println(response);
                     user_id = response.getString("user_id");
-                    if (user_id.equals("false")){
+                    if (user_id.equals("false")) {
                         Toast.makeText(LoginActivity.this, "用户名或密码不正确", Toast.LENGTH_LONG).show();
-                    }else {
+                    } else {
                         Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_LONG).show();
                         USER_ID = user_id;
-    Thread login = new Thread(){
-        @Override
-        public void run() {
-            super.run();
-            String result = "";
-            PrintWriter out = null;
-            BufferedReader in = null;
-            try {
-
-                //登录
-                    URL url = new URL("http://123.206.14.122/user/login");
-                    HttpURLConnection con = (HttpURLConnection)url.openConnection();
-                    con.setDoInput(true);
-                    con.setDoOutput(true);
-                    out = new PrintWriter(con.getOutputStream());
-                    out.print(user_name+"\n"+user_pwd);
-                    out.flush();
-                    //定义BufferedReader输入流读取URL响应
-                    in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-                    String line;
-                    while ((line = in.readLine()) != null){
-                        result += "\n" +line;
+                        LauncherActivity.actionStartActivity(LoginActivity.this);
                     }
 
-                      user_id = result;
-                Toast.makeText(LoginActivity.this, ""+user_id, Toast.LENGTH_SHORT).show();
-            }  catch (Exception e) {
-                System.out.println("发送POST请求出现异常！" + e);
-                e.printStackTrace();
-            }  finally {
-                try{
-                    if (out != null){
-                        out.close();
-                    }
-                    if (in != null){
-                        in.close();
-                    }
-                }catch (IOException ex){
-                    ex.printStackTrace();
-                } catch (Exception e) {
+                }catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
-
-    /**
-     * 环信EM注册方法
-     */
-    private void signUp(final String user_id, final String user_pwd) {
-        //截取US诶、
-        final String nameEM=user_id.substring(0,7);
-        final String pwdEM;
-        if(TextUtils.isEmpty(user_pwd)){
-            //密码为null，EM默认密码为123456
-            pwdEM="123456";
-        }else{
-            pwdEM=user_pwd;
-        }
-        Log.i("zhu", "name,pwd: "+nameEM+","+pwdEM);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    EMClient.getInstance().createAccount(nameEM, pwdEM);
-                } catch (final HyphenateException e) {
-                    e.printStackTrace();
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            /**
-                             * 关于错误码可以参考官方api详细说明
-                             * http://www.easemob.com/apidoc/android/chat3.0/classcom_1_1hyphenate_1_1_e_m_error.html
-                             */
-                            int errorCode = e.getErrorCode();
-                            String message = e.getMessage();
-                            Log.d("zhu", String.format("sign up - errorCode:%d, errorMsg:%s", errorCode, e.getMessage()));
-                            switch (errorCode) {
-                                // 网络错误
-                                case EMError.NETWORK_ERROR:
-                                    Toast.makeText(LoginActivity.this, "网络错误 code: " + errorCode + ", message:" + message, Toast.LENGTH_LONG).show();
-                                    break;
-                                // 用户已存在
-                                case EMError.USER_ALREADY_EXIST:
-                                    //Toast.makeText(LoginActivity.this, "用户已存在 code: " + errorCode + ", message:" + message, Toast.LENGTH_LONG).show();
-                                    //用户如果以注册直接转到登录
-                                    signIn(nameEM,pwdEM);
-                                    break;
-                                // 参数不合法，一般情况是username 使用了uuid导致，不能使用uuid注册
-                                case EMError.USER_ILLEGAL_ARGUMENT:
-                                    Toast.makeText(LoginActivity.this, "参数不合法，一般情况是username 使用了uuid导致，不能使用uuid注册 code: " + errorCode + ", message:" + message, Toast.LENGTH_LONG).show();
-                                    break;
-                                // 服务器未知错误
-                                case EMError.SERVER_UNKNOWN_ERROR:
-                                    Toast.makeText(LoginActivity.this, "服务器未知错误 code: " + errorCode + ", message:" + message, Toast.LENGTH_LONG).show();
-                                    break;
-                                case EMError.USER_REG_FAILED:
-                                    Toast.makeText(LoginActivity.this, "账户注册失败 code: " + errorCode + ", message:" + message, Toast.LENGTH_LONG).show();
-                                    break;
-                                default:
-                                    Toast.makeText(LoginActivity.this, "ml_sign_up_failed code: " + errorCode + ", message:" + message, Toast.LENGTH_LONG).show();
-                                    break;
-                            }
-                        }
-                    });
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }finally {
-                    //转到登录
-                    signIn(nameEM,pwdEM);
-                }
-            }
-        }).start();
-    }
-    /**
-     * 登录方法
-     */
-    private void signIn(final String user_id, final String user_pwd) {
-        Log.i("zhu", "name,pwd: "+user_id+","+user_pwd);
-        EMClient.getInstance().login(user_id, user_pwd, new EMCallBack() {
-            /**
-             * 登陆成功的回调
-             */
-            @Override
-            public void onSuccess() {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        // 加载所有会话到内存
-                        EMClient.getInstance().chatManager().loadAllConversations();
-                        // 加载所有群组到内存，如果使用了群组的话
-                        // EMClient.getInstance().groupManager().loadAllGroups();
-                        // 登录成功跳转界面
-                        //Intent intent = new Intent(ECLoginActivity.this, ECMainActivity.class);
-                        //startActivity(intent);
-                        //finish();
-                    }
-                });
-            }
-
-            /**
-             * 登陆错误的回调
-             * @param i
-             * @param s
-             */
-            @Override
-            public void onError(final int i, final String s) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Log.d("zhu", "登录失败 Error code:" + i + ", message:" + s);
-                        /**
-                         * 关于错误码可以参考官方api详细说明
-                         * http://www.easemob.com/apidoc/android/chat3.0/classcom_1_1hyphenate_1_1_e_m_error.html
-                         */
-                        switch (i) {
-                            // 网络异常 2
-                            case EMError.NETWORK_ERROR:
-                                Toast.makeText(LoginActivity.this, "EM网络错误 code: " + i + ", message:" + s, Toast.LENGTH_LONG).show();
-                                break;
-                            // 无效的用户名 101
-                            case EMError.INVALID_USER_NAME:
-                                Toast.makeText(LoginActivity.this, "EM无效的用户名 code: " + i + ", message:" + s, Toast.LENGTH_LONG).show();
-                                break;
-                            // 无效的密码 102
-                            case EMError.INVALID_PASSWORD:
-                                Toast.makeText(LoginActivity.this, "EM无效的密码 code: " + i + ", message:" + s, Toast.LENGTH_LONG).show();
-                                break;
-                            // 用户认证失败，用户名或密码错误 202
-                            case EMError.USER_AUTHENTICATION_FAILED:
-                                Toast.makeText(LoginActivity.this, "EM用户认证失败，用户名或密码错误 code: " + i + ", message:" + s, Toast.LENGTH_LONG).show();
-                                break;
-                            // 用户不存在 204
-                            case EMError.USER_NOT_FOUND:
-                                Toast.makeText(LoginActivity.this, "EM用户不存在 code: " + i + ", message:" + s, Toast.LENGTH_LONG).show();
-                                break;
-                            // 无法访问到服务器 300
-                            case EMError.SERVER_NOT_REACHABLE:
-                                Toast.makeText(LoginActivity.this, "EM无法访问到服务器 code: " + i + ", message:" + s, Toast.LENGTH_LONG).show();
-                                break;
-                            // 等待服务器响应超时 301
-                            case EMError.SERVER_TIMEOUT:
-                                Toast.makeText(LoginActivity.this, "EM等待服务器响应超时 code: " + i + ", message:" + s, Toast.LENGTH_LONG).show();
-                                break;
-                            // 服务器繁忙 302
-                            case EMError.SERVER_BUSY:
-                                Toast.makeText(LoginActivity.this, "EM服务器繁忙 code: " + i + ", message:" + s, Toast.LENGTH_LONG).show();
-                                break;
-                            // 未知 Server 异常 303 一般断网会出现这个错误
-                            case EMError.SERVER_UNKNOWN_ERROR:
-                                Toast.makeText(LoginActivity.this, "EM未知的服务器异常 code: " + i + ", message:" + s, Toast.LENGTH_LONG).show();
-                                break;
-                            default:
-                                Toast.makeText(LoginActivity.this, "EMml_sign_in_failed code: " + i + ", message:" + s, Toast.LENGTH_LONG).show();
-                                break;
-                        }
-                    }
-                });
-            }
-
-            @Override
-            public void onProgress(int i, String s) {
-
-            }
         });
     }
-
-
-    private void initViews() {
-        bt = (Button)findViewById(R.id.lg_bt2);
-        btl = (Button)findViewById(R.id.lg_bt);
-        btl.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                super.onFailure(statusCode, headers, throwable, errorResponse);
-            }
-        });
-    }
-
     private void initViews() {
         bt = (Button)findViewById(R.id.lg_bt2);
         btnweibo = (ImageView) findViewById(R.id.lg_weibo);
@@ -377,7 +166,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
     }
 
     private void initEvents() {
-        btnweibo.setOnClickListener(this);
+        btnweibo.setOnClickListener(LoginActivity.this);
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -392,7 +181,12 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
     public static void actionStartActivity(Context context) {
         context.startActivity(new Intent(context, LoginActivity.class));
     }
-
+    public static void actionStartActivityRegister(Context context, String username, String userpwd) {
+        Intent i = new Intent(context, LoginActivity.class);
+        i.putExtra(USER_NAME, username);
+        i.putExtra(USER_PWD, userpwd);
+        context.startActivity(i);
+    }
     /**
      * 进行微博授权初始化操作
      */
@@ -622,27 +416,27 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
         }
     }
     private void getTeamNameInfo() {
-            AsyncHttpClient gclient2 = new AsyncHttpClient();
-            RequestParams params = new RequestParams();
-            params.add("team_id", GROUP_ID);
-            gclient2.get(getApplicationContext(),xyurl2,params,new JsonHttpResponseHandler(){
-                @Override
-                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                    super.onSuccess(statusCode, headers, response);
-                    try {
-                        String team_name = response.getString("name");
-                        AppUtil.Group.GROUP_NAME = team_name;
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+        AsyncHttpClient gclient2 = new AsyncHttpClient();
+        RequestParams params = new RequestParams();
+        params.add("team_id", GROUP_ID);
+        gclient2.get(getApplicationContext(),xyurl2,params,new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                try {
+                    String team_name = response.getString("name");
+                    AppUtil.Group.GROUP_NAME = team_name;
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
+            }
 
-                @Override
-                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                    super.onFailure(statusCode, headers, throwable, errorResponse);
-                    Toast.makeText(LoginActivity.this, "Team_name获取失败" + AppUtil.Group.GROUP_NAME, Toast.LENGTH_SHORT).show();
-                }
-            });
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                Toast.makeText(LoginActivity.this, "Team_name获取失败" + AppUtil.Group.GROUP_NAME, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public void getyh() {
@@ -684,17 +478,17 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 
                 if (msg.what == 0) {
                     JSONObject response = (JSONObject) msg.obj;
-                            if (response.has("nickname")) {
-                                try {
-                                    qqgender = response.getString("gender").toString();
-                                    qqname = response.getString("nickname").toString();
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
+                    if (response.has("nickname")) {
+                        try {
+                            qqgender = response.getString("gender").toString();
+                            qqname = response.getString("nickname").toString();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
 
-             //   Toast.makeText(LoginActivity.this, "用户id： " + qqid + "\n用户昵称： " + qqname + "\n用户性别： " + qqgender, Toast.LENGTH_SHORT).show();
+                //   Toast.makeText(LoginActivity.this, "用户id： " + qqid + "\n用户昵称： " + qqname + "\n用户性别： " + qqgender, Toast.LENGTH_SHORT).show();
                 //建立连接
                 AsyncHttpClient client = new AsyncHttpClient();
                 String Url_add = "http://123.206.14.122/qq/login";
@@ -714,9 +508,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
                         xyuser_id = qqresult;
                         USER_ID = qqresult;
                         Toast.makeText(LoginActivity.this,"登录成功", Toast.LENGTH_LONG).show();
-                        Log.i("zhu", "user_id(all)"+AppUtil.User.USER_ID);
-                        //环信EM注册登录
-                        signUp(AppUtil.User.USER_ID,"");
                         getTeamInfo();
                         Intent intent = new Intent(LoginActivity.this, LauncherActivity.class);
                         startActivity(intent);
@@ -777,7 +568,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
         mTencent.login(LoginActivity.this, "all", iuilisten);
 
     }
-   Handler mHandler = new Handler() {
+    Handler mHandler = new Handler() {
 
         @Override
         public void handleMessage(Message msg) {

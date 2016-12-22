@@ -48,12 +48,12 @@
         "source": "E:\\android\\shixun\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable-hdpi\\ease_chat_face_normal.png"
     },
     {
-        "merged": "E:\\android\\shixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ease_msg_state_fail_resend_pressed.png",
-        "source": "E:\\android\\shixun\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable-hdpi\\ease_msg_state_fail_resend_pressed.png"
-    },
-    {
         "merged": "E:\\android\\shixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ease_chatto_bg_normal.9.png",
         "source": "E:\\android\\shixun\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable-hdpi\\ease_chatto_bg_normal.9.png"
+    },
+    {
+        "merged": "E:\\android\\shixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ease_msg_state_fail_resend_pressed.png",
+        "source": "E:\\android\\shixun\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable-hdpi\\ease_msg_state_fail_resend_pressed.png"
     },
     {
         "merged": "E:\\android\\shixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ee_7.png",
@@ -112,12 +112,12 @@
         "source": "E:\\android\\shixun\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable-hdpi\\ease_chatto_voice_playing_f1.png"
     },
     {
-        "merged": "E:\\android\\shixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ease_chatto_voice_playing_f2.png",
-        "source": "E:\\android\\shixun\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable-hdpi\\ease_chatto_voice_playing_f2.png"
-    },
-    {
         "merged": "E:\\android\\shixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ease_conversation_selected.png",
         "source": "E:\\android\\shixun\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable-hdpi\\ease_conversation_selected.png"
+    },
+    {
+        "merged": "E:\\android\\shixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ease_chatto_voice_playing_f2.png",
+        "source": "E:\\android\\shixun\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable-hdpi\\ease_chatto_voice_playing_f2.png"
     },
     {
         "merged": "E:\\android\\shixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ease_dx_checkbox_gray_on.png",
@@ -312,12 +312,12 @@
         "source": "E:\\android\\shixun\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable-hdpi\\ee_20.png"
     },
     {
-        "merged": "E:\\android\\shixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ee_12.png",
-        "source": "E:\\android\\shixun\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable-hdpi\\ee_12.png"
-    },
-    {
         "merged": "E:\\android\\shixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ee_15.png",
         "source": "E:\\android\\shixun\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable-hdpi\\ee_15.png"
+    },
+    {
+        "merged": "E:\\android\\shixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ee_12.png",
+        "source": "E:\\android\\shixun\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable-hdpi\\ee_12.png"
     },
     {
         "merged": "E:\\android\\shixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ease_chatting_setmode_keyboard_btn_pressed.png",

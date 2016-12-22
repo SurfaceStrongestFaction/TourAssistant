@@ -34,12 +34,12 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <!-- 环信权限-->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 环信权限 -->
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
@@ -56,6 +56,24 @@
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <code class="code">
+        <uses-permission android:name="android.permission.INTERNET" />
+        <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+        <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+        <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+        <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    </code>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -105,12 +123,11 @@
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="lTm3oo5q4Mr4c1lYnUxGpUniVARYBDNV" />
-
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="c6f919b976553027da271b65df049774" />
 
-        <activity android:name=".baihaoran.LauncherActivity">
+        <activity android:name=".activity.LauncherActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -119,84 +136,106 @@
         </activity>
         <activity android:name=".caizihuan.MyTrackActivity" />
         <activity android:name=".caizihuan.SearchMemberActivity" />
-        <activity android:name=".caizihuan.ECChatActivity" />
+        <activity android:name=".activity.ECChatActivity" />
         <activity android:name=".caizihuan.ChatTableActivity" />
         <activity android:name=".jiangshengda.SearchActivity" />
         <activity android:name=".shenyue.PictureActivity" />
         <activity android:name=".shenyue.ViewspotActivity" />
         <activity android:name=".shenyue.ScenicspotActivity" />
-        <activity android:name="com.daoshengwanwu.android.tourassistant.zhu.PersonalDataActivity" />
-        <activity android:name="com.daoshengwanwu.android.tourassistant.zhu.SetActivity" />
-
-        <activity android:name=".zhouxiuya.WelcomeActivity" />
-        <activity android:name=".zhouxiuya.AboutActivity" />
-        <activity android:name=".zhouxiuya.CollectActivity" />
-        <activity android:name=".leekuo.MyTeamActivity" />
-        <activity android:name=".leekuo.TransferTeamActivity" />
-        <activity android:name=".leekuo.TeamMemberActivity" />
-        <activity android:name=".leekuo.TeamerMyTeamActivity" />
-        <activity android:name=".wangxiao.RegisterActivity" />
-        <activity android:name=".wangxiao.Register2Activity" />
-        <activity android:name=".wangxiao.LoginActivity" />
-        <activity android:name=".jiangshengda.poisearch.PoiAroundSearchActivity"/>
+        <activity android:name=".zhu.PersonalDataActivity" />
+        <activity android:name=".zhu.SetActivity" />
+        <activity android:name=".activity.MyTrackActivity" />
+        <activity android:name=".activity.SearchMemberActivity" />
+        <activity android:name=".activity.ChatTableActivity" />
+        <activity android:name=".activity.SearchActivity" />
+        <activity android:name=".activity.PictureActivity" />
+        <activity android:name=".activity.ViewspotActivity" />
+        <activity android:name=".activity.ScenicspotActivity" />
+        <activity android:name=".activity.PersonalDataActivity" />
+        <activity android:name=".activity.SetActivity" />
+        <activity android:name=".activity.WelcomeActivity" />
+        <activity android:name=".activity.AboutActivity" />
+        <activity android:name=".activity.CollectActivity" />
+        <activity android:name=".activity.MyTeamActivity" />
+        <activity android:name=".activity.TransferTeamActivity" />
+        <activity android:name=".activity.TeamMemberActivity" />
+        <activity android:name=".activity.TeamerMyTeamActivity" />
+        <activity android:name=".activity.RegisterActivity" />
+        <activity android:name=".activity.Register2Activity" />
+        <activity android:name=".activity.LoginActivity" />
+        <activity android:name=".activity.PoiAroundSearchActivity" />
 
         <service android:name="com.amap.api.location.APSService" />
-        <service android:name=".baihaoran.SharingService" />
+        <service android:name=".service.SharingService" />
 
-         <!--微信分享回调 -->
+        <!-- 微信分享回调 -->
         <activity
-            android:name=".wangxiao.wxapi.WXEntryActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:name=".activity.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:exported="true" />
-        <activity android:name=".leekuo.BaseActivity"></activity>
+            android:exported="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity android:name=".activity.BaseActivity" />
+        <activity
+            android:name=".activity.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
             android:name="com.sina.weibo.sdk.component.WeiboSdkBrowser"
             android:configChanges="keyboardHidden|orientation"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize" >
-        </activity>
-        <activity
-            android:name="com.tencent.tauth.AuthActivity"
-            android:launchMode="singleTask"
-            android:noHistory="true" >
+            android:windowSoftInputMode="adjustResize"></activity>
 
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="tencent222222" />
-                <!-- 100380359 100381104 222222 -->
-            </intent-filter>
-        </activity>
         <service
             android:name="com.sina.weibo.sdk.net.DownloadService"
-            android:exported="false" >
-        </service>
+            android:exported="false"></service>
 
         <activity
             android:name="com.tencent.connect.common.AssistActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity android:name=".ReturnActivity"></activity>
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
 
+                <data android:scheme="tencent222222" />
+                <!-- 100380359 100381104 222222 -->
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name="com.sina.weibo.sdk.net.DownloadService"
+            android:exported="false"></service>
+
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity android:name=".ReturnActivity"></activity>
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="tencent222222" />
+                <!-- 100380359 100381104 222222 -->
+            </intent-filter>
+        </activity>
+        <activity android:name=".activity.ConversationActivity"></activity>
     </application>
-    <code class="code">
-        <uses-permission android:name="android.permission.INTERNET"/>
-        <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-        <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-        <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-        <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    </code>
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
 </manifest>

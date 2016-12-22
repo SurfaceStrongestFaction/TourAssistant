@@ -36,12 +36,12 @@
         "source": "E:\\android\\shixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\bundles\\debug\\res\\drawable\\ease_recording_text_hint_bg.xml"
     },
     {
-        "merged": "E:\\android\\shixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\ease_btn_blue_normal_shape.xml",
-        "source": "E:\\android\\shixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\bundles\\debug\\res\\drawable\\ease_btn_blue_normal_shape.xml"
-    },
-    {
         "merged": "E:\\android\\shixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\ease_chat_send_btn_selector.xml",
         "source": "E:\\android\\shixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\bundles\\debug\\res\\drawable\\ease_chat_send_btn_selector.xml"
+    },
+    {
+        "merged": "E:\\android\\shixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\ease_btn_blue_normal_shape.xml",
+        "source": "E:\\android\\shixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\bundles\\debug\\res\\drawable\\ease_btn_blue_normal_shape.xml"
     },
     {
         "merged": "E:\\android\\shixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\ease_search_clear.xml",

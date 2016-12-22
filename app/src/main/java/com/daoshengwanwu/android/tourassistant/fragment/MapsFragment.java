@@ -192,7 +192,6 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
         btn = (Button) v.findViewById(R.id.Fog_btn);
         btn.setVisibility(btn.GONE);
         act_main = (FrameLayout)v.findViewById(R.id.fragment_maps);
-        mapView = (MapView) v.findViewById(R.id.map);
         mQuit_fog_btn = (Button) v.findViewById(R.id.Quit_Fog_btn);
         mQuit_fog_btn.setVisibility(mQuit_fog_btn.GONE);
         mapView = (TextureMapView) v.findViewById(R.id.map);
@@ -253,6 +252,9 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
                 myView.setVisibility(myView.GONE);
                 btn.setVisibility(btn.VISIBLE);
                 mQuit_fog_btn.setVisibility(mQuit_fog_btn.GONE);
+                aMap.getUiSettings().setAllGesturesEnabled(true);//允许所有手势操作
+                aMap.getUiSettings().setRotateGesturesEnabled(false);//禁止地图旋转手势
+                aMap.getUiSettings().setTiltGesturesEnabled(false);//禁止倾斜手势
             }
         });
 
@@ -801,6 +803,9 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
                 }
                 mStartLocation.setVisibility(mStartLocation.VISIBLE);
                 mStopLocation.setVisibility(mStopLocation.GONE);
+                aMap.getUiSettings().setAllGesturesEnabled(true);//允许所有手势操作
+                aMap.getUiSettings().setRotateGesturesEnabled(false);//禁止地图旋转手势
+                aMap.getUiSettings().setTiltGesturesEnabled(false);//禁止倾斜手势
                 //-----------------------------------------------------------------
                 if (mIsStartLocation) {
                     mSharingBinder.stopLocationService();

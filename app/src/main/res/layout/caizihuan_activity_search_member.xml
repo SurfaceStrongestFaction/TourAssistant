@@ -4,7 +4,7 @@
     android:id="@+id/activity_search_member"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.daoshengwanwu.android.tourassistant.caizihuan.SearchMemberActivity"
+    tools:context="com.daoshengwanwu.android.tourassistant.activity.SearchMemberActivity"
     android:orientation="vertical"
     android:background="#ffffff"
     android:fitsSystemWindows="true"

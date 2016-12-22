@@ -1,10 +1,10 @@
 apply plugin: 'com.android.library'
 
-        android {
-            compileSdkVersion 24
-            buildToolsVersion "24.0.2"
+android {
+    compileSdkVersion 24
+    buildToolsVersion "24.0.2"
 
-            defaultConfig {
+    defaultConfig {
         minSdkVersion 19
         targetSdkVersion 24
         versionCode 1
@@ -19,7 +19,8 @@ apply plugin: 'com.android.library'
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:24.2.0'
+    provided fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile 'junit:junit:4.12'
+    provided 'com.android.support:appcompat-v7:24.0.0'
+    testCompile 'org.testng:testng:6.9.6'
 }

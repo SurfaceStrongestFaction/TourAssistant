@@ -13,7 +13,7 @@ import com.daoshengwanwu.android.tourassistant.R;
 
 import java.util.ArrayList;
 
-public class TeamerMyTeamActivity extends BaseActivity{
+public class TeamerMyTeamActivity extends Activity {
     private ListView lv;
     private ArrayList<TeamerMyTeamItem> items=new ArrayList<>();
     private Button btn1;
@@ -28,9 +28,9 @@ public class TeamerMyTeamActivity extends BaseActivity{
         lv.setAdapter(adapter);
         setItemClick();
     }
-    public static  void actionStartActivity(Context packageContext) {
-        Intent intent = new Intent(packageContext, TeamerMyTeamActivity.class);
-        packageContext.startActivity(intent);
+    public static Intent newIntent(Context packageContext, String userName) {
+        Intent i = new Intent(packageContext, TeamerMyTeamActivity.class);
+        return i;
     }
     public void  getData(){
         items.add(new TeamerMyTeamItem(R.drawable.item_pic2,"申玥"));
@@ -49,7 +49,8 @@ public class TeamerMyTeamActivity extends BaseActivity{
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> paren, View view, int position, long id) {
-                TeamMemberActivity.actionStartActivity(TeamerMyTeamActivity.this);
+                Intent i = TeamMemberActivity.newIntent(TeamerMyTeamActivity.this,"李阔");
+                startActivity(i);
             }
         });
     }

@@ -10,7 +10,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
     android:background="@drawable/background"
-    tools:context="com.daoshengwanwu.android.tourassistant.zhouxiuya.AboutActivity"
+    tools:context="com.daoshengwanwu.android.tourassistant.activity.AboutActivity"
     android:fitsSystemWindows="true"
     android:clipToPadding="false">
     <RelativeLayout

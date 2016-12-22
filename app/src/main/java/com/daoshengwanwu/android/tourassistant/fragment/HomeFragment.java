@@ -2,6 +2,7 @@ package com.daoshengwanwu.android.tourassistant.fragment;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -26,9 +27,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.daoshengwanwu.android.tourassistant.R;
+import com.daoshengwanwu.android.tourassistant.activity.ScenicspotActivity;
 import com.daoshengwanwu.android.tourassistant.model.HomeModel;
 import com.daoshengwanwu.android.tourassistant.model.Spot;
 import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
@@ -58,6 +61,7 @@ import okhttp3.Response;
 
 public class HomeFragment extends Fragment {
     public static final int REFRESH_DELAY = 4000;
+    private static final int WHAT_NOTIFY = 1024;
 
     private PullToRefreshView mPullToRefreshView;
     private LinearLayout mAreaSelBtn;
@@ -79,6 +83,14 @@ public class HomeFragment extends Fragment {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+
+            switch (msg.what) {
+                case WHAT_NOTIFY: {
+                    mRecyclerView.getAdapter().notifyDataSetChanged();
+                } break;
+                default: break;
+            }
+
             judgeShouldSwitch();
         }
     };
@@ -120,6 +132,7 @@ public class HomeFragment extends Fragment {
                     @Override
                     public void run() {
                         mPullToRefreshView.setRefreshing(false);
+                        getDataFromServer();
                     }
                 }, REFRESH_DELAY);
             }
@@ -132,54 +145,65 @@ public class HomeFragment extends Fragment {
 
     private void getDataFromServer() {
         final AsyncHttpClient client = new AsyncHttpClient();
-        String url = "http://10.7.88.89:80/spot/getspotid";//10.7.88.89,192.168.191.1
+        String url = "http://" + AppUtil.JFinalServer.HOST + ":" + AppUtil.JFinalServer.PORT + "/spot/getspotid";//10.7.88.89,192.168.191.1
 
         RequestParams params = new RequestParams();
         params.add("id", "111");
 
         client.get(getActivity().getApplicationContext(), url, params, new JsonHttpResponseHandler() {
             @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+            public void onSuccess(int statusCode, Header[] headers, final JSONArray response) {
                 super.onSuccess(statusCode, headers, response);
-
+                
                 if (null == response) {
-                    return ;
+                    return;
                 }
 
                 mListData.clear();
-                Log.d(TAG, "onSuccess: response:" + response);
-                for (int i = 0; i < response.length(); i++) {
-                    try {
-                        String spot_id = response.getString(i);
+                mRecyclerView.getAdapter().notifyDataSetChanged();
+                Log.d(TAG, "onSuccess: responselength:" + response.length());
 
-                        String url = "http://10.7.88.89:80/spot/getrecommend";//10.7.88.89,192.168.191.1
+                new Thread() {
+                    @Override
+                    public void run() {
+                        OkHttpClient okClient = new OkHttpClient();
+                        String url = "http://" + AppUtil.JFinalServer.HOST + ":" + AppUtil.JFinalServer.PORT + "/spot/getrecommend";//10.7.88.89,192.168.191.1
 
-                        RequestParams params = new RequestParams();
-                        params.add("id", spot_id);
+                        for(int i = 0; i<response.length(); i++) {
+                            try {
+                                String spot_id = response.getString(i);
 
-                        client.get(getActivity().getApplicationContext(), url, params, new JsonHttpResponseHandler() {
-                            @Override
-                            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                                super.onSuccess(statusCode, headers, response);
-                                Spot spot = new Spot(R.drawable.gugong);
+                                RequestBody body = new FormBody.Builder().add("id", spot_id).build();
+                                Request request = new Request.Builder().url(url).post(body).build();
+
+                                Response okResponse = okClient.newCall(request).execute();
+                                JSONObject response = new JSONObject(okResponse.body().string());
+                                Log.d(TAG, "run: response:" + response);
+                                Spot spot = new Spot(spot_id, R.drawable.gugong);
+                                Log.d(TAG, "onSuccess: response:" + response);
                                 try {
                                     spot.setSpotName(response.getString("cn_name"));
                                     spot.setSpotEnName(response.getString("en_name"));
                                     spot.setDistance(100);
                                     spot.setRecommandNum(Integer.parseInt(response.getString("recommend_index")));
                                 } catch (JSONException e) {
-                                    e.printStackTrace();
+                                            e.printStackTrace();
                                 }
 
                                 mListData.add(spot);
+                                Log.d(TAG, "onSuccess: mListDataSize:" + mListData.size());
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            } catch (IOException e) {
+                                e.printStackTrace();
                             }
-                        });
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
+                        }
 
-                mRecyclerView.getAdapter().notifyDataSetChanged();
+                        Message msg = new Message();
+                        msg.what = WHAT_NOTIFY;
+                        mHandler.sendMessage(msg);
+                    }
+                }.start();
             }
         });
     }
@@ -261,7 +285,7 @@ public class HomeFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
         mRecyclerView.setAdapter(new RecommandListAdapter());
         params = mRecyclerView.getLayoutParams();
-        params.height = DisplayUtil.getScreenHeight(getActivity()) * 5;
+        params.height = DisplayUtil.getScreenHeight(getActivity());
         mRecyclerView.setLayoutParams(params);
 
         mRecyclerView.setOnTouchListener(new View.OnTouchListener() {
@@ -303,12 +327,12 @@ public class HomeFragment extends Fragment {
         return new HomeFragment();
     }
 
-
-    public class SpotHolder extends RecyclerView.ViewHolder {
+    public class SpotHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ImageView mItemImg;
         private TextView mSpotName;
         private TextView mSpotEnName;
         private TextView mDistance;
+        private String mSpotId;
 
 
         public SpotHolder(View itemView) {
@@ -343,6 +367,8 @@ public class HomeFragment extends Fragment {
             params = rLL.getLayoutParams();
             params.width = (int)(screenWidth * 3.0 / 5.0);
             rLL.setLayoutParams(params);
+
+            itemView.setOnClickListener(this);
         }
 
         public void bindData(Spot spot) {
@@ -350,6 +376,13 @@ public class HomeFragment extends Fragment {
             mSpotName.setText(spot.getSpotName());
             mSpotEnName.setText(spot.getSpotEnName());
             mDistance.setText("距离：" + spot.getDistance());
+            mSpotId = spot.getId();
+        }
+
+        @Override
+        public void onClick(View v) {
+            Intent intent = ScenicspotActivity.actionStartActivity(getActivity(), mSpotId);
+            startActivity(intent);
         }
     }
 

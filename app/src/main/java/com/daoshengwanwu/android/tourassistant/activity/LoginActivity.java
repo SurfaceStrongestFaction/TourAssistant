@@ -66,6 +66,8 @@ import java.net.URL;
 
 import static com.daoshengwanwu.android.tourassistant.utils.AppUtil.Group.GROUP_ID;
 import static com.daoshengwanwu.android.tourassistant.utils.AppUtil.User.USER_ID;
+import static com.daoshengwanwu.android.tourassistant.baihaoran.AppUtil.User.USER_ID;
+
 
 
 public class LoginActivity extends BaseActivity implements OnClickListener{
@@ -93,6 +95,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
     private final String xyurl2 = new String("http://123.206.14.122/team/getInformation");
             //("http://"+AppUtil.SharingServer.HOST2+":"+AppUtil.SharingServer.PORT2+"/user/getInformation");
     private String xyuser_id;
+    private Button mLoginButton;
+    private static final String TAG = "LoginActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,7 +125,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
             try {
 
                 //登录
-                    URL url = new URL("http://10.7.88.89/user/login");
+                    URL url = new URL("http://123.206.14.122/user/login");
                     HttpURLConnection con = (HttpURLConnection)url.openConnection();
                     con.setDoInput(true);
                     con.setDoOutput(true);
@@ -166,6 +170,15 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
             }
         });
         btnweibo = (ImageView) findViewById(R.id.lg_weibo);
+        mLoginButton = (Button)findViewById(R.id.lg_bt);
+        Log.d(TAG, "initViews: loginButton yi jing huo qu dao:" + mLoginButton.toString());
+        mLoginButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: ");
+                Toast.makeText(LoginActivity.this, "login is clicked!", Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
@@ -514,10 +527,11 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
                     @Override
                     public void onSuccess(int i, Header[] headers, byte[] bytes) {
                         qqresult = new String(bytes);
-                        AppUtil.User.USER_ID = qqresult;
+                        USER_ID = qqresult;
                         AppUtil.User.USER_NAME = qqname;
                         AppUtil.User.USER_GENDER = qqgender;
                         xyuser_id = qqresult;
+                        USER_ID = qqresult;
                         Toast.makeText(LoginActivity.this,"登录成功", Toast.LENGTH_LONG).show();
                         getTeamInfo();
                         Intent intent = new Intent(LoginActivity.this, LauncherActivity.class);
@@ -635,7 +649,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
         lgbt.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Toast.makeText(LoginActivity.this, "tanchu toast", Toast.LENGTH_SHORT).show();
                 if(cb.isChecked()){
                     s = getSharedPreferences("ty_user",Context.MODE_PRIVATE);
                     SharedPreferences.Editor editer = s.edit();

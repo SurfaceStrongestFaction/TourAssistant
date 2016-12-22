@@ -53,7 +53,7 @@
                 android:layout_height="25dp"
                 android:layout_marginRight="20dp"
                 android:src="@drawable/entry"/>
-            <com.daoshengwanwu.android.tourassistant.zhu.CircleImageView
+            <com.daoshengwanwu.android.tourassistant.view.CircleImageView
                 android:layout_centerVertical="true"
                 android:id="@+id/iv_set_img"
                 android:layout_width="100dp"

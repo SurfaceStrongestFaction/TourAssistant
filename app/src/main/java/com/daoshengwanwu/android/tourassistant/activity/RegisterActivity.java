@@ -82,6 +82,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             public void onClick(View view) {
                 Intent intent = new Intent(RegisterActivity.this, Register2Activity.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
                 finish();
             }
         });

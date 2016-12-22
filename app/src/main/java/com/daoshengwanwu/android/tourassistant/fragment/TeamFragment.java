@@ -1,5 +1,6 @@
 package com.daoshengwanwu.android.tourassistant.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,7 +14,9 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.daoshengwanwu.android.tourassistant.R;
+import com.daoshengwanwu.android.tourassistant.activity.CaptureActivity;
 import com.daoshengwanwu.android.tourassistant.activity.MyTeamActivity;
+import com.daoshengwanwu.android.tourassistant.service.SharingService;
 import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -25,6 +28,9 @@ import org.apache.http.Header;
  * Created by LK on 2016/12/14.
  */
 public class TeamFragment extends Fragment {
+    private static final String KEY_BINDER = "TeamFragment.KEY_BINDER";
+    private SharingService.SharingBinder mBinder;
+
     private RelativeLayout createTeam;
     private RelativeLayout joinTeam;
     private RelativeLayout myTeam;
@@ -59,11 +65,11 @@ public class TeamFragment extends Fragment {
                             str = ed.getText().toString();//获取队伍名
                             Toast.makeText(getActivity(),str,Toast.LENGTH_SHORT).show();
                             //1.向特定URL传输str
-                           // String captain= AppUtil.User.USER_ID;
-                            String captain= "2";
+                           String captain= AppUtil.User.USER_ID;
+                        //    String captain= "2";
                             String members = captain;
-                            AsyncHttpClient client=new AsyncHttpClient();
-                            RequestParams params=new RequestParams();
+                            AsyncHttpClient client = new AsyncHttpClient();
+                            RequestParams params = new RequestParams();
                             params.add("team_name",str);
                             params.add("captain",captain);
                             params.add("members",members);
@@ -74,10 +80,14 @@ public class TeamFragment extends Fragment {
                                 @Override
                                 public void onSuccess(int i, Header[] headers, byte[] bytes) {
                                     String str1 = new String(bytes);
-                                    Toast.makeText(getActivity(),str1,Toast.LENGTH_SHORT).show();
+                                    AppUtil.Group.GROUP_CAPTIAN = AppUtil.User.USER_ID;
+                                    AppUtil.Group.GROUP_ID = str1;
+                                    AppUtil.Group.GROUP_NAME = str;
+                                    String text = "id:\n" + AppUtil.Group.GROUP_ID + "captian:" + AppUtil.Group.GROUP_CAPTIAN;
+                                    Toast.makeText(getActivity(), text,Toast.LENGTH_SHORT).show();
                                     if(!str1.equals("创建队伍失败,请重新创建")&&!str1.equals("只能创建一个队伍")){
                                         AppUtil.Group.GROUP_ID=str1;
-                                        Toast.makeText(getActivity()," AppUtil.Group.Group_id:"+AppUtil.Group.GROUP_ID,Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getActivity()," AppUtil.Group.GROUP_ID:"+AppUtil.Group.GROUP_ID,Toast.LENGTH_SHORT).show();
                                     }
                                 }
 
@@ -97,20 +107,25 @@ public class TeamFragment extends Fragment {
                         dialog.dismiss();
                     }
                 });
+
+
+
+
             }
         });
         joinTeam=(RelativeLayout)view.findViewById(R.id.lk_joinTeam);
         joinTeam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(getActivity(), CaptureActivity.class);
+                startActivity(intent);
             }
         });
         myTeam=(RelativeLayout)view.findViewById(R.id.lk_myTeam);
         myTeam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MyTeamActivity.actionStartActivity(getActivity());
+               MyTeamActivity.actionStartActivity(getActivity(), mBinder);
             }
         });
         talk=(RelativeLayout)view.findViewById(R.id.lk_talk);
@@ -120,15 +135,28 @@ public class TeamFragment extends Fragment {
 
             }
         });
+
+        Bundle data = getArguments();
+        if (null != data) {
+            mBinder = (SharingService.SharingBinder)data.getSerializable(KEY_BINDER);
+        }
+
         return view;
+    }
+
+    public static TeamFragment newInstance(SharingService.SharingBinder binder) {
+        TeamFragment teamFragment = new TeamFragment();
+
+        Bundle data = new Bundle();
+        data.putSerializable(KEY_BINDER, binder);
+
+        teamFragment.setArguments(data);
+
+        return teamFragment;
     }
 
     @Override
     public void onPause() {
         super.onPause();
-    }
-
-    public static TeamFragment newInstance() {
-        return new TeamFragment();
     }
 }

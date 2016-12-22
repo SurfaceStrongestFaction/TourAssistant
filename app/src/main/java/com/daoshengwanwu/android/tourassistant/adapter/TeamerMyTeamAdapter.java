@@ -44,7 +44,7 @@ public class TeamerMyTeamAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         convertView= LayoutInflater.from(context).inflate(R.layout.lk_activity_my_team_item_teamer,null);
         ImageView pic=(ImageView)convertView.findViewById(R.id.activity_my_team_item_teamer_pic);
-        pic.setImageResource(items.get(position).getPic());
+        pic.setImageBitmap(items.get(position).getPic());
         TextView name=(TextView)convertView.findViewById(R.id.activity_my_team_item_teamer_text);
         name.setText(items.get(position).getName());
         return convertView;

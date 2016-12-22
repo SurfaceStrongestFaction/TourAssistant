@@ -62,7 +62,7 @@ public class MyView extends View {
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeJoin(Paint.Join.ROUND);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
-        mPaint.setStrokeWidth(30);  //笔画宽度
+        mPaint.setStrokeWidth(60);  //笔画宽度
 
         //set path
         mPath = new Path();
@@ -107,7 +107,6 @@ public class MyView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         canvas.drawBitmap(mBitmap, 0, 0, null);
-        //mCanvas.drawPath(mPath, mPaint);
         super.onDraw(canvas);
     }
 

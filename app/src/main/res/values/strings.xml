@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TourAssistant</string>
+    <string name="app_name">探游</string>
     <string name="santa_initialization_text">初始化文字</string>
     <string name="santa_setting">设置</string>
     <string name="santa_my_footprint">我的足迹</string>

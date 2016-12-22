@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="#F8F8F8"
     android:minHeight="50dp">
-    <com.daoshengwanwu.android.tourassistant.leekuo.CircleImageView
+    <com.daoshengwanwu.android.tourassistant.view.CircleImageView
         android:id="@+id/activity_transfer_team_item_pic"
         android:layout_width="40dp"
         android:layout_height="40dp"

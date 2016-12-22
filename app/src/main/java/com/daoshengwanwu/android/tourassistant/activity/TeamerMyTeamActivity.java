@@ -11,6 +11,7 @@ import android.widget.ListView;
 import com.daoshengwanwu.android.tourassistant.R;
 import com.daoshengwanwu.android.tourassistant.adapter.TeamerMyTeamAdapter;
 import com.daoshengwanwu.android.tourassistant.item.team.TeamerMyTeamItem;
+import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
 
 import java.util.ArrayList;
 
@@ -34,16 +35,16 @@ public class TeamerMyTeamActivity extends BaseActivity{
         packageContext.startActivity(intent);
     }
     public void  getData(){
-        items.add(new TeamerMyTeamItem(R.drawable.item_pic2,"申玥"));
-        items.add(new TeamerMyTeamItem(R.drawable.item_pic2,"申玥"));
-        items.add(new TeamerMyTeamItem(R.drawable.item_pic2,"申玥"));
-        items.add(new TeamerMyTeamItem(R.drawable.item_pic2,"申玥"));
-        items.add(new TeamerMyTeamItem(R.drawable.item_pic2,"申玥"));
-        items.add(new TeamerMyTeamItem(R.drawable.item_pic2,"申玥"));
-        items.add(new TeamerMyTeamItem(R.drawable.item_pic2,"申玥"));
-        items.add(new TeamerMyTeamItem(R.drawable.item_pic2,"申玥"));
-        items.add(new TeamerMyTeamItem(R.drawable.item_pic2,"申玥"));
-        items.add(new TeamerMyTeamItem(R.drawable.item_pic2,"申玥"));
+        items.add(new TeamerMyTeamItem(AppUtil.User.USER_IMG,"申玥"));
+        items.add(new TeamerMyTeamItem(AppUtil.User.USER_IMG,"申玥"));
+        items.add(new TeamerMyTeamItem(AppUtil.User.USER_IMG,"申玥"));
+        items.add(new TeamerMyTeamItem(AppUtil.User.USER_IMG,"申玥"));
+        items.add(new TeamerMyTeamItem(AppUtil.User.USER_IMG,"申玥"));
+        items.add(new TeamerMyTeamItem(AppUtil.User.USER_IMG,"申玥"));
+        items.add(new TeamerMyTeamItem(AppUtil.User.USER_IMG,"申玥"));
+        items.add(new TeamerMyTeamItem(AppUtil.User.USER_IMG,"申玥"));
+        items.add(new TeamerMyTeamItem(AppUtil.User.USER_IMG,"申玥"));
+        items.add(new TeamerMyTeamItem(AppUtil.User.USER_IMG,"申玥"));
     }
 
     public void setItemClick(){
@@ -51,6 +52,7 @@ public class TeamerMyTeamActivity extends BaseActivity{
             @Override
             public void onItemClick(AdapterView<?> paren, View view, int position, long id) {
                 TeamMemberActivity.actionStartActivity(TeamerMyTeamActivity.this);
+                overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
             }
         });
     }

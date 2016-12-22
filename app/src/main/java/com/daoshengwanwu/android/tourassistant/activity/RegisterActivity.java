@@ -15,6 +15,7 @@ import com.loopj.android.http.RequestParams;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -56,7 +57,19 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
-                System.out.println(response);
+
+                try {
+                    String result = response.getString("result");
+                    Toast.makeText(RegisterActivity.this, result, Toast.LENGTH_LONG).show();
+                    if(result.equals("注册成功")){
+                        LoginActivity.actionStartActivityRegister(RegisterActivity.this, user_name, user_pwd);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+
             }
 
             @Override

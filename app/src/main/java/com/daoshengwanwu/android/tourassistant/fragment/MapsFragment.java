@@ -875,7 +875,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
         }
 
         if (mIsStartBlack) {
-
+            stopFogModel();
         }
 
         if (mIsStartLocation) {

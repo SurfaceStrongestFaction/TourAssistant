@@ -39,8 +39,6 @@ public class MyTeamActivity extends BaseActivity {
     private Button btn1;
     private Button btn2;
     private RelativeLayout transfer;
-    private final String xyurl = new String("http://123.206.14.122/user/getInformation");
-    private final String xyurl2 = new String("http://123.206.14.122/team/getInformation");
     public String username;
     public String members;
     public String[] names;
@@ -63,7 +61,7 @@ public class MyTeamActivity extends BaseActivity {
                     AsyncHttpClient gclient = new AsyncHttpClient();
                     RequestParams params = new RequestParams();
                     params.add("user_id", memberIds.get(i));
-                    gclient.get(getApplicationContext(),xyurl,params,new JsonHttpResponseHandler(){
+                    gclient.get(getApplicationContext(),AppUtil.JFinalServer.xyurl,params,new JsonHttpResponseHandler(){
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                             super.onSuccess(statusCode, headers, response);
@@ -96,7 +94,7 @@ public class MyTeamActivity extends BaseActivity {
         AsyncHttpClient gclient = new AsyncHttpClient();
         RequestParams params = new RequestParams();
         params.add("user_id", groupcaptian);
-        gclient.get(getApplicationContext(),xyurl,params,new JsonHttpResponseHandler(){
+        gclient.get(getApplicationContext(),AppUtil.JFinalServer.xyurl,params,new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
@@ -119,7 +117,7 @@ public class MyTeamActivity extends BaseActivity {
         AsyncHttpClient gclient = new AsyncHttpClient();
         RequestParams params = new RequestParams();
         params.add("team_id",groupid);
-        gclient.get(getApplicationContext(),xyurl2,params,new JsonHttpResponseHandler(){
+        gclient.get(getApplicationContext(),AppUtil.JFinalServer.xyurl2,params,new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
@@ -144,7 +142,7 @@ public class MyTeamActivity extends BaseActivity {
             AsyncHttpClient gclient = new AsyncHttpClient();
             RequestParams params = new RequestParams();
             params.add("user_id",names[i]);
-            gclient.get(getApplicationContext(),xyurl,params,new JsonHttpResponseHandler(){
+            gclient.get(getApplicationContext(),AppUtil.JFinalServer.xyurl,params,new JsonHttpResponseHandler(){
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     super.onSuccess(statusCode, headers, response);
@@ -195,9 +193,8 @@ public class MyTeamActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 ImageView img =  new ImageView(MyTeamActivity.this);
-                img.setImageBitmap(CreateQRImageTest.createQRImage("我是王肖"));
+                img.setImageBitmap(CreateQRImageTest.createQRImage(AppUtil.Group.GROUP_ID));
                 new  AlertDialog.Builder(MyTeamActivity.this)
-                        .setTitle("队伍二维码" )
                         .setView(img)
                         .setPositiveButton("确定" ,  null )
                         .show();

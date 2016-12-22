@@ -68,6 +68,7 @@ import static com.daoshengwanwu.android.tourassistant.utils.AppUtil.Group.GROUP_
 import static com.daoshengwanwu.android.tourassistant.utils.AppUtil.User.USER_ID;
 
 
+
 public class LoginActivity extends BaseActivity implements OnClickListener{
     private AuthInfo mAuthInfo;
     private ImageView btnweibo;
@@ -93,6 +94,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
     private final String xyurl2 = new String("http://123.206.14.122/team/getInformation");
             //("http://"+AppUtil.SharingServer.HOST2+":"+AppUtil.SharingServer.PORT2+"/user/getInformation");
     private String xyuser_id;
+    private Button mLoginButton;
+    private static final String TAG = "LoginActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,6 +132,28 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
                     }else {
                         Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_LONG).show();
                         USER_ID = user_id;
+    Thread login = new Thread(){
+        @Override
+        public void run() {
+            super.run();
+            String result = "";
+            PrintWriter out = null;
+            BufferedReader in = null;
+            try {
+
+                //登录
+                    URL url = new URL("http://123.206.14.122/user/login");
+                    HttpURLConnection con = (HttpURLConnection)url.openConnection();
+                    con.setDoInput(true);
+                    con.setDoOutput(true);
+                    out = new PrintWriter(con.getOutputStream());
+                    out.print(user_name+"\n"+user_pwd);
+                    out.flush();
+                    //定义BufferedReader输入流读取URL响应
+                    in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                    String line;
+                    while ((line = in.readLine()) != null){
+                        result += "\n" +line;
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -145,6 +170,15 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
     private void initViews() {
         bt = (Button)findViewById(R.id.lg_bt2);
         btnweibo = (ImageView) findViewById(R.id.lg_weibo);
+        mLoginButton = (Button)findViewById(R.id.lg_bt);
+        Log.d(TAG, "initViews: loginButton yi jing huo qu dao:" + mLoginButton.toString());
+        mLoginButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: ");
+                Toast.makeText(LoginActivity.this, "login is clicked!", Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
@@ -480,10 +514,11 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
                     @Override
                     public void onSuccess(int i, Header[] headers, byte[] bytes) {
                         qqresult = new String(bytes);
-                        AppUtil.User.USER_ID = qqresult;
+                        USER_ID = qqresult;
                         AppUtil.User.USER_NAME = qqname;
                         AppUtil.User.USER_GENDER = qqgender;
                         xyuser_id = qqresult;
+                        USER_ID = qqresult;
                         Toast.makeText(LoginActivity.this,"登录成功", Toast.LENGTH_LONG).show();
                         getTeamInfo();
                         Intent intent = new Intent(LoginActivity.this, LauncherActivity.class);
@@ -604,6 +639,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
                 user_name = name.getText().toString();
                 user_pwd = pwd.getText().toString();
                 synhttprequestlogin();
+                Toast.makeText(LoginActivity.this, "tanchu toast", Toast.LENGTH_SHORT).show();
                 if(cb.isChecked()){
                     s = getSharedPreferences("ty_user",Context.MODE_PRIVATE);
                     SharedPreferences.Editor editer = s.edit();

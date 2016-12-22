@@ -3,7 +3,6 @@ package com.daoshengwanwu.android.tourassistant.fragment;
 
 import android.graphics.Point;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -104,6 +103,9 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
     private static final String MSG_DATA_LATITUDE = "msg_data_latitude";
     private static final String MSG_DATA_LONGITUDE = "msg_data_longitude";
     private static final String MSG_DATA_MEMBER_LOC_INFOS = "msg_data_member_loc_infos";
+    private static final String KEY_START_LOCATION = "MapsFragment.KEY_START_LOCATION";
+    private static final String KEY_START_UPLOAD = "MapsFragment.KEY_START_UPLOAD";
+    private static final String KEY_START_BLACK = "MapsFragment.KEY_START_BLACK";
 
     private Map<String, Marker> mMemberMarkers = new HashMap<>();
     private boolean mIsStartLocation = false;
@@ -734,12 +736,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
         }
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        //在activity执行onSaveInstanceState时执行mMapView.onSaveInstanceState (outState)，实现地图生命周期管理
-        mapView.onSaveInstanceState(outState);
-    }
+
 
     private void updateCurrentInfomation() {
         if (null != USER_NAME && !USER_NAME.equals("")) {
@@ -864,5 +861,32 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mIsStartUpload) {
+            mSharingBinder.stopUploadLocation();
+        }
+
+        if (mIsStartBlack) {
+
+        }
+
+        if (mIsStartLocation) {
+            mSharingBinder.stopLocationService();
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        //在activity执行onSaveInstanceState时执行mMapView.onSaveInstanceState (outState)，实现地图生命周期管理
+        mapView.onSaveInstanceState(outState);
+
+        outState.putBoolean(KEY_START_BLACK, mIsStartBlack);
+        outState.putBoolean(KEY_START_LOCATION, mIsStartLocation);
+        outState.putBoolean(KEY_START_UPLOAD, mIsStartUpload);
     }
 }

@@ -1,5 +1,6 @@
 package com.daoshengwanwu.android.tourassistant.activity;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.daoshengwanwu.android.tourassistant.R;
 import com.daoshengwanwu.android.tourassistant.adapter.MyTeamAdapter;
 import com.daoshengwanwu.android.tourassistant.item.team.MyTeamItem;
+import com.daoshengwanwu.android.tourassistant.model.CreateQRImageTest;
 import com.daoshengwanwu.android.tourassistant.service.SharingService;
 import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
 import com.loopj.android.http.AsyncHttpClient;
@@ -37,14 +39,15 @@ public class MyTeamActivity extends BaseActivity {
     private Button btn1;
     private Button btn2;
     private RelativeLayout transfer;
-    private final String xyurl = new String("http://10.7.88.30/user/getInformation");
-    private final String xyurl2 = new String("http://10.7.88.30/team/getInformation");
+    private final String xyurl = new String("http://123.206.14.122/user/getInformation");
+    private final String xyurl2 = new String("http://123.206.14.122/team/getInformation");
     public String username;
     public String members;
     public String[] names;
     public int i;
     public MyTeamAdapter adapter;
     private ImageView back;
+    public RelativeLayout add;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +68,7 @@ public class MyTeamActivity extends BaseActivity {
                         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                             super.onSuccess(statusCode, headers, response);
                             try {
-                                String n = response.getString("user_name");
+                                String n = response.getString("nick_name");
                                 items.add(new MyTeamItem(AppUtil.User.USER_IMG,n));
                                 adapter.notifyDataSetChanged();
                             } catch (JSONException e) {
@@ -98,7 +101,7 @@ public class MyTeamActivity extends BaseActivity {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 try {
-                    username = response.getString("user_name");
+                    username = response.getString("nick_name");
                     TextView tv1 = (TextView) findViewById(R.id.myTeam_leader);
                     tv1.setText(username);
                 } catch (JSONException e) {
@@ -146,7 +149,7 @@ public class MyTeamActivity extends BaseActivity {
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     super.onSuccess(statusCode, headers, response);
                     try {
-                        String n = response.getString("user_name");
+                        String n = response.getString("nick_name");
                         items.add(new MyTeamItem(AppUtil.User.USER_IMG,n));
                         adapter.notifyDataSetChanged();
                     } catch (JSONException e) {
@@ -185,6 +188,19 @@ public class MyTeamActivity extends BaseActivity {
             public void onClick(View v) {
                 TransferTeamActivity.actionStartActivity(MyTeamActivity.this);
                 overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
+            }
+        });
+        add = (RelativeLayout) findViewById(R.id.addmember);
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ImageView img =  new ImageView(MyTeamActivity.this);
+                img.setImageBitmap(CreateQRImageTest.createQRImage("我是王肖"));
+                new  AlertDialog.Builder(MyTeamActivity.this)
+                        .setTitle("队伍二维码" )
+                        .setView(img)
+                        .setPositiveButton("确定" ,  null )
+                        .show();
             }
         });
     }

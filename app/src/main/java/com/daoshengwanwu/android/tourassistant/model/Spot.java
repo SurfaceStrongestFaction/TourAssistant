@@ -1,11 +1,8 @@
 package com.daoshengwanwu.android.tourassistant.model;
 
 
-import java.util.UUID;
-
-
 public class Spot {
-    private UUID mId;
+    private String mId;
     private int mDrawableResId;
     private String mSpotName;
     private String mSpotEnName;
@@ -13,12 +10,12 @@ public class Spot {
     private int mDistance;
 
 
-    public Spot(int drawableResId) {
-        this(drawableResId, "", "", 0, 0);
+    public Spot(String spot_id, int drawableResId) {
+        this(spot_id, drawableResId, "", "", 0, 0);
     }
 
-    public Spot(int drawableResId, String spotName, String spotEnName, int recommandNum, int distance) {
-        mId = UUID.randomUUID();
+    public Spot(String spot_id, int drawableResId, String spotName, String spotEnName, int recommandNum, int distance) {
+        mId = spot_id;
         mDrawableResId = drawableResId;
         mSpotName = spotName;
         mSpotEnName = spotEnName;
@@ -66,7 +63,7 @@ public class Spot {
         mDistance = distance;
     }
 
-    public UUID getId() {
+    public String getId() {
         return mId;
     }
 }

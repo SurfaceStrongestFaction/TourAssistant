@@ -52,7 +52,7 @@
             android:textAlignment="center"
             android:textSize="18sp"
             android:textColor="#4d4d4d"
-            />
+            android:layout_marginTop="10dp" />
         <Button
             android:id="@+id/myTeam_button2"
             android:layout_width="match_parent"
@@ -144,6 +144,38 @@
                 android:id="@+id/myTeam_listView">
             </ListView>
         </LinearLayout>
+
+        <RelativeLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:baselineAligned="false"
+            android:background="#EDEDED"
+            android:id="@+id/addmember"
+            android:longClickable="false"
+            android:layout_marginTop="1dp">
+
+            <TextView
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="生成队伍二维码"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:textColor="#4d4d4d"
+                android:id="@+id/textView3" />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/more"
+                android:layout_gravity="center"
+                android:layout_alignParentRight="true"
+                android:id="@+id/imageView" />
+
+        </RelativeLayout>
+
         <RelativeLayout
             android:layout_marginTop="1dp"
             android:layout_width="match_parent"
@@ -160,6 +192,7 @@
                 android:textSize="18sp"
                 android:gravity="center"
                 android:textColor="#4d4d4d"/>
+
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="match_parent"

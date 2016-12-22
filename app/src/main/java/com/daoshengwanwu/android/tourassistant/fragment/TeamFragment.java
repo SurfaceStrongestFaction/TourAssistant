@@ -1,5 +1,6 @@
 package com.daoshengwanwu.android.tourassistant.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.daoshengwanwu.android.tourassistant.R;
+import com.daoshengwanwu.android.tourassistant.activity.CaptureActivity;
 import com.daoshengwanwu.android.tourassistant.activity.MyTeamActivity;
 import com.daoshengwanwu.android.tourassistant.service.SharingService;
 import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
@@ -63,11 +65,11 @@ public class TeamFragment extends Fragment {
                             str = ed.getText().toString();//获取队伍名
                             Toast.makeText(getActivity(),str,Toast.LENGTH_SHORT).show();
                             //1.向特定URL传输str
-                           // String captain= AppUtil.User.USER_ID;
-                            String captain= "2";
+                           String captain= AppUtil.User.USER_ID;
+                        //    String captain= "2";
                             String members = captain;
-                            AsyncHttpClient client=new AsyncHttpClient();
-                            RequestParams params=new RequestParams();
+                            AsyncHttpClient client = new AsyncHttpClient();
+                            RequestParams params = new RequestParams();
                             params.add("team_name",str);
                             params.add("captain",captain);
                             params.add("members",members);
@@ -78,7 +80,11 @@ public class TeamFragment extends Fragment {
                                 @Override
                                 public void onSuccess(int i, Header[] headers, byte[] bytes) {
                                     String str1 = new String(bytes);
-                                    Toast.makeText(getActivity(),str1,Toast.LENGTH_SHORT).show();
+                                    AppUtil.Group.GROUP_CAPTIAN = AppUtil.User.USER_ID;
+                                    AppUtil.Group.GROUP_ID = str1;
+                                    AppUtil.Group.GROUP_NAME = str;
+                                    String text = "id:\n" + AppUtil.Group.GROUP_ID + "captian:" + AppUtil.Group.GROUP_CAPTIAN;
+                                    Toast.makeText(getActivity(), text,Toast.LENGTH_SHORT).show();
                                     if(!str1.equals("创建队伍失败,请重新创建")&&!str1.equals("只能创建一个队伍")){
                                         AppUtil.Group.GROUP_ID=str1;
                                         Toast.makeText(getActivity()," AppUtil.Group.GROUP_ID:"+AppUtil.Group.GROUP_ID,Toast.LENGTH_SHORT).show();
@@ -111,7 +117,8 @@ public class TeamFragment extends Fragment {
         joinTeam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(getActivity(), CaptureActivity.class);
+                startActivity(intent);
             }
         });
         myTeam=(RelativeLayout)view.findViewById(R.id.lk_myTeam);

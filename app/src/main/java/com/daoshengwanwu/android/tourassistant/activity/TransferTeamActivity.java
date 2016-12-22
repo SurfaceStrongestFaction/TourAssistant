@@ -47,12 +47,12 @@ public class TransferTeamActivity extends BaseActivity {
     }
 
     public void  getData(){
-        items.add(new TransferTeamItem(AppUtil.User.USER_IMG,"申玥"));
-        items.add(new TransferTeamItem(AppUtil.User.USER_IMG,"申玥"));
-        items.add(new TransferTeamItem(AppUtil.User.USER_IMG,"申玥"));
-        items.add(new TransferTeamItem(AppUtil.User.USER_IMG,"申玥"));
-        items.add(new TransferTeamItem(AppUtil.User.USER_IMG,"申玥"));
-        items.add(new TransferTeamItem(AppUtil.User.USER_IMG,"申玥"));
+        items.add(new TransferTeamItem(AppUtil.User.USER_IMG,AppUtil.User.USER_NAME));
+        items.add(new TransferTeamItem(AppUtil.User.USER_IMG,AppUtil.User.USER_NAME));
+        items.add(new TransferTeamItem(AppUtil.User.USER_IMG,AppUtil.User.USER_NAME));
+        items.add(new TransferTeamItem(AppUtil.User.USER_IMG,AppUtil.User.USER_NAME));
+        items.add(new TransferTeamItem(AppUtil.User.USER_IMG,AppUtil.User.USER_NAME));
+        items.add(new TransferTeamItem(AppUtil.User.USER_IMG,AppUtil.User.USER_NAME));
 
 
     }

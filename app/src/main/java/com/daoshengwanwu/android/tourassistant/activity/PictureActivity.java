@@ -26,7 +26,6 @@ public class PictureActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.shenyue_activity_picture);
-        getSupportActionBar().hide();
         picgv = (GridView)findViewById(R.id.picture_picture_gv);
         getData();
         picturegvAdapter = new PicturegvAdapter(this, ls);
@@ -70,9 +69,5 @@ public class PictureActivity extends BaseActivity {
         public void onClick(View v) {
 
         }
-    }
-    public static Intent newIntent(Context packageContext) {
-        Intent i = new Intent(packageContext, PictureActivity.class);
-        return i;
     }
 }

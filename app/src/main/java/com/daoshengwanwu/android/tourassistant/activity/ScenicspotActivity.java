@@ -48,6 +48,7 @@ public class ScenicspotActivity extends BaseActivity {
     String introduction;
     String imgs;
     String[] urls;
+    String scenicspotid;
     int num;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,15 +56,19 @@ public class ScenicspotActivity extends BaseActivity {
         setContentView(R.layout.shenyue_activity_scenicspot);
         getViews();
         setListener();
-        getIntent().getIntExtra(SCENICSPOTEXTRA_ID, 0);
         synhttprequest();
+        getintent();
     }
-
+    public  void getintent(){
+        Intent i = getIntent();
+        scenicspotid = i.getStringExtra(SCENICSPOTEXTRA_ID);
+    }
     public void synhttprequest(){
         AsyncHttpClient client = new AsyncHttpClient();
-        String Url = "http://192.168.191.1/spot/getrecommend";
+        String Url = "http://139.199.28.184/spot/getrecommend";
+
         RequestParams params = new RequestParams();
-        params.add("id", "333");
+        params.add("id", scenicspotid);
         client.get(Url, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -79,16 +84,16 @@ public class ScenicspotActivity extends BaseActivity {
                     imgs = response.getString("imgs");
                     urls = imgs.split(",");
                     num = urls.length;
-                    System.out.println(recommendimgs);
-                    System.out.println(cnname);
-                    System.out.println(recommendindex);
-                    System.out.println(position);
-                    System.out.println(price);
-                    System.out.println(time);
-                    System.out.println(introduction);
-                    System.out.println(imgs);
-                    System.out.println(urls);
-                    System.out.println(num);
+//                    System.out.println(recommendimgs);
+//                    System.out.println(cnname);
+//                    System.out.println(recommendindex);
+//                    System.out.println(position);
+//                    System.out.println(price);
+//                    System.out.println(time);
+//                    System.out.println(introduction);
+//                    System.out.println(imgs);
+//                    System.out.println(urls);
+//                    System.out.println(num);
                     setViews();
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -199,10 +204,10 @@ public class ScenicspotActivity extends BaseActivity {
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id.scenicspot_back_img:
-
+                    LauncherActivity.actionStartActivity(ScenicspotActivity.this);
                     break;
                 case R.id.scenicspot_picture_rl:
-
+                    PictureActivity.actionStartActivity(ScenicspotActivity.this, scenicspotid);
                     break;
                 case R.id.scenicspot_go_tv:
 

@@ -77,10 +77,11 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
     private Oauth2AccessToken mAccessToken;
 
     /** 注意：SsoHandler 仅当 SDK 支持 SSO 时有效 */
+    private static final String USER_NAME = "loginActivity.EXTRA_NAME";
+    private static final String USER_PWD = "loginActivity.EXTRA_PWD";
     private SsoHandler mSsoHandler;
     private UsersAPI mUsersAPI;
     private Button bt;
-    private Button btl;
     private SharedPreferences s,s1;
     private String name1;
     private String pwd1;
@@ -113,61 +114,44 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
         pwd1 = s1.getString("pwd","");
         name.setText(name1);
         pwd.setText(pwd1);
+        registerinf ();
     }
-    Thread login = new Thread(){
-        @Override
-        public void run() {
-            super.run();
-            String result = "";
-            PrintWriter out = null;
-            BufferedReader in = null;
-            try {
-
-                //登录
-                    URL url = new URL("http://123.206.14.122/user/login");
-                    HttpURLConnection con = (HttpURLConnection)url.openConnection();
-                    con.setDoInput(true);
-                    con.setDoOutput(true);
-                    out = new PrintWriter(con.getOutputStream());
-                    out.print(user_name+"\n"+user_pwd);
-                    out.flush();
-                    //定义BufferedReader输入流读取URL响应
-                    in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-                    String line;
-                    while ((line = in.readLine()) != null){
-                        result += "\n" +line;
-                    }
-
-                      user_id = result;
-            }  catch (Exception e) {
-                System.out.println("发送POST请求出现异常！" + e);
-                e.printStackTrace();
-            }  finally {
-                try{
-                    if (out != null){
-                        out.close();
-                    }
-                    if (in != null){
-                        in.close();
-                    }
-                }catch (IOException ex){
-                    ex.printStackTrace();
-                }
-            }
-        }
-    };
-
-
-    private void initViews() {
-        bt = (Button)findViewById(R.id.lg_bt2);
-        btl = (Button)findViewById(R.id.lg_bt);
-        btl.setOnClickListener(new View.OnClickListener(){
+    public void registerinf (){
+        Intent i = getIntent();
+        String username = i.getStringExtra(USER_NAME);
+        String userpwd = i.getStringExtra(USER_PWD);
+        name.setText(username);
+        pwd.setText(userpwd);
+    }
+    public void synhttprequestlogin(){
+        AsyncHttpClient client = new AsyncHttpClient();
+        String Url = "http://123.206.14.122/user/login";
+        RequestParams params = new RequestParams();
+        params.add("user_name", user_name);
+        params.add("user_pwd", user_pwd);
+        client.get(Url, params, new JsonHttpResponseHandler() {
             @Override
-            public void onClick(View v) {
-                System.out.println("haha");
-                Toast.makeText(LoginActivity.this,"haha",Toast.LENGTH_LONG).show();
-            }
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                try {
+                    System.out.println(response);
+                    user_id = response.getString("user_id");
+                    if (user_id.equals("false")) {
+                        Toast.makeText(LoginActivity.this, "用户名或密码不正确", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_LONG).show();
+                        USER_ID = user_id;
+                        LauncherActivity.actionStartActivity(LoginActivity.this);
+                    }
+
+                }catch (JSONException e) {
+                    e.printStackTrace();
+                }
+        }
         });
+    }
+        private void initViews() {
+        bt = (Button)findViewById(R.id.lg_bt2);
         btnweibo = (ImageView) findViewById(R.id.lg_weibo);
         mLoginButton = (Button)findViewById(R.id.lg_bt);
         Log.d(TAG, "initViews: loginButton yi jing huo qu dao:" + mLoginButton.toString());
@@ -182,21 +166,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
     }
 
     private void initEvents() {
-        btnweibo.setOnClickListener(this);
-//        btl.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-//                startActivity(intent);
-////                user_name = name.getText().toString();
-////                user_pwd = pwd.getText().toString();
-////                System.out.println("haha");
-////                System.out.println(user_name);
-////                System.out.println(user_pwd);
-////                login.start();
-//            }
-//        });
-        btl.setOnClickListener(new View.OnClickListener() {
+        btnweibo.setOnClickListener(LoginActivity.this);
+        bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
@@ -210,7 +181,12 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
     public static void actionStartActivity(Context context) {
         context.startActivity(new Intent(context, LoginActivity.class));
     }
-
+    public static void actionStartActivityRegister(Context context, String username, String userpwd) {
+        Intent i = new Intent(context, LoginActivity.class);
+        i.putExtra(USER_NAME, username);
+        i.putExtra(USER_PWD, userpwd);
+        context.startActivity(i);
+    }
     /**
      * 进行微博授权初始化操作
      */
@@ -648,6 +624,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
         lgbt.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                user_name = name.getText().toString();
+                user_pwd = pwd.getText().toString();
+                synhttprequestlogin();
                 Toast.makeText(LoginActivity.this, "tanchu toast", Toast.LENGTH_SHORT).show();
                 if(cb.isChecked()){
                     s = getSharedPreferences("ty_user",Context.MODE_PRIVATE);

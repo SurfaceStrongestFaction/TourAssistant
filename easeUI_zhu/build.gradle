@@ -18,7 +18,7 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:24.2.0'
+    compile 'com.android.support:support-v4:24.0.0'
     compile files('libs/BaiduLBS_Android.jar')
     compile files('libs/glide-3.6.1.jar')
     compile files('libs/google-play-services.jar')

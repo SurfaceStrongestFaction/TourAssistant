@@ -18,7 +18,7 @@ import java.util.Hashtable;
  */
 public class CreateQRImageTest
 {
-	private static  final int QR_WIDTH = 200, QR_HEIGHT = 200;
+	private static  final int QR_WIDTH = 1300, QR_HEIGHT = 1300;
 	/**
 	 * @方法功能说明: 生成二维码图片,实际使用时要初始化sweepIV,不然会报空指针错误
 	 * @作者:饶正勇

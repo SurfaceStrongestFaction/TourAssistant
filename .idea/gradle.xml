@@ -8,6 +8,8 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/QRCodeLibrary" />
+            <option value="$PROJECT_DIR$/ZBLibrary" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/easeUI_zhu" />
             <option value="$PROJECT_DIR$/library" />

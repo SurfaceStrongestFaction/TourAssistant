@@ -24,6 +24,9 @@ public class AppUtil {
     public static final class JFinalServer {
         public static final String HOST = "123.206.14.122";
         public static final int PORT = 80;
+        public static final String xyurl = "http://123.206.14.122/user/getInformation";
+        public static final String xyurl2 = "http://123.206.14.122/team/getInformation";
+        public static final String xyurl3 = "http://123.206.14.122/team/joinTeam";
     }
 
     public static final class User {
@@ -34,7 +37,7 @@ public class AppUtil {
     }
 
     public static final class Group {
-        public static String GROUP_ID = "SurfaceStrongestTeam";
+        public static String GROUP_ID = "";
         public static String GROUP_NAME;
         public static String GROUP_CAPTIAN = "4b9a29a5-9fc9-48db-9486-79353106a599";
     }

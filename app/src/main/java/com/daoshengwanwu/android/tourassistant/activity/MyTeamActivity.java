@@ -53,8 +53,7 @@ public class MyTeamActivity extends BaseActivity {
     private RelativeLayout transfer;
     private String myGroupId;
 
-    private RelativeLayout conversation;
-
+    private static final String TAG = "MyTeamActivity";
     private final String xyurl = new String("http://123.206.14.122/user/getInformation");
     private final String xyurl2 = new String("http://123.206.14.122/team/getInformation");
     public String username;
@@ -64,51 +63,45 @@ public class MyTeamActivity extends BaseActivity {
     public MyTeamAdapter adapter;
     private ImageView back;
     public RelativeLayout add;
-
+    private SharingService.OnTeamMemberChangeListener mOnTeamMemberChangeListener = new SharingService.OnTeamMemberChangeListener() {
+        @Override
+        public void onTeamMemberChange(String team_id, List<String> memberIds) {
+            getCaptianInfo(AppUtil.Group.GROUP_CAPTIAN);
+            for ( i = 0; i <  memberIds.size(); i++) {
+                AsyncHttpClient gclient = new AsyncHttpClient();
+                RequestParams params = new RequestParams();
+                params.add("user_id", memberIds.get(i));
+                gclient.get(getApplicationContext(),AppUtil.JFinalServer.xyurl,params,new JsonHttpResponseHandler(){
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                        super.onSuccess(statusCode, headers, response);
+                        try {
+                            String n = response.getString("nick_name");
+                            items.add(new MyTeamItem(AppUtil.User.USER_IMG,n));
+                            adapter.notifyDataSetChanged();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                        super.onFailure(statusCode, headers, throwable, errorResponse);
+                    }
+                });
+            }
+        }
+    };
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lk_activity_my_team);
+        Log.d(TAG, "onCreate: getData 之前");
         getData();
+        Log.d(TAG, "onCreate: getData之后");
         mBinder = (SharingService.SharingBinder)getIntent().getSerializableExtra(KEY_BINDER);
-        mBinder.registerOnTeamMemberChangeListener(new SharingService.OnTeamMemberChangeListener() {
-            @Override
-            public void onTeamMemberChange(String team_id, List<String> memberIds) {
-                getCaptianInfo(AppUtil.Group.GROUP_CAPTIAN);
-                for ( i = 0; i <  memberIds.size(); i++) {
-                    AsyncHttpClient gclient = new AsyncHttpClient();
-                    RequestParams params = new RequestParams();
-                    params.add("user_id", memberIds.get(i));
-                    gclient.get(getApplicationContext(),xyurl,params,new JsonHttpResponseHandler(){
-                        @Override
-                        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                            super.onSuccess(statusCode, headers, response);
-                            try {
-                                String n = response.getString("nick_name");
-                                items.add(new MyTeamItem(AppUtil.User.USER_IMG,n));
-                                adapter.notifyDataSetChanged();
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        @Override
-                        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                            super.onFailure(statusCode, headers, throwable, errorResponse);
-                        }
-                    });
-                }
-            }
-        });
-        conversation=(RelativeLayout)findViewById(R.id.lk_talk);
-        conversation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent =new Intent(MyTeamActivity.this,ConversationActivity.class);
-                startActivity(intent);
-            }
-        });
+        mBinder.registerOnTeamMemberChangeListener(mOnTeamMemberChangeListener);
         //队伍群聊
         groupChat=(Button)findViewById(R.id.group_chat);
         groupChat.setOnClickListener(new View.OnClickListener() {
@@ -200,7 +193,7 @@ public class MyTeamActivity extends BaseActivity {
         AsyncHttpClient gclient = new AsyncHttpClient();
         RequestParams params = new RequestParams();
         params.add("user_id", groupcaptian);
-        gclient.get(getApplicationContext(),xyurl,params,new JsonHttpResponseHandler(){
+        gclient.get(getApplicationContext(),AppUtil.JFinalServer.xyurl,params,new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
@@ -223,7 +216,7 @@ public class MyTeamActivity extends BaseActivity {
         AsyncHttpClient gclient = new AsyncHttpClient();
         RequestParams params = new RequestParams();
         params.add("team_id",groupid);
-        gclient.get(getApplicationContext(),xyurl2,params,new JsonHttpResponseHandler(){
+        gclient.get(getApplicationContext(),AppUtil.JFinalServer.xyurl2,params,new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
@@ -231,6 +224,11 @@ public class MyTeamActivity extends BaseActivity {
                     members = response.getString("members");
                     myGroupId=response.getString("chat_team_id");
                     setMembers(members);
+
+                    adapter = new MyTeamAdapter(MyTeamActivity.this,items);
+                    lv = (ListView)findViewById(R.id.myTeam_listView);
+                    lv.setAdapter(adapter);
+                    setItemClick();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -249,7 +247,7 @@ public class MyTeamActivity extends BaseActivity {
             AsyncHttpClient gclient = new AsyncHttpClient();
             RequestParams params = new RequestParams();
             params.add("user_id",names[i]);
-            gclient.get(getApplicationContext(),xyurl,params,new JsonHttpResponseHandler(){
+            gclient.get(getApplicationContext(),AppUtil.JFinalServer.xyurl,params,new JsonHttpResponseHandler(){
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     super.onSuccess(statusCode, headers, response);
@@ -282,10 +280,7 @@ public class MyTeamActivity extends BaseActivity {
         tv.setText(AppUtil.Group.GROUP_NAME);
         getCaptianInfo(AppUtil.Group.GROUP_CAPTIAN);
         getMembersInfo(AppUtil.Group.GROUP_ID);
-        adapter = new MyTeamAdapter(this,items);
-        lv = (ListView)findViewById(R.id.myTeam_listView);
-        lv.setAdapter(adapter);
-        setItemClick();
+
         btn2 = (Button)findViewById(R.id.myTeam_button2);
         transfer = (RelativeLayout)findViewById(R.id.myTeam_transfer);
         transfer.setOnClickListener(new View.OnClickListener() {
@@ -300,9 +295,8 @@ public class MyTeamActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 ImageView img =  new ImageView(MyTeamActivity.this);
-                img.setImageBitmap(CreateQRImageTest.createQRImage("我是王肖"));
+                img.setImageBitmap(CreateQRImageTest.createQRImage(AppUtil.Group.GROUP_ID));
                 new  AlertDialog.Builder(MyTeamActivity.this)
-                        .setTitle("队伍二维码" )
                         .setView(img)
                         .setPositiveButton("确定" ,  null )
                         .show();

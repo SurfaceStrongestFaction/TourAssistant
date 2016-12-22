@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="E:\android\shixun\TourAssistant\easeUI_zhu\src\main\shaders"/></dataSet><dataSet config="debug"><source path="E:\android\shixun\TourAssistant\easeUI_zhu\src\debug\shaders"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="D:\AndroidPracticalTraining\Kaixin\TourAssistant\easeUI_zhu\src\main\shaders"/></dataSet><dataSet config="debug"><source path="D:\AndroidPracticalTraining\Kaixin\TourAssistant\easeUI_zhu\src\debug\shaders"/></dataSet></merger>

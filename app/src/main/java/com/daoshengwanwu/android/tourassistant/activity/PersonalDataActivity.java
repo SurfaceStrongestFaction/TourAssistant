@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,12 +22,18 @@ import android.widget.Toast;
 import com.daoshengwanwu.android.tourassistant.R;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+
+import com.loopj.android.http.RequestParams;
+
+import org.apache.http.Header;
+
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -328,6 +335,46 @@ public class PersonalDataActivity extends BaseActivity {
                     bitMap.recycle();
                 bitMap = (Bitmap) data.getExtras().get("data");
                 File file2=new File(pathString, System.currentTimeMillis()+".jpg");
+
+                //头像文件上传
+                //异步的客户端对象
+                AsyncHttpClient client = new AsyncHttpClient();
+                //指定url路径
+                //String url = "http://192.168.178.2/api/fs/upload?token=3f42fd120d2040c9ae22a1647c45885c4erET1";
+                String url="http://123.206.14.122/images/upload";
+                //封装文件上传的参数
+                RequestParams params = new RequestParams();
+                //根据路径创建文件
+                //File file = new File(path);
+                try {
+                    //放入文件
+                    params.put("profile_picture", file2);
+                } catch (Exception e) {
+                    // TODO: handle exception
+                    System.out.println("文件不存在----------");
+                }
+                //执行post请求
+                client.post(url,params, new AsyncHttpResponseHandler() {
+
+
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers,
+                                          byte[] responseBody) {
+                       /* if (statusCode == 200) {
+                            Toast.makeText(getApplicationContext(), "上次成功", Toast.LENGTH_SHORT)
+                                    .show();
+                        }*/
+                        Log.i("zhu","onSuccess");
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers,
+                                          byte[] responseBody, Throwable error) {
+                      /*  error.printStackTrace();*/
+                        Log.i("zhu", "onFailure: ");
+                    }
+                });
+
                 try
                 {
                     FileOutputStream fos = new FileOutputStream(file2);

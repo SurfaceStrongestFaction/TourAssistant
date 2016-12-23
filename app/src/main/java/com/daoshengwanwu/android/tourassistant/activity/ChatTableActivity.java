@@ -51,7 +51,7 @@ public class ChatTableActivity extends BaseActivity {
     AdapterView.OnItemClickListener itemListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            Intent intent = new Intent(ChatTableActivity.this,ChatActivity.class);
+            Intent intent = new Intent(ChatTableActivity.this,ECChatActivity.class);
             startActivity(intent);
         }
     };

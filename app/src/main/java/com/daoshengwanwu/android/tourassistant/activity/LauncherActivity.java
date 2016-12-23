@@ -16,6 +16,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.daoshengwanwu.android.tourassistant.R;
+/*import com.daoshengwanwu.android.tourassistant.jiangshengda.MapsFragment;
+import com.daoshengwanwu.android.tourassistant.jiangshengda.MeFragment;
+import com.daoshengwanwu.android.tourassistant.leekuo.TeamFragment;
+import com.daoshengwanwu.android.tourassistant.wangxiao.LoginActivity;
+import com.daoshengwanwu.android.tourassistant.leekuo.BaseActivity;*/
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.easeui.controller.EaseUI;
 import com.daoshengwanwu.android.tourassistant.fragment.HomeFragment;
 import com.daoshengwanwu.android.tourassistant.fragment.MapFragment;
 import com.daoshengwanwu.android.tourassistant.fragment.MapsFragment;
@@ -66,12 +73,15 @@ public class LauncherActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.baihaoran_activity_launcher);
+        //环信easeUI初始化
+        EaseUI.getInstance().init(this,null);
+        EMClient.getInstance().setDebugMode(true);
 
         //应用启动时即绑定服务
         bindService(SharingService.newIntent(this), mServiceConnection, BIND_AUTO_CREATE);
-
         getWidgetsReferences(); //获取所需组件的引用
         setListenersToWidgets(); //为组件设置监听器
+
         initFragment();
     }
 //---------------------------胜达--------------------------------------------------------------------

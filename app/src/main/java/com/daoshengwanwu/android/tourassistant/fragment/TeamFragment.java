@@ -8,6 +8,7 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,10 +18,12 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.daoshengwanwu.android.tourassistant.R;
+import com.daoshengwanwu.android.tourassistant.activity.ConversationActivity;
 import com.daoshengwanwu.android.tourassistant.activity.MyTeamActivity;
 import com.daoshengwanwu.android.tourassistant.activity.ScanActivity;
 import com.daoshengwanwu.android.tourassistant.service.SharingService;
 import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
+import com.hyphenate.chat.EMClient;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -152,13 +155,19 @@ public class TeamFragment extends Fragment {
         myTeam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MyTeamActivity.actionStartActivity(getActivity(), mBinder);
+               MyTeamActivity.actionStartActivity(getActivity(), mBinder);
             }
         });
         talk = (RelativeLayout) view.findViewById(R.id.lk_talk);
         talk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!TextUtils.isEmpty(AppUtil.User.USER_ID)) {
+                    Intent intent = new Intent(getActivity(), ConversationActivity.class);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(getActivity(), "请先登录！", Toast.LENGTH_SHORT).show();
+                }
 
             }
         });

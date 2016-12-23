@@ -1,5 +1,6 @@
 package com.daoshengwanwu.android.tourassistant.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.daoshengwanwu.android.tourassistant.R;
+import com.daoshengwanwu.android.tourassistant.activity.PersonalDataActivity;
 import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
 import com.daoshengwanwu.android.tourassistant.view.CircleImageView;
 
@@ -26,6 +28,14 @@ public class MeFragment extends Fragment{
         if(AppUtil.User.USER_GENDER.equals("女")){
             iv.setImageResource(R.drawable.woman);
         }
+        TextView set=(TextView)view.findViewById(R.id.set);
+        set.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getActivity(), PersonalDataActivity.class);
+                startActivity(intent);
+            }
+        });
         return view;
     }
 }

@@ -310,7 +310,11 @@ public class MyTeamActivity extends BaseActivity {
             public void onItemClick(AdapterView<?> paren, View view, int position, long id) {
                 /*Intent i = TeamMemberActivity.newIntent(MyTeamActivity.this,"李阔");
                 startActivity(i);*/
-                TeamMemberActivity.actionStartActivity(MyTeamActivity.this);
+                //点击队伍成员列表跳转到队伍成员页
+                Intent intent =new Intent(MyTeamActivity.this,TeamMemberActivity.class);
+                intent.putExtra("memberId",names[position]);
+                startActivity(intent);
+                //TeamMemberActivity.actionStartActivity(MyTeamActivity.this);
                 overridePendingTransition(R.anim.push_up_in,R.anim.push_up_out);
             }
         });

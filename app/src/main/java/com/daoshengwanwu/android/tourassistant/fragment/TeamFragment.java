@@ -152,7 +152,11 @@ public class TeamFragment extends Fragment {
         myTeam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MyTeamActivity.actionStartActivity(getActivity(), mBinder);
+                if(AppUtil.Group.GROUP_ID.equals("")) {
+                    Toast.makeText(getActivity(),"您还未加入队伍", Toast.LENGTH_SHORT).show();
+                }else {
+                    MyTeamActivity.actionStartActivity(getActivity(), mBinder);
+                }
             }
         });
         talk = (RelativeLayout) view.findViewById(R.id.lk_talk);

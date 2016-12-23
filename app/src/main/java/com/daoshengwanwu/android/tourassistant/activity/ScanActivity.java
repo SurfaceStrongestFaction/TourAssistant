@@ -95,13 +95,6 @@ public class ScanActivity extends CaptureActivity implements Callback, ActivityP
 
 
 
-
-
-
-
-
-
-
 	//Data数据区(存在数据获取或处理代码，但不存在事件监听代码)<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 	@Override
@@ -114,22 +107,19 @@ public class ScanActivity extends CaptureActivity implements Callback, ActivityP
 
 
 
-
-
-
-
-
 	//Event事件区(只要存在事件监听代码就是)<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 	@Override
-	public void initEvent() {//必须调用
-
+	public void initEvent() {
+		// 必须调用
 		findViewById(R.id.ivCameraScanLight).setOnClickListener(this);
 	}
 
 
 	@Override
 	public void onReturnClick(View v) {
+		Intent intent = new Intent();
+		setResult(0,intent);
 		finish();
 	}	
 	@Override

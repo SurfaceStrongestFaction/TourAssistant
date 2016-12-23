@@ -297,7 +297,11 @@ public class SharingService extends Service {
         }
 
         public void stopLocationService() {
-            if (null == mLocationClient || isStartingLocation() || isUploadStarting() || isUploadStart() || !mLocationClient.isStarted()) {
+            Log.d(TAG, "stopLocationService: mLocationClient:" + mLocationClient
+                + ", isStartingLocation:" + isStartingLocation() + ", isUploadStarting:" + isUploadStarting()
+                + ", isUploadStart:" + isUploadStart() + ", isLocationStarted:" + mLocationClient.isStarted());
+
+            if (null == mLocationClient ||  isUploadStart()) {
                 return;
             }
 
@@ -305,6 +309,7 @@ public class SharingService extends Service {
             mLocationClient = null;
             mIsStartingLocation = false;
             mIsStartLocation = false;
+            Log.d(TAG, "stopLocationService: 成功关闭定位信息");
         }
 
         public void stopUploadLocation() {
@@ -450,6 +455,10 @@ public class SharingService extends Service {
         }
 
         private String getInfoCommand(String info) {
+            if (null == info) {
+                return "";
+            }
+
             return info.split(":")[0];
         }
 

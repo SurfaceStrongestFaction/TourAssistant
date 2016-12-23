@@ -16,10 +16,19 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.daoshengwanwu.android.tourassistant.R;
+/*import com.daoshengwanwu.android.tourassistant.jiangshengda.MapsFragment;
+import com.daoshengwanwu.android.tourassistant.jiangshengda.MeFragment;
+import com.daoshengwanwu.android.tourassistant.leekuo.TeamFragment;
+import com.daoshengwanwu.android.tourassistant.wangxiao.LoginActivity;
+import com.daoshengwanwu.android.tourassistant.leekuo.BaseActivity;*/
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.easeui.controller.EaseUI;
 import com.daoshengwanwu.android.tourassistant.fragment.HomeFragment;
+import com.daoshengwanwu.android.tourassistant.fragment.MapFragment;
 import com.daoshengwanwu.android.tourassistant.fragment.MapsFragment;
 import com.daoshengwanwu.android.tourassistant.fragment.MeFragment;
 import com.daoshengwanwu.android.tourassistant.fragment.TeamFragment;
+import com.daoshengwanwu.android.tourassistant.model.MapsFragmentSaveData;
 import com.daoshengwanwu.android.tourassistant.service.SharingService;
 import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
 
@@ -41,9 +50,10 @@ public class LauncherActivity extends BaseActivity {
     private LinearLayout mTabsMyPage;
     private FragmentManager mFragmentManager;
     private HomeFragment mHomeFragment;
-    private MapsFragment mMapsFragment;
     private TeamFragment mTeamFragment;
     private MeFragment mMeFragment;
+    private MapsFragment mMapsFragment;
+    private MapsFragmentSaveData mMapsFragmentSaveData = null;
     private SharingService.SharingBinder mSharingBinder;
     private ServiceConnection mServiceConnection = new ServiceConnection() {
         @Override
@@ -63,12 +73,15 @@ public class LauncherActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.baihaoran_activity_launcher);
+        //环信easeUI初始化
+        EaseUI.getInstance().init(this,null);
+        EMClient.getInstance().setDebugMode(true);
 
         //应用启动时即绑定服务
         bindService(SharingService.newIntent(this), mServiceConnection, BIND_AUTO_CREATE);
-
         getWidgetsReferences(); //获取所需组件的引用
         setListenersToWidgets(); //为组件设置监听器
+
         initFragment();
     }
 //---------------------------胜达--------------------------------------------------------------------
@@ -143,9 +156,15 @@ public class LauncherActivity extends BaseActivity {
                     mTabsHomeImg.setImageResource(R.drawable.home1);
                     mTabsHomeText.setTextColor(ContextCompat.getColor(LauncherActivity.this, R.color.bhr_tabs_green));
 
-                    if (null == mMapsFragment) {
-                        mHomeFragment = HomeFragment.newInstance();
+                    //判断当前显示的Fragment是否是MapsFragment
+                    Fragment fragment = mFragmentManager.findFragmentById(R.id.launcher_fragment_container);
+                    if (fragment instanceof MapsFragment) {
+                        //如果当前显示的Fragment是MapsFragment的话，就先取得该Fragment的状态
+                        mMapsFragmentSaveData = mMapsFragment.getCurrentState();
                     }
+
+                    mHomeFragment = HomeFragment.newInstance();
+
                     mFragmentManager.beginTransaction().replace(R.id.launcher_fragment_container, mHomeFragment).commit();
 
                     break;
@@ -153,21 +172,41 @@ public class LauncherActivity extends BaseActivity {
                     mTabsMapImg.setImageResource(R.drawable.map1);
                     mTabsMapText.setTextColor(ContextCompat.getColor(LauncherActivity.this, R.color.bhr_tabs_green));
 
-                    if (null == mMapsFragment) {
-                        mMapsFragment = MapsFragment.newInstance(mSharingBinder);
+                    //判断当前显示的Fragment是否是MapsFragment
+                    fragment = mFragmentManager.findFragmentById(R.id.launcher_fragment_container);
+                    if (fragment instanceof MapsFragment) {
+                        //如果当前显示的Fragment是MapsFragment的话，就先取得该Fragment的状态
+                        break;
                     }
-                    mFragmentManager.beginTransaction().replace(R.id.launcher_fragment_container, mMapsFragment).commit();
 
+                    mMapsFragment = MapsFragment.newInstance(mSharingBinder, mMapsFragmentSaveData);
+
+                    mFragmentManager.beginTransaction().replace(R.id.launcher_fragment_container, mMapsFragment).commit();
                     break;
                 case R.id.tabs_ranks_page:
                     mTabsRanksImg.setImageResource(R.drawable.ranks1);
                     mTabsRanksText.setTextColor(ContextCompat.getColor(LauncherActivity.this, R.color.bhr_tabs_green));
+
+                    //判断当前显示的Fragment是否是MapsFragment
+                    fragment = mFragmentManager.findFragmentById(R.id.launcher_fragment_container);
+                    if (fragment instanceof MapsFragment) {
+                        //如果当前显示的Fragment是MapsFragment的话，就先取得该Fragment的状态
+                        mMapsFragmentSaveData = mMapsFragment.getCurrentState();
+                    }
+
                     if (null == mTeamFragment) {
                         mTeamFragment = TeamFragment.newInstance(mSharingBinder);
                     }
                     mFragmentManager.beginTransaction().replace(R.id.launcher_fragment_container, mTeamFragment).commit();
                     break;
                 case R.id.tabs_my_page:
+                    //判断当前显示的Fragment是否是MapsFragment
+                    fragment = mFragmentManager.findFragmentById(R.id.launcher_fragment_container);
+                    if (fragment instanceof MapsFragment) {
+                        //如果当前显示的Fragment是MapsFragment的话，就先取得该Fragment的状态
+                        mMapsFragmentSaveData = mMapsFragment.getCurrentState();
+                    }
+
                     if ("".equals(AppUtil.User.USER_ID)) {
                         //说明还没有登陆，应该跳转到登录界面
                         LoginActivity.actionStartActivity(LauncherActivity.this);
@@ -177,7 +216,7 @@ public class LauncherActivity extends BaseActivity {
                         if (null == mMeFragment) {
                             mMeFragment = new MeFragment();
                         }
-                        Fragment fragment = mFragmentManager.findFragmentById(R.id.launcher_fragment_container);
+                        fragment = mFragmentManager.findFragmentById(R.id.launcher_fragment_container);
                         if (null == fragment) {
                             mFragmentManager.beginTransaction().add(R.id.launcher_fragment_container, mMeFragment).commit();
                         } else {

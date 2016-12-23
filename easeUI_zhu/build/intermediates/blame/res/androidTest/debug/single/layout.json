@@ -8,32 +8,32 @@
         "source": "E:\\android\\newshixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\bundles\\debug\\res\\layout\\ease_widget_emojicon_tab_bar.xml"
     },
     {
-        "merged": "E:\\android\\newshixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\ease_chat_message_list.xml",
-        "source": "E:\\android\\newshixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\bundles\\debug\\res\\layout\\ease_chat_message_list.xml"
-    },
-    {
-        "merged": "E:\\android\\newshixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\ease_fragment_conversation_list.xml",
-        "source": "E:\\android\\newshixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\bundles\\debug\\res\\layout\\ease_fragment_conversation_list.xml"
+        "merged": "E:\\android\\newshixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\ease_row_received_voice_call.xml",
+        "source": "E:\\android\\newshixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\bundles\\debug\\res\\layout\\ease_row_received_voice_call.xml"
     },
     {
         "merged": "E:\\android\\newshixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\ease_row_received_location.xml",
         "source": "E:\\android\\newshixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\bundles\\debug\\res\\layout\\ease_row_received_location.xml"
     },
     {
-        "merged": "E:\\android\\newshixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\ease_row_received_voice_call.xml",
-        "source": "E:\\android\\newshixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\bundles\\debug\\res\\layout\\ease_row_received_voice_call.xml"
+        "merged": "E:\\android\\newshixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\ease_fragment_conversation_list.xml",
+        "source": "E:\\android\\newshixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\bundles\\debug\\res\\layout\\ease_fragment_conversation_list.xml"
+    },
+    {
+        "merged": "E:\\android\\newshixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\ease_chat_message_list.xml",
+        "source": "E:\\android\\newshixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\bundles\\debug\\res\\layout\\ease_chat_message_list.xml"
     },
     {
         "merged": "E:\\android\\newshixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\ease_commom_back_btn.xml",
         "source": "E:\\android\\newshixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\bundles\\debug\\res\\layout\\ease_commom_back_btn.xml"
     },
     {
-        "merged": "E:\\android\\newshixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\ease_row_sent_picture.xml",
-        "source": "E:\\android\\newshixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\bundles\\debug\\res\\layout\\ease_row_sent_picture.xml"
-    },
-    {
         "merged": "E:\\android\\newshixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\ease_emojicon.xml",
         "source": "E:\\android\\newshixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\bundles\\debug\\res\\layout\\ease_emojicon.xml"
+    },
+    {
+        "merged": "E:\\android\\newshixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\ease_row_sent_picture.xml",
+        "source": "E:\\android\\newshixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\bundles\\debug\\res\\layout\\ease_row_sent_picture.xml"
     },
     {
         "merged": "E:\\android\\newshixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\ease_row_sent_voice.xml",
@@ -72,16 +72,16 @@
         "source": "E:\\android\\newshixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\bundles\\debug\\res\\layout\\ease_activity_show_file.xml"
     },
     {
-        "merged": "E:\\android\\newshixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\ease_conversation_item.xml",
-        "source": "E:\\android\\newshixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\bundles\\debug\\res\\layout\\ease_conversation_item.xml"
+        "merged": "E:\\android\\newshixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\ease_expression_gridview.xml",
+        "source": "E:\\android\\newshixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\bundles\\debug\\res\\layout\\ease_expression_gridview.xml"
     },
     {
         "merged": "E:\\android\\newshixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\ease_row_sent_bigexpression.xml",
         "source": "E:\\android\\newshixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\bundles\\debug\\res\\layout\\ease_row_sent_bigexpression.xml"
     },
     {
-        "merged": "E:\\android\\newshixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\ease_expression_gridview.xml",
-        "source": "E:\\android\\newshixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\bundles\\debug\\res\\layout\\ease_expression_gridview.xml"
+        "merged": "E:\\android\\newshixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\ease_conversation_item.xml",
+        "source": "E:\\android\\newshixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\bundles\\debug\\res\\layout\\ease_conversation_item.xml"
     },
     {
         "merged": "E:\\android\\newshixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\ease_fragment_contact_list.xml",

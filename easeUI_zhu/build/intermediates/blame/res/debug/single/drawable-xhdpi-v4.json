@@ -4,12 +4,12 @@
         "source": "E:\\android\\newshixun\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable-xhdpi\\ease_chat_send_btn_normal.9.png"
     },
     {
-        "merged": "E:\\android\\newshixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\ease_chat_press_speak_btn_pressed.9.png",
-        "source": "E:\\android\\newshixun\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable-xhdpi\\ease_chat_press_speak_btn_pressed.9.png"
-    },
-    {
         "merged": "E:\\android\\newshixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\ease_dot_emojicon_selected.png",
         "source": "E:\\android\\newshixun\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable-xhdpi\\ease_dot_emojicon_selected.png"
+    },
+    {
+        "merged": "E:\\android\\newshixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\ease_chat_press_speak_btn_pressed.9.png",
+        "source": "E:\\android\\newshixun\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable-xhdpi\\ease_chat_press_speak_btn_pressed.9.png"
     },
     {
         "merged": "E:\\android\\newshixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\ease_chat_voice_call_self.png",

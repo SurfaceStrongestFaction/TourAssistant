@@ -1,11 +1,11 @@
 [
     {
-        "merged": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\debug\\drawable\\dialog_bg_rec.xml",
-        "source": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\drawable\\dialog_bg_rec.xml"
-    },
-    {
         "merged": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\debug\\drawable\\btn_blue_round_big_pressed.xml",
         "source": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\drawable\\btn_blue_round_big_pressed.xml"
+    },
+    {
+        "merged": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\debug\\drawable\\dialog_bg_rec.xml",
+        "source": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\drawable\\dialog_bg_rec.xml"
     },
     {
         "merged": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\debug\\drawable\\dialog_bg_common.xml",

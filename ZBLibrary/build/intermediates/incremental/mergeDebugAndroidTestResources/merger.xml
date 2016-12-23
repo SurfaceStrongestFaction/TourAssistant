@@ -232,7 +232,11 @@
     </style><style name="topbar_return_img" parent="topbar_left_btn">
         <item name="android:src">@drawable/back2</item>
     </style><style name="AppBaseTheme" parent="android:Theme.Holo.Light">
-        
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
     </style><style name="text_huge_black" parent="text_huge">
         <item name="android:textColor">@color/black</item>
     </style><string name="xlistview_footer_hint_complete">已加载完全部</string><style name="topbar_tab_tv_center" parent="topbar_tab_tv">
@@ -278,11 +282,14 @@
         <item name="android:singleLine">true</item>
     </style><style name="translucentAnimation">
 
-        
-        
+        <!-- 切入切出时也会进行的动画，当底部界面均为透明界面时，动画会被桌面遮挡 -->
+        <!--
+        <item name="android:windowEnterAnimation">@anim/slide_right_in</item>
+        <item name="android:windowExitAnimation">@anim/transparent_to_zero</item>
+        -->
 
 
-        
+        <!-- 若底部界面均为透明界面时，以下动画会失效，也会受其他应用影响 -->
         <item name="android:activityOpenEnterAnimation">@anim/right_push_in</item>
         <item name="android:activityOpenExitAnimation">@anim/hold</item>
         <item name="android:activityCloseEnterAnimation">@anim/left_push_in</item>
@@ -415,10 +422,10 @@
         <item name="android:layout_height">fill_parent</item>
         <item name="android:background">@color/activity_bg</item>
         <item name="android:orientation">vertical</item>
-        
+        <!-- 状态栏沉浸 <<<<<<<<<<<<<<<<< -->
         <item name="android:clipToPadding">true</item>
         <item name="android:fitsSystemWindows">true</item>
-        
+        <!-- 状态栏沉浸 >>>>>>>>>>>>>>>>> -->
     </style><string name="xlistview_footer_hint_loading">正在加载更多...</string><style name="topbar_tab_tv" parent="text_small_white">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:minWidth">66dp</item>
@@ -482,7 +489,7 @@
     </style><color name="gray_unslected">#999999</color><dimen name="bottom_drag_height">78dp</dimen><dimen name="bottom_drag_max_height">100dp</dimen><dimen name="text_size_small">14sp</dimen><color name="green">#33cc66</color><style name="btn_next" parent="btn_bottom_blue">
         <item name="android:text">下一步</item>
     </style><dimen name="top_menu_item_max_width">240dp</dimen><dimen name="margin_large">24dp</dimen><style name="AppTheme" parent="AppBaseTheme">
-        
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style><dimen name="common_item_right_tv_width">78dp</dimen><style name="topbar_return_tv" parent="topbar_left_btn">
         <item name="android:text">返回</item>
     </style><style name="edit_item_right_et_padding" parent="edit_item_right_et">
@@ -711,7 +718,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:gravity">center_vertical</item>
-        
+        <!-- <item name="android:padding">10dp</item> -->
         <item name="android:orientation">horizontal</item>
         <item name="android:background">@drawable/bg_item_to_alpha</item>
     </style><style name="edit_item_white" parent="edit_item">

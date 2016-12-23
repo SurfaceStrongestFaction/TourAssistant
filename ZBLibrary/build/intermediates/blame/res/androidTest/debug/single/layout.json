@@ -16,12 +16,12 @@
         "source": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\bundles\\debug\\res\\layout\\divider_vertical_1dp.xml"
     },
     {
-        "merged": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\top_right_iv.xml",
-        "source": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\bundles\\debug\\res\\layout\\top_right_iv.xml"
-    },
-    {
         "merged": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\base_tab_activity.xml",
         "source": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\bundles\\debug\\res\\layout\\base_tab_activity.xml"
+    },
+    {
+        "merged": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\top_right_iv.xml",
+        "source": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\bundles\\debug\\res\\layout\\top_right_iv.xml"
     },
     {
         "merged": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\image_picker_activity.xml",

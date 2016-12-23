@@ -40,12 +40,12 @@
         "source": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\locate.png"
     },
     {
-        "merged": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\edit.png",
-        "source": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\edit.png"
-    },
-    {
         "merged": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\delete_light.png",
         "source": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\delete_light.png"
+    },
+    {
+        "merged": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\edit.png",
+        "source": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\edit.png"
     },
     {
         "merged": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\edit_light_small.png",
@@ -56,12 +56,12 @@
         "source": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\folder.png"
     },
     {
-        "merged": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\spinner_undown.png",
-        "source": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\spinner_undown.png"
-    },
-    {
         "merged": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\keyboard.png",
         "source": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\keyboard.png"
+    },
+    {
+        "merged": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\spinner_undown.png",
+        "source": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\spinner_undown.png"
     },
     {
         "merged": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\down2_small.png",

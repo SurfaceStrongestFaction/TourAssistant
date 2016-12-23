@@ -131,10 +131,10 @@
         <item name="android:layout_height">fill_parent</item>
         <item name="android:background">@color/activity_bg</item>
         <item name="android:orientation">vertical</item>
-        
+        <!-- 状态栏沉浸 <<<<<<<<<<<<<<<<< -->
         <item name="android:clipToPadding">true</item>
         <item name="android:fitsSystemWindows">true</item>
-        
+        <!-- 状态栏沉浸 >>>>>>>>>>>>>>>>> -->
     </style><style name="lv_no_divider_white" parent="lv_no_divider">
         <item name="android:background">@color/white</item>
     </style><style name="topbar_text">
@@ -248,7 +248,7 @@
     </style><style name="divider_horizontal_1px_gray" parent="divider_horizontal_1px">
         <item name="android:background">@color/gray_2</item>
     </style><style name="AppTheme" parent="AppBaseTheme">
-        
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style><style name="content_item_lf_img" parent="text">
         <item name="android:paddingRight">@dimen/padding_big</item>
         <item name="android:textSize">36sp</item>
@@ -455,7 +455,11 @@
     </style><style name="topbar_return_img" parent="topbar_left_btn">
         <item name="android:src">@drawable/back2</item>
     </style><style name="AppBaseTheme" parent="android:Theme.Holo.Light">
-        
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
     </style><style name="topbar_tab_bg" parent="ll_horizontal_wrap_wrap">
         <item name="android:background">@drawable/round_rectangle_empty_white</item>
     </style><style name="text_huge_black" parent="text_huge">
@@ -512,11 +516,14 @@
         <item name="android:background">@drawable/bg_item_to_alpha</item>
     </style><style name="translucentAnimation">
 
-        
-        
+        <!-- 切入切出时也会进行的动画，当底部界面均为透明界面时，动画会被桌面遮挡 -->
+        <!--
+        <item name="android:windowEnterAnimation">@anim/slide_right_in</item>
+        <item name="android:windowExitAnimation">@anim/transparent_to_zero</item>
+        -->
 
 
-        
+        <!-- 若底部界面均为透明界面时，以下动画会失效，也会受其他应用影响 -->
         <item name="android:activityOpenEnterAnimation">@anim/right_push_in</item>
         <item name="android:activityOpenExitAnimation">@anim/hold</item>
         <item name="android:activityCloseEnterAnimation">@anim/left_push_in</item>
@@ -694,7 +701,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:gravity">center_vertical</item>
-        
+        <!-- <item name="android:padding">10dp</item> -->
         <item name="android:orientation">horizontal</item>
         <item name="android:background">@drawable/bg_item_to_alpha</item>
     </style><style name="edit_item_white" parent="edit_item">

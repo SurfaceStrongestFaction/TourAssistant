@@ -22,4 +22,5 @@ dependencies {
     provided fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile 'junit:junit:4.12'
     provided 'com.android.support:appcompat-v7:24.0.0'
+    testCompile 'org.testng:testng:6.9.6'
 }

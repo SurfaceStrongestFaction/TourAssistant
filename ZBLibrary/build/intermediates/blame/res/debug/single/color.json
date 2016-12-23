@@ -1,14 +1,14 @@
 [
     {
-        "merged": "F:\\JAVA\\shixun\\shixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\debug\\color\\alpha_to_darker_selector.xml",
-        "source": "F:\\JAVA\\shixun\\shixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\color\\alpha_to_darker_selector.xml"
+        "merged": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\debug\\color\\black_to_white_selector.xml",
+        "source": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\color\\black_to_white_selector.xml"
     },
     {
-        "merged": "F:\\JAVA\\shixun\\shixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\debug\\color\\white_to_black_selector.xml",
-        "source": "F:\\JAVA\\shixun\\shixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\color\\white_to_black_selector.xml"
+        "merged": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\debug\\color\\alpha_to_darker_selector.xml",
+        "source": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\color\\alpha_to_darker_selector.xml"
     },
     {
-        "merged": "F:\\JAVA\\shixun\\shixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\debug\\color\\black_to_white_selector.xml",
-        "source": "F:\\JAVA\\shixun\\shixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\color\\black_to_white_selector.xml"
+        "merged": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\debug\\color\\white_to_black_selector.xml",
+        "source": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\color\\white_to_black_selector.xml"
     }
 ]

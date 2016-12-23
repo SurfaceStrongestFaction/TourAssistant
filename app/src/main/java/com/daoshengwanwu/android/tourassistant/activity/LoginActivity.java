@@ -88,9 +88,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
     private JSONObject response1;
     public static String  qqresult;
     public static CircleImageView bimp;
-    private final String xyurl = new String("http://123.206.14.122/user/getInformation");
-    private final String xyurl2 = new String("http://123.206.14.122/team/getInformation");
-            //("http://"+AppUtil.SharingServer.HOST2+":"+AppUtil.SharingServer.PORT2+"/user/getInformation");
+    private final String xyurl = "http://"+AppUtil.JFinalServer.HOST+":"+AppUtil.JFinalServer.PORT+ "/user/getInformation";
+    private final String xyurl2 = "http://"+AppUtil.JFinalServer.HOST+":"+AppUtil.JFinalServer.PORT+ "/team/getInformation";
+    //("http://"+AppUtil.SharingServer.HOST2+":"+AppUtil.SharingServer.PORT2+"/user/getInformation");
     private String xyuser_id;
     private Button mLoginButton;
     private static final String TAG = "LoginActivity";
@@ -122,7 +122,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
     }
     public void synhttprequestlogin(){
         AsyncHttpClient client = new AsyncHttpClient();
-        String Url = "http://123.206.14.122/user/login";
+        String Url = "http://"+AppUtil.JFinalServer.HOST+":"+AppUtil.JFinalServer.PORT+ "/user/login";
         RequestParams params = new RequestParams();
         params.add("user_name", user_name);
         params.add("user_pwd", user_pwd);
@@ -144,10 +144,10 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
                 }catch (JSONException e) {
                     e.printStackTrace();
                 }
-        }
+            }
         });
     }
-        private void initViews() {
+    private void initViews() {
         bt = (Button)findViewById(R.id.lg_bt2);
         btnweibo = (ImageView) findViewById(R.id.lg_weibo);
         mLoginButton = (Button)findViewById(R.id.lg_bt);
@@ -411,27 +411,27 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
         }
     }
     private void getTeamNameInfo() {
-            AsyncHttpClient gclient2 = new AsyncHttpClient();
-            RequestParams params = new RequestParams();
-            params.add("team_id", GROUP_ID);
-            gclient2.get(getApplicationContext(),xyurl2,params,new JsonHttpResponseHandler(){
-                @Override
-                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                    super.onSuccess(statusCode, headers, response);
-                    try {
-                        String team_name = response.getString("name");
-                        AppUtil.Group.GROUP_NAME = team_name;
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+        AsyncHttpClient gclient2 = new AsyncHttpClient();
+        RequestParams params = new RequestParams();
+        params.add("team_id", GROUP_ID);
+        gclient2.get(getApplicationContext(),xyurl2,params,new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                try {
+                    String team_name = response.getString("name");
+                    AppUtil.Group.GROUP_NAME = team_name;
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
+            }
 
-                @Override
-                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                    super.onFailure(statusCode, headers, throwable, errorResponse);
-                    Toast.makeText(LoginActivity.this, "Team_name获取失败" + AppUtil.Group.GROUP_NAME, Toast.LENGTH_SHORT).show();
-                }
-            });
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                Toast.makeText(LoginActivity.this, "Team_name获取失败" + AppUtil.Group.GROUP_NAME, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public void getyh() {
@@ -473,20 +473,20 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 
                 if (msg.what == 0) {
                     JSONObject response = (JSONObject) msg.obj;
-                            if (response.has("nickname")) {
-                                try {
-                                    qqgender = response.getString("gender").toString();
-                                    qqname = response.getString("nickname").toString();
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
+                    if (response.has("nickname")) {
+                        try {
+                            qqgender = response.getString("gender").toString();
+                            qqname = response.getString("nickname").toString();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
 
-             //   Toast.makeText(LoginActivity.this, "用户id： " + qqid + "\n用户昵称： " + qqname + "\n用户性别： " + qqgender, Toast.LENGTH_SHORT).show();
+                //   Toast.makeText(LoginActivity.this, "用户id： " + qqid + "\n用户昵称： " + qqname + "\n用户性别： " + qqgender, Toast.LENGTH_SHORT).show();
                 //建立连接
                 AsyncHttpClient client = new AsyncHttpClient();
-                String Url_add = "http://123.206.14.122/qq/login";
+                String Url_add = "http://"+AppUtil.JFinalServer.HOST+":"+AppUtil.JFinalServer.PORT+ "/qq/login";
                 //获取参数
                 RequestParams params = new RequestParams();
                 params.add("qq",qqid);
@@ -563,7 +563,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
         mTencent.login(LoginActivity.this, "all", iuilisten);
 
     }
-   Handler mHandler = new Handler() {
+    Handler mHandler = new Handler() {
 
         @Override
         public void handleMessage(Message msg) {

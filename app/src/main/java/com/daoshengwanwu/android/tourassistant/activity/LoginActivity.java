@@ -91,8 +91,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
     private JSONObject response1;
     public static String  qqresult;
     public static CircleImageView bimp;
-    private final String xyurl = new String("http://123.206.14.122/user/getInformation");
-    private final String xyurl2 = new String("http://123.206.14.122/team/getInformation");
+    private final String xyurl = "http://"+AppUtil.JFinalServer.HOST+":"+AppUtil.JFinalServer.PORT+ "/user/getInformation";
+    private final String xyurl2 = "http://"+AppUtil.JFinalServer.HOST+":"+AppUtil.JFinalServer.PORT+ "/team/getInformation";
     //("http://"+AppUtil.SharingServer.HOST2+":"+AppUtil.SharingServer.PORT2+"/user/getInformation");
     private String xyuser_id;
     private Button mLoginButton;
@@ -125,7 +125,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
     }
     public void synhttprequestlogin(){
         AsyncHttpClient client = new AsyncHttpClient();
-        String Url = "http://123.206.14.122/user/login";
+        String Url = "http://"+AppUtil.JFinalServer.HOST+":"+AppUtil.JFinalServer.PORT+ "/user/login";
         RequestParams params = new RequestParams();
         params.add("user_name", user_name);
         params.add("user_pwd", user_pwd);
@@ -491,7 +491,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
                 //   Toast.makeText(LoginActivity.this, "用户id： " + qqid + "\n用户昵称： " + qqname + "\n用户性别： " + qqgender, Toast.LENGTH_SHORT).show();
                 //建立连接
                 AsyncHttpClient client = new AsyncHttpClient();
-                String Url_add = "http://123.206.14.122/qq/login";
+                String Url_add = "http://"+AppUtil.JFinalServer.HOST+":"+AppUtil.JFinalServer.PORT+ "/qq/login";
                 //获取参数
                 RequestParams params = new RequestParams();
                 params.add("qq",qqid);

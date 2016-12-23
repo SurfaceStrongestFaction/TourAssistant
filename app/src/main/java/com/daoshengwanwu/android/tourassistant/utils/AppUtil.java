@@ -7,8 +7,6 @@ public class AppUtil {
     public static final class SharingServer {
         public static final String HOST = "123.206.14.122";//192.168.43.14
         public static final int PORT = 80;
-        public static final String HOST2 = "123.206.14.122";//zhouxiuya's ip
-        public static final int PORT2 = 80;//zhouxiuya's port
         public static final String COMMAND_SET_LOCATION = "set_location";
         public static final String REQUEST_MEMBER_LOCATION = "request_location";
         public static final String REQUEST_STOP = "over";
@@ -24,9 +22,9 @@ public class AppUtil {
     public static final class JFinalServer {
         public static final String HOST = "123.206.14.122";
         public static final int PORT = 80;
-        public static final String xyurl = "http://123.206.14.122/user/getInformation";
-        public static final String xyurl2 = "http://123.206.14.122/team/getInformation";
-        public static final String xyurl3 = "http://123.206.14.122/team/joinTeam";
+        public static final String xyurl = "http://"+AppUtil.JFinalServer.HOST+":"+AppUtil.JFinalServer.PORT+ "/user/getInformation";
+        public static final String xyurl2 = "http://"+AppUtil.JFinalServer.HOST+":"+AppUtil.JFinalServer.PORT+ "/team/getInformation";
+        public static final String xyurl3 = "http://"+AppUtil.JFinalServer.HOST+":"+AppUtil.JFinalServer.PORT+ "/team/joinTeam";
     }
 
     public static final class User {

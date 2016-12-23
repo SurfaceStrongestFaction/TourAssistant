@@ -1,5 +1,6 @@
 package com.daoshengwanwu.android.tourassistant.activity;
 
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import com.daoshengwanwu.android.tourassistant.item.team.TeamerMyTeamItem;
 import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
 
 import java.util.ArrayList;
+
 
 public class TeamerMyTeamActivity extends BaseActivity{
     private ListView lv;

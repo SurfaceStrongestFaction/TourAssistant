@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.daoshengwanwu.android.tourassistant.R;
+import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -48,7 +49,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     }
     public void synhttprequestlogin(){
         AsyncHttpClient client = new AsyncHttpClient();
-        String Url = "http://123.206.14.122/user/regist";
+        String Url = "http://"+AppUtil.JFinalServer.HOST+":"+ AppUtil.JFinalServer.PORT+ "/user/regist";
         RequestParams params = new RequestParams();
         params.add("user_name", user_name);
         params.add("user_pwd", user_pwd);

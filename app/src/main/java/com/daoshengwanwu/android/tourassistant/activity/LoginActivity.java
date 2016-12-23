@@ -23,14 +23,14 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.daoshengwanwu.android.tourassistant.R;
-import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
-import com.daoshengwanwu.android.tourassistant.utils.HttpCallBackListener;
-import com.daoshengwanwu.android.tourassistant.utils.HttpUtil;
-import com.daoshengwanwu.android.tourassistant.utils.PrefParams;
 import com.daoshengwanwu.android.tourassistant.model.AccessTokenKeeper;
 import com.daoshengwanwu.android.tourassistant.model.App;
 import com.daoshengwanwu.android.tourassistant.model.Constants;
 import com.daoshengwanwu.android.tourassistant.model.Userty;
+import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
+import com.daoshengwanwu.android.tourassistant.utils.HttpCallBackListener;
+import com.daoshengwanwu.android.tourassistant.utils.HttpUtil;
+import com.daoshengwanwu.android.tourassistant.utils.PrefParams;
 import com.daoshengwanwu.android.tourassistant.view.CircleImageView;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.EMError;
@@ -61,11 +61,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -227,8 +224,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
                 break;
             default:
                 break;
-
-
         }
     }
 

@@ -210,7 +210,7 @@ public class LauncherActivity extends BaseActivity {
                     if ("".equals(AppUtil.User.USER_ID)) {
                         //说明还没有登陆，应该跳转到登录界面
                         LoginActivity.actionStartActivity(LauncherActivity.this);
-                        overridePendingTransition(R.anim.slide_left,R.anim.slide_right);
+                        overridePendingTransition(R.anim.push_up_in,R.anim.push_up_out);
                     } else {
                         //说明已经登录，进入我的界面
                         if (null == mMeFragment) {

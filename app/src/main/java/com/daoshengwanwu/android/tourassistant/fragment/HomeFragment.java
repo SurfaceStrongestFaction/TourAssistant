@@ -382,6 +382,7 @@ public class HomeFragment extends Fragment {
         @Override
         public void onClick(View v) {
             Intent intent = ScenicspotActivity.actionStartActivity(getActivity(), mSpotId);
+            getActivity().overridePendingTransition(R.anim.zoom_enter,R.anim.zoom_exit);
             startActivity(intent);
         }
     }

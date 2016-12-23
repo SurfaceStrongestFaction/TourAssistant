@@ -2,6 +2,7 @@ package com.example.www.library;
 
 import org.junit.Test;
 
+import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.*;
 
 /**

@@ -17,15 +17,16 @@
             android:layout_height="@dimen/santa_100dp"
             android:layout_marginTop="@dimen/santa_200dp"
             android:layout_centerHorizontal="true">
-            <com.daoshengwanwu.android.tourassistant.jiangshengda.CircleImageView
+            <com.daoshengwanwu.android.tourassistant.view.CircleImageView
                 android:layout_width="@dimen/santa_100dp"
                 android:layout_height="@dimen/santa_100dp"
                 android:src="@drawable/head"
-                />
+                android:id="@+id/mImg" />
             <ImageView
                 android:layout_width="@dimen/santa_30dp"
                 android:layout_height="@dimen/santa_30dp"
-                android:src="@drawable/woman"
+                android:src="@drawable/man"
+                android:id="@+id/mGender"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"/>
         </RelativeLayout>
@@ -36,8 +37,10 @@
             android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="@dimen/santa_20dp"
-            android:textSize="15dp"/>
+            android:textSize="15dp"
+            android:id="@+id/mName" />
         <TextView
+            android:id="@+id/set"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/santa_10dp"

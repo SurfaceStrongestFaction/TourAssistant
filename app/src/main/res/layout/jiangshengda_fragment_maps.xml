@@ -1,83 +1,213 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragment_maps"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:id="@+id/fragment_maps">
+    android:orientation="vertical">
 
-    <com.amap.api.maps.MapView
+    <com.amap.api.maps.TextureMapView
         android:id="@+id/map"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <LinearLayout
-        android:orientation="vertical"
+    <RelativeLayout
+        android:id="@+id/search_bar_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="48dp"
+        android:layout_marginLeft="@dimen/offset_title"
+        android:layout_marginRight="@dimen/offset_title"
+        android:layout_marginStart="@dimen/offset_title"
+        android:layout_marginTop="@dimen/offset_title"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/btn_search"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/offlinearrow_tab2_pressed"
+            android:clickable="true"
+            android:gravity="center"
+            android:paddingEnd="12dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingStart="12dp"
+            android:text="搜索"
+            android:textColor="@color/white"
+            android:textSize="12dp" />
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/btn_search"
+            android:layout_toStartOf="@+id/btn_search"
+            android:background="@drawable/search_input_half"
+            android:clickable="true"
+            android:gravity="center_vertical">
+
+
+            <EditText
+                android:id="@+id/input_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/transparent"
+                android:drawableLeft="@drawable/search_input"
+                android:hint="请输入搜索关键字"
+                android:singleLine="true"
+                android:textColor="@color/gary"
+                android:textColorHint="@color/darkgrey"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/poi_detail"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/border_bg"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/poi_name"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="12dp"
+            android:layout_marginStart="12dp"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:textColor="#5566b8"
+            android:textSize="15sp" />
+
+
+        <TextView
+            android:id="@+id/poi_address"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/poi_name"
+            android:layout_marginLeft="12dp"
+            android:layout_marginStart="12dp"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:textColor="#333333"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/poi_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/poi_address"
+            android:layout_marginLeft="12dp"
+            android:layout_marginStart="12dp"
+            android:gravity="center_vertical"
+            android:textColor="#333333"
+            android:textSize="12sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginTop="350dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:orientation="vertical">
 
             <Button
                 android:id="@+id/Fog_btn"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="迷雾模式" />
+                android:alpha="0.9"
+                android:layout_width="@dimen/santa_60dp"
+                android:layout_height="@dimen/santa_35dp"
+                android:layout_marginBottom="@dimen/santa_5dp"
+                android:background="@drawable/shape"
+                android:text="迷雾模式"
+                android:textSize="9dp" />
+
+            <Button
+                android:id="@+id/Quit_Fog_btn"
+                android:alpha="0.9"
+                android:layout_width="@dimen/santa_60dp"
+                android:layout_height="@dimen/santa_35dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/shape"
+                android:text="正常模式"
+                android:textSize="9dp" />
 
             <Button
                 android:id="@+id/start_location"
+                android:alpha="0.9"
+                android:layout_width="@dimen/santa_60dp"
+                android:layout_height="@dimen/santa_35dp"
+                android:layout_marginBottom="@dimen/santa_5dp"
+                android:background="@drawable/shape"
                 android:text="开启定位"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"/>
+                android:textSize="9dp" />
 
             <Button
-                android:text="停止定位"
                 android:id="@+id/stop_location"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"/>
+                android:alpha="0.9"
+                android:layout_width="@dimen/santa_60dp"
+                android:layout_height="@dimen/santa_35dp"
+                android:layout_marginBottom="@dimen/santa_5dp"
+                android:background="@drawable/shape"
+                android:text="停止定位"
+
+                android:textSize="9dp" />
         </LinearLayout>
 
+        <Button
+            android:id="@+id/start_upload"
+            android:alpha="0.9"
+            android:layout_width="@dimen/santa_80dp"
+            android:layout_height="@dimen/santa_35dp"
+            android:layout_marginBottom="@dimen/santa_5dp"
+            android:background="@drawable/shape"
+
+            android:text="开启位置共享"
+            android:textSize="9dp" />
+
+        <Button
+            android:id="@+id/stop_upload"
+            android:alpha="0.9"
+            android:layout_width="@dimen/santa_80dp"
+            android:layout_height="@dimen/santa_35dp"
+            android:layout_marginBottom="@dimen/santa_5dp"
+            android:background="@drawable/shape"
+
+            android:text="停止位置共享"
+            android:textSize="9dp" />
+
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <Button
-                android:id="@+id/start_upload"
-                android:text="开启位置共享"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"/>
-
-            <Button
-                android:text="停止位置共享"
-                android:id="@+id/stop_upload"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_gravity="end"
-            android:orientation="vertical"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/user_nick_name"
-                android:layout_gravity="end"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_gravity="end" />
 
             <TextView
                 android:id="@+id/group_name"
-                android:layout_gravity="end"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_gravity="end" />
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>

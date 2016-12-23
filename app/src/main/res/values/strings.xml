@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TourAssistant</string>
+    <string name="app_name">探游</string>
     <string name="santa_initialization_text">初始化文字</string>
     <string name="santa_setting">设置</string>
     <string name="santa_my_footprint">我的足迹</string>
@@ -39,4 +39,5 @@
     <string name="bhr_home_title_area">地区</string>
     <string name="bhr_home_title_search_hint">搜索景区信息</string>
     <string name="bhr_home_city_recommond">附近景区推荐</string>
+    <string name="no_result">对不起，没有搜索到相关数据！</string>
 </resources>

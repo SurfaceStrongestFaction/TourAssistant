@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.daoshengwanwu.android.tourassistant.R;
 import com.daoshengwanwu.android.tourassistant.activity.BaseActivity;
+import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -65,7 +66,7 @@ public class ScenicspotActivity extends BaseActivity {
     }
     public void synhttprequest(){
         AsyncHttpClient client = new AsyncHttpClient();
-        String Url = "http://139.199.28.184/spot/getrecommend";
+        String Url = "http://"+ AppUtil.JFinalServer.HOST+":"+AppUtil.JFinalServer.PORT+ "/spot/getrecommend";
 
         RequestParams params = new RequestParams();
         params.add("id", scenicspotid);

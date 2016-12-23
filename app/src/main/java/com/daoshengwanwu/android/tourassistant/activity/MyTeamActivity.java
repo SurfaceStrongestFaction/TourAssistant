@@ -54,8 +54,8 @@ public class MyTeamActivity extends BaseActivity {
     private String myGroupId;
 
     private static final String TAG = "MyTeamActivity";
-    private final String xyurl = new String("http://123.206.14.122/user/getInformation");
-    private final String xyurl2 = new String("http://123.206.14.122/team/getInformation");
+    private final String xyurl = "http://"+AppUtil.JFinalServer.HOST+":"+AppUtil.JFinalServer.PORT+ "/user/getInformation";
+    private final String xyurl2 = "http://"+AppUtil.JFinalServer.HOST+":"+AppUtil.JFinalServer.PORT+ "/team/getInformation";
     public String username;
     public String members;
     public String[] names;

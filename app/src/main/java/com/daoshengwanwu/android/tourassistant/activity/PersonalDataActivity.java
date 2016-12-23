@@ -1,5 +1,6 @@
 package com.daoshengwanwu.android.tourassistant.activity;
 
+import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.daoshengwanwu.android.tourassistant.R;
+import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
@@ -107,7 +109,7 @@ public class PersonalDataActivity extends BaseActivity {
     private void inint(){
         //建立连接
         AsyncHttpClient client=new AsyncHttpClient();
-        String url = "http://10.7.88.30/user/getInformation";
+        String url = "http://"+ AppUtil.JFinalServer.HOST + ":" + AppUtil.JFinalServer.PORT + "/user/getInformation";
         //传送参数
         RequestParams params=new RequestParams();
         params.add("user_id",USER_ID);
@@ -178,7 +180,7 @@ public class PersonalDataActivity extends BaseActivity {
                                     name.setText(input_name);
                                     //建立连接
                                     AsyncHttpClient client=new AsyncHttpClient();
-                                    String Url_login = "http://10.7.88.45:8080/user/editNick_name";
+                                    String Url_login = "http://"+AppUtil.JFinalServer.HOST+":"+AppUtil.JFinalServer.PORT+ "/user/editNick_name";
                                     //传送参数
                                     RequestParams params=new RequestParams();
                                     params.add("user_id",USER_ID);
@@ -227,7 +229,7 @@ public class PersonalDataActivity extends BaseActivity {
                                     }
                                     //建立连接
                                     AsyncHttpClient client=new AsyncHttpClient();
-                                    String Url_login = "http://10.7.88.45:8080/user/editUser_pwd";
+                                    String Url_login = "http://"+AppUtil.JFinalServer.HOST+":"+AppUtil.JFinalServer.PORT+ "/user/editUser_pwd";
                                     //传送参数
                                     RequestParams params=new RequestParams();
                                     params.add("user_id",USER_ID);
@@ -264,7 +266,7 @@ public class PersonalDataActivity extends BaseActivity {
                                     usersex.setText(sexs[i]);
                                     //建立连接
                                     AsyncHttpClient client=new AsyncHttpClient();
-                                    String Url_login = "http://10.7.88.45:8080/user/editNick_name";
+                                    String Url_login = "http://"+AppUtil.JFinalServer.HOST+":"+AppUtil.JFinalServer.PORT+ "/user/editNick_name";
                                     //传送参数
                                     RequestParams params=new RequestParams();
                                     params.add("user_id",USER_ID);
@@ -341,7 +343,7 @@ public class PersonalDataActivity extends BaseActivity {
                 AsyncHttpClient client = new AsyncHttpClient();
                 //指定url路径
                 //String url = "http://192.168.178.2/api/fs/upload?token=3f42fd120d2040c9ae22a1647c45885c4erET1";
-                String url="http://123.206.14.122/images/upload";
+                String url="http://"+AppUtil.JFinalServer.HOST+":"+AppUtil.JFinalServer.PORT+ "/images/upload";
                 //封装文件上传的参数
                 RequestParams params = new RequestParams();
                 //根据路径创建文件

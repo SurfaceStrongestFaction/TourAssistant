@@ -1,12 +1,12 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion "19.1.0"
+    compileSdkVersion 24
+    buildToolsVersion "24.0.2"
 
     defaultConfig {
         minSdkVersion 9
-        targetSdkVersion 20
+        targetSdkVersion 24
     }
 
     buildTypes {
@@ -18,7 +18,7 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:24.0.0'
+    compile 'com.android.support:support-v4:24.1.0'
     compile files('libs/BaiduLBS_Android.jar')
     compile files('libs/glide-3.6.1.jar')
     compile files('libs/google-play-services.jar')

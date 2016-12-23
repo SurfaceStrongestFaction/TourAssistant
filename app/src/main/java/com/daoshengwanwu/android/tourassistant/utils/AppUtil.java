@@ -5,7 +5,7 @@ import android.graphics.Bitmap;
 
 public class AppUtil {
     public static final class SharingServer {
-        public static final String HOST = "139.199.28.184";//192.168.43.14
+        public static final String HOST = "192.168.1.125";//139.199.28.184
         public static final int PORT = 8088;
         public static final String COMMAND_SET_LOCATION = "set_location";
         public static final String REQUEST_MEMBER_LOCATION = "request_location";
@@ -20,7 +20,7 @@ public class AppUtil {
     }
 
     public static final class JFinalServer {
-        public static final String HOST = "139.199.28.184";
+        public static final String HOST = "192.168.1.125";//139.199.28.184
         public static final int PORT = 8083;
         public static final String xyurl = "http://"+AppUtil.JFinalServer.HOST+":"+AppUtil.JFinalServer.PORT+ "/user/getInformation";
         public static final String xyurl2 = "http://"+AppUtil.JFinalServer.HOST+":"+AppUtil.JFinalServer.PORT+ "/team/getInformation";
@@ -30,13 +30,13 @@ public class AppUtil {
     public static final class User {
         public static String USER_ID = "";
         public static String USER_NAME = "";
-        public static Bitmap USER_IMG;
-        public static String USER_GENDER = "男";
+        public static Bitmap USER_IMG = null;
+        public static String USER_GENDER = "";
     }
 
     public static final class Group {
         public static String GROUP_ID = "";
-        public static String GROUP_NAME;
+        public static String GROUP_NAME = "";
         public static String GROUP_CAPTIAN = "";
     }
 }

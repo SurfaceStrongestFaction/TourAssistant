@@ -5,8 +5,8 @@ import android.graphics.Bitmap;
 
 public class AppUtil {
     public static final class SharingServer {
-        public static final String HOST = "123.206.14.122";//192.168.43.14
-        public static final int PORT = 80;
+        public static final String HOST = "139.199.28.184";//192.168.43.14
+        public static final int PORT = 8088;
         public static final String COMMAND_SET_LOCATION = "set_location";
         public static final String REQUEST_MEMBER_LOCATION = "request_location";
         public static final String REQUEST_STOP = "over";

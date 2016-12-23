@@ -20,8 +20,8 @@ public class AppUtil {
     }
 
     public static final class JFinalServer {
-        public static final String HOST = "123.206.14.122";
-        public static final int PORT = 80;
+        public static final String HOST = "139.199.28.184";
+        public static final int PORT = 8083;
         public static final String xyurl = "http://"+AppUtil.JFinalServer.HOST+":"+AppUtil.JFinalServer.PORT+ "/user/getInformation";
         public static final String xyurl2 = "http://"+AppUtil.JFinalServer.HOST+":"+AppUtil.JFinalServer.PORT+ "/team/getInformation";
         public static final String xyurl3 = "http://"+AppUtil.JFinalServer.HOST+":"+AppUtil.JFinalServer.PORT+ "/team/joinTeam";

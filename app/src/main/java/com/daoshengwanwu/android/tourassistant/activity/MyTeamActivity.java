@@ -118,7 +118,7 @@ public class MyTeamActivity extends BaseActivity {
                             //String[] members = data.getStringArrayExtra("newmembers");
                             List<String> member = new ArrayList<String>();
                             for (int i = 0; i < names.length; i++) {
-                                member.add(names[i].substring(0, 7));
+                                member.add(names[i]);
                             }
                             String[] members = member.toArray(new String[1]);
                             try {

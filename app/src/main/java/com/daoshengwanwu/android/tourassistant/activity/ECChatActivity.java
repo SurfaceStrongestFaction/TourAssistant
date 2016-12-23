@@ -40,7 +40,7 @@ public class ECChatActivity extends AppCompatActivity {
 
 
 
-        //添加新成员按钮监听
+        /*//添加新成员按钮监听
         EaseChatFragment.EaseChatFragmentHelper myCharHelper = new EaseChatFragment.EaseChatFragmentHelper() {
             @Override
             public void onSetMessageAttributes(EMMessage message) {
@@ -93,7 +93,7 @@ public class ECChatActivity extends AppCompatActivity {
                 return null;
             }
         };
-        chatFragment.setChatFragmentListener(myCharHelper);
+        chatFragment.setChatFragmentListener(myCharHelper);*/
 
 
         initView();

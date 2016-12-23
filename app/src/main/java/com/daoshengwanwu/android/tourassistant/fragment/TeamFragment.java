@@ -48,7 +48,7 @@ public class TeamFragment extends Fragment {
     private RelativeLayout myTeam;
     private RelativeLayout talk;
     private String str; //战队名
-    private final String url = new String("http://" + AppUtil.SharingServer.HOST + ":" + AppUtil.SharingServer.PORT + "/team/create");
+    private final String url = new String("http://" + AppUtil.JFinalServer.HOST + ":" + AppUtil.JFinalServer.PORT + "/team/create");
     private String[] memberids;
     public  String teamname;
     private Handler mHandler = new Handler() {

@@ -237,6 +237,48 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
         if (forward_msg_id != null) {
             forwardMessage(forward_msg_id);
         }
+        EaseChatFragment.EaseChatFragmentHelper myHelper=new EaseChatFragmentHelper() {
+            @Override
+            public void onSetMessageAttributes(EMMessage message) {
+
+            }
+
+            @Override
+            public void onEnterToChatDetails() {
+
+            }
+
+            @Override
+            public void onAvatarClick(String username) {
+
+            }
+
+            @Override
+            public void onAvatarLongClick(String username) {
+
+            }
+
+            @Override
+            public boolean onMessageBubbleClick(EMMessage message) {
+                return false;
+            }
+
+            @Override
+            public void onMessageBubbleLongClick(EMMessage message) {
+
+            }
+
+            @Override
+            public boolean onExtendMenuItemClick(int itemId, View view) {
+                return false;
+            }
+
+            @Override
+            public EaseCustomChatRowProvider onSetCustomChatRowProvider() {
+                return null;
+            }
+        };
+        setChatFragmentListener(myHelper);
     }
     
     /**

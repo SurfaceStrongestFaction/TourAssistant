@@ -3,9 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/QRCodeLibrary/QRCodeLibrary.iml" filepath="$PROJECT_DIR$/QRCodeLibrary/QRCodeLibrary.iml" />
-      <module fileurl="file://$PROJECT_DIR$/QRCodeLibrary/QRCodeLibrary.iml" filepath="$PROJECT_DIR$/QRCodeLibrary/QRCodeLibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/TourAssistant.iml" filepath="$PROJECT_DIR$/TourAssistant.iml" />
-      <module fileurl="file://$PROJECT_DIR$/ZBLibrary/ZBLibrary.iml" filepath="$PROJECT_DIR$/ZBLibrary/ZBLibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/ZBLibrary/ZBLibrary.iml" filepath="$PROJECT_DIR$/ZBLibrary/ZBLibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />

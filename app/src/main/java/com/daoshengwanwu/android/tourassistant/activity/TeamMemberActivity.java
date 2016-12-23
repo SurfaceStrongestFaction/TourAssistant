@@ -81,7 +81,7 @@ public class TeamMemberActivity extends BaseActivity {
                 if(!AppUtil.User.USER_ID.equals(memberId)) {
                     Intent intent = new Intent(TeamMemberActivity.this, ECChatActivity.class);
                     //chatId为聊天者的环信id
-                    String chatId = "6337ab9".trim();
+                    String chatId = memberId.substring(0,7);
                     intent.putExtra("userId", chatId);
                     intent.putExtra("chatType", EaseConstant.CHATTYPE_SINGLE);
                     startActivity(intent);

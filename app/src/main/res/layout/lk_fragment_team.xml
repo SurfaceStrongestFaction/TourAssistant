@@ -80,7 +80,6 @@
         android:orientation="horizontal"
         android:id="@+id/lk_talk">
         <TextView
-            android:onClick=""
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="20dp"
             android:layout_width="wrap_content"

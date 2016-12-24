@@ -1,12 +1,14 @@
 package com.daoshengwanwu.android.tourassistant.fragment;
 
 
+import android.content.DialogInterface;
 import android.graphics.Point;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,11 +42,18 @@ import com.amap.api.services.core.SuggestionCity;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
 import com.daoshengwanwu.android.tourassistant.R;
+import com.daoshengwanwu.android.tourassistant.model.Frag;
 import com.daoshengwanwu.android.tourassistant.model.MapsFragmentSaveData;
 import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
 import com.daoshengwanwu.android.tourassistant.service.SharingService;
 import com.daoshengwanwu.android.tourassistant.utils.ToastUtil;
 import com.daoshengwanwu.android.tourassistant.view.MyView;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+import com.luolc.emojirain.EmojiRainLayout;
+
+import org.apache.http.Header;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -106,13 +116,16 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
     private static final String KEY_START_UPLOAD = "MapsFragment.KEY_START_UPLOAD";
     private static final String KEY_START_BLACK = "MapsFragment.KEY_START_BLACK";
     private static final String KEY_SAVE_DATA = "MapsFragment.KEY_SAVE_DATA";
+    private static final String KEY_SPOT_ID = "MapsFragment.KEY_SPOT_ID";
 
     private Map<String, Marker> mMemberMarkers = new HashMap<>();
+    private boolean mIsDroppingGift = false;
     private boolean mIsStartLocation = false;
     private boolean mIsStartUpload = false;
     private Button mStartLocation;
     private Button mStopLocation;
     private Button mStartUpload;
+    private List<Frag> mFrags = new ArrayList<>();
     private Button mStopUpload;
     private boolean mIsFirstLoc = true;
     private Marker mUserMarker = null;
@@ -120,6 +133,8 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
     private boolean mIsStartBlack = false;
     private TextView mUserNickName = null;
     private TextView mGroupName = null;
+    private String mSpotId = "";
+    private EmojiRainLayout mEmojiRainLayout = null;
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -138,6 +153,8 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
                         double longitude = data.getDouble(MSG_DATA_LONGITUDE);
                         LatLng currentLoc = new LatLng(latitude, longitude);
 
+                        Log.d(TAG, "handleMessage: 接收到坐标信息：latitude：" + latitude + ", longitude:" + longitude);
+
                         if (mIsFirstLoc) {
                             Log.d(TAG, "handleMessage: 第一次定位");
                             aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLoc, 15.0f));
@@ -146,6 +163,24 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
                                     .snippet("你在这里"));
                             mIsFirstLoc = false;
                         }
+
+                        //判断是否掉落糖果
+                            for (Frag frag : mFrags) {
+                                double distance = Math.sqrt(Math.pow((frag.getLatitude() - latitude), 2) + Math.pow(frag.getLongitude() - longitude, 2));
+                                if (distance <= 0.002) {
+                                    mIsDroppingGift = true;
+                                    startEmoji();
+                                    new AlertDialog.Builder(getActivity()).setTitle("发现礼物！").setView(R.layout.baihaoran_dialog_baoxiang)
+                                            .setPositiveButton("收入怀中", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+
+                                                }
+                                            }).create().show();
+                                    frag.setLatitude(0.0);
+                                    frag.setLongitude(0.0);
+                                }
+                            }
 
                         mUserMarker.setPosition(currentLoc);
                     }
@@ -181,12 +216,19 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
                         }
                     }
                 } break;
-                default: break;
+                default: break;//0.000002881364,0.00169745809963014992825543408831
             }
         }
     };
     //----------------------------------------------------------------------
 
+
+    private void initFragCoorderData() {
+        mFrags.add(new Frag(38.00313,114.525238,R.drawable.yuanbao));
+        mFrags.add(new Frag(38.00158,114.524546,R.drawable.baoxiang2_2));//114.595809,38.054852
+        mFrags.add(new Frag(38.054852,114.595809,R.drawable.baoxiang2_2));//38.048681, longitude:114.589406
+        mFrags.add(new Frag(38.048681, 114.589406, R.drawable.baoxiang3_2));
+    }//initFragCoorderData
 
     public MapsFragmentSaveData getCurrentState() {
         MapsFragmentSaveData data = new MapsFragmentSaveData();
@@ -314,7 +356,45 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
             }
         }
 
+//        //获取景点信息
+//        String url = "http://" + AppUtil.JFinalServer.HOST + ":" + AppUtil.JFinalServer.PORT + "/spot/getrecommend";
+//        AsyncHttpClient client = new AsyncHttpClient();
+//        RequestParams params = new RequestParams();
+//
+//        mSpotId = getArguments().getString(KEY_SPOT_ID);
+//        params.add("id", mSpotId);
+//
+//        client.get(getActivity().getApplicationContext(), url, params, new AsyncHttpResponseHandler() {
+//            @Override
+//            public void onSuccess(int i, Header[] headers, byte[] bytes) {
+//
+//            }
+//
+//            @Override
+//            public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+//
+//            }
+//        });
+
+        initFragCoorderData();
+
+        mEmojiRainLayout = (EmojiRainLayout)v.findViewById(R.id.emoji_rain_layout);
+        mEmojiRainLayout.addEmoji(R.drawable.emoji_1_3);
+        mEmojiRainLayout.addEmoji(R.drawable.emoji_2_3);
+        mEmojiRainLayout.addEmoji(R.drawable.emoji_3_3);
+        mEmojiRainLayout.addEmoji(R.drawable.emoji_4_3);
+        mEmojiRainLayout.addEmoji(R.drawable.emoji_5_3);
+        mEmojiRainLayout.addEmoji(R.drawable.yuanbao);
+
         return v;
+    }
+
+    private void startEmoji() {
+        mEmojiRainLayout.startDropping();
+    }
+
+    private void stopEmoji() {
+        mEmojiRainLayout.stopDropping();
     }
 
     private void startFogModel(){
@@ -736,7 +816,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
         lp.setLatitude(x);
         lp.setLongitude(y);
         //aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lp.getLatitude(), lp.getLongitude()), 14));
-        if (amapLocation != null && mIsStartBlack) {
+        if (mIsStartBlack) {
             if (amapLocation.getErrorCode() == 0) {
                 //迷雾追踪部分代码
                 pos = new LatLng(x,y);
@@ -773,19 +853,16 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
             }
         }
 
-        if (null != amapLocation) {
-            Message msg = new Message();
-            msg.what = WHAT_LOCATION_CHANGE;
+        Message msg = new Message();
+        msg.what = WHAT_LOCATION_CHANGE;
 
-            Bundle data = new Bundle();
-            data.putDouble(MSG_DATA_LATITUDE, amapLocation.getLatitude());
-            data.putDouble(MSG_DATA_LONGITUDE, amapLocation.getLongitude());
+        Bundle data = new Bundle();
+        data.putDouble(MSG_DATA_LATITUDE, amapLocation.getLatitude());
+        data.putDouble(MSG_DATA_LONGITUDE, amapLocation.getLongitude());
 
-            msg.setData(data);
-            mHandler.sendMessage(msg);
-        }
+        msg.setData(data);
+        mHandler.sendMessage(msg);
     }
-
 
 
     private void updateCurrentInfomation() {
@@ -798,12 +875,13 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
     }
 
 
-    public static MapsFragment newInstance(SharingService.SharingBinder binder, MapsFragmentSaveData saveData) {
+    public static MapsFragment newInstance(SharingService.SharingBinder binder, MapsFragmentSaveData saveData, String spot_id) {
         MapsFragment fragment = new MapsFragment();
 
         Bundle data = new Bundle();
         data.putBinder(KEY_BINDER, binder);
         data.putSerializable(KEY_SAVE_DATA, saveData);
+        data.putString(KEY_SPOT_ID, spot_id);
         fragment.setArguments(data);
 
         return fragment;

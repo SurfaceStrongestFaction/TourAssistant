@@ -176,7 +176,7 @@ public class LauncherActivity extends BaseActivity {
                         break;
                     }
 
-                    mMapsFragment = MapsFragment.newInstance(mSharingBinder, mMapsFragmentSaveData);
+                    mMapsFragment = MapsFragment.newInstance(mSharingBinder, mMapsFragmentSaveData, "abcd");
                     mFragmentManager.beginTransaction().replace(R.id.launcher_fragment_container, mMapsFragment).commit();
                     break;
                 case R.id.tabs_ranks_page:

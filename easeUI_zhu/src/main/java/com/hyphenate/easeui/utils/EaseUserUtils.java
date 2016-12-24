@@ -49,6 +49,19 @@ public class EaseUserUtils {
             Glide.with(context).load(R.drawable.ease_default_avatar).into(imageView);
         }
     }
+    public static void setAvatar(Context context, String username,String imgUrl, ImageView imageView){
+        EaseUser user = getUserInfo(username);
+        if(user != null && user.getAvatar() != null){
+            try {
+                Glide.with(context).load(imgUrl).into(imageView);
+            } catch (Exception e) {
+                //use default avatar
+                Glide.with(context).load(user.getAvatar()).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.drawable.ease_default_avatar).into(imageView);
+            }
+        }else{
+            Glide.with(context).load(R.drawable.ease_default_avatar).into(imageView);
+        }
+    }
     
     /**
      * set user's nickname

@@ -358,6 +358,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
                         try {
                             String team_id = response.getString("team_id");
                             GROUP_ID = team_id;
+                            AppUtil.Group.CHAT_TEAM_ID=response.getString("chat_team_id");
                             getTeamNameInfo();
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -796,7 +797,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
                                 // 用户已存在
                                 case EMError.USER_ALREADY_EXIST:
                                     //Toast.makeText(LoginActivity.this, "用户已存在 code: " + errorCode + ", message:" + message, Toast.LENGTH_LONG).show();
-                                    signIn(username,password);
+
+                                    //signIn(username,password);
                                     break;
                                 // 参数不合法，一般情况是username 使用了uuid导致，不能使用uuid注册
                                 case EMError.USER_ILLEGAL_ARGUMENT:
@@ -817,6 +819,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
                     });
                 } catch (Exception e) {
                     e.printStackTrace();
+                }finally {
+                    Log.i("zhu", "sigIn,id:"+username+"sigIn,pwd:"+password);
+                    signIn(username,password);
                 }
             }
         }).start();
@@ -843,6 +848,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
                         EMClient.getInstance().chatManager().loadAllConversations();
                         // 加载所有群组到内存，如果使用了群组的话
                         // EMClient.getInstance().groupManager().loadAllGroups();
+                        Log.i("zhu", "signIn成功 ");
                     }
                 });
             }
@@ -860,6 +866,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
                          * 关于错误码可以参考官方api详细说明
                          * http://www.easemob.com/apidoc/android/chat3.0/classcom_1_1hyphenate_1_1_e_m_error.html
                          */
+                        Log.i("zhu", "signIn失败 ");
                         switch (i) {
                             // 网络异常 2
                             case EMError.NETWORK_ERROR:

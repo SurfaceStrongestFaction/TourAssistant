@@ -192,7 +192,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
 
     protected void setUpView() {
         titleBar.setTitle(toChatUsername);
-        Log.i("zhu", "setUpView,toChatUsername: "+toChatUsername);
+        Log.i("zhu", "EaseChatFragment:setUpView,toChatUsername: "+toChatUsername);
         if (chatType == EaseConstant.CHATTYPE_SINGLE) {
             // set title
             Log.i("zhu", "chatType_single");
@@ -294,13 +294,13 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
         if (forward_msg_id != null) {
             forwardMessage(forward_msg_id);
         }
-        EaseChatFragment.EaseChatFragmentHelper myHelper=new EaseChatFragmentHelper() {
+        /*EaseChatFragment.EaseChatFragmentHelper myHelper=new EaseChatFragmentHelper() {
             @Override
             public void onSetMessageAttributes(EMMessage message) {
                 //String sendHeadImg="http://img.blog.csdn.net/20161103094426509";
                 String receiveHeadImg="http://img.blog.csdn.net/20161103093824441";
                 //message.setAttribute("myHeadImg",sendHeadImg);
-                message.setAttribute("HeadImg",receiveHeadImg);
+                message.setAttribute("myHeadImg",receiveHeadImg);
             }
 
             @Override
@@ -338,7 +338,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
                 return null;
             }
         };
-        setChatFragmentListener(myHelper);
+        setChatFragmentListener(myHelper);*/
     }
     
     /**

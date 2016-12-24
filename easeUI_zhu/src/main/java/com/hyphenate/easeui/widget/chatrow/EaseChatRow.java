@@ -120,22 +120,29 @@ public abstract class EaseChatRow extends LinearLayout {
         //set nickname and avatar
         if(message.direct() == Direct.SEND){
             //EaseUserUtils.setUserAvatar(context, EMClient.getInstance().getCurrentUser(), userAvatarView);
-            LoaderImage loaderImage = null;
             try {
-                loaderImage = new LoaderImage(context,userAvatarView,message.getStringAttribute("HeadImg"));
+                LoaderImage loaderImage = new LoaderImage(context,userAvatarView,message.getStringAttribute("myHeadImg"));
+                loaderImage.start();
                 //Log.i("zhu", "setUp;send: "+message.getStringAttribute("HeadImg"));
             } catch (HyphenateException e) {
                 e.printStackTrace();
             }
-            loaderImage.start();
         }else{
             EaseUserUtils.setUserAvatar(context, message.getFrom(), userAvatarView);
-            EaseUserUtils.setUserNick(message.getFrom(), usernickView);
-            /*try {
+            //EaseUserUtils.setUserNick(message.getFrom(), usernickView);
+            /*LoaderImage loaderImage = null;
+            try {
+                loaderImage = new LoaderImage(context,userAvatarView,message.getStringAttribute("myHeadImg"));
+                //Log.i("zhu", "setUp;send: "+message.getStringAttribute("HeadImg"));
+            } catch (HyphenateException e) {
+                e.printStackTrace();
+            }
+            loaderImage.start();*/
+            try {
                 EaseUserUtils.setUserNick(message.getStringAttribute("name"), usernickView);
             } catch (HyphenateException e) {
                 e.printStackTrace();
-            }*/
+            }
         }
         
         if(deliveredView != null){

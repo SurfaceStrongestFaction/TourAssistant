@@ -78,4 +78,5 @@ dependencies {
     //compile files('libs/zxing.jar')
     compile project(path: ':QRCodeLibrary')
     compile files('libs/universal-image-loader-1.9.5.jar')
+    compile 'com.luolc:emoji-rain:0.1.1'
 }

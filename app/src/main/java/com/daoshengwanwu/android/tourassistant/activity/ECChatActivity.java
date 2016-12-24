@@ -46,7 +46,13 @@ public class ECChatActivity extends AppCompatActivity {
             public void onSetMessageAttributes(EMMessage message) {
                 //设置消息拓展
                 String name= AppUtil.User.USER_NAME;
+                //String receiveHeadImg="http://img.blog.csdn.net/20161103093824441";
+                String myHeadImg="http://img.blog.csdn.net/20161103094426509";
+                message.setAttribute("myHeadImg",myHeadImg);
+                //message.setAttribute("HeadImg",receiveHeadImg);
                 message.setAttribute("name",name);
+
+
             }
             //点击标题栏右侧图表
             @Override

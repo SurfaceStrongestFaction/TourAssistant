@@ -2,6 +2,7 @@ package com.hyphenate.easeui.adapter;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +28,14 @@ import com.hyphenate.easeui.utils.EaseSmileUtils;
 import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.easeui.widget.EaseConversationList.EaseConversationListHelper;
 import com.hyphenate.util.DateUtils;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.apache.http.Header;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -96,10 +105,14 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
         }
         holder.list_itease_layout.setBackgroundResource(R.drawable.ease_mm_listitem);
 
+        final ViewHolder holderTemp = new ViewHolder();
+        holderTemp.name = (TextView) convertView.findViewById(R.id.name);
+        holderTemp.avatar = (ImageView) convertView.findViewById(R.id.avatar);
+
         // get conversation
         EMConversation conversation = getItem(position);
         // get username or group id
-        String username = conversation.getUserName();
+        final String username = conversation.getUserName();
         
         if (conversation.getType() == EMConversationType.GroupChat) {
             String groupId = conversation.getUserName();
@@ -118,8 +131,34 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
             holder.name.setText(room != null && !TextUtils.isEmpty(room.getName()) ? room.getName() : username);
             holder.motioned.setVisibility(View.GONE);
         }else {
-            EaseUserUtils.setUserAvatar(getContext(), username, holder.avatar);
-            EaseUserUtils.setUserNick(username, holder.name);
+            //设置会话页的头像和昵称
+            Log.i("zhu", "conversation");
+
+            JsonHttpResponseHandler handler = new JsonHttpResponseHandler(){
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    super.onSuccess(statusCode, headers, response);
+                    try {
+                        Log.i("zhu", "HttpOnSuccess: "+response.getString("nick_name"));
+                        EaseUserUtils.setUserAvatar(getContext(), username, holderTemp.avatar);
+                        //EaseUserUtils.setAvatar(getContext(), username,response.getString("head_pic"), holderTemp.avatar);
+                        EaseUserUtils.setUserNick(response.getString("nick_name"),holderTemp.name);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                    super.onFailure(statusCode, headers, throwable, errorResponse);
+                }
+            };
+            String url="http://139.199.28.184:8083/user/getInformation";
+            AsyncHttpClient gclient = new AsyncHttpClient();
+            RequestParams params = new RequestParams();
+            params.add("user_id",username);
+            gclient.get(getContext(), url,params,handler);
+            //EaseUserUtils.setUserAvatar(getContext(), username, holder.avatar);
+            //EaseUserUtils.setUserNick(username, holder.name);
             holder.motioned.setVisibility(View.GONE);
         }
 

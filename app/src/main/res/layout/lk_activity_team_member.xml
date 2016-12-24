@@ -60,6 +60,7 @@
             </FrameLayout>
         </FrameLayout>
         <TextView
+            android:id="@+id/team_member_name2"
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:text="申玥"
@@ -87,7 +88,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="申玥"
-                android:id="@+id/Team_member_name"
+                android:id="@+id/team_member_name1"
                 android:textSize="18sp"
                 android:textColor="#4d4d4d"
                 android:layout_marginLeft="60dp"/>

@@ -48,7 +48,7 @@ public class TeamFragment extends Fragment {
     private RelativeLayout myTeam;
     private RelativeLayout talk;
     private String str; //战队名
-    private final String url = new String("http://" + AppUtil.SharingServer.HOST + ":" + AppUtil.SharingServer.PORT + "/team/create");
+    private final String url = new String("http://" + AppUtil.JFinalServer.HOST + ":" + AppUtil.JFinalServer.PORT + "/team/create");
     private String[] memberids;
     public  String teamname;
     private Handler mHandler = new Handler() {
@@ -155,7 +155,11 @@ public class TeamFragment extends Fragment {
         myTeam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               MyTeamActivity.actionStartActivity(getActivity(), mBinder);
+                if(AppUtil.Group.GROUP_ID == null || AppUtil.Group.GROUP_ID.equals("") || AppUtil.Group.GROUP_ID.equals("null")) {
+                    Toast.makeText(getActivity(),"您还未加入队伍", Toast.LENGTH_SHORT).show();
+                }else {
+                    MyTeamActivity.actionStartActivity(getActivity(), mBinder);
+                }
             }
         });
         talk = (RelativeLayout) view.findViewById(R.id.lk_talk);

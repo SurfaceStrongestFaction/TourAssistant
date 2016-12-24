@@ -31,7 +31,7 @@ public class MyTeamAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
+    public MyTeamItem getItem(int position) {
         return items.get(position);
     }
 

@@ -67,6 +67,9 @@ public class MyTeamActivity extends BaseActivity {
         @Override
         public void onTeamMemberChange(String team_id, List<String> memberIds) {
             getCaptianInfo(AppUtil.Group.GROUP_CAPTIAN);
+            items.clear();
+            adapter.notifyDataSetChanged();
+
             for ( i = 0; i <  memberIds.size(); i++) {
                 AsyncHttpClient gclient = new AsyncHttpClient();
                 RequestParams params = new RequestParams();
@@ -97,9 +100,8 @@ public class MyTeamActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lk_activity_my_team);
-        Log.d(TAG, "onCreate: getData 之前");
+
         getData();
-        Log.d(TAG, "onCreate: getData之后");
         mBinder = (SharingService.SharingBinder)getIntent().getSerializableExtra(KEY_BINDER);
         mBinder.registerOnTeamMemberChangeListener(mOnTeamMemberChangeListener);
         //队伍群聊

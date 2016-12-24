@@ -2,6 +2,7 @@ package com.hyphenate.easeui.widget.chatrow;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.BaseAdapter;
@@ -21,6 +22,7 @@ import com.hyphenate.easeui.adapter.EaseMessageAdapter;
 import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.easeui.widget.EaseChatMessageList;
 import com.hyphenate.easeui.widget.EaseChatMessageList.MessageListItemClickListener;
+import com.hyphenate.easeui.widget.LoaderImage;
 import com.hyphenate.exceptions.HyphenateException;
 import com.hyphenate.util.DateUtils;
 
@@ -117,7 +119,15 @@ public abstract class EaseChatRow extends LinearLayout {
         }
         //set nickname and avatar
         if(message.direct() == Direct.SEND){
-            EaseUserUtils.setUserAvatar(context, EMClient.getInstance().getCurrentUser(), userAvatarView);
+            //EaseUserUtils.setUserAvatar(context, EMClient.getInstance().getCurrentUser(), userAvatarView);
+            LoaderImage loaderImage = null;
+            try {
+                loaderImage = new LoaderImage(context,userAvatarView,message.getStringAttribute("HeadImg"));
+                //Log.i("zhu", "setUp;send: "+message.getStringAttribute("HeadImg"));
+            } catch (HyphenateException e) {
+                e.printStackTrace();
+            }
+            loaderImage.start();
         }else{
             EaseUserUtils.setUserAvatar(context, message.getFrom(), userAvatarView);
             EaseUserUtils.setUserNick(message.getFrom(), usernickView);

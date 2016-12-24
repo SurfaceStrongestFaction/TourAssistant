@@ -507,8 +507,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
                         AppUtil.User.USER_GENDER = qqgender;
                         xyuser_id = qqresult;
                         USER_ID = qqresult;
-                        Log.i("zhu", "id"+USER_ID+":"+USER_PWD);
-                        signUp(USER_ID,USER_PWD);
+                        Log.i("zhu", "id"+USER_ID);
+                        signUp(USER_ID,"");
                         Toast.makeText(LoginActivity.this,"登录成功", Toast.LENGTH_LONG).show();
                         getTeamInfo();
                         Intent intent = new Intent(LoginActivity.this, LauncherActivity.class);

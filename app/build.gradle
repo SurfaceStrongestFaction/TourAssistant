@@ -70,12 +70,9 @@ dependencies {
     compile files('libs/libammsdk.jar')
     compile 'com.android.support:appcompat-v7:24.0.0'
     //compile files('libs/org.apache.http.legacy.jar')
-    compile files('libs/android-async-http-1.4.8.jar')
     compile project(path: ':easeUI_zhu')
     //compile files('libs/org.apache.http.legacy.jar')
-    compile files('libs/android-async-http-1.4.8.jar')
     compile 'com.squareup.okhttp3:okhttp:3.5.0'
     //compile files('libs/zxing.jar')
     compile project(path: ':QRCodeLibrary')
-    compile files('libs/universal-image-loader-1.9.5.jar')
 }

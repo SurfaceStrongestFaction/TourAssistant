@@ -13,6 +13,7 @@ import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -52,9 +53,18 @@ import com.hyphenate.easeui.widget.EaseChatInputMenu.ChatInputMenuListener;
 import com.hyphenate.easeui.widget.EaseChatMessageList;
 import com.hyphenate.easeui.widget.EaseVoiceRecorderView;
 import com.hyphenate.easeui.widget.EaseVoiceRecorderView.EaseVoiceRecorderCallback;
+import com.hyphenate.easeui.widget.LoaderImage;
 import com.hyphenate.easeui.widget.chatrow.EaseCustomChatRowProvider;
 import com.hyphenate.util.EMLog;
 import com.hyphenate.util.PathUtil;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.apache.http.Header;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.util.List;
@@ -182,14 +192,61 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
 
     protected void setUpView() {
         titleBar.setTitle(toChatUsername);
+        Log.i("zhu", "setUpView,toChatUsername: "+toChatUsername);
         if (chatType == EaseConstant.CHATTYPE_SINGLE) {
             // set title
-            if(EaseUserUtils.getUserInfo(toChatUsername) != null) {
+            Log.i("zhu", "chatType_single");
+            String url="http://139.199.28.184:8083/user/getInformation";
+            AsyncHttpClient gclient = new AsyncHttpClient();
+            RequestParams params = new RequestParams();
+            params.add("user_id",toChatUsername);
+            gclient.get(getContext(), url,params,new JsonHttpResponseHandler(){
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    super.onSuccess(statusCode, headers, response);
+                    try {
+                        Log.i("zhu", "HttpOnSuccess: "+response.getString("nick_name"));
+                        titleBar.setTitle(response.getString("nick_name"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                    super.onFailure(statusCode, headers, throwable, errorResponse);
+                }
+            });
+            /*if(EaseUserUtils.getUserInfo(toChatUsername) != null) {
                 EaseUser user = EaseUserUtils.getUserInfo(toChatUsername);
                 if (user != null) {
                     titleBar.setTitle(user.getNick());
+                    Log.i("zhu", "setUpView,getNick: "+user.getNick());
                 }
-            }
+            }*/
+            /*if(EaseUserUtils.getUserInfo(toChatUsername) != null) {
+                EaseUser user = EaseUserUtils.getUserInfo(toChatUsername);
+                String url="http://139.199.28.184:8083/user/getInformation";
+                AsyncHttpClient gclient = new AsyncHttpClient();
+                RequestParams params = new RequestParams();
+                params.add("user_id",user.getNick());
+                Log.i("zhu", "httpClient "+user.getNick());
+                gclient.get(getContext(), url,params,new JsonHttpResponseHandler(){
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                        super.onSuccess(statusCode, headers, response);
+                        try {
+                            Log.i("zhu", "HttpOnSuccess: "+response.getString("user_name"));
+                            titleBar.setTitle(response.getString("user_name"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                        super.onFailure(statusCode, headers, throwable, errorResponse);
+                    }
+                });
+            }*/
             titleBar.setRightImageResource(R.drawable.ease_mm_title_remove);
         } else {
         	titleBar.setRightImageResource(R.drawable.ease_to_group_details_normal);
@@ -240,7 +297,10 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
         EaseChatFragment.EaseChatFragmentHelper myHelper=new EaseChatFragmentHelper() {
             @Override
             public void onSetMessageAttributes(EMMessage message) {
-
+                //String sendHeadImg="http://img.blog.csdn.net/20161103094426509";
+                String receiveHeadImg="http://img.blog.csdn.net/20161103093824441";
+                //message.setAttribute("myHeadImg",sendHeadImg);
+                message.setAttribute("HeadImg",receiveHeadImg);
             }
 
             @Override

@@ -40,13 +40,19 @@ public class ECChatActivity extends AppCompatActivity {
 
 
 
-        /*//添加新成员按钮监听
+        //添加新成员按钮监听
         EaseChatFragment.EaseChatFragmentHelper myCharHelper = new EaseChatFragment.EaseChatFragmentHelper() {
             @Override
             public void onSetMessageAttributes(EMMessage message) {
                 //设置消息拓展
                 String name= AppUtil.User.USER_NAME;
+                //String receiveHeadImg="http://img.blog.csdn.net/20161103093824441";
+                String myHeadImg="http://img.blog.csdn.net/20161103094426509";
+                message.setAttribute("myHeadImg",myHeadImg);
+                //message.setAttribute("HeadImg",receiveHeadImg);
                 message.setAttribute("name",name);
+
+
             }
             //点击标题栏右侧图表
             @Override
@@ -93,7 +99,7 @@ public class ECChatActivity extends AppCompatActivity {
                 return null;
             }
         };
-        chatFragment.setChatFragmentListener(myCharHelper);*/
+        chatFragment.setChatFragmentListener(myCharHelper);
 
 
         initView();

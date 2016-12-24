@@ -36,6 +36,7 @@ public class AppUtil {
 
     public static final class Group {
         public static String GROUP_ID = "";
+        public static String CHAT_TEAM_ID="";
         public static String GROUP_NAME = "";
         public static String GROUP_CAPTIAN = "";
     }

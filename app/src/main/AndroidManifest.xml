@@ -125,8 +125,7 @@
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="lTm3oo5q4Mr4c1lYnUxGpUniVARYBDNV" />
-
+            android:value="sHp6knsRmIvOd9K3jeNdertbFNAwnGuO" />
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="2214f6ab633dcb98ae9dc3e06256b9b5" />

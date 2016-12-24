@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -63,32 +65,63 @@ public class MyTeamActivity extends BaseActivity {
     public MyTeamAdapter adapter;
     private ImageView back;
     public RelativeLayout add;
+
+    private String mWhenMemberChangeTeamId = "";
+    private List<String> mWhenMemberChangeIds = null;
+    private static final int WHAT_ON_MEMBER_CHANGE = 10288;
+
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case WHAT_ON_MEMBER_CHANGE: {
+                    if (null != mWhenMemberChangeIds) {
+                        Log.d(TAG, "onTeamMemberChange: executed!" + mWhenMemberChangeIds);
+                        getCaptianInfo(AppUtil.Group.GROUP_CAPTIAN);
+                        items.clear();
+                        adapter.notifyDataSetChanged();
+
+                        for (i = 0; i < mWhenMemberChangeIds.size(); i++) {
+                            AsyncHttpClient gclient = new AsyncHttpClient();
+                            RequestParams params = new RequestParams();
+                            params.add("user_id", mWhenMemberChangeIds.get(i));
+                            gclient.get(getApplicationContext(), AppUtil.JFinalServer.xyurl, params, new JsonHttpResponseHandler() {
+                                @Override
+                                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                                    super.onSuccess(statusCode, headers, response);
+                                    try {
+                                        String n = response.getString("nick_name");
+                                        items.add(new MyTeamItem(AppUtil.User.USER_IMG, n));
+                                        adapter.notifyDataSetChanged();
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                                    super.onFailure(statusCode, headers, throwable, errorResponse);
+                                }
+                            });
+                        }
+                    }
+                } break;
+                default: break;
+            }
+        }
+    };
+
     private SharingService.OnTeamMemberChangeListener mOnTeamMemberChangeListener = new SharingService.OnTeamMemberChangeListener() {
         @Override
         public void onTeamMemberChange(String team_id, List<String> memberIds) {
-            getCaptianInfo(AppUtil.Group.GROUP_CAPTIAN);
-            for ( i = 0; i <  memberIds.size(); i++) {
-                AsyncHttpClient gclient = new AsyncHttpClient();
-                RequestParams params = new RequestParams();
-                params.add("user_id", memberIds.get(i));
-                gclient.get(getApplicationContext(),AppUtil.JFinalServer.xyurl,params,new JsonHttpResponseHandler(){
-                    @Override
-                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                        super.onSuccess(statusCode, headers, response);
-                        try {
-                            String n = response.getString("nick_name");
-                            items.add(new MyTeamItem(AppUtil.User.USER_IMG,n));
-                            adapter.notifyDataSetChanged();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    @Override
-                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                        super.onFailure(statusCode, headers, throwable, errorResponse);
-                    }
-                });
-            }
+            mWhenMemberChangeTeamId = team_id;
+            mWhenMemberChangeIds = memberIds;
+
+            Message msg = new Message();
+            msg.what = WHAT_ON_MEMBER_CHANGE;
+
+            mHandler.sendMessage(msg);
         }
     };
 
@@ -97,9 +130,8 @@ public class MyTeamActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lk_activity_my_team);
-        Log.d(TAG, "onCreate: getData 之前");
+
         getData();
-        Log.d(TAG, "onCreate: getData之后");
         mBinder = (SharingService.SharingBinder)getIntent().getSerializableExtra(KEY_BINDER);
         mBinder.registerOnTeamMemberChangeListener(mOnTeamMemberChangeListener);
         //队伍群聊

@@ -946,7 +946,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
                                 Toast.makeText(LoginActivity.this, "未知的服务器异常 code: " + i + ", message:" + s, Toast.LENGTH_LONG).show();
                                 break;
                             default:
-                                Toast.makeText(LoginActivity.this, "ml_sign_in_failed code: " + i + ", message:" + s, Toast.LENGTH_LONG).show();
+                                Log.d(TAG, "run: " + "ml_sign_in_failed code: " + i + ", message:" + s);
                                 break;
                         }
                     }

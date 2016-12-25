@@ -92,14 +92,16 @@ public class MyTeamActivity extends BaseActivity {
                         for (i = 0; i < mWhenMemberChangeIds.size(); i++) {
                             AsyncHttpClient gclient = new AsyncHttpClient();
                             RequestParams params = new RequestParams();
-                            params.add("user_id", mWhenMemberChangeIds.get(i));
+                            final String user_id = mWhenMemberChangeIds.get(i);
+                            params.add("user_id", user_id);
                             gclient.get(getApplicationContext(), AppUtil.JFinalServer.xyurl, params, new JsonHttpResponseHandler() {
                                 @Override
                                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                                     super.onSuccess(statusCode, headers, response);
                                     try {
-                                        String name = response.getString("nick_name");
-                                        items.add(new MyTeamItem(response.getString("head_pic"), name));
+                                        String nick_name = response.getString("nick_name");
+                                        String head_pic = response.getString("head_pic");
+                                        items.add(new MyTeamItem(head_pic, nick_name, user_id));
                                         adapter.notifyDataSetChanged();
                                     } catch (JSONException e) {
                                         e.printStackTrace();
@@ -137,6 +139,10 @@ public class MyTeamActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lk_activity_my_team);
+
+        lv = (ListView)findViewById(R.id.myTeam_listView);
+        adapter = new MyTeamAdapter(MyTeamActivity.this,items);
+        lv.setAdapter(adapter);
 
         getData();
         mBinder = (SharingService.SharingBinder)getIntent().getSerializableExtra(KEY_BINDER);
@@ -267,9 +273,6 @@ public class MyTeamActivity extends BaseActivity {
                     AppUtil.Group.CHAT_TEAM_ID=response.getString("chat_team_id");
                     setMembers(members);
 
-                    adapter = new MyTeamAdapter(MyTeamActivity.this,items);
-                    lv = (ListView)findViewById(R.id.myTeam_listView);
-                    lv.setAdapter(adapter);
                     setItemClick();
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -284,23 +287,29 @@ public class MyTeamActivity extends BaseActivity {
     }
 
     private void setMembers(String members) {
-        names = members.split("\\,");
+        names = members.split(",");
+
         for ( i = 0; i < names.length; i++) {
             AsyncHttpClient gclient = new AsyncHttpClient();
             RequestParams params = new RequestParams();
-            params.add("user_id",names[i]);
-            gclient.get(getApplicationContext(),AppUtil.JFinalServer.xyurl,params,new JsonHttpResponseHandler(){
+
+            final String user_id = names[i];
+            params.add("user_id",user_id);
+
+            gclient.get(getApplicationContext(), AppUtil.JFinalServer.xyurl, params, new JsonHttpResponseHandler(){
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     super.onSuccess(statusCode, headers, response);
                     try {
-                        String n = response.getString("nick_name");
-                        items.add(new MyTeamItem(response.getString("head_pic"),n));
+                        String nick_name = response.getString("nick_name");
+                        String head_pic = response.getString("head_pic");
+                        items.add(new MyTeamItem(head_pic, nick_name, user_id));
                         adapter.notifyDataSetChanged();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
+
                 @Override
                 public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
                     super.onFailure(statusCode, headers, throwable, errorResponse);
@@ -354,7 +363,7 @@ public class MyTeamActivity extends BaseActivity {
                 startActivity(i);*/
                 //点击队伍成员列表跳转到队伍成员页
                 Intent intent =new Intent(MyTeamActivity.this,TeamMemberActivity.class);
-                intent.putExtra("memberId",names[position]);
+                intent.putExtra("memberId",items.get(position).getUserId());
                 startActivity(intent);
                 //TeamMemberActivity.actionStartActivity(MyTeamActivity.this);
                 overridePendingTransition(R.anim.push_up_in,R.anim.push_up_out);

@@ -71,6 +71,12 @@ public class MyTeamActivity extends BaseActivity {
     private List<String> mWhenMemberChangeIds = null;
     private static final int WHAT_ON_MEMBER_CHANGE = 10288;
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mBinder.unregisterOnTeamMemberChangeListener(mOnTeamMemberChangeListener);
+    }
+
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {

@@ -75,4 +75,6 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.5.0'
     //compile files('libs/zxing.jar')
     compile project(path: ':QRCodeLibrary')
+    compile files('libs/universal-image-loader-1.9.5.jar')
+    compile 'com.luolc:emoji-rain:0.1.1'
 }

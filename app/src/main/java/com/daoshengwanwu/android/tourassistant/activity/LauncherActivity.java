@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.daoshengwanwu.android.tourassistant.R;
 import com.hyphenate.chat.EMClient;
@@ -131,8 +132,7 @@ public class LauncherActivity extends BaseActivity {
     }
 
     private class OnTabClickListener implements View.OnClickListener {
-        @Override
-        public void onClick(View view) {
+        private void clearIcon() {
             mTabsHomeImg.setImageResource(R.drawable.home);
             mTabsMapImg.setImageResource(R.drawable.map);;
             mTabsRanksImg.setImageResource(R.drawable.ranks);;
@@ -141,9 +141,14 @@ public class LauncherActivity extends BaseActivity {
             mTabsMapText.setTextColor(ContextCompat.getColor(LauncherActivity.this, R.color.bhr_tabs_text_color));
             mTabsRanksText.setTextColor(ContextCompat.getColor(LauncherActivity.this, R.color.bhr_tabs_text_color));
             mTabsMyText.setTextColor(ContextCompat.getColor(LauncherActivity.this, R.color.bhr_tabs_text_color));
+        }
 
+        @Override
+        public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.tabs_home_page:
+                    clearIcon();
+
                     mTabsHomeImg.setImageResource(R.drawable.home1);
                     mTabsHomeText.setTextColor(ContextCompat.getColor(LauncherActivity.this, R.color.bhr_tabs_green));
 
@@ -160,6 +165,8 @@ public class LauncherActivity extends BaseActivity {
                     mFragmentManager.beginTransaction().replace(R.id.launcher_fragment_container, mHomeFragment).commit();
                     break;
                 case R.id.tabs_map_page:
+                    clearIcon();
+
                     mTabsMapImg.setImageResource(R.drawable.map1);
                     mTabsMapText.setTextColor(ContextCompat.getColor(LauncherActivity.this, R.color.bhr_tabs_green));
 
@@ -169,10 +176,18 @@ public class LauncherActivity extends BaseActivity {
                         break;
                     }
 
-                    mMapsFragment = MapsFragment.newInstance(mSharingBinder, mMapsFragmentSaveData);
+                    mMapsFragment = MapsFragment.newInstance(mSharingBinder, mMapsFragmentSaveData, "abcd");
                     mFragmentManager.beginTransaction().replace(R.id.launcher_fragment_container, mMapsFragment).commit();
                     break;
                 case R.id.tabs_ranks_page:
+                    //进入队伍页面时首先要登录
+                    String user_id = AppUtil.User.USER_ID;
+                    if (null == user_id || user_id.equals("") || user_id.equals("null")) {
+                        Toast.makeText(LauncherActivity.this, "请先登录再使用队伍功能", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+
+                    clearIcon();
                     mTabsRanksImg.setImageResource(R.drawable.ranks1);
                     mTabsRanksText.setTextColor(ContextCompat.getColor(LauncherActivity.this, R.color.bhr_tabs_green));
 
@@ -201,6 +216,8 @@ public class LauncherActivity extends BaseActivity {
                         LoginActivity.actionStartActivity(LauncherActivity.this);
                         overridePendingTransition(R.anim.push_up_in,R.anim.push_up_out);
                     } else {
+                        clearIcon();
+
                         //说明已经登录，进入我的界面
                         if (fragment instanceof MeFragment) {
                             break;

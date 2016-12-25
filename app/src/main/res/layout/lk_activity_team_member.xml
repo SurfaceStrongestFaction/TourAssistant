@@ -52,7 +52,7 @@
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:src="@drawable/woman"
+                    android:src="@drawable/man"
                     android:id="@+id/sex"
                     android:layout_marginTop="60dp"
                     android:layout_marginLeft="85dp"

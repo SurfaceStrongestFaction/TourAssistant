@@ -2,6 +2,7 @@ package com.daoshengwanwu.android.tourassistant.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,7 +11,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.daoshengwanwu.android.tourassistant.R;
-import com.daoshengwanwu.android.tourassistant.item.team.MyTeamItem;
 import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
 import com.daoshengwanwu.android.tourassistant.utils.LoaderImage;
 import com.daoshengwanwu.android.tourassistant.view.CircleImageView;
@@ -23,12 +23,14 @@ import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 public class TeamMemberActivity extends BaseActivity {
     private static final String EXTRA_USER_NAME = "SecondActivity.EXTRA_USER_NAME";
     private ImageView back;
+    private ImageView myGender;
+    private String sex="";
     private Button button1;
+    private Button btnCall;
     private String memberId;
     private TextView memberName1;
     private TextView memberName2;
@@ -53,6 +55,10 @@ public class TeamMemberActivity extends BaseActivity {
                     memberName1.setText(response.getString("nick_name"));
                     memberName2.setText(response.getString("nick_name"));
                     memberTell.setText(response.getString("tel"));
+                    sex=response.getString("sex");
+                    if(sex.equals("女")){
+                        myGender.setImageResource(R.drawable.woman);
+                    }
                     LoaderImage loaderImage=new LoaderImage(TeamMemberActivity.this,memberPic,response.getString("head_pic"));
                     loaderImage.start();
                 } catch (JSONException e) {
@@ -94,15 +100,29 @@ public class TeamMemberActivity extends BaseActivity {
 
             }
         });
+
+        btnCall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent();
+                i.setAction( Intent.ACTION_CALL );
+                //i.setData( Uri.parse( "tel:10086" ) );
+                i.setData(Uri.parse("tel:"+memberTell.getText()));
+                startActivity( i );
+            }
+        });
     }
 
     private void initView() {
         memberName1=(TextView) findViewById(R.id.team_member_name1);
         memberName2=(TextView) findViewById(R.id.team_member_name2);
         button1=(Button)findViewById(R.id.myTeam_button1);
+        btnCall=(Button)findViewById(R.id.myTeam_button2);
         back=(ImageView)findViewById(R.id.activity_team_member_back);
         memberTell=(TextView)findViewById(R.id.Team_member_tell);
         memberPic=(CircleImageView)findViewById(R.id.activity_team_member_pic);
+        myGender=(ImageView)findViewById(R.id.sex);
+
     }
 
     public static  void actionStartActivity(Context packageContext) {

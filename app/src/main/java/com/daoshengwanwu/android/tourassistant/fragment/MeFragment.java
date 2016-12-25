@@ -13,6 +13,7 @@ import com.daoshengwanwu.android.tourassistant.R;
 import com.daoshengwanwu.android.tourassistant.activity.PersonalDataActivity;
 import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
 import com.daoshengwanwu.android.tourassistant.view.CircleImageView;
+import com.hyphenate.easeui.widget.LoaderImage;
 
 
 public class MeFragment extends Fragment{
@@ -22,9 +23,12 @@ public class MeFragment extends Fragment{
         View view = inflater.inflate(R.layout.jiangshengda_layout_me, container, false);
         TextView tv = (TextView)view.findViewById(R.id.mName);
         CircleImageView cv = (CircleImageView)view.findViewById(R.id.mImg);
+        LoaderImage loaderImage=new LoaderImage(getActivity(),cv,AppUtil.User.USER_IMG);
+        loaderImage.start();
         ImageView iv = (ImageView)view.findViewById(R.id.mGender);
         tv.setText(AppUtil.User.USER_NAME);
-        cv.setImageBitmap(AppUtil.User.USER_IMG);
+        //zhu ImageView
+        //cv.setImageBitmap(AppUtil.User.USER_IMG);
         if(AppUtil.User.USER_GENDER.equals("女")){
             iv.setImageResource(R.drawable.woman);
         }

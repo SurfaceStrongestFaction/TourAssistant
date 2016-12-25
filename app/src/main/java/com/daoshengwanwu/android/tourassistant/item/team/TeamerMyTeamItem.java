@@ -6,19 +6,19 @@ import android.graphics.Bitmap;
  * Created by LK on 2016/11/22.
  */
 public class TeamerMyTeamItem {
-    private Bitmap pic;
+    private String pic;
     private String name;
 
-    public TeamerMyTeamItem(Bitmap pic, String name) {
+    public TeamerMyTeamItem(String pic, String name) {
         this.pic = pic;
         this.name = name;
     }
 
-    public Bitmap getPic() {
+    public String getPic() {
         return pic;
     }
 
-    public void setPic(Bitmap pic) {
+    public void setPic(String pic) {
         this.pic = pic;
     }
 

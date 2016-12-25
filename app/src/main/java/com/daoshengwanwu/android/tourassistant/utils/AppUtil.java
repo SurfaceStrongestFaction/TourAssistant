@@ -25,13 +25,15 @@ public class AppUtil {
         public static final String xyurl = "http://"+AppUtil.JFinalServer.HOST+":"+AppUtil.JFinalServer.PORT+ "/user/getInformation";
         public static final String xyurl2 = "http://"+AppUtil.JFinalServer.HOST+":"+AppUtil.JFinalServer.PORT+ "/team/getInformation";
         public static final String xyurl3 = "http://"+AppUtil.JFinalServer.HOST+":"+AppUtil.JFinalServer.PORT+ "/team/joinTeam";
+        public static final String xyurl4 = "http://"+AppUtil.JFinalServer.HOST+":"+AppUtil.JFinalServer.PORT+ "/user/editHeadPic";
     }
 
     public static final class User {
         public static String USER_ID = "";
         public static String USER_NAME = "";
-        public static Bitmap USER_IMG = null;
+        public static String USER_IMG = "";
         public static String USER_GENDER = "";
+
     }
 
     public static final class Group {

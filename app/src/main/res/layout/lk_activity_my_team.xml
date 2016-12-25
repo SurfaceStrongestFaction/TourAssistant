@@ -131,7 +131,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:id="@+id/myTeam_leader"
+                android:id="@+id/team_captain"
                 android:text="白浩然"
                 android:textSize="18sp"
                 android:textColor="#4d4d4d"/>

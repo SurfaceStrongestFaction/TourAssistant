@@ -7,9 +7,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+//import android.graphics.Bitmap;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
@@ -30,6 +32,7 @@ import com.daoshengwanwu.android.tourassistant.model.Userty;
 import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
 import com.daoshengwanwu.android.tourassistant.utils.HttpCallBackListener;
 import com.daoshengwanwu.android.tourassistant.utils.HttpUtil;
+import com.daoshengwanwu.android.tourassistant.utils.LoaderImage;
 import com.daoshengwanwu.android.tourassistant.utils.PrefParams;
 import com.daoshengwanwu.android.tourassistant.view.CircleImageView;
 import com.hyphenate.EMCallBack;
@@ -61,6 +64,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -341,24 +348,22 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
     }
 
     private void getTeamInfo() {
-        if(!GROUP_ID.equals("")) {
+        if(GROUP_ID.equals("")) {
             RequestParams params1 = new RequestParams();
             params1.add("team_id", GROUP_ID);
             // 2.关闭弹出窗口
             //3.根据服务器返回值显示创建成功或失败的提示
-
             if (!AppUtil.User.USER_ID.equals("")) {
                 AsyncHttpClient gclient = new AsyncHttpClient();
                 RequestParams params = new RequestParams();
                 params.add("user_id", xyuser_id);
-                gclient.get(getApplicationContext(), xyurl, params, new JsonHttpResponseHandler() {
+                gclient.get(getApplicationContext(), AppUtil.JFinalServer.xyurl, params, new JsonHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                         super.onSuccess(statusCode, headers, response);
                         try {
                             String team_id = response.getString("team_id");
                             GROUP_ID = team_id;
-                            AppUtil.Group.CHAT_TEAM_ID=response.getString("chat_team_id");
                             getTeamNameInfo();
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -367,7 +372,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 
                     @Override
                     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                        Toast.makeText(LoginActivity.this, "Team_id获取失败" + AppUtil.Group.GROUP_NAME, Toast.LENGTH_SHORT).show();
                         super.onFailure(statusCode, headers, throwable, errorResponse);
                     }
                 });
@@ -420,22 +424,24 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
         AsyncHttpClient gclient2 = new AsyncHttpClient();
         RequestParams params = new RequestParams();
         params.add("team_id", GROUP_ID);
-        gclient2.get(getApplicationContext(),xyurl2,params,new JsonHttpResponseHandler(){
+        gclient2.get(getApplicationContext(),AppUtil.JFinalServer.xyurl2,params,new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 try {
                     String team_name = response.getString("name");
                     AppUtil.Group.GROUP_NAME = team_name;
+                    AppUtil.Group.GROUP_CAPTIAN=response.getString("captain");
+                    AppUtil.Group.CHAT_TEAM_ID=response.getString("chat_team_id");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
-
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
-                Toast.makeText(LoginActivity.this, "Team_name获取失败" + AppUtil.Group.GROUP_NAME, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(LoginActivity.this, "Team_name获取失败" + AppUtil.Group.GROUP_NAME, Toast.LENGTH_SHORT).show();
+                Log.i("test1", "Team_name获取失败");
             }
         });
     }
@@ -515,7 +521,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
                         Intent intent = new Intent(LoginActivity.this, LauncherActivity.class);
                         startActivity(intent);
                         finish();
-                        getTeamInfo();
                     }
                     @Override
                     public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
@@ -577,10 +582,43 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
         public void handleMessage(Message msg) {
             if (msg.what == 1) {
                 Bitmap bitmap = (Bitmap) msg.obj;
-                AppUtil.User.USER_IMG = bitmap;
+                File file= saveBitmap(bitmap);
+                AsyncHttpClient gclient = new AsyncHttpClient();
+                RequestParams params = new RequestParams();
+                params.put("user_id",AppUtil.User.USER_ID);
+                try {
+                    params.put("head_pic", file);
+                } catch (FileNotFoundException e) {
+                    Log.i("zhu", "async: ");
+                    e.printStackTrace();
+                }
+                //params.setContentEncoding("utf-8");
+                //必须用post请求 ！！
+                gclient.post(getApplicationContext(), AppUtil.JFinalServer.xyurl4, params,new JsonHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                        super.onSuccess(statusCode, headers, response);
+                        try {
+                            Log.i("zhu", "图片url：onSuccess: "+response.getString("head_pic"));
+                            AppUtil.User.USER_IMG=response.getString("head_pic");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                        super.onFailure(statusCode, headers, throwable, errorResponse);
+                        Log.i("zhu", "接口onFailure ");
+                    }
+
+
+                });
+
             }
         }
     };
+
+
 
     public static Bitmap getbitmap(String imageUri) {
         Log.v("Util", "getbitmap:" + imageUri);
@@ -905,7 +943,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
                                 Toast.makeText(LoginActivity.this, "未知的服务器异常 code: " + i + ", message:" + s, Toast.LENGTH_LONG).show();
                                 break;
                             default:
-                                Toast.makeText(LoginActivity.this, "ml_sign_in_failed code: " + i + ", message:" + s, Toast.LENGTH_LONG).show();
+                                Log.d(TAG, "run: " + "ml_sign_in_failed code: " + i + ", message:" + s);
                                 break;
                         }
                     }
@@ -917,5 +955,72 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 
             }
         });
+    }
+    public File saveBitmap(Bitmap bm) {
+        Log.i("zhu", "file路径"+AppUtil.User.USER_ID);
+        while(AppUtil.User.USER_ID.isEmpty()){
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        /*String path = getSDPath() +"/Movies/";
+        File f = new File(path);
+        if(!f.exists()){
+            f.mkdir();
+        }
+        File myCaptureFile = new File(path + AppUtil.User.USER_ID);
+        *//*try {
+            BufferedOutputStream  bos = new BufferedOutputStream(new FileOutputStream(myCaptureFile));
+            bm.compress(Bitmap.CompressFormat.JPEG, 80, bos);
+            bos.flush();
+            bos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*//*
+
+        try {
+                FileOutputStream out = new FileOutputStream(myCaptureFile);
+                Log.i("zhu", "file流传输");
+                bm.compress(Bitmap.CompressFormat.PNG, 90, out);
+                out.flush();
+                out.close();
+                Log.i("zhu", "file已经保存");
+            } catch (FileNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }*/
+        File appDir = new File(Environment.getExternalStorageDirectory(),"Boohee");
+        if (!appDir.exists()) {
+            appDir.mkdir();
+        }
+        String fileName = AppUtil.User.USER_ID +".jpg";
+        File file = new File(appDir, fileName);
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+            bm.compress(Bitmap.CompressFormat.JPEG, 70, fos);
+            fos.flush();
+            fos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return file;
+    }
+    public static String getSDPath(){
+        File sdDir = null;
+        boolean sdCardExist = Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED); //判断sd卡是否存在
+        if (sdCardExist)
+        {
+            sdDir = Environment.getExternalStorageDirectory();//获取跟目录
+        }
+        return sdDir.toString();
     }
 }

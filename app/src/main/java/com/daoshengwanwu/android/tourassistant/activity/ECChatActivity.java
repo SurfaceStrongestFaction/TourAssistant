@@ -46,13 +46,9 @@ public class ECChatActivity extends AppCompatActivity {
             public void onSetMessageAttributes(EMMessage message) {
                 //设置消息拓展
                 String name= AppUtil.User.USER_NAME;
-                //String receiveHeadImg="http://img.blog.csdn.net/20161103093824441";
-                String myHeadImg="http://img.blog.csdn.net/20161103094426509";
+                String myHeadImg=AppUtil.User.USER_IMG;
                 message.setAttribute("myHeadImg",myHeadImg);
-                //message.setAttribute("HeadImg",receiveHeadImg);
                 message.setAttribute("name",name);
-
-
             }
             //点击标题栏右侧图表
             @Override
@@ -68,10 +64,12 @@ public class ECChatActivity extends AppCompatActivity {
 
             @Override
             public void onAvatarClick(String username) {
-                Intent intent=new Intent(ECChatActivity.this,ECChatActivity.class);
-                intent.putExtra("userId",username);
-                intent.putExtra("chatType", EaseConstant.CHATTYPE_SINGLE);
-                startActivity(intent);
+                if(!username.equals(AppUtil.User.USER_ID)) {
+                    Intent intent = new Intent(ECChatActivity.this, ECChatActivity.class);
+                    intent.putExtra("userId", username);
+                    intent.putExtra("chatType", EaseConstant.CHATTYPE_SINGLE);
+                    startActivity(intent);
+                }
             }
 
             @Override

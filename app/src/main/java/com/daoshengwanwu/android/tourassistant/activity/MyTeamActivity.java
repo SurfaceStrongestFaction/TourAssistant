@@ -3,6 +3,7 @@ package com.daoshengwanwu.android.tourassistant.activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -91,8 +92,8 @@ public class MyTeamActivity extends BaseActivity {
                                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                                     super.onSuccess(statusCode, headers, response);
                                     try {
-                                        String n = response.getString("nick_name");
-                                        items.add(new MyTeamItem(AppUtil.User.USER_IMG, n));
+                                        String name = response.getString("nick_name");
+                                        items.add(new MyTeamItem(response.getString("head_pic"), name));
                                         adapter.notifyDataSetChanged();
                                     } catch (JSONException e) {
                                         e.printStackTrace();
@@ -288,7 +289,7 @@ public class MyTeamActivity extends BaseActivity {
                     super.onSuccess(statusCode, headers, response);
                     try {
                         String n = response.getString("nick_name");
-                        items.add(new MyTeamItem(AppUtil.User.USER_IMG,n));
+                        items.add(new MyTeamItem(response.getString("head_pic"),n));
                         adapter.notifyDataSetChanged();
                     } catch (JSONException e) {
                         e.printStackTrace();

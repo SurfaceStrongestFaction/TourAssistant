@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.daoshengwanwu.android.tourassistant.R;
 import com.daoshengwanwu.android.tourassistant.item.team.MyTeamItem;
+import com.hyphenate.easeui.widget.LoaderImage;
 
 import java.util.ArrayList;
 
@@ -44,7 +45,8 @@ public class MyTeamAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         convertView= LayoutInflater.from(context).inflate(R.layout.lk_activity_my_team_item,null);
         ImageView pic=(ImageView)convertView.findViewById(R.id.activity_my_team_item_pic);
-        pic.setImageBitmap(items.get(position).getPic());
+        LoaderImage loaderImage=new LoaderImage(context,pic,items.get(position).getPic());
+        loaderImage.start();
         TextView name=(TextView)convertView.findViewById(R.id.activity_my_team_item_text);
         name.setText(items.get(position).getName());
         return convertView;

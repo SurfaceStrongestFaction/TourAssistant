@@ -10,7 +10,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.daoshengwanwu.android.tourassistant.R;
-import com.daoshengwanwu.android.tourassistant.item.team.MyTeamItem;
 import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
 import com.daoshengwanwu.android.tourassistant.utils.LoaderImage;
 import com.daoshengwanwu.android.tourassistant.view.CircleImageView;
@@ -23,7 +22,6 @@ import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 public class TeamMemberActivity extends BaseActivity {
     private static final String EXTRA_USER_NAME = "SecondActivity.EXTRA_USER_NAME";

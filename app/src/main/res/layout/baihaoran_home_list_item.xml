@@ -50,12 +50,20 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:text="推荐指数"
+                    android:text="推荐指数:  "
+                    android:id="@+id/tuijianzhishu"
                     android:textSize="12sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
-
+                <RatingBar
+                    android:layout_marginStart="1dp"
+                    android:id="@+id/rating_bar"
+                    android:layout_toEndOf="@id/tuijianzhishu"
+                    android:numStars="10"
+                    style="?android:attr/ratingBarStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
             </RelativeLayout>
 
             <RelativeLayout

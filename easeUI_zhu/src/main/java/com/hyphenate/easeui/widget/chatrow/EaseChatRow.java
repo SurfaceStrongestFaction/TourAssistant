@@ -128,7 +128,14 @@ public abstract class EaseChatRow extends LinearLayout {
                 e.printStackTrace();
             }
         }else{
-            EaseUserUtils.setUserAvatar(context, message.getFrom(), userAvatarView);
+            //EaseUserUtils.setUserAvatar(context, message.getFrom(), userAvatarView);
+            try {
+                LoaderImage loaderImage = new LoaderImage(context,userAvatarView,message.getStringAttribute("myHeadImg"));
+                loaderImage.start();
+                //Log.i("zhu", "setUp;send: "+message.getStringAttribute("HeadImg"));
+            } catch (HyphenateException e) {
+                e.printStackTrace();
+            }
             //EaseUserUtils.setUserNick(message.getFrom(), usernickView);
             /*LoaderImage loaderImage = null;
             try {

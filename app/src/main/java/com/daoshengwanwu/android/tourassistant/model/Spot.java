@@ -3,32 +3,46 @@ package com.daoshengwanwu.android.tourassistant.model;
 
 public class Spot {
     private String mId;
-    private int mDrawableResId;
+    private String mImgUrl;
+    private String mLargeImg;
     private String mSpotName;
     private String mSpotEnName;
     private int mRecommandNum;
     private int mDistance;
 
 
-    public Spot(String spot_id, int drawableResId) {
-        this(spot_id, drawableResId, "", "", 0, 0);
+    public Spot(String spot_id, String imgUrl, String largeImg) {
+        this(spot_id, imgUrl, largeImg, "", "", 0, 0);
     }
 
-    public Spot(String spot_id, int drawableResId, String spotName, String spotEnName, int recommandNum, int distance) {
+    public Spot(String spot_id, String imgUrl, String largeImg, String spotName, String spotEnName, int recommandNum, int distance) {
         mId = spot_id;
-        mDrawableResId = drawableResId;
+        mImgUrl = imgUrl;
         mSpotName = spotName;
         mSpotEnName = spotEnName;
         mRecommandNum = recommandNum;
+        mLargeImg = largeImg;
         mDistance = distance;
     }
 
-    public int getDrawableResId() {
-        return mDrawableResId;
+    public String getImgUrl() {
+        return mImgUrl;
     }
 
-    public void setDrawableResId(int drawableResId) {
-        mDrawableResId = drawableResId;
+    public void setImgUrl(String imgUrl) {
+        mImgUrl = imgUrl;
+    }
+
+    public void setId(String id) {
+        mId = id;
+    }
+
+    public String getLargeImg() {
+        return mLargeImg;
+    }
+
+    public void setLargeImg(String largeImg) {
+        mLargeImg = largeImg;
     }
 
     public String getSpotName() {

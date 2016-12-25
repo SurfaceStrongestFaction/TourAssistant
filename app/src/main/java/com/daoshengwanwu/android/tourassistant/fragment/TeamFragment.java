@@ -201,9 +201,7 @@ public class TeamFragment extends Fragment {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
-
-    {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         String addTeam_id = data.getStringExtra("RESULT_QRCODE_STRING");
         // 根据上面发送过去的请求吗来区别
         switch (requestCode) {

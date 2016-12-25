@@ -140,8 +140,8 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
                     super.onSuccess(statusCode, headers, response);
                     try {
                         Log.i("zhu", "HttpOnSuccess: "+response.getString("nick_name"));
-                        EaseUserUtils.setUserAvatar(getContext(), username, holderTemp.avatar);
-                        //EaseUserUtils.setAvatar(getContext(), username,response.getString("head_pic"), holderTemp.avatar);
+                        //EaseUserUtils.setUserAvatar(getContext(), username, holderTemp.avatar);
+                        EaseUserUtils.setAvatar(getContext(), username,response.getString("head_pic"), holderTemp.avatar);
                         EaseUserUtils.setUserNick(response.getString("nick_name"),holderTemp.name);
                     } catch (JSONException e) {
                         e.printStackTrace();

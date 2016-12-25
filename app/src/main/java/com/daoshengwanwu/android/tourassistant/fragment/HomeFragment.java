@@ -24,6 +24,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -159,6 +160,7 @@ public class HomeFragment extends Fragment {
         });
 
         getDataFromServer();
+
 
         return v;
     }
@@ -350,6 +352,7 @@ public class HomeFragment extends Fragment {
         private TextView mSpotEnName;
         private TextView mDistance;
         private String mSpotId;
+        private RatingBar mRatingBar;
 
 
         public SpotHolder(View itemView) {
@@ -359,6 +362,8 @@ public class HomeFragment extends Fragment {
             mSpotName = (TextView)itemView.findViewById(R.id.bhr_home_spot_name);
             mSpotEnName = (TextView)itemView.findViewById(R.id.bhr_home_en_spot_name);
             mDistance = (TextView)itemView.findViewById(R.id.bhr_home_distance);
+            mRatingBar = (RatingBar)itemView.findViewById(R.id.rating_bar);
+
 
             //获取手机屏幕宽度
             WindowManager winMan = getActivity().getWindowManager();
@@ -394,6 +399,7 @@ public class HomeFragment extends Fragment {
             mSpotEnName.setText(spot.getSpotEnName());
             mDistance.setText("距离：" + spot.getDistance());
             mSpotId = spot.getId();
+            mRatingBar.setRating(spot.getRecommandNum() * 2.0f);
         }
 
         @Override

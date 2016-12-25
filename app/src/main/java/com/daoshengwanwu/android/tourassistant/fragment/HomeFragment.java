@@ -27,7 +27,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.daoshengwanwu.android.tourassistant.R;
@@ -40,6 +39,8 @@ import com.example.www.library.PullToRefreshView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
 
@@ -87,7 +88,19 @@ public class HomeFragment extends Fragment {
             switch (msg.what) {
                 case WHAT_NOTIFY: {
                     mRecyclerView.getAdapter().notifyDataSetChanged();
-                } break;
+
+                    int imgNum = mListData.size() / 3;
+                    imgNum = 4 < imgNum ? 4 : imgNum;
+
+                    List<Integer> imgs = new ArrayList<>();
+                    imgs.add(R.drawable.wuzhen3);
+                    imgs.add(R.drawable.summerpalace3);
+                    imgs.add(R.drawable.forbiddencty3);
+
+                    mBanner.setImages(imgs);
+                    Log.d(TAG, "handleMessage: imgs:" + imgs);
+                    mBanner.start();
+                } return;
                 default: break;
             }
 
@@ -103,6 +116,13 @@ public class HomeFragment extends Fragment {
 
         getWidgetsReferences(v);
         initView();
+
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getContext())
+                .threadPriority(Thread.NORM_PRIORITY - 2)
+                .denyCacheImageMultipleSizesInMemory()
+                .tasksProcessingOrder(QueueProcessingType.LIFO)
+                .build();
+        com.nostra13.universalimageloader.core.ImageLoader.getInstance().init(config);
 
         new Thread() {
             @Override
@@ -179,18 +199,16 @@ public class HomeFragment extends Fragment {
                                 Response okResponse = okClient.newCall(request).execute();
                                 JSONObject response = new JSONObject(okResponse.body().string());
                                 Log.d(TAG, "run: response:" + response);
-                                Spot spot = new Spot(spot_id, R.drawable.gugong);
-                                Log.d(TAG, "onSuccess: response:" + response);
                                 try {
+                                    Spot spot = new Spot(spot_id, response.getString("recommend_imgs"), response.getString("imgs"));
                                     spot.setSpotName(response.getString("cn_name"));
                                     spot.setSpotEnName(response.getString("en_name"));
                                     spot.setDistance(100);
                                     spot.setRecommandNum(Integer.parseInt(response.getString("recommend_index")));
+                                    mListData.add(spot);
                                 } catch (JSONException e) {
                                             e.printStackTrace();
                                 }
-
-                                mListData.add(spot);
                                 Log.d(TAG, "onSuccess: mListDataSize:" + mListData.size());
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -266,11 +284,10 @@ public class HomeFragment extends Fragment {
 
         //设置Banner轮播图
         mBanner.setImageLoader(new GlideImageLoader());
-        List<Integer> images = new ArrayList<>();
-        images.add(R.drawable.banner_1);
-        images.add(R.drawable.banner_2);
-        mBanner.setImages(images);
-        mBanner.start();
+//        List<Integer> images = new ArrayList<>();
+//        images.add(R.drawable.banner_1);
+//        images.add(R.drawable.banner_2);
+//        mBanner.setImages(images);
 
         //设置scroll的drawableEnd
         lineHeight = DisplayUtil.getTextHeight(getActivity(), 18.0f);
@@ -372,7 +389,7 @@ public class HomeFragment extends Fragment {
         }
 
         public void bindData(Spot spot) {
-            mItemImg.setImageResource(spot.getDrawableResId());
+            com.nostra13.universalimageloader.core.ImageLoader.getInstance().displayImage(spot.getImgUrl(), mItemImg);
             mSpotName.setText(spot.getSpotName());
             mSpotEnName.setText(spot.getSpotEnName());
             mDistance.setText("距离：" + spot.getDistance());

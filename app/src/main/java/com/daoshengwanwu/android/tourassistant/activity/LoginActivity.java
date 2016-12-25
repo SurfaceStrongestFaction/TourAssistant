@@ -348,24 +348,22 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
     }
 
     private void getTeamInfo() {
-        if(!GROUP_ID.equals("")) {
+        if(GROUP_ID.equals("")) {
             RequestParams params1 = new RequestParams();
             params1.add("team_id", GROUP_ID);
             // 2.关闭弹出窗口
             //3.根据服务器返回值显示创建成功或失败的提示
-
             if (!AppUtil.User.USER_ID.equals("")) {
                 AsyncHttpClient gclient = new AsyncHttpClient();
                 RequestParams params = new RequestParams();
                 params.add("user_id", xyuser_id);
-                gclient.get(getApplicationContext(), xyurl, params, new JsonHttpResponseHandler() {
+                gclient.get(getApplicationContext(), AppUtil.JFinalServer.xyurl, params, new JsonHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                         super.onSuccess(statusCode, headers, response);
                         try {
                             String team_id = response.getString("team_id");
                             GROUP_ID = team_id;
-                            AppUtil.Group.CHAT_TEAM_ID=response.getString("chat_team_id");
                             getTeamNameInfo();
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -374,7 +372,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 
                     @Override
                     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                        Toast.makeText(LoginActivity.this, "Team_id获取失败" + AppUtil.Group.GROUP_NAME, Toast.LENGTH_SHORT).show();
                         super.onFailure(statusCode, headers, throwable, errorResponse);
                     }
                 });
@@ -427,22 +424,24 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
         AsyncHttpClient gclient2 = new AsyncHttpClient();
         RequestParams params = new RequestParams();
         params.add("team_id", GROUP_ID);
-        gclient2.get(getApplicationContext(),xyurl2,params,new JsonHttpResponseHandler(){
+        gclient2.get(getApplicationContext(),AppUtil.JFinalServer.xyurl2,params,new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 try {
                     String team_name = response.getString("name");
                     AppUtil.Group.GROUP_NAME = team_name;
+                    AppUtil.Group.GROUP_CAPTIAN=response.getString("captain");
+                    AppUtil.Group.CHAT_TEAM_ID=response.getString("chat_team_id");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
-
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
-                Toast.makeText(LoginActivity.this, "Team_name获取失败" + AppUtil.Group.GROUP_NAME, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(LoginActivity.this, "Team_name获取失败" + AppUtil.Group.GROUP_NAME, Toast.LENGTH_SHORT).show();
+                Log.i("test1", "Team_name获取失败");
             }
         });
     }
@@ -517,13 +516,11 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
                         USER_ID = qqresult;
                         Log.i("zhu", "id"+USER_ID);
                         signUp(USER_ID,"");
-
                         Toast.makeText(LoginActivity.this,"登录成功", Toast.LENGTH_LONG).show();
                         getTeamInfo();
                         Intent intent = new Intent(LoginActivity.this, LauncherActivity.class);
                         startActivity(intent);
                         finish();
-                        getTeamInfo();
                     }
                     @Override
                     public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {

@@ -160,7 +160,7 @@ public class MyTeamActivity extends BaseActivity {
                         if (AppUtil.Group.CHAT_TEAM_ID.equals("null")) {
                             //队伍名
 
-                            final String groupName = AppUtil.Group.GROUP_NAME+"zhu";
+                            final String groupName = AppUtil.Group.GROUP_NAME;
                             String desc = "队伍简介";//队伍简介app并无体现，但作为创建群聊参数传入
                             //String[] members = data.getStringArrayExtra("newmembers");
                             List<String> member = new ArrayList<String>();
@@ -247,8 +247,9 @@ public class MyTeamActivity extends BaseActivity {
                 super.onSuccess(statusCode, headers, response);
                 try {
                     username = response.getString("nick_name");
-                    TextView tv1 = (TextView) findViewById(R.id.myTeam_leader);
-                    tv1.setText(username);
+                    //zhu
+                    TextView teamCaptain = (TextView) findViewById(R.id.team_captain);
+                    teamCaptain.setText(username);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -329,6 +330,8 @@ public class MyTeamActivity extends BaseActivity {
         });
         TextView tv = (TextView) findViewById(R.id.myTeam_name);
         tv.setText(AppUtil.Group.GROUP_NAME);
+        TextView teamCaptain = (TextView) findViewById(R.id.team_captain);
+        teamCaptain.setText(AppUtil.Group.GROUP_CAPTIAN);
         getCaptianInfo(AppUtil.Group.GROUP_CAPTIAN);
         getMembersInfo(AppUtil.Group.GROUP_ID);
 

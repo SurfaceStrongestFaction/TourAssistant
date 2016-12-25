@@ -24,6 +24,7 @@ import com.daoshengwanwu.android.tourassistant.item.team.MyTeamItem;
 import com.daoshengwanwu.android.tourassistant.model.CreateQRImageTest;
 import com.daoshengwanwu.android.tourassistant.service.SharingService;
 import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
+import com.daoshengwanwu.android.tourassistant.utils.AppUtil.Group;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMGroup;
 import com.hyphenate.chat.EMGroupManager;
@@ -85,35 +86,56 @@ public class MyTeamActivity extends BaseActivity {
                 case WHAT_ON_MEMBER_CHANGE: {
                     if (null != mWhenMemberChangeIds) {
                         Log.d(TAG, "onTeamMemberChange: executed!" + mWhenMemberChangeIds);
-                        getCaptianInfo(AppUtil.Group.GROUP_CAPTIAN);
-                        items.clear();
-                        adapter.notifyDataSetChanged();
 
-                        for (i = 0; i < mWhenMemberChangeIds.size(); i++) {
-                            AsyncHttpClient gclient = new AsyncHttpClient();
-                            RequestParams params = new RequestParams();
-                            final String user_id = mWhenMemberChangeIds.get(i);
-                            params.add("user_id", user_id);
-                            gclient.get(getApplicationContext(), AppUtil.JFinalServer.xyurl, params, new JsonHttpResponseHandler() {
-                                @Override
-                                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                                    super.onSuccess(statusCode, headers, response);
-                                    try {
-                                        String nick_name = response.getString("nick_name");
-                                        String head_pic = response.getString("head_pic");
-                                        items.add(new MyTeamItem(head_pic, nick_name, user_id));
-                                        adapter.notifyDataSetChanged();
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
+                        AsyncHttpClient client = new AsyncHttpClient();
+                        RequestParams params = new RequestParams();
+
+                        params.add("team_id", Group.GROUP_ID);
+                        client.get(getApplicationContext(), "http://139.199.28.184:8083/team/getInformation", params, new JsonHttpResponseHandler(){
+                            @Override
+                            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                                super.onSuccess(statusCode, headers, response);
+                                try {
+                                    Group.CHAT_TEAM_ID = response.getString("chat_team_id");
+                                    Group.GROUP_NAME = response.getString("name");
+                                    Group.GROUP_CAPTIAN = response.getString("captain");
+
+                                    ((TextView)findViewById(R.id.myTeam_name)).setText(Group.GROUP_NAME);
+                                    getCaptianInfo(Group.GROUP_CAPTIAN);
+                                    items.clear();
+                                    adapter.notifyDataSetChanged();
+
+                                    for (i = 0; i < mWhenMemberChangeIds.size(); i++) {
+                                        AsyncHttpClient gclient = new AsyncHttpClient();
+                                        RequestParams pparams = new RequestParams();
+                                        final String user_id = mWhenMemberChangeIds.get(i);
+                                        pparams.add("user_id", user_id);
+                                        gclient.get(getApplicationContext(), AppUtil.JFinalServer.xyurl, pparams, new JsonHttpResponseHandler() {
+                                            @Override
+                                            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                                                super.onSuccess(statusCode, headers, response);
+                                                try {
+                                                    String nick_name = response.getString("nick_name");
+                                                    String head_pic = response.getString("head_pic");
+                                                    items.add(new MyTeamItem(head_pic, nick_name, user_id));
+                                                    adapter.notifyDataSetChanged();
+                                                } catch (JSONException e) {
+                                                    e.printStackTrace();
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                                                super.onFailure(statusCode, headers, throwable, errorResponse);
+                                            }
+                                        });
                                     }
-                                }
 
-                                @Override
-                                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                                    super.onFailure(statusCode, headers, throwable, errorResponse);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
                                 }
-                            });
-                        }
+                            }
+                        });
                     }
                 } break;
                 default: break;
@@ -140,6 +162,31 @@ public class MyTeamActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lk_activity_my_team);
 
+        //=====================白浩然=====================
+        AsyncHttpClient client = new AsyncHttpClient();
+        RequestParams params = new RequestParams();
+
+        params.add("team_id", Group.GROUP_ID);
+        client.get(getApplicationContext(), "http://139.199.28.184:8083/team/getInformation", params, new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                try {
+                    Group.CHAT_TEAM_ID = response.getString("chat_team_id").equals("null") ? "" : response.getString("chat_team_id");
+                    Group.GROUP_NAME = response.getString("name");
+                    Group.GROUP_CAPTIAN = response.getString("captain");
+
+                    doNext();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        //================================================
+    }
+
+    private void doNext() {
         lv = (ListView)findViewById(R.id.myTeam_listView);
         adapter = new MyTeamAdapter(MyTeamActivity.this,items);
         lv.setAdapter(adapter);
@@ -156,11 +203,11 @@ public class MyTeamActivity extends BaseActivity {
                     @Override
                     public void run() {
                         super.run();
-                        Log.i("zhu", "创建队伍 "+AppUtil.Group.CHAT_TEAM_ID+TextUtils.isEmpty(AppUtil.Group.CHAT_TEAM_ID));
-                        if (AppUtil.Group.CHAT_TEAM_ID.equals("null")) {
+                        Log.i("zhu", "创建队伍 "+ Group.CHAT_TEAM_ID+TextUtils.isEmpty(Group.CHAT_TEAM_ID));
+                        if (Group.CHAT_TEAM_ID.equals("null")) {
                             //队伍名
 
-                            final String groupName = AppUtil.Group.GROUP_NAME;
+                            final String groupName = Group.GROUP_NAME;
                             String desc = "队伍简介";//队伍简介app并无体现，但作为创建群聊参数传入
                             //String[] members = data.getStringArrayExtra("newmembers");
                             List<String> member = new ArrayList<String>();
@@ -177,12 +224,12 @@ public class MyTeamActivity extends BaseActivity {
                                 option.style = EMGroupManager.EMGroupStyle.EMGroupStylePublicOpenJoin;
                                 Log.i("zhu", "创建队伍调用方法"+groupName);
                                 EMGroup myGroup = EMClient.getInstance().groupManager().createGroup(groupName, desc, members, reason, option);
-                                AppUtil.Group.CHAT_TEAM_ID = myGroup.getGroupId();
+                                Group.CHAT_TEAM_ID = myGroup.getGroupId();
                                 //创建成功后跳转到群聊页
-                                Log.i("zhu", "onActivityResult:CHAT_TEAM_ID " + AppUtil.Group.CHAT_TEAM_ID);
+                                Log.i("zhu", "onActivityResult:CHAT_TEAM_ID " + Group.CHAT_TEAM_ID);
                                 Intent intent = new Intent(MyTeamActivity.this, ECChatActivity.class);
                                 intent.putExtra("chatType", EaseConstant.CHATTYPE_GROUP);
-                                intent.putExtra("userId", AppUtil.Group.CHAT_TEAM_ID);
+                                intent.putExtra("userId", Group.CHAT_TEAM_ID);
                                 startActivity(intent);
                             } catch (final HyphenateException e) {
                                 runOnUiThread(new Runnable() {
@@ -194,15 +241,15 @@ public class MyTeamActivity extends BaseActivity {
                             }
                         }else
                         {
-                            Log.i("zhu", "创建队伍else "+AppUtil.Group.CHAT_TEAM_ID);
+                            Log.i("zhu", "创建队伍else "+ Group.CHAT_TEAM_ID);
                             try {
-                                EMClient.getInstance().groupManager().addUsersToGroup(AppUtil.Group.CHAT_TEAM_ID, names);
+                                EMClient.getInstance().groupManager().addUsersToGroup(Group.CHAT_TEAM_ID, names);
                             } catch (HyphenateException e) {
                                 e.printStackTrace();
                             }
                             Intent intent = new Intent(MyTeamActivity.this, ECChatActivity.class);
                             intent.putExtra("chatType", EaseConstant.CHATTYPE_GROUP);
-                            intent.putExtra("userId", AppUtil.Group.CHAT_TEAM_ID);
+                            intent.putExtra("userId", Group.CHAT_TEAM_ID);
                             startActivity(intent);
                         }
                     }
@@ -210,8 +257,8 @@ public class MyTeamActivity extends BaseActivity {
                 //保存myGroupId
                 AsyncHttpClient gclient = new AsyncHttpClient();
                 RequestParams params = new RequestParams();
-                params.add("team_id",AppUtil.Group.GROUP_ID);
-                params.add("chat_team_id",AppUtil.Group.CHAT_TEAM_ID);
+                params.add("team_id", Group.GROUP_ID);
+                params.add("chat_team_id", Group.CHAT_TEAM_ID);
                 gclient.get(getApplicationContext(),xyurl1,params,new JsonHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -227,7 +274,6 @@ public class MyTeamActivity extends BaseActivity {
                 });
             }
         });
-
     }
 
     public static  void actionStartActivity(Context packageContext) {
@@ -271,7 +317,7 @@ public class MyTeamActivity extends BaseActivity {
                 super.onSuccess(statusCode, headers, response);
                 try {
                     members = response.getString("members");
-                    AppUtil.Group.CHAT_TEAM_ID=response.getString("chat_team_id");
+                    Group.CHAT_TEAM_ID=response.getString("chat_team_id");
                     setMembers(members);
 
                     setItemClick();
@@ -328,12 +374,13 @@ public class MyTeamActivity extends BaseActivity {
                 MyTeamActivity.this.finish();
             }
         });
+
         TextView tv = (TextView) findViewById(R.id.myTeam_name);
-        tv.setText(AppUtil.Group.GROUP_NAME);
+        tv.setText(Group.GROUP_NAME);
         TextView teamCaptain = (TextView) findViewById(R.id.team_captain);
-        teamCaptain.setText(AppUtil.Group.GROUP_CAPTIAN);
-        getCaptianInfo(AppUtil.Group.GROUP_CAPTIAN);
-        getMembersInfo(AppUtil.Group.GROUP_ID);
+        teamCaptain.setText(Group.GROUP_CAPTIAN);
+        getCaptianInfo(Group.GROUP_CAPTIAN);
+        getMembersInfo(Group.GROUP_ID);
 
         btn2 = (Button)findViewById(R.id.myTeam_button2);
         transfer = (RelativeLayout)findViewById(R.id.myTeam_transfer);
@@ -349,7 +396,7 @@ public class MyTeamActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 ImageView img =  new ImageView(MyTeamActivity.this);
-                img.setImageBitmap(CreateQRImageTest.createQRImage(AppUtil.Group.GROUP_ID));
+                img.setImageBitmap(CreateQRImageTest.createQRImage(Group.GROUP_ID));
                 new  AlertDialog.Builder(MyTeamActivity.this)
                         .setView(img)
                         .setPositiveButton("确定" ,  null )

@@ -30,6 +30,7 @@ public class TeamMemberActivity extends BaseActivity {
     private static final String EXTRA_USER_NAME = "SecondActivity.EXTRA_USER_NAME";
     private ImageView back;
     private ImageView myGender;
+    private String sex="";
     private Button button1;
     private Button btnCall;
     private String memberId;
@@ -56,6 +57,10 @@ public class TeamMemberActivity extends BaseActivity {
                     memberName1.setText(response.getString("nick_name"));
                     memberName2.setText(response.getString("nick_name"));
                     memberTell.setText(response.getString("tel"));
+                    sex=response.getString("sex");
+                    if(sex.equals("女")){
+                        myGender.setImageResource(R.drawable.woman);
+                    }
                     LoaderImage loaderImage=new LoaderImage(TeamMemberActivity.this,memberPic,response.getString("head_pic"));
                     loaderImage.start();
                 } catch (JSONException e) {
@@ -119,9 +124,7 @@ public class TeamMemberActivity extends BaseActivity {
         memberTell=(TextView)findViewById(R.id.Team_member_tell);
         memberPic=(CircleImageView)findViewById(R.id.activity_team_member_pic);
         myGender=(ImageView)findViewById(R.id.sex);
-        if(AppUtil.User.USER_GENDER.equals("女")){
-            myGender.setImageResource(R.drawable.woman);
-        }
+
     }
 
     public static  void actionStartActivity(Context packageContext) {

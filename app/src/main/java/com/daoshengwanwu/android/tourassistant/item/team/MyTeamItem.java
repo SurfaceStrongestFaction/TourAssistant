@@ -8,10 +8,21 @@ import android.graphics.Bitmap;
 public class MyTeamItem {
     private String pic;
     private String name;
+    private String mUserId;
 
-    public MyTeamItem(String pic, String name) {
+    public String getUserId() {
+        return mUserId;
+    }
+
+    public void setUserId(String userId) {
+        mUserId = userId;
+    }
+
+    public MyTeamItem(String pic, String name, String userId) {
         this.pic = pic;
         this.name = name;
+        mUserId = userId;
+
     }
 
     public String getPic() {

@@ -399,7 +399,7 @@ public class HomeFragment extends Fragment {
             mSpotEnName.setText(spot.getSpotEnName());
             mDistance.setText("距离：" + spot.getDistance());
             mSpotId = spot.getId();
-            mRatingBar.setRating(spot.getRecommandNum() * 2.0f);
+            mRatingBar.setRating(spot.getRecommandNum());
         }
 
         @Override

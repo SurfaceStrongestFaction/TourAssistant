@@ -153,6 +153,8 @@ public class SharingService extends Service {
                                 Log.d(TAG, "run: team:" + responseData);
                                 jObj = new JSONObject(responseData);
 
+                                AppUtil.Group.CHAT_TEAM_ID = jObj.getString("chat_team_id");
+
                                 String membersInfo = jObj.getString("members");
                                 List<String> memInfos = generateMemIdsList(membersInfo.split(","));
 

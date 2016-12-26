@@ -175,6 +175,8 @@
             android:textAlignment="center"
             android:textSize="18sp"
             android:textColor="#ffffff"
+
+
             />
     </LinearLayout>
 </RelativeLayout>

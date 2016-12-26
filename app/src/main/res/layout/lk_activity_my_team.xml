@@ -33,7 +33,7 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="105dp"
         android:id="@+id/myTeam_bottom"
         android:layout_alignParentBottom="true"
         android:orientation="vertical"
@@ -67,7 +67,8 @@
             android:textAlignment="center"
             android:textSize="18sp"
             android:textColor="#ffffff"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"/>
     </LinearLayout>
     <LinearLayout
         android:layout_below="@id/myTeam_top"

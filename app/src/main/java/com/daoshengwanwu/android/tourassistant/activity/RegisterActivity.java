@@ -6,8 +6,18 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.daoshengwanwu.android.tourassistant.R;
+import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.apache.http.Header;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,13 +26,16 @@ import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import static com.daoshengwanwu.android.tourassistant.utils.AppUtil.User.USER_ID;
+
 public class RegisterActivity extends BaseActivity implements View.OnClickListener {
 
     private Button bt;
-    private String user_name;
-    private String user_pwd;
-    private String user_repwd;
-    private String registresult;
+    private Button registbt;
+    private String user_name="";
+    private String user_pwd="";
+    private String user_repwd="";
+    private String registresult="";
     private EditText email;
     private EditText pwd;
     private EditText repwd;
@@ -30,53 +43,53 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.wx_register1);
+        initViews();
         findViews();
         setListener();
     }
-    Thread regist = new Thread(){
-        @Override
-        public void run() {
-            super.run();
-            String result = "";
-            PrintWriter out = null;
-            BufferedReader in = null;
-            try {
-                //注册
-                URL url = new URL("http://192.168.191.1/user/regist");
-                HttpURLConnection con = (HttpURLConnection)url.openConnection();
-                con.setDoInput(true);
-                con.setDoOutput(true);
-                out = new PrintWriter(con.getOutputStream());
-                out.print(user_name+"\n"+user_pwd+"\n"+user_repwd);
-                out.flush();
-                in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-                String line;
-                while ((line = in.readLine()) != null){
-                    result += "\n" +line;
-                }
-                registresult = result;
-            }  catch (Exception e) {
-                System.out.println("发送POST请求出现异常！" + e);
-                e.printStackTrace();
-            }  finally {
-                try{
-                    if (out != null){
-                        out.close();
+    public void synhttprequestlogin(){
+        AsyncHttpClient client = new AsyncHttpClient();
+        String Url = "http://"+AppUtil.JFinalServer.HOST+":"+ AppUtil.JFinalServer.PORT+ "/user/regist";
+        RequestParams params = new RequestParams();
+        params.add("user_name", user_name);
+        params.add("user_pwd", user_pwd);
+        params.add("user_repwd", user_repwd);
+        client.get(Url, params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+
+                try {
+                    String result = response.getString("result");
+                    Toast.makeText(RegisterActivity.this, result, Toast.LENGTH_LONG).show();
+                    if(result.equals("注册成功")){
+                        LoginActivity.actionStartActivityRegister(RegisterActivity.this, user_name, user_pwd);
                     }
-                    if (in != null){
-                        in.close();
-                    }
-                }catch (IOException ex){
-                    ex.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
+
+
+
             }
-        }
-    };
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+            }
+        });
+    }
     private void findViews() {
         bt = (Button)findViewById(R.id.rs_phoners);
-
+        registbt = (Button)findViewById(R.id.rs2_bt);
     }
     private void setListener() {
+        registbt.setOnClickListener(this);
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -97,10 +110,11 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rs2_bt:
+//                Toast.makeText(this, email.getText().toString(), Toast.LENGTH_LONG).show();
                 user_name = email.getText().toString();
                 user_pwd = pwd.getText().toString();
                 user_repwd = repwd.getText().toString();
-                regist.start();
+                synhttprequestlogin();
             default:
                 break;
 

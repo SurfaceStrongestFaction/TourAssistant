@@ -50,7 +50,7 @@
                     <ImageView
                         android:id="@+id/scenicspot_show_img"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:src="@drawable/imperialpalace"
                         android:scaleType="fitXY"/>
                     <ImageView

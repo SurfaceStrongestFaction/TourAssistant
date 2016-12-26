@@ -2,13 +2,16 @@ package com.daoshengwanwu.android.tourassistant.activity;
 
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+//import android.graphics.Bitmap;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
@@ -22,15 +25,20 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.daoshengwanwu.android.tourassistant.R;
-import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
-import com.daoshengwanwu.android.tourassistant.utils.HttpCallBackListener;
-import com.daoshengwanwu.android.tourassistant.utils.HttpUtil;
-import com.daoshengwanwu.android.tourassistant.utils.PrefParams;
 import com.daoshengwanwu.android.tourassistant.model.AccessTokenKeeper;
 import com.daoshengwanwu.android.tourassistant.model.App;
 import com.daoshengwanwu.android.tourassistant.model.Constants;
 import com.daoshengwanwu.android.tourassistant.model.Userty;
+import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
+import com.daoshengwanwu.android.tourassistant.utils.HttpCallBackListener;
+import com.daoshengwanwu.android.tourassistant.utils.HttpUtil;
+import com.daoshengwanwu.android.tourassistant.utils.LoaderImage;
+import com.daoshengwanwu.android.tourassistant.utils.PrefParams;
 import com.daoshengwanwu.android.tourassistant.view.CircleImageView;
+import com.hyphenate.EMCallBack;
+import com.hyphenate.EMError;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.exceptions.HyphenateException;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -56,11 +64,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -77,10 +86,11 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
     private Oauth2AccessToken mAccessToken;
 
     /** 注意：SsoHandler 仅当 SDK 支持 SSO 时有效 */
+    private static final String USER_NAME = "loginActivity.EXTRA_NAME";
+    private static final String USER_PWD = "loginActivity.EXTRA_PWD";
     private SsoHandler mSsoHandler;
     private UsersAPI mUsersAPI;
     private Button bt;
-    private Button btl;
     private SharedPreferences s,s1;
     private String name1;
     private String pwd1;
@@ -90,9 +100,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
     private JSONObject response1;
     public static String  qqresult;
     public static CircleImageView bimp;
-    private final String xyurl = new String("http://123.206.14.122/user/getInformation");
-    private final String xyurl2 = new String("http://123.206.14.122/team/getInformation");
-            //("http://"+AppUtil.SharingServer.HOST2+":"+AppUtil.SharingServer.PORT2+"/user/getInformation");
+    private final String xyurl = "http://"+AppUtil.JFinalServer.HOST+":"+AppUtil.JFinalServer.PORT+ "/user/getInformation";
+    private final String xyurl2 = "http://"+AppUtil.JFinalServer.HOST+":"+AppUtil.JFinalServer.PORT+ "/team/getInformation";
+    //("http://"+AppUtil.SharingServer.HOST2+":"+AppUtil.SharingServer.PORT2+"/user/getInformation");
     private String xyuser_id;
     private Button mLoginButton;
     private static final String TAG = "LoginActivity";
@@ -113,61 +123,44 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
         pwd1 = s1.getString("pwd","");
         name.setText(name1);
         pwd.setText(pwd1);
+        registerinf ();
     }
-    Thread login = new Thread(){
-        @Override
-        public void run() {
-            super.run();
-            String result = "";
-            PrintWriter out = null;
-            BufferedReader in = null;
-            try {
-
-                //登录
-                    URL url = new URL("http://123.206.14.122/user/login");
-                    HttpURLConnection con = (HttpURLConnection)url.openConnection();
-                    con.setDoInput(true);
-                    con.setDoOutput(true);
-                    out = new PrintWriter(con.getOutputStream());
-                    out.print(user_name+"\n"+user_pwd);
-                    out.flush();
-                    //定义BufferedReader输入流读取URL响应
-                    in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-                    String line;
-                    while ((line = in.readLine()) != null){
-                        result += "\n" +line;
+    public void registerinf (){
+        Intent i = getIntent();
+        String username = i.getStringExtra(USER_NAME);
+        String userpwd = i.getStringExtra(USER_PWD);
+        name.setText(username);
+        pwd.setText(userpwd);
+    }
+    public void synhttprequestlogin(){
+        AsyncHttpClient client = new AsyncHttpClient();
+        String Url = "http://"+AppUtil.JFinalServer.HOST+":"+AppUtil.JFinalServer.PORT+ "/user/login";
+        RequestParams params = new RequestParams();
+        params.add("user_name", user_name);
+        params.add("user_pwd", user_pwd);
+        client.get(Url, params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                try {
+                    System.out.println(response);
+                    user_id = response.getString("user_id");
+                    if (user_id.equals("false")) {
+                        Toast.makeText(LoginActivity.this, "用户名或密码不正确", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_LONG).show();
+                        USER_ID = user_id;
+                        LauncherActivity.actionStartActivity(LoginActivity.this);
                     }
 
-                      user_id = result;
-            }  catch (Exception e) {
-                System.out.println("发送POST请求出现异常！" + e);
-                e.printStackTrace();
-            }  finally {
-                try{
-                    if (out != null){
-                        out.close();
-                    }
-                    if (in != null){
-                        in.close();
-                    }
-                }catch (IOException ex){
-                    ex.printStackTrace();
+                }catch (JSONException e) {
+                    e.printStackTrace();
                 }
             }
-        }
-    };
-
-
+        });
+    }
     private void initViews() {
         bt = (Button)findViewById(R.id.lg_bt2);
-        btl = (Button)findViewById(R.id.lg_bt);
-        btl.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                System.out.println("haha");
-                Toast.makeText(LoginActivity.this,"haha",Toast.LENGTH_LONG).show();
-            }
-        });
         btnweibo = (ImageView) findViewById(R.id.lg_weibo);
         mLoginButton = (Button)findViewById(R.id.lg_bt);
         Log.d(TAG, "initViews: loginButton yi jing huo qu dao:" + mLoginButton.toString());
@@ -182,21 +175,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
     }
 
     private void initEvents() {
-        btnweibo.setOnClickListener(this);
-//        btl.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-//                startActivity(intent);
-////                user_name = name.getText().toString();
-////                user_pwd = pwd.getText().toString();
-////                System.out.println("haha");
-////                System.out.println(user_name);
-////                System.out.println(user_pwd);
-////                login.start();
-//            }
-//        });
-        btl.setOnClickListener(new View.OnClickListener() {
+        btnweibo.setOnClickListener(LoginActivity.this);
+        bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
@@ -210,7 +190,12 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
     public static void actionStartActivity(Context context) {
         context.startActivity(new Intent(context, LoginActivity.class));
     }
-
+    public static void actionStartActivityRegister(Context context, String username, String userpwd) {
+        Intent i = new Intent(context, LoginActivity.class);
+        i.putExtra(USER_NAME, username);
+        i.putExtra(USER_PWD, userpwd);
+        context.startActivity(i);
+    }
     /**
      * 进行微博授权初始化操作
      */
@@ -246,8 +231,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
                 break;
             default:
                 break;
-
-
         }
     }
 
@@ -365,17 +348,16 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
     }
 
     private void getTeamInfo() {
-        if(!GROUP_ID.equals("")) {
+        if(GROUP_ID.equals("")) {
             RequestParams params1 = new RequestParams();
             params1.add("team_id", GROUP_ID);
             // 2.关闭弹出窗口
             //3.根据服务器返回值显示创建成功或失败的提示
-
             if (!AppUtil.User.USER_ID.equals("")) {
                 AsyncHttpClient gclient = new AsyncHttpClient();
                 RequestParams params = new RequestParams();
                 params.add("user_id", xyuser_id);
-                gclient.get(getApplicationContext(), xyurl, params, new JsonHttpResponseHandler() {
+                gclient.get(getApplicationContext(), AppUtil.JFinalServer.xyurl, params, new JsonHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                         super.onSuccess(statusCode, headers, response);
@@ -390,7 +372,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 
                     @Override
                     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                        Toast.makeText(LoginActivity.this, "Team_id获取失败" + AppUtil.Group.GROUP_NAME, Toast.LENGTH_SHORT).show();
                         super.onFailure(statusCode, headers, throwable, errorResponse);
                     }
                 });
@@ -440,27 +421,29 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
         }
     }
     private void getTeamNameInfo() {
-            AsyncHttpClient gclient2 = new AsyncHttpClient();
-            RequestParams params = new RequestParams();
-            params.add("team_id", GROUP_ID);
-            gclient2.get(getApplicationContext(),xyurl2,params,new JsonHttpResponseHandler(){
-                @Override
-                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                    super.onSuccess(statusCode, headers, response);
-                    try {
-                        String team_name = response.getString("name");
-                        AppUtil.Group.GROUP_NAME = team_name;
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+        AsyncHttpClient gclient2 = new AsyncHttpClient();
+        RequestParams params = new RequestParams();
+        params.add("team_id", GROUP_ID);
+        gclient2.get(getApplicationContext(),AppUtil.JFinalServer.xyurl2,params,new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                try {
+                    String team_name = response.getString("name");
+                    AppUtil.Group.GROUP_NAME = team_name;
+                    AppUtil.Group.GROUP_CAPTIAN=response.getString("captain");
+                    AppUtil.Group.CHAT_TEAM_ID=response.getString("chat_team_id");
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-
-                @Override
-                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                    super.onFailure(statusCode, headers, throwable, errorResponse);
-                    Toast.makeText(LoginActivity.this, "Team_name获取失败" + AppUtil.Group.GROUP_NAME, Toast.LENGTH_SHORT).show();
-                }
-            });
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                //Toast.makeText(LoginActivity.this, "Team_name获取失败" + AppUtil.Group.GROUP_NAME, Toast.LENGTH_SHORT).show();
+                Log.i("test1", "Team_name获取失败");
+            }
+        });
     }
 
     public void getyh() {
@@ -502,20 +485,20 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 
                 if (msg.what == 0) {
                     JSONObject response = (JSONObject) msg.obj;
-                            if (response.has("nickname")) {
-                                try {
-                                    qqgender = response.getString("gender").toString();
-                                    qqname = response.getString("nickname").toString();
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
+                    if (response.has("nickname")) {
+                        try {
+                            qqgender = response.getString("gender").toString();
+                            qqname = response.getString("nickname").toString();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
 
-             //   Toast.makeText(LoginActivity.this, "用户id： " + qqid + "\n用户昵称： " + qqname + "\n用户性别： " + qqgender, Toast.LENGTH_SHORT).show();
+                //   Toast.makeText(LoginActivity.this, "用户id： " + qqid + "\n用户昵称： " + qqname + "\n用户性别： " + qqgender, Toast.LENGTH_SHORT).show();
                 //建立连接
                 AsyncHttpClient client = new AsyncHttpClient();
-                String Url_add = "http://123.206.14.122/qq/login";
+                String Url_add = "http://"+AppUtil.JFinalServer.HOST+":"+AppUtil.JFinalServer.PORT+ "/qq/login";
                 //获取参数
                 RequestParams params = new RequestParams();
                 params.add("qq",qqid);
@@ -531,12 +514,13 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
                         AppUtil.User.USER_GENDER = qqgender;
                         xyuser_id = qqresult;
                         USER_ID = qqresult;
+                        Log.i("zhu", "id"+USER_ID);
+                        signUp(USER_ID,"");
                         Toast.makeText(LoginActivity.this,"登录成功", Toast.LENGTH_LONG).show();
                         getTeamInfo();
                         Intent intent = new Intent(LoginActivity.this, LauncherActivity.class);
                         startActivity(intent);
                         finish();
-                        getTeamInfo();
                     }
                     @Override
                     public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
@@ -592,16 +576,49 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
         mTencent.login(LoginActivity.this, "all", iuilisten);
 
     }
-   Handler mHandler = new Handler() {
+    Handler mHandler = new Handler() {
 
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == 1) {
                 Bitmap bitmap = (Bitmap) msg.obj;
-                AppUtil.User.USER_IMG = bitmap;
+                File file= saveBitmap(bitmap);
+                AsyncHttpClient gclient = new AsyncHttpClient();
+                RequestParams params = new RequestParams();
+                params.put("user_id",AppUtil.User.USER_ID);
+                try {
+                    params.put("head_pic", file);
+                } catch (FileNotFoundException e) {
+                    Log.i("zhu", "async: ");
+                    e.printStackTrace();
+                }
+                //params.setContentEncoding("utf-8");
+                //必须用post请求 ！！
+                gclient.post(getApplicationContext(), AppUtil.JFinalServer.xyurl4, params,new JsonHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                        super.onSuccess(statusCode, headers, response);
+                        try {
+                            Log.i("zhu", "图片url：onSuccess: "+response.getString("head_pic"));
+                            AppUtil.User.USER_IMG=response.getString("head_pic");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                        super.onFailure(statusCode, headers, throwable, errorResponse);
+                        Log.i("zhu", "接口onFailure ");
+                    }
+
+
+                });
+
             }
         }
     };
+
+
 
     public static Bitmap getbitmap(String imageUri) {
         Log.v("Util", "getbitmap:" + imageUri);
@@ -648,6 +665,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
         lgbt.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                user_name = name.getText().toString();
+                user_pwd = pwd.getText().toString();
+                synhttprequestlogin();
                 Toast.makeText(LoginActivity.this, "tanchu toast", Toast.LENGTH_SHORT).show();
                 if(cb.isChecked()){
                     s = getSharedPreferences("ty_user",Context.MODE_PRIVATE);
@@ -779,5 +799,228 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
             getAccessToken();
         }
     }
+    /**
+     * 注册方法
+     */
+    private void signUp(final String userid, final String userpwd) {
+        final String username=userid;
+        final String password;
+        if(TextUtils.isEmpty(userpwd)){
+            password="123456";
+        }else{
+            password=userpwd;
+        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    EMClient.getInstance().createAccount(username,password);
+                } catch (final HyphenateException e) {
+                    e.printStackTrace();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            /**
+                             * 关于错误码可以参考官方api详细说明
+                             * http://www.easemob.com/apidoc/android/chat3.0/classcom_1_1hyphenate_1_1_e_m_error.html
+                             */
+                            int errorCode = e.getErrorCode();
+                            String message = e.getMessage();
+                            Log.d("lzan13", String.format("sign up - errorCode:%d, errorMsg:%s", errorCode, e.getMessage()));
+                            switch (errorCode) {
+                                // 网络错误
+                                case EMError.NETWORK_ERROR:
+                                    Toast.makeText(LoginActivity.this, "网络错误 code: " + errorCode + ", message:" + message, Toast.LENGTH_LONG).show();
+                                    break;
+                                // 用户已存在
+                                case EMError.USER_ALREADY_EXIST:
+                                    //Toast.makeText(LoginActivity.this, "用户已存在 code: " + errorCode + ", message:" + message, Toast.LENGTH_LONG).show();
 
+                                    //signIn(username,password);
+                                    break;
+                                // 参数不合法，一般情况是username 使用了uuid导致，不能使用uuid注册
+                                case EMError.USER_ILLEGAL_ARGUMENT:
+                                    Toast.makeText(LoginActivity.this, "参数不合法，一般情况是username 使用了uuid导致，不能使用uuid注册 code: " + errorCode + ", message:" + message, Toast.LENGTH_LONG).show();
+                                    break;
+                                // 服务器未知错误
+                                case EMError.SERVER_UNKNOWN_ERROR:
+                                    Toast.makeText(LoginActivity.this, "服务器未知错误 code: " + errorCode + ", message:" + message, Toast.LENGTH_LONG).show();
+                                    break;
+                                case EMError.USER_REG_FAILED:
+                                    Toast.makeText(LoginActivity.this, "账户注册失败 code: " + errorCode + ", message:" + message, Toast.LENGTH_LONG).show();
+                                    break;
+                                default:
+                                    Toast.makeText(LoginActivity.this, "ml_sign_up_failed code: " + errorCode + ", message:" + message, Toast.LENGTH_LONG).show();
+                                    break;
+                            }
+                        }
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }finally {
+                    Log.i("zhu", "sigIn,id:"+username+"sigIn,pwd:"+password);
+                    signIn(username,password);
+                }
+            }
+        }).start();
+    }
+    /**
+     * 登录方法
+     */
+    private void signIn(String username,String password) {
+
+        /*if (TextUtils.isEmpty(username) || TextUtils.isEmpty(password)) {
+            Toast.makeText(ECLoginActivity.this, "用户名和密码不能为空", Toast.LENGTH_LONG).show();
+            return;
+        }*/
+        EMClient.getInstance().login(username, password, new EMCallBack() {
+            /**
+             * 登陆成功的回调
+             */
+            @Override
+            public void onSuccess() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        // 加载所有会话到内存
+                        EMClient.getInstance().chatManager().loadAllConversations();
+                        // 加载所有群组到内存，如果使用了群组的话
+                        // EMClient.getInstance().groupManager().loadAllGroups();
+                        Log.i("zhu", "signIn成功 ");
+                    }
+                });
+            }
+            /**
+             * 登陆错误的回调
+             * @param i
+             * @param s
+             */
+            @Override
+            public void onError(final int i, final String s) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        /**
+                         * 关于错误码可以参考官方api详细说明
+                         * http://www.easemob.com/apidoc/android/chat3.0/classcom_1_1hyphenate_1_1_e_m_error.html
+                         */
+                        Log.i("zhu", "signIn失败 ");
+                        switch (i) {
+                            // 网络异常 2
+                            case EMError.NETWORK_ERROR:
+                                Toast.makeText(LoginActivity.this, "网络错误 code: " + i + ", message:" + s, Toast.LENGTH_LONG).show();
+                                break;
+                            // 无效的用户名 101
+                            case EMError.INVALID_USER_NAME:
+                                Toast.makeText(LoginActivity.this, "无效的用户名 code: " + i + ", message:" + s, Toast.LENGTH_LONG).show();
+                                break;
+                            // 无效的密码 102
+                            case EMError.INVALID_PASSWORD:
+                                Toast.makeText(LoginActivity.this, "无效的密码 code: " + i + ", message:" + s, Toast.LENGTH_LONG).show();
+                                break;
+                            // 用户认证失败，用户名或密码错误 202
+                            case EMError.USER_AUTHENTICATION_FAILED:
+                                Toast.makeText(LoginActivity.this, "用户认证失败，用户名或密码错误 code: " + i + ", message:" + s, Toast.LENGTH_LONG).show();
+                                break;
+                            // 用户不存在 204
+                            case EMError.USER_NOT_FOUND:
+                                Toast.makeText(LoginActivity.this, "用户不存在 code: " + i + ", message:" + s, Toast.LENGTH_LONG).show();
+                                break;
+                            // 无法访问到服务器 300
+                            case EMError.SERVER_NOT_REACHABLE:
+                                Toast.makeText(LoginActivity.this, "无法访问到服务器 code: " + i + ", message:" + s, Toast.LENGTH_LONG).show();
+                                break;
+                            // 等待服务器响应超时 301
+                            case EMError.SERVER_TIMEOUT:
+                                Toast.makeText(LoginActivity.this, "等待服务器响应超时 code: " + i + ", message:" + s, Toast.LENGTH_LONG).show();
+                                break;
+                            // 服务器繁忙 302
+                            case EMError.SERVER_BUSY:
+                                Toast.makeText(LoginActivity.this, "服务器繁忙 code: " + i + ", message:" + s, Toast.LENGTH_LONG).show();
+                                break;
+                            // 未知 Server 异常 303 一般断网会出现这个错误
+                            case EMError.SERVER_UNKNOWN_ERROR:
+                                Toast.makeText(LoginActivity.this, "未知的服务器异常 code: " + i + ", message:" + s, Toast.LENGTH_LONG).show();
+                                break;
+                            default:
+                                Log.d(TAG, "run: " + "ml_sign_in_failed code: " + i + ", message:" + s);
+                                break;
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void onProgress(int i, String s) {
+
+            }
+        });
+    }
+    public File saveBitmap(Bitmap bm) {
+        Log.i("zhu", "file路径"+AppUtil.User.USER_ID);
+        while(AppUtil.User.USER_ID.isEmpty()){
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        /*String path = getSDPath() +"/Movies/";
+        File f = new File(path);
+        if(!f.exists()){
+            f.mkdir();
+        }
+        File myCaptureFile = new File(path + AppUtil.User.USER_ID);
+        *//*try {
+            BufferedOutputStream  bos = new BufferedOutputStream(new FileOutputStream(myCaptureFile));
+            bm.compress(Bitmap.CompressFormat.JPEG, 80, bos);
+            bos.flush();
+            bos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*//*
+
+        try {
+                FileOutputStream out = new FileOutputStream(myCaptureFile);
+                Log.i("zhu", "file流传输");
+                bm.compress(Bitmap.CompressFormat.PNG, 90, out);
+                out.flush();
+                out.close();
+                Log.i("zhu", "file已经保存");
+            } catch (FileNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }*/
+        File appDir = new File(Environment.getExternalStorageDirectory(),"Boohee");
+        if (!appDir.exists()) {
+            appDir.mkdir();
+        }
+        String fileName = AppUtil.User.USER_ID +".jpg";
+        File file = new File(appDir, fileName);
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+            bm.compress(Bitmap.CompressFormat.JPEG, 70, fos);
+            fos.flush();
+            fos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return file;
+    }
+    public static String getSDPath(){
+        File sdDir = null;
+        boolean sdCardExist = Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED); //判断sd卡是否存在
+        if (sdCardExist)
+        {
+            sdDir = Environment.getExternalStorageDirectory();//获取跟目录
+        }
+        return sdDir.toString();
+    }
 }

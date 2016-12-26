@@ -14,17 +14,18 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.daoshengwanwu.android.tourassistant.R;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.easeui.controller.EaseUI;
 import com.daoshengwanwu.android.tourassistant.fragment.HomeFragment;
-import com.daoshengwanwu.android.tourassistant.fragment.MapFragment;
 import com.daoshengwanwu.android.tourassistant.fragment.MapsFragment;
 import com.daoshengwanwu.android.tourassistant.fragment.MeFragment;
 import com.daoshengwanwu.android.tourassistant.fragment.TeamFragment;
 import com.daoshengwanwu.android.tourassistant.model.MapsFragmentSaveData;
 import com.daoshengwanwu.android.tourassistant.service.SharingService;
 import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
-
 
 
 public class LauncherActivity extends BaseActivity {
@@ -61,17 +62,20 @@ public class LauncherActivity extends BaseActivity {
     };
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.baihaoran_activity_launcher);
 
+        //环信easeUI初始化
+        EaseUI.getInstance().init(this,null);
+        EMClient.getInstance().setDebugMode(true);
+
         //应用启动时即绑定服务
         bindService(SharingService.newIntent(this), mServiceConnection, BIND_AUTO_CREATE);
-
         getWidgetsReferences(); //获取所需组件的引用
         setListenersToWidgets(); //为组件设置监听器
+
         initFragment();
     }
 //---------------------------胜达--------------------------------------------------------------------
@@ -93,9 +97,7 @@ public class LauncherActivity extends BaseActivity {
 //--------------------------------------------------------------------------------------------------
 
     private void initFragment() {
-        if (null == mHomeFragment) {
-            mHomeFragment = HomeFragment.newInstance();
-        }
+        mHomeFragment = HomeFragment.newInstance();
 
         Fragment fragment = mFragmentManager.findFragmentById(R.id.launcher_fragment_container);
         if (null != fragment) {
@@ -130,8 +132,7 @@ public class LauncherActivity extends BaseActivity {
     }
 
     private class OnTabClickListener implements View.OnClickListener {
-        @Override
-        public void onClick(View view) {
+        private void clearIcon() {
             mTabsHomeImg.setImageResource(R.drawable.home);
             mTabsMapImg.setImageResource(R.drawable.map);;
             mTabsRanksImg.setImageResource(R.drawable.ranks);;
@@ -140,9 +141,14 @@ public class LauncherActivity extends BaseActivity {
             mTabsMapText.setTextColor(ContextCompat.getColor(LauncherActivity.this, R.color.bhr_tabs_text_color));
             mTabsRanksText.setTextColor(ContextCompat.getColor(LauncherActivity.this, R.color.bhr_tabs_text_color));
             mTabsMyText.setTextColor(ContextCompat.getColor(LauncherActivity.this, R.color.bhr_tabs_text_color));
+        }
 
+        @Override
+        public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.tabs_home_page:
+                    clearIcon();
+
                     mTabsHomeImg.setImageResource(R.drawable.home1);
                     mTabsHomeText.setTextColor(ContextCompat.getColor(LauncherActivity.this, R.color.bhr_tabs_green));
 
@@ -151,30 +157,37 @@ public class LauncherActivity extends BaseActivity {
                     if (fragment instanceof MapsFragment) {
                         //如果当前显示的Fragment是MapsFragment的话，就先取得该Fragment的状态
                         mMapsFragmentSaveData = mMapsFragment.getCurrentState();
+                    } else if (fragment instanceof HomeFragment) {
+                        break;
                     }
 
-                    if (null == mHomeFragment) {
-                        mHomeFragment = HomeFragment.newInstance();
-                    }
+                    mHomeFragment = HomeFragment.newInstance();
                     mFragmentManager.beginTransaction().replace(R.id.launcher_fragment_container, mHomeFragment).commit();
-
                     break;
                 case R.id.tabs_map_page:
+                    clearIcon();
+
                     mTabsMapImg.setImageResource(R.drawable.map1);
                     mTabsMapText.setTextColor(ContextCompat.getColor(LauncherActivity.this, R.color.bhr_tabs_green));
 
                     //判断当前显示的Fragment是否是MapsFragment
                     fragment = mFragmentManager.findFragmentById(R.id.launcher_fragment_container);
                     if (fragment instanceof MapsFragment) {
-                        //如果当前显示的Fragment是MapsFragment的话，就先取得该Fragment的状态
                         break;
                     }
 
-                    mMapsFragment = MapsFragment.newInstance(mSharingBinder, mMapsFragmentSaveData);
-
+                    mMapsFragment = MapsFragment.newInstance(mSharingBinder, mMapsFragmentSaveData, "abcd");
                     mFragmentManager.beginTransaction().replace(R.id.launcher_fragment_container, mMapsFragment).commit();
                     break;
                 case R.id.tabs_ranks_page:
+                    //进入队伍页面时首先要登录
+                    String user_id = AppUtil.User.USER_ID;
+                    if (null == user_id || user_id.equals("") || user_id.equals("null")) {
+                        Toast.makeText(LauncherActivity.this, "请先登录再使用队伍功能", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+
+                    clearIcon();
                     mTabsRanksImg.setImageResource(R.drawable.ranks1);
                     mTabsRanksText.setTextColor(ContextCompat.getColor(LauncherActivity.this, R.color.bhr_tabs_green));
 
@@ -183,11 +196,11 @@ public class LauncherActivity extends BaseActivity {
                     if (fragment instanceof MapsFragment) {
                         //如果当前显示的Fragment是MapsFragment的话，就先取得该Fragment的状态
                         mMapsFragmentSaveData = mMapsFragment.getCurrentState();
+                    } else if (fragment instanceof TeamFragment) {
+                        break;
                     }
 
-                    if (null == mTeamFragment) {
-                        mTeamFragment = TeamFragment.newInstance(mSharingBinder);
-                    }
+                    mTeamFragment = TeamFragment.newInstance(mSharingBinder);
                     mFragmentManager.beginTransaction().replace(R.id.launcher_fragment_container, mTeamFragment).commit();
                     break;
                 case R.id.tabs_my_page:
@@ -198,25 +211,23 @@ public class LauncherActivity extends BaseActivity {
                         mMapsFragmentSaveData = mMapsFragment.getCurrentState();
                     }
 
-                    if ("".equals(AppUtil.User.USER_ID)) {
+                    if ("".equals(AppUtil.User.USER_ID) || AppUtil.User.USER_ID == null) {
                         //说明还没有登陆，应该跳转到登录界面
                         LoginActivity.actionStartActivity(LauncherActivity.this);
-                        overridePendingTransition(R.anim.slide_left,R.anim.slide_right);
+                        overridePendingTransition(R.anim.push_up_in,R.anim.push_up_out);
                     } else {
-                        //说明已经登录，进入我的界面
-                        if (null == mMeFragment) {
-                            mMeFragment = new MeFragment();
-                        }
-                        fragment = mFragmentManager.findFragmentById(R.id.launcher_fragment_container);
-                        if (null == fragment) {
-                            mFragmentManager.beginTransaction().add(R.id.launcher_fragment_container, mMeFragment).commit();
-                        } else {
-                            mFragmentManager.beginTransaction().replace(R.id.launcher_fragment_container, mMeFragment).commit();
-                        }
-                    }
+                        clearIcon();
 
-                    mTabsMyImg.setImageResource(R.drawable.my1);
-                    mTabsMyText.setTextColor(ContextCompat.getColor(LauncherActivity.this, R.color.bhr_tabs_green));
+                        //说明已经登录，进入我的界面
+                        if (fragment instanceof MeFragment) {
+                            break;
+                        }
+                        mMeFragment = new MeFragment();
+                        mFragmentManager.beginTransaction().replace(R.id.launcher_fragment_container, mMeFragment).commit();
+
+                        mTabsMyImg.setImageResource(R.drawable.my1);
+                        mTabsMyText.setTextColor(ContextCompat.getColor(LauncherActivity.this, R.color.bhr_tabs_green));
+                    }
                     break;
             }
         }

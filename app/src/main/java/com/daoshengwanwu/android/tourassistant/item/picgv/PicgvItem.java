@@ -1,13 +1,15 @@
 package com.daoshengwanwu.android.tourassistant.item.picgv;
 
+import android.graphics.drawable.Drawable;
+
 /**
  * Created by dell on 2016/11/24.
  */
 
 public class PicgvItem {
     private int id;
-    private int imgsrc;
-    public PicgvItem(int id, int imgsrc) {
+    private Drawable imgsrc;
+    public PicgvItem(int id, Drawable imgsrc) {
         this.id = id;
         this.imgsrc = imgsrc;
     }
@@ -16,7 +18,7 @@ public class PicgvItem {
         return id;
     }
 
-    public int getImgsrc() {
+    public Drawable getImgsrc() {
         return imgsrc;
     }
 }

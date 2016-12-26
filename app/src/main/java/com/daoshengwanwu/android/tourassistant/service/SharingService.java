@@ -107,11 +107,11 @@ public class SharingService extends Service {
                 super.run();
 
                 try {
-
                     OkHttpClient client = new OkHttpClient();
                     List<String> oldMemInfo = generateMemIdsList(new String[0]);
 
                     while (mNeedRequestTeam) {
+                        Log.d(TAG, "run: requestTeamInfo...!");
                         String user_id = AppUtil.User.USER_ID;
 
                         if (user_id != null && !user_id.equals("")) {
@@ -125,7 +125,7 @@ public class SharingService extends Service {
                             String responseData = response.body().string();
 
                             JSONObject jObj = new JSONObject(responseData);
-                            String team_id = (String)jObj.get("team_id");
+                            String team_id = (String) jObj.getString("team_id");
 
                             String old_team_id = AppUtil.Group.GROUP_ID;
                             if (!team_id.equals(old_team_id)) {
@@ -135,35 +135,38 @@ public class SharingService extends Service {
                                     for (OnTeamChangeListener listener : mOnTeamChangeListeners) {
                                         listener.onTeamChange(team_id);
                                     }
+
+                                    oldMemInfo = generateMemIdsList(new String[0]);
                                 }//sync
                             }//if
 
-                            requestBody = new FormBody.Builder().add("team_id", team_id).build();
-                            request = new Request.Builder()
-                                    .url("http://" + AppUtil.JFinalServer.HOST + ":" + AppUtil.JFinalServer.PORT + "/team/getInformation")
-                                    .post(requestBody)
-                                    .build();
+                            if (!team_id.equals("") && !team_id.equals("null")) {
+                                requestBody = new FormBody.Builder().add("team_id", team_id).build();
+                                request = new Request.Builder()
+                                        .url("http://" + AppUtil.JFinalServer.HOST + ":" + AppUtil.JFinalServer.PORT + "/team/getInformation")
+                                        .post(requestBody)
+                                        .build();
 
-                            response = client.newCall(request).execute();
-                            responseData = response.body().string();
+                                response = client.newCall(request).execute();
+                                responseData = response.body().string();
 
-                            Log.d(TAG, "run: team:" + responseData);
-                            jObj = new JSONObject(responseData);
+                                Log.d(TAG, "run: team:" + responseData);
+                                jObj = new JSONObject(responseData);
 
-                            String membersInfo = jObj.getString("members");
-                            List<String> memInfos = generateMemIdsList(membersInfo.split(","));
+                                String membersInfo = jObj.getString("members");
+                                List<String> memInfos = generateMemIdsList(membersInfo.split(","));
 
-                            Log.d(TAG, "run: membersInfo: " + membersInfo);
+                                Log.d(TAG, "run: membersInfo: " + membersInfo);
+                                if (!memInfos.equals(oldMemInfo)) {
+                                    Log.d(TAG, "run: 进入if");
+                                    for (OnTeamMemberChangeListener listener : mOnTeamMemberChangeListeners) {
+                                        listener.onTeamMemberChange(team_id, memInfos);
+                                    }
 
-                            if (!memInfos.equals(oldMemInfo)) {
-                                Log.d(TAG, "run: 进入if");
-                                for (OnTeamMemberChangeListener listener : mOnTeamMemberChangeListeners) {
-                                    listener.onTeamMemberChange(team_id, memInfos);
+                                    oldMemInfo = memInfos;
                                 }
-
-                                oldMemInfo = memInfos;
-                            }
-                        }//if
+                            }//if
+                        }
 
                         Thread.sleep(1000);
                     }//while
@@ -455,6 +458,10 @@ public class SharingService extends Service {
         }
 
         private String getInfoCommand(String info) {
+            if (null == info) {
+                return "";
+            }
+
             return info.split(":")[0];
         }
 

@@ -61,7 +61,7 @@
             android:layout_marginLeft="20dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="我的队伍"
+            android:text="已加入的队伍"
             android:textSize="18sp"
             android:gravity="center"
             android:textColor="#4d4d4d"/>
@@ -84,7 +84,7 @@
             android:layout_marginLeft="20dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="聊天信息"
+            android:text="队伍聊天记录"
             android:textSize="18sp"
             android:gravity="center"
             android:textColor="#4d4d4d"/>

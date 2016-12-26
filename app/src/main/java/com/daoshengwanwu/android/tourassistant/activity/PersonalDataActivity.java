@@ -1,5 +1,6 @@
 package com.daoshengwanwu.android.tourassistant.activity;
 
+import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -9,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,14 +21,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.daoshengwanwu.android.tourassistant.R;
+import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+
+import com.loopj.android.http.RequestParams;
+
+import org.apache.http.Header;
+
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -100,7 +109,7 @@ public class PersonalDataActivity extends BaseActivity {
     private void inint(){
         //建立连接
         AsyncHttpClient client=new AsyncHttpClient();
-        String url = "http://10.7.88.30/user/getInformation";
+        String url = "http://"+ AppUtil.JFinalServer.HOST + ":" + AppUtil.JFinalServer.PORT + "/user/getInformation";
         //传送参数
         RequestParams params=new RequestParams();
         params.add("user_id",USER_ID);
@@ -171,7 +180,7 @@ public class PersonalDataActivity extends BaseActivity {
                                     name.setText(input_name);
                                     //建立连接
                                     AsyncHttpClient client=new AsyncHttpClient();
-                                    String Url_login = "http://10.7.88.45:8080/user/editNick_name";
+                                    String Url_login = "http://"+AppUtil.JFinalServer.HOST+":"+AppUtil.JFinalServer.PORT+ "/user/editNick_name";
                                     //传送参数
                                     RequestParams params=new RequestParams();
                                     params.add("user_id",USER_ID);
@@ -220,7 +229,7 @@ public class PersonalDataActivity extends BaseActivity {
                                     }
                                     //建立连接
                                     AsyncHttpClient client=new AsyncHttpClient();
-                                    String Url_login = "http://10.7.88.45:8080/user/editUser_pwd";
+                                    String Url_login = "http://"+AppUtil.JFinalServer.HOST+":"+AppUtil.JFinalServer.PORT+ "/user/editUser_pwd";
                                     //传送参数
                                     RequestParams params=new RequestParams();
                                     params.add("user_id",USER_ID);
@@ -257,7 +266,7 @@ public class PersonalDataActivity extends BaseActivity {
                                     usersex.setText(sexs[i]);
                                     //建立连接
                                     AsyncHttpClient client=new AsyncHttpClient();
-                                    String Url_login = "http://10.7.88.45:8080/user/editNick_name";
+                                    String Url_login = "http://"+AppUtil.JFinalServer.HOST+":"+AppUtil.JFinalServer.PORT+ "/user/editNick_name";
                                     //传送参数
                                     RequestParams params=new RequestParams();
                                     params.add("user_id",USER_ID);
@@ -328,6 +337,46 @@ public class PersonalDataActivity extends BaseActivity {
                     bitMap.recycle();
                 bitMap = (Bitmap) data.getExtras().get("data");
                 File file2=new File(pathString, System.currentTimeMillis()+".jpg");
+
+                //头像文件上传
+                //异步的客户端对象
+                AsyncHttpClient client = new AsyncHttpClient();
+                //指定url路径
+                //String url = "http://192.168.178.2/api/fs/upload?token=3f42fd120d2040c9ae22a1647c45885c4erET1";
+                String url="http://"+AppUtil.JFinalServer.HOST+":"+AppUtil.JFinalServer.PORT+ "/images/upload";
+                //封装文件上传的参数
+                RequestParams params = new RequestParams();
+                //根据路径创建文件
+                //File file = new File(path);
+                try {
+                    //放入文件
+                    params.put("profile_picture", file2);
+                } catch (Exception e) {
+                    // TODO: handle exception
+                    System.out.println("文件不存在----------");
+                }
+                //执行post请求
+                client.post(url,params, new AsyncHttpResponseHandler() {
+
+
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers,
+                                          byte[] responseBody) {
+                       /* if (statusCode == 200) {
+                            Toast.makeText(getApplicationContext(), "上次成功", Toast.LENGTH_SHORT)
+                                    .show();
+                        }*/
+                        Log.i("zhu","onSuccess");
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers,
+                                          byte[] responseBody, Throwable error) {
+                      /*  error.printStackTrace();*/
+                        Log.i("zhu", "onFailure: ");
+                    }
+                });
+
                 try
                 {
                     FileOutputStream fos = new FileOutputStream(file2);

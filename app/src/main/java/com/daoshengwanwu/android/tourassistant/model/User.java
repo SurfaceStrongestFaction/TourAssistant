@@ -20,7 +20,7 @@ import org.json.JSONObject;
 
 public class User {
     private static final String REQUEST_URL = "http://" + AppUtil.JFinalServer.HOST
-            + ":" + AppUtil.JFinalServer.PORT + "user/getInformation";
+            + ":" + AppUtil.JFinalServer.PORT + "/user/getInformation";
     private static final String PARAM_KEY_USER_ID = "user_id";
 
     private Context mApplicationContext = null;
@@ -63,6 +63,10 @@ public class User {
 
     public String getSex() {
         return mSex;
+    }
+
+    public String getUserId() {
+        return mUserId;
     }
 
     public void setSex(String sex) {

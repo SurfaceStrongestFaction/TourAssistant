@@ -22,6 +22,7 @@ import com.daoshengwanwu.android.tourassistant.R;
 import com.daoshengwanwu.android.tourassistant.adapter.MyTeamAdapter;
 import com.daoshengwanwu.android.tourassistant.item.team.MyTeamItem;
 import com.daoshengwanwu.android.tourassistant.model.CreateQRImageTest;
+import com.daoshengwanwu.android.tourassistant.model.UserWarehouse;
 import com.daoshengwanwu.android.tourassistant.service.SharingService;
 import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
 import com.daoshengwanwu.android.tourassistant.utils.AppUtil.Group;
@@ -86,6 +87,12 @@ public class MyTeamActivity extends BaseActivity {
                 case WHAT_ON_MEMBER_CHANGE: {
                     if (null != mWhenMemberChangeIds) {
                         Log.d(TAG, "onTeamMemberChange: executed!" + mWhenMemberChangeIds);
+                        UserWarehouse.getInstance(getApplicationContext()).updateUsersInfo(mWhenMemberChangeIds, new UserWarehouse.OnUsersInfoUpdatedListener() {
+                            @Override
+                            public void onUsersInfoUpdated(UserWarehouse userWarehouse) {
+                                adapter.notifyDataSetChanged();
+                            }
+                        });
 
                         AsyncHttpClient client = new AsyncHttpClient();
                         RequestParams params = new RequestParams();
@@ -102,35 +109,34 @@ public class MyTeamActivity extends BaseActivity {
 
                                     ((TextView)findViewById(R.id.myTeam_name)).setText(Group.GROUP_NAME);
                                     getCaptianInfo(Group.GROUP_CAPTIAN);
-                                    items.clear();
-                                    adapter.notifyDataSetChanged();
+//                                    items.clear();
+//                                    adapter.notifyDataSetChanged();
 
-                                    for (i = 0; i < mWhenMemberChangeIds.size(); i++) {
-                                        AsyncHttpClient gclient = new AsyncHttpClient();
-                                        RequestParams pparams = new RequestParams();
-                                        final String user_id = mWhenMemberChangeIds.get(i);
-                                        pparams.add("user_id", user_id);
-                                        gclient.get(getApplicationContext(), AppUtil.JFinalServer.xyurl, pparams, new JsonHttpResponseHandler() {
-                                            @Override
-                                            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                                                super.onSuccess(statusCode, headers, response);
-                                                try {
-                                                    String nick_name = response.getString("nick_name");
-                                                    String head_pic = response.getString("head_pic");
-                                                    items.add(new MyTeamItem(head_pic, nick_name, user_id));
-                                                    adapter.notifyDataSetChanged();
-                                                } catch (JSONException e) {
-                                                    e.printStackTrace();
-                                                }
-                                            }
-
-                                            @Override
-                                            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                                                super.onFailure(statusCode, headers, throwable, errorResponse);
-                                            }
-                                        });
-                                    }
-
+//                                    for (i = 0; i < mWhenMemberChangeIds.size(); i++) {
+//                                        AsyncHttpClient gclient = new AsyncHttpClient();
+//                                        RequestParams pparams = new RequestParams();
+//                                        final String user_id = mWhenMemberChangeIds.get(i);
+//                                        pparams.add("user_id", user_id);
+//                                        gclient.get(getApplicationContext(), AppUtil.JFinalServer.xyurl, pparams, new JsonHttpResponseHandler() {
+//                                            @Override
+//                                            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+//                                                super.onSuccess(statusCode, headers, response);
+//                                                try {
+//                                                    String nick_name = response.getString("nick_name");
+//                                                    String head_pic = response.getString("head_pic");
+//                                                    items.add(new MyTeamItem(head_pic, nick_name, user_id));
+//                                                    adapter.notifyDataSetChanged();
+//                                                } catch (JSONException e) {
+//                                                    e.printStackTrace();
+//                                                }
+//                                            }
+//
+//                                            @Override
+//                                            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+//                                                super.onFailure(statusCode, headers, throwable, errorResponse);
+//                                            }
+//                                        });
+//                                    }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -188,8 +194,15 @@ public class MyTeamActivity extends BaseActivity {
 
     private void doNext() {
         lv = (ListView)findViewById(R.id.myTeam_listView);
-        adapter = new MyTeamAdapter(MyTeamActivity.this,items);
+        adapter = new MyTeamAdapter(MyTeamActivity.this, UserWarehouse.getInstance(getApplicationContext()).getUsers());
         lv.setAdapter(adapter);
+        UserWarehouse.getInstance(getApplicationContext()).updateUsersInfo(Group.GROUP_ID, new UserWarehouse.OnUsersInfoUpdatedListener() {
+            @Override
+            public void onUsersInfoUpdated(UserWarehouse userWarehouse) {
+                adapter.notifyDataSetChanged();
+            }
+        });
+        setItemClick();
 
         getData();
         mBinder = (SharingService.SharingBinder)getIntent().getSerializableExtra(KEY_BINDER);
@@ -233,9 +246,10 @@ public class MyTeamActivity extends BaseActivity {
                             String desc = "队伍简介";//队伍简介app并无体现，但作为创建群聊参数传入
                             //String[] members = data.getStringArrayExtra("newmembers");
                             List<String> member = new ArrayList<String>();
-                            for (int i = 0; i < items.size(); i++) {
-                                Log.i("zhu", "names:"+items.get(i).getUserId());
-                                member.add(items.get(i).getUserId());
+                            UserWarehouse userWarehouse = UserWarehouse.getInstance(getApplicationContext());
+                            for (int i = 0; i < userWarehouse.getUsers().size(); i++) {
+                                Log.i("zhu", "names:"+userWarehouse.getUsers().get(i).getUserId());
+                                member.add(userWarehouse.getUsers().get(i).getUserId());
                             }
                             String[] members = member.toArray(new String[1]);
                             try {
@@ -454,10 +468,7 @@ public class MyTeamActivity extends BaseActivity {
 
         TextView tv = (TextView) findViewById(R.id.myTeam_name);
         tv.setText(Group.GROUP_NAME);
-        TextView teamCaptain = (TextView) findViewById(R.id.team_captain);
-        teamCaptain.setText(Group.GROUP_CAPTIAN);
         getCaptianInfo(Group.GROUP_CAPTIAN);
-        getMembersInfo(Group.GROUP_ID);
 
         btn2 = (Button)findViewById(R.id.myTeam_button2);
         transfer = (RelativeLayout)findViewById(R.id.myTeam_transfer);
@@ -490,7 +501,7 @@ public class MyTeamActivity extends BaseActivity {
                 startActivity(i);*/
                 //点击队伍成员列表跳转到队伍成员页
                 Intent intent =new Intent(MyTeamActivity.this,TeamMemberActivity.class);
-                intent.putExtra("memberId",items.get(position).getUserId());
+                intent.putExtra("memberId", UserWarehouse.getInstance(getApplicationContext()).getUsers().get(position).getUserId());
                 startActivity(intent);
                 //TeamMemberActivity.actionStartActivity(MyTeamActivity.this);
                 overridePendingTransition(R.anim.push_up_in,R.anim.push_up_out);

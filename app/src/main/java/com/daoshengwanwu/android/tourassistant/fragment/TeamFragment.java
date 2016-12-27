@@ -1,5 +1,6 @@
 package com.daoshengwanwu.android.tourassistant.fragment;
 
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import com.daoshengwanwu.android.tourassistant.R;
 import com.daoshengwanwu.android.tourassistant.activity.ConversationActivity;
 import com.daoshengwanwu.android.tourassistant.activity.MyTeamActivity;
 import com.daoshengwanwu.android.tourassistant.activity.ScanActivity;
+import com.daoshengwanwu.android.tourassistant.model.UserWarehouse;
 import com.daoshengwanwu.android.tourassistant.service.SharingService;
 import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
 import com.hyphenate.chat.EMClient;
@@ -37,6 +39,8 @@ import org.json.JSONObject;
 /**
  * Created by LK on 2016/12/14.
  */
+
+
 public class TeamFragment extends Fragment {
     private static final String KEY_BINDER = "TeamFragment.KEY_BINDER";
     private static final int WHAT_ALERT_DIALOG = 1024;
@@ -58,7 +62,6 @@ public class TeamFragment extends Fragment {
             switch (msg.what) {
                 case WHAT_ALERT_DIALOG:
                     String teamid = msg.getData().getString(MSG_DATA_TEAM_ID);
-                    Toast.makeText(getActivity(), "teamid:" + teamid, Toast.LENGTH_SHORT).show();
                     alertDialog(teamid);
                     break;
                 default: break;
@@ -236,6 +239,7 @@ public class TeamFragment extends Fragment {
                         try {
                             result = response.getString("result");
                             AppUtil.Group.GROUP_ID = teamid;
+                            UserWarehouse.getInstance(getActivity().getApplicationContext()).updateUsersInfo(teamid, null);
                             Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
                         } catch (JSONException e) {
                             e.printStackTrace();

@@ -13,6 +13,7 @@ import android.util.Log;
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationListener;
+import com.daoshengwanwu.android.tourassistant.model.UserWarehouse;
 import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
 import com.daoshengwanwu.android.tourassistant.utils.AppUtil.SharingServer;
 
@@ -161,6 +162,7 @@ public class SharingService extends Service {
                                 Log.d(TAG, "run: membersInfo: " + membersInfo);
                                 if (!memInfos.equals(oldMemInfo)) {
                                     Log.d(TAG, "run: 进入if");
+                                    UserWarehouse.getInstance(getApplicationContext()).updateUsersInfo(memInfos, null);
                                     for (OnTeamMemberChangeListener listener : mOnTeamMemberChangeListeners) {
                                         listener.onTeamMemberChange(team_id, memInfos);
                                     }

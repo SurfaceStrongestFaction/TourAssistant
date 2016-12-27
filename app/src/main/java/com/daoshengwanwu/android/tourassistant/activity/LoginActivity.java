@@ -28,6 +28,7 @@ import com.daoshengwanwu.android.tourassistant.R;
 import com.daoshengwanwu.android.tourassistant.model.AccessTokenKeeper;
 import com.daoshengwanwu.android.tourassistant.model.App;
 import com.daoshengwanwu.android.tourassistant.model.Constants;
+import com.daoshengwanwu.android.tourassistant.model.UserWarehouse;
 import com.daoshengwanwu.android.tourassistant.model.Userty;
 import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
 import com.daoshengwanwu.android.tourassistant.utils.HttpCallBackListener;
@@ -72,6 +73,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.daoshengwanwu.android.tourassistant.utils.AppUtil.Group.GROUP_ID;
 import static com.daoshengwanwu.android.tourassistant.utils.AppUtil.User.USER_ID;
@@ -510,17 +513,25 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
                     public void onSuccess(int i, Header[] headers, byte[] bytes) {
                         qqresult = new String(bytes);
                         USER_ID = qqresult;
-                        AppUtil.User.USER_NAME = qqname;
-                        AppUtil.User.USER_GENDER = qqgender;
-                        xyuser_id = qqresult;
-                        USER_ID = qqresult;
-                        Log.i("zhu", "id"+USER_ID);
-                        signUp(USER_ID,"");
-                        Toast.makeText(LoginActivity.this,"登录成功", Toast.LENGTH_LONG).show();
-                        getTeamInfo();
-                        Intent intent = new Intent(LoginActivity.this, LauncherActivity.class);
-                        startActivity(intent);
-                        finish();
+                        List<String> list = new ArrayList<String>();
+                        list.add(USER_ID);
+                        UserWarehouse.getInstance(getApplicationContext()).updateUsersInfo(list, new UserWarehouse.OnUsersInfoUpdatedListener() {
+                            @Override
+                            public void onUsersInfoUpdated(UserWarehouse userWarehouse) {
+                                AppUtil.User.USER_NAME = qqname;
+                                AppUtil.User.USER_GENDER = qqgender;
+                                xyuser_id = qqresult;
+                                USER_ID = qqresult;
+                                Log.i("zhu", "id"+USER_ID);
+                                signUp(USER_ID,"");
+                                Toast.makeText(LoginActivity.this,"登录成功", Toast.LENGTH_LONG).show();
+                                getTeamInfo();
+                                Intent intent = new Intent(LoginActivity.this, LauncherActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                        });
+
                     }
                     @Override
                     public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {

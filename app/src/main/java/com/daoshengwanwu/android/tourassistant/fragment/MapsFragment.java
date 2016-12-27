@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,11 +44,14 @@ import com.amap.api.services.poisearch.PoiSearch;
 import com.daoshengwanwu.android.tourassistant.R;
 import com.daoshengwanwu.android.tourassistant.model.Frag;
 import com.daoshengwanwu.android.tourassistant.model.MapsFragmentSaveData;
+import com.daoshengwanwu.android.tourassistant.model.User;
+import com.daoshengwanwu.android.tourassistant.model.UserWarehouse;
 import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
 import com.daoshengwanwu.android.tourassistant.service.SharingService;
 import com.daoshengwanwu.android.tourassistant.utils.ToastUtil;
 import com.daoshengwanwu.android.tourassistant.view.MyView;
 import com.luolc.emojirain.EmojiRainLayout;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -64,9 +68,8 @@ import static com.daoshengwanwu.android.tourassistant.utils.AppUtil.User.USER_NA
 
 public class MapsFragment extends Fragment implements AMapLocationListener,
         SharingService.SharingLocationListener, View.OnClickListener,
-        AMap.OnMapClickListener, AMap.OnInfoWindowClickListener,
-        AMap.InfoWindowAdapter, AMap.OnMarkerClickListener,
-        PoiSearch.OnPoiSearchListener {
+        AMap.OnMapClickListener, PoiSearch.OnPoiSearchListener
+        , AMap.OnMarkerClickListener{
     //------------------------------胜达-------------------------------
     private LatLng pos;
     private int i = 0;
@@ -129,6 +132,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
     private TextView mGroupName = null;
     private String mSpotId = "";
     private EmojiRainLayout mEmojiRainLayout = null;
+    private Map<Marker, String> mMarkerIdReflection = new HashMap<>();
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -155,13 +159,14 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
                             mUserMarker = aMap.addMarker(new MarkerOptions().position(currentLoc)
                                     .title(AppUtil.User.USER_NAME)
                                     .snippet("你在这里"));
+                            mMarkerIdReflection.put(mUserMarker, AppUtil.User.USER_ID);
                             mIsFirstLoc = false;
                         }
 
                         //判断是否掉落糖果
                             for (Frag frag : mFrags) {
                                 double distance = Math.sqrt(Math.pow((frag.getLatitude() - latitude), 2) + Math.pow(frag.getLongitude() - longitude, 2));
-                                if (distance <= 0.002) {
+                                if (distance <= 0.001) {
                                     mIsDroppingGift = true;
                                     startEmoji();
                                     new AlertDialog.Builder(getActivity()).setTitle("发现礼物！").setView(R.layout.baihaoran_dialog_baoxiang)
@@ -204,7 +209,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
                                 Marker marker = aMap.addMarker(new MarkerOptions().position(currentLoc)
                                         .title("好友")
                                         .snippet("你的好友在这里~"));
-
+                                mMarkerIdReflection.put(marker, user_id);
                                 mMemberMarkers.put(user_id, marker);
                             }
                         }
@@ -222,7 +227,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
         mFrags.add(new Frag(37.997244,114.518988,R.drawable.yuanbao));//114.518988,37.997244
         mFrags.add(new Frag(37.99568,114.517968,R.drawable.yuanbao));//114.517968,37.99568
         mFrags.add(new Frag(37.994361,114.518076,R.drawable.yuanbao));//114.518076,37.994361
-        mFrags.add(new Frag(37.995414,114.518671,R.drawable.yuanbao));//114.518671,37.995414
+        mFrags.add(new Frag(37.997293,114.520564,R.drawable.yuanbao));//114.520564,37.997293
 
     }//initFragCoorderData
 
@@ -236,7 +241,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
         //-------------------------胜达-------------------------------------------------
         View v = inflater.inflate(R.layout.jiangshengda_fragment_maps, container, false);
 
@@ -248,10 +253,31 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
         mapView = (TextureMapView) v.findViewById(R.id.map);
         if (aMap == null) {
             aMap = mapView.getMap();
+            aMap.setInfoWindowAdapter(new AMap.InfoWindowAdapter() {
+                @Override
+                public View getInfoWindow(Marker marker) {
+                    View infoWindow = getLayoutInflater(savedInstanceState).inflate(
+                            R.layout.custom_marker, null, false);
+
+                    ImageView img = (ImageView)infoWindow.findViewById(R.id.head_pic);
+                    TextView nickName = (TextView)infoWindow.findViewById(R.id.nick_name);
+
+                    User user = UserWarehouse.getInstance(getActivity()).getUserById(mMarkerIdReflection.get(marker));
+                    if (null != user) {
+                        nickName.setText(UserWarehouse.getInstance(getActivity()).getUserById(mMarkerIdReflection.get(marker)).getNickName());
+                        ImageLoader.getInstance().displayImage(UserWarehouse.getInstance(getActivity()).getUserById(mMarkerIdReflection.get(marker)).getHeadPicUrl(), img);
+                    }
+
+                    return infoWindow;
+                }
+
+                @Override
+                public View getInfoContents(Marker marker) {
+                    return null;
+                }
+            });
+
             aMap.setOnMapClickListener(this);
-            aMap.setOnMarkerClickListener(this);
-            aMap.setOnInfoWindowClickListener(this);
-            aMap.setInfoWindowAdapter(this);
             TextView searchButton = (TextView) v.findViewById(R.id.btn_search);
             searchButton.setOnClickListener(this);
             /*
@@ -300,7 +326,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
         removeAMapLogo(); //删除高德logo
         //设置使用普通地图
         //aMap.setMapType(AMap.MAP_TYPE_NIGHT);//夜景地图模式
-        //aMap.setMapType(AMap.MAP_TYPE_NORMAL);
+        aMap.setMapType(AMap.MAP_TYPE_SATELLITE);
         //---------------------------------------------------------------------------------
 
 
@@ -374,24 +400,6 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
 
         initFragCoorderData(); //初始化彩蛋的位置信息
         initEmojiRainData(v); //初始化表情雨的数据信息
-
-        //自定义InfoWindow样式
-        aMap.setInfoWindowAdapter(new AMap.InfoWindowAdapter() {
-            @Override
-            public View getInfoWindow(Marker marker) {
-                return null;
-            }
-
-            @Override
-            public View getInfoContents(Marker marker) {
-//                View infoWindow = getLayoutInflater().inflate(
-//                        R.layout.custom_info_window, null);
-//
-//                render(marker, infoWindow);
-//                return infoWindow;
-                return null;
-            }
-        });
 
         return v;
     }
@@ -570,27 +578,6 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
     private void setPoiItemDisplayContent(final PoiItem mCurrentPoi) {
         mPoiName.setText(mCurrentPoi.getTitle());
         mPoiAddress.setText(mCurrentPoi.getSnippet()+mCurrentPoi.getDistance());
-    }
-
-
-    @Override
-    public View getInfoContents(Marker arg0) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-
-    @Override
-    public View getInfoWindow(Marker arg0) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-
-    @Override
-    public void onInfoWindowClick(Marker arg0) {
-        // TODO Auto-generated method stub
-
     }
 
     private int[] markers = {R.drawable.poi_marker_1,

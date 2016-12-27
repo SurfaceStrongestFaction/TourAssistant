@@ -349,8 +349,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 
     private void getTeamInfo() {
         if(GROUP_ID.equals("")) {
-            RequestParams params1 = new RequestParams();
-            params1.add("team_id", GROUP_ID);
             // 2.关闭弹出窗口
             //3.根据服务器返回值显示创建成功或失败的提示
             if (!AppUtil.User.USER_ID.equals("")) {
@@ -364,7 +362,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
                         try {
                             String team_id = response.getString("team_id");
                             GROUP_ID = team_id;
-                            getTeamNameInfo();
+                            //getTeamNameInfo();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -432,7 +430,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
                     String team_name = response.getString("name");
                     AppUtil.Group.GROUP_NAME = team_name;
                     AppUtil.Group.GROUP_CAPTIAN=response.getString("captain");
-                    AppUtil.Group.CHAT_TEAM_ID=response.getString("chat_team_id");
+                    //AppUtil.Group.CHAT_TEAM_ID=response.getString("chat_team_id");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

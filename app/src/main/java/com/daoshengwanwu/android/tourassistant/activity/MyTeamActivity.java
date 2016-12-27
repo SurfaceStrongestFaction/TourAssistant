@@ -63,6 +63,7 @@ public class MyTeamActivity extends BaseActivity {
     public String username;
     public String members;
     public String[] names;
+    public String[] chatTeamMembers=new String[20];
     public int i;
     public MyTeamAdapter adapter;
     private ImageView back;
@@ -199,14 +200,100 @@ public class MyTeamActivity extends BaseActivity {
         groupChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                 //确保每次点击群聊都是最新的chat_team_id
+                /*AsyncHttpClient gclient0 = new AsyncHttpClient();
+                RequestParams params0 = new RequestParams();
+                params0.add("team_id",AppUtil.Group.GROUP_ID);
+                gclient0.get(getApplicationContext(),xyurl2,params0,new JsonHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                        super.onSuccess(statusCode, headers, response);
+                        try {
+                            AppUtil.Group.CHAT_TEAM_ID=response.getString("chat_team_id");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });*/
+                /*while(TextUtils.isEmpty(AppUtil.Group.CHAT_TEAM_ID)){
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }*/
                 new Thread(){
+                    @Override
+                    public void run() {
+                        super.run();
+                        Log.i("zhu", "创建队伍 "+ Group.CHAT_TEAM_ID+TextUtils.isEmpty(Group.CHAT_TEAM_ID));
+                        if (Group.CHAT_TEAM_ID.equals("null")||Group.CHAT_TEAM_ID.equals("")) {
+                            //队伍名
+                            final String groupName = Group.GROUP_NAME;
+                            String desc = "队伍简介";//队伍简介app并无体现，但作为创建群聊参数传入
+                            //String[] members = data.getStringArrayExtra("newmembers");
+                            List<String> member = new ArrayList<String>();
+                            for (int i = 0; i < items.size(); i++) {
+                                Log.i("zhu", "Items:"+"i"+items.get(i).getUserId());
+                                member.add(items.get(i).getUserId());
+                            }
+                            String[] members = member.toArray(new String[1]);
+                            try {
+                                EMGroupManager.EMGroupOptions option = new EMGroupManager.EMGroupOptions();
+                                option.maxUsers = 200;
+                                String reason = "Invite to join the group";
+                                reason = EMClient.getInstance().getCurrentUser() + reason + groupName;
+                                option.style = EMGroupManager.EMGroupStyle.EMGroupStylePublicOpenJoin;
+                                Log.i("zhu", "创建队伍调用方法"+groupName);
+                                EMGroup myGroup = EMClient.getInstance().groupManager().createGroup(groupName, desc, members, reason, option);
+                                Group.CHAT_TEAM_ID = myGroup.getGroupId();
+                                Log.i(TAG, "创建队伍成功，保存team_chat_id: "+Group.CHAT_TEAM_ID);
+                                //创建成功后跳转到群聊页
+                                Log.i("zhu", "onActivityResult:CHAT_TEAM_ID " + Group.CHAT_TEAM_ID);
+                                Intent intent = new Intent(MyTeamActivity.this, ECChatActivity.class);
+                                intent.putExtra("chatType", EaseConstant.CHATTYPE_GROUP);
+                                intent.putExtra("userId", Group.CHAT_TEAM_ID);
+                                startActivity(intent);
+                            } catch (final HyphenateException e) {
+                                runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        Log.i("zhu", "创建队伍错误 " + e.getLocalizedMessage());
+                                        Toast.makeText(MyTeamActivity.this, "创建错误" + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                                    }
+                                });
+                            }
+                        }else
+                        {
+                            Log.i("zhu", "创建队伍else "+ Group.CHAT_TEAM_ID);
+                            for(int i=0;i<items.size();i++){
+                                Log.i(TAG, "chatTeamMembers: "+items.get(i).getUserId());
+                                chatTeamMembers[i]=items.get(i).getUserId();
+                                Log.i(TAG, "chatTeamMembers: "+chatTeamMembers[i]);
+
+                            }
+                           try {
+                                EMClient.getInstance().groupManager().addUsersToGroup(Group.CHAT_TEAM_ID, chatTeamMembers);
+                           } catch (HyphenateException e) {
+                               e.printStackTrace();
+                           }
+                            Intent intent = new Intent(MyTeamActivity.this, ECChatActivity.class);
+                            intent.putExtra("chatType", EaseConstant.CHATTYPE_GROUP);
+                            intent.putExtra("userId", Group.CHAT_TEAM_ID);
+                            startActivity(intent);
+                        }
+                    }
+                }.start();
+
+            }
+
+                /*new Thread(){
                     @Override
                     public void run() {
                         super.run();
                         Log.i("zhu", "创建队伍 "+ Group.CHAT_TEAM_ID+TextUtils.isEmpty(Group.CHAT_TEAM_ID));
                         if (Group.CHAT_TEAM_ID.equals("null")) {
                             //队伍名
-
                             final String groupName = Group.GROUP_NAME;
                             String desc = "队伍简介";//队伍简介app并无体现，但作为创建群聊参数传入
                             //String[] members = data.getStringArrayExtra("newmembers");
@@ -239,8 +326,7 @@ public class MyTeamActivity extends BaseActivity {
                                     }
                                 });
                             }
-                        }else
-                        {
+                        }else{
                             Log.i("zhu", "创建队伍else "+ Group.CHAT_TEAM_ID);
                             try {
                                 EMClient.getInstance().groupManager().addUsersToGroup(Group.CHAT_TEAM_ID, names);
@@ -271,8 +357,8 @@ public class MyTeamActivity extends BaseActivity {
                             e.printStackTrace();
                         }
                     }
-                });
-            }
+                });*/
+
         });
     }
 
@@ -365,7 +451,6 @@ public class MyTeamActivity extends BaseActivity {
         }
     }
 
-
     public void  getData(){
         back=(ImageView)findViewById(R.id.myTeam_back);
         back.setOnClickListener(new View.OnClickListener() {
@@ -420,7 +505,6 @@ public class MyTeamActivity extends BaseActivity {
             }
         });
     }
-
 
     public static void actionStartActivity(Context packageContext, SharingService.SharingBinder binder) {
         Intent intent = new Intent(packageContext, MyTeamActivity.class);

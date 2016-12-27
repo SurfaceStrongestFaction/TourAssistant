@@ -83,7 +83,9 @@ public class TeamFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
+                Toast.makeText(getActivity(),AppUtil.Group.GROUP_ID,Toast.LENGTH_LONG).show();
+                if (AppUtil.Group.GROUP_ID.equals("null") || AppUtil.Group.GROUP_ID.isEmpty()){//还未创建队伍
+                    AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
                 final View myDialog = getActivity().getLayoutInflater().inflate(R.layout.lk_dialogxml, null);
                 ab.setView(myDialog);
                 final AlertDialog dialog = ab.show();
@@ -139,6 +141,13 @@ public class TeamFragment extends Fragment {
                     }
                 });
 
+            }else{//否则弹出框你已加入队伍或创建队伍不能创建
+
+                       AlertDialog.Builder ab=new AlertDialog.Builder(getActivity());
+                       ab.setTitle("请求失败");
+                       ab.setMessage("你已经加入或创建了队伍");
+                       ab.create().show();
+                }
 
             }
         });
@@ -146,8 +155,16 @@ public class TeamFragment extends Fragment {
         joinTeam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), ScanActivity.class);
-                startActivityForResult(intent, 0);
+                if (AppUtil.Group.GROUP_ID.equals("null") || AppUtil.Group.GROUP_ID.isEmpty()) {//还未加入队伍
+                    Intent intent = new Intent(getActivity(), ScanActivity.class);
+                    startActivityForResult(intent, 0);
+                }else{
+
+                    AlertDialog.Builder ab=new AlertDialog.Builder(getActivity());
+                    ab.setTitle("请求失败");
+                    ab.setMessage("你已经加入或创建了队伍");
+                    ab.create().show();
+                }
 
             }
         });

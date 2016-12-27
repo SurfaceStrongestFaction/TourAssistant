@@ -151,6 +151,7 @@ public class TeamFragment extends Fragment {
 
             }
         });
+
         joinTeam = (RelativeLayout) view.findViewById(R.id.lk_joinTeam);
         joinTeam.setOnClickListener(new View.OnClickListener() {
             @Override

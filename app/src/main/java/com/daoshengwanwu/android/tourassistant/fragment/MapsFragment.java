@@ -16,7 +16,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,12 +47,7 @@ import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
 import com.daoshengwanwu.android.tourassistant.service.SharingService;
 import com.daoshengwanwu.android.tourassistant.utils.ToastUtil;
 import com.daoshengwanwu.android.tourassistant.view.MyView;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.luolc.emojirain.EmojiRainLayout;
-
-import org.apache.http.Header;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -378,8 +372,31 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
 //            }
 //        });
 
-        initFragCoorderData();
+        initFragCoorderData(); //初始化彩蛋的位置信息
+        initEmojiRainData(v); //初始化表情雨的数据信息
 
+        //自定义InfoWindow样式
+        aMap.setInfoWindowAdapter(new AMap.InfoWindowAdapter() {
+            @Override
+            public View getInfoWindow(Marker marker) {
+                return null;
+            }
+
+            @Override
+            public View getInfoContents(Marker marker) {
+//                View infoWindow = getLayoutInflater().inflate(
+//                        R.layout.custom_info_window, null);
+//
+//                render(marker, infoWindow);
+//                return infoWindow;
+                return null;
+            }
+        });
+
+        return v;
+    }
+
+    private void initEmojiRainData(View v) {
         mEmojiRainLayout = (EmojiRainLayout)v.findViewById(R.id.emoji_rain_layout);
         mEmojiRainLayout.addEmoji(R.drawable.emoji_1_3);
         mEmojiRainLayout.addEmoji(R.drawable.emoji_2_3);
@@ -387,8 +404,6 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
         mEmojiRainLayout.addEmoji(R.drawable.emoji_4_3);
         mEmojiRainLayout.addEmoji(R.drawable.emoji_5_3);
         mEmojiRainLayout.addEmoji(R.drawable.yuanbao);
-
-        return v;
     }
 
     private void startEmoji() {

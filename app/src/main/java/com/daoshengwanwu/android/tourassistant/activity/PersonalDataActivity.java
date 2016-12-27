@@ -190,7 +190,6 @@ public class PersonalDataActivity extends BaseActivity {
                                         @Override
                                         public void onSuccess(int statusCode, Header[] headers, byte[] bytes) {
                                             String result = new String (bytes);
-                                            Toast.makeText(PersonalDataActivity.this,result,Toast.LENGTH_LONG).show();
                                         }
                                         @Override
                                         public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
@@ -239,7 +238,6 @@ public class PersonalDataActivity extends BaseActivity {
                                         @Override
                                         public void onSuccess(int statusCode, Header[] headers, byte[] bytes) {
                                             String result = new String (bytes);
-                                            Toast.makeText(PersonalDataActivity.this,result,Toast.LENGTH_LONG).show();
                                         }
                                         @Override
                                         public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
@@ -276,7 +274,6 @@ public class PersonalDataActivity extends BaseActivity {
                                         @Override
                                         public void onSuccess(int statusCode, Header[] headers, byte[] bytes) {
                                             String result = new String (bytes);
-                                            Toast.makeText(PersonalDataActivity.this,result,Toast.LENGTH_LONG).show();
                                         }
                                         @Override
                                         public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {

@@ -2,5 +2,9 @@
     {
         "merged": "E:\\android\\newshixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-mdpi-v4\\ic_launcher.png",
         "source": "E:\\android\\newshixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\bundles\\debug\\res\\drawable-mdpi-v4\\ic_launcher.png"
+    },
+    {
+        "merged": "G:\\shixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-mdpi-v4\\ic_launcher.png",
+        "source": "G:\\shixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\bundles\\debug\\res\\drawable-mdpi-v4\\ic_launcher.png"
     }
 ]

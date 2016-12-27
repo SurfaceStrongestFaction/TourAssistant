@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="E:\android\newshixun\TourAssistant\ZBLibrary\src\main\assets"/><source path="E:\android\newshixun\TourAssistant\ZBLibrary\build\generated\assets\shaders\release"/></dataSet><dataSet config="release"><source path="E:\android\newshixun\TourAssistant\ZBLibrary\src\release\assets"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="G:\shixun\TourAssistant\ZBLibrary\src\main\assets"/><source path="G:\shixun\TourAssistant\ZBLibrary\build\generated\assets\shaders\release"/></dataSet><dataSet config="release"><source path="G:\shixun\TourAssistant\ZBLibrary\src\release\assets"/></dataSet></merger>

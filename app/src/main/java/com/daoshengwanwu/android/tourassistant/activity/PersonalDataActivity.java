@@ -91,6 +91,7 @@ public class PersonalDataActivity extends BaseActivity {
         nickname.setOnClickListener(myListener);
         password.setOnClickListener(myListener);
         sex.setOnClickListener(myListener);
+        imageView_back.setOnClickListener(myListener);
     }
 
     private void findView() {

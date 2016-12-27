@@ -28,12 +28,12 @@
         "source": "G:\\shixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\drawable\\tab_bg_right_full_white.xml"
     },
     {
-        "merged": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\release\\drawable\\tab_bg_right_selector.xml",
-        "source": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\drawable\\tab_bg_right_selector.xml"
-    },
-    {
         "merged": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\release\\drawable\\alpha3.xml",
         "source": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\drawable\\alpha3.xml"
+    },
+    {
+        "merged": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\release\\drawable\\tab_bg_right_selector.xml",
+        "source": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\drawable\\tab_bg_right_selector.xml"
     },
     {
         "merged": "G:\\shixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\release\\drawable\\dialog_right_but_bg.xml",

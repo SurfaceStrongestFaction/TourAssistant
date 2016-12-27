@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,7 +59,8 @@ public class TeamFragment extends Fragment {
             switch (msg.what) {
                 case WHAT_ALERT_DIALOG:
                     String teamid = msg.getData().getString(MSG_DATA_TEAM_ID);
-                    Toast.makeText(getActivity(), "teamid:" + teamid, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(), "teamid:" + teamid, Toast.LENGTH_SHORT).show();
+                    Log.i("zhu", "创建队伍: "+teamid);
                     alertDialog(teamid);
                     break;
                 default: break;
@@ -254,7 +256,8 @@ public class TeamFragment extends Fragment {
                         try {
                             result = response.getString("result");
                             AppUtil.Group.GROUP_ID = teamid;
-                            Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
+                            Log.i("zhu", "alertDialog:result: "+result);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -263,7 +266,7 @@ public class TeamFragment extends Fragment {
 
                     @Override
                     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                        Toast.makeText(getActivity(), "error", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getActivity(), "error", Toast.LENGTH_SHORT).show();
                     }
                 });
             }

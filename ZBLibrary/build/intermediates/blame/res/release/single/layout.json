@@ -16,12 +16,12 @@
         "source": "G:\\shixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\layout\\top_menu_window.xml"
     },
     {
-        "merged": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\release\\layout\\list_item.xml",
-        "source": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\layout\\list_item.xml"
-    },
-    {
         "merged": "G:\\shixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\release\\layout\\grid_item.xml",
         "source": "G:\\shixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\layout\\grid_item.xml"
+    },
+    {
+        "merged": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\release\\layout\\list_item.xml",
+        "source": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\layout\\list_item.xml"
     },
     {
         "merged": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\release\\layout\\top_right_tv.xml",
@@ -36,12 +36,12 @@
         "source": "G:\\shixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\layout\\select_bar.xml"
     },
     {
-        "merged": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\release\\layout\\server_setting_activity.xml",
-        "source": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\layout\\server_setting_activity.xml"
-    },
-    {
         "merged": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\release\\layout\\select_bar.xml",
         "source": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\layout\\select_bar.xml"
+    },
+    {
+        "merged": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\release\\layout\\server_setting_activity.xml",
+        "source": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\layout\\server_setting_activity.xml"
     },
     {
         "merged": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\release\\layout\\base_view_bottom_window.xml",

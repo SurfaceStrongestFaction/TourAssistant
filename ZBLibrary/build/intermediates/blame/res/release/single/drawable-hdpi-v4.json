@@ -20,12 +20,12 @@
         "source": "G:\\shixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\drawable-hdpi\\spinner_down.png"
     },
     {
-        "merged": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\spinner_undown.png",
-        "source": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\drawable-hdpi\\spinner_undown.png"
-    },
-    {
         "merged": "G:\\shixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\setting_light.png",
         "source": "G:\\shixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\drawable-hdpi\\setting_light.png"
+    },
+    {
+        "merged": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\spinner_undown.png",
+        "source": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\drawable-hdpi\\spinner_undown.png"
     },
     {
         "merged": "G:\\shixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\radio_normal.png",
@@ -44,12 +44,12 @@
         "source": "G:\\shixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\drawable-hdpi\\forward2_light.png"
     },
     {
-        "merged": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\search.png",
-        "source": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\drawable-hdpi\\search.png"
-    },
-    {
         "merged": "G:\\shixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\earth_light.png",
         "source": "G:\\shixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\drawable-hdpi\\earth_light.png"
+    },
+    {
+        "merged": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\search.png",
+        "source": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\drawable-hdpi\\search.png"
     },
     {
         "merged": "G:\\shixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\cancel.png",
@@ -88,20 +88,20 @@
         "source": "G:\\shixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\drawable-hdpi\\default_head.png"
     },
     {
-        "merged": "G:\\shixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\menu_light.png",
-        "source": "G:\\shixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\drawable-hdpi\\menu_light.png"
-    },
-    {
-        "merged": "G:\\shixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\search_light.png",
-        "source": "G:\\shixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\drawable-hdpi\\search_light.png"
+        "merged": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\earth.png",
+        "source": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\drawable-hdpi\\earth.png"
     },
     {
         "merged": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\setting_light.png",
         "source": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\drawable-hdpi\\setting_light.png"
     },
     {
-        "merged": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\earth.png",
-        "source": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\drawable-hdpi\\earth.png"
+        "merged": "G:\\shixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\search_light.png",
+        "source": "G:\\shixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\drawable-hdpi\\search_light.png"
+    },
+    {
+        "merged": "G:\\shixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\menu_light.png",
+        "source": "G:\\shixun\\TourAssistant\\ZBLibrary\\src\\main\\res\\drawable-hdpi\\menu_light.png"
     },
     {
         "merged": "E:\\android\\newshixun\\TourAssistant\\ZBLibrary\\build\\intermediates\\res\\merged\\release\\drawable-hdpi-v4\\triangle_down.png",

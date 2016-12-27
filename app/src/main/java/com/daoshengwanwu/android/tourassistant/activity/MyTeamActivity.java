@@ -259,7 +259,7 @@ public class MyTeamActivity extends BaseActivity {
                                 runOnUiThread(new Runnable() {
                                     public void run() {
                                         Log.i("zhu", "创建队伍错误 " + e.getLocalizedMessage());
-                                        Toast.makeText(MyTeamActivity.this, "创建错误" + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                                        Toast.makeText(MyTeamActivity.this, "创建错误", Toast.LENGTH_LONG).show();
                                     }
                                 });
                             }

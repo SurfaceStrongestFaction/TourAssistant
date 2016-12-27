@@ -666,7 +666,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
                 user_name = name.getText().toString();
                 user_pwd = pwd.getText().toString();
                 synhttprequestlogin();
-                Toast.makeText(LoginActivity.this, "tanchu toast", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(LoginActivity.this, "tanchu toast", Toast.LENGTH_SHORT).show();
                 if(cb.isChecked()){
                     s = getSharedPreferences("ty_user",Context.MODE_PRIVATE);
                     SharedPreferences.Editor editer = s.edit();
@@ -828,7 +828,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
                             switch (errorCode) {
                                 // 网络错误
                                 case EMError.NETWORK_ERROR:
-                                    Toast.makeText(LoginActivity.this, "网络错误 code: " + errorCode + ", message:" + message, Toast.LENGTH_LONG).show();
+                                    //Toast.makeText(LoginActivity.this, "网络错误 code: " + errorCode + ", message:" + message, Toast.LENGTH_LONG).show();
                                     break;
                                 // 用户已存在
                                 case EMError.USER_ALREADY_EXIST:
@@ -838,7 +838,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
                                     break;
                                 // 参数不合法，一般情况是username 使用了uuid导致，不能使用uuid注册
                                 case EMError.USER_ILLEGAL_ARGUMENT:
-                                    Toast.makeText(LoginActivity.this, "参数不合法，一般情况是username 使用了uuid导致，不能使用uuid注册 code: " + errorCode + ", message:" + message, Toast.LENGTH_LONG).show();
+                                    //Toast.makeText(LoginActivity.this, "参数不合法，一般情况是username 使用了uuid导致，不能使用uuid注册 code: " + errorCode + ", message:" + message, Toast.LENGTH_LONG).show();
                                     break;
                                 // 服务器未知错误
                                 case EMError.SERVER_UNKNOWN_ERROR:
@@ -848,7 +848,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
                                     Toast.makeText(LoginActivity.this, "账户注册失败 code: " + errorCode + ", message:" + message, Toast.LENGTH_LONG).show();
                                     break;
                                 default:
-                                    Toast.makeText(LoginActivity.this, "ml_sign_up_failed code: " + errorCode + ", message:" + message, Toast.LENGTH_LONG).show();
+                                    //Toast.makeText(LoginActivity.this, "ml_sign_up_failed code: " + errorCode + ", message:" + message, Toast.LENGTH_LONG).show();
+                                    Log.i("zhu", "ml_sign_up_failed code: " + errorCode + ", message:" + message);
                                     break;
                             }
                         }
@@ -906,39 +907,39 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
                         switch (i) {
                             // 网络异常 2
                             case EMError.NETWORK_ERROR:
-                                Toast.makeText(LoginActivity.this, "网络错误 code: " + i + ", message:" + s, Toast.LENGTH_LONG).show();
+                                //Toast.makeText(LoginActivity.this, "网络错误 code: " + i + ", message:" + s, Toast.LENGTH_LONG).show();
                                 break;
                             // 无效的用户名 101
                             case EMError.INVALID_USER_NAME:
-                                Toast.makeText(LoginActivity.this, "无效的用户名 code: " + i + ", message:" + s, Toast.LENGTH_LONG).show();
+                                //Toast.makeText(LoginActivity.this, "无效的用户名 code: " + i + ", message:" + s, Toast.LENGTH_LONG).show();
                                 break;
                             // 无效的密码 102
                             case EMError.INVALID_PASSWORD:
-                                Toast.makeText(LoginActivity.this, "无效的密码 code: " + i + ", message:" + s, Toast.LENGTH_LONG).show();
+                                //Toast.makeText(LoginActivity.this, "无效的密码 code: " + i + ", message:" + s, Toast.LENGTH_LONG).show();
                                 break;
                             // 用户认证失败，用户名或密码错误 202
                             case EMError.USER_AUTHENTICATION_FAILED:
-                                Toast.makeText(LoginActivity.this, "用户认证失败，用户名或密码错误 code: " + i + ", message:" + s, Toast.LENGTH_LONG).show();
+                                //Toast.makeText(LoginActivity.this, "用户认证失败，用户名或密码错误 code: " + i + ", message:" + s, Toast.LENGTH_LONG).show();
                                 break;
                             // 用户不存在 204
                             case EMError.USER_NOT_FOUND:
-                                Toast.makeText(LoginActivity.this, "用户不存在 code: " + i + ", message:" + s, Toast.LENGTH_LONG).show();
+                                //Toast.makeText(LoginActivity.this, "用户不存在 code: " + i + ", message:" + s, Toast.LENGTH_LONG).show();
                                 break;
                             // 无法访问到服务器 300
                             case EMError.SERVER_NOT_REACHABLE:
-                                Toast.makeText(LoginActivity.this, "无法访问到服务器 code: " + i + ", message:" + s, Toast.LENGTH_LONG).show();
+                                //Toast.makeText(LoginActivity.this, "无法访问到服务器 code: " + i + ", message:" + s, Toast.LENGTH_LONG).show();
                                 break;
                             // 等待服务器响应超时 301
                             case EMError.SERVER_TIMEOUT:
-                                Toast.makeText(LoginActivity.this, "等待服务器响应超时 code: " + i + ", message:" + s, Toast.LENGTH_LONG).show();
+                                //Toast.makeText(LoginActivity.this, "等待服务器响应超时 code: " + i + ", message:" + s, Toast.LENGTH_LONG).show();
                                 break;
                             // 服务器繁忙 302
                             case EMError.SERVER_BUSY:
-                                Toast.makeText(LoginActivity.this, "服务器繁忙 code: " + i + ", message:" + s, Toast.LENGTH_LONG).show();
+                                //Toast.makeText(LoginActivity.this, "服务器繁忙 code: " + i + ", message:" + s, Toast.LENGTH_LONG).show();
                                 break;
                             // 未知 Server 异常 303 一般断网会出现这个错误
                             case EMError.SERVER_UNKNOWN_ERROR:
-                                Toast.makeText(LoginActivity.this, "未知的服务器异常 code: " + i + ", message:" + s, Toast.LENGTH_LONG).show();
+                                //Toast.makeText(LoginActivity.this, "未知的服务器异常 code: " + i + ", message:" + s, Toast.LENGTH_LONG).show();
                                 break;
                             default:
                                 Log.d(TAG, "run: " + "ml_sign_in_failed code: " + i + ", message:" + s);

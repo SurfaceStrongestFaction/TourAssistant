@@ -224,11 +224,8 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
 
 
     private void initFragCoorderData() {
-        mFrags.add(new Frag(37.997633,114.522823,R.drawable.yuanbao));//114.522823,37.997633
-        mFrags.add(new Frag(37.997244,114.518988,R.drawable.yuanbao));//114.518988,37.997244
-        mFrags.add(new Frag(37.99568,114.517968,R.drawable.yuanbao));//114.517968,37.99568
-        mFrags.add(new Frag(37.994361,114.518076,R.drawable.yuanbao));//114.518076,37.994361
-        mFrags.add(new Frag(37.995414,114.518671,R.drawable.yuanbao));//114.518671,37.995414
+        mFrags.add(new Frag(37.997319,114.521594,R.drawable.yuanbao));//114.521594,37.997319
+        mFrags.add(new Frag(37.997293,114.520564,R.drawable.yuanbao));//114.520564,37.997293
 
     }//initFragCoorderData
 

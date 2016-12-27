@@ -56,20 +56,20 @@
         "source": "G:\\shixun\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable\\ease_timestampe_bg.xml"
     },
     {
-        "merged": "E:\\android\\newshixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\release\\drawable\\ease_common_tab_bg.xml",
-        "source": "E:\\android\\newshixun\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable\\ease_common_tab_bg.xml"
-    },
-    {
         "merged": "G:\\shixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\release\\drawable\\ease_chatto_bg.xml",
         "source": "G:\\shixun\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable\\ease_chatto_bg.xml"
     },
     {
-        "merged": "G:\\shixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\release\\drawable\\ease_chatting_setmode_keyboard_btn.xml",
-        "source": "G:\\shixun\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable\\ease_chatting_setmode_keyboard_btn.xml"
+        "merged": "E:\\android\\newshixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\release\\drawable\\ease_common_tab_bg.xml",
+        "source": "E:\\android\\newshixun\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable\\ease_common_tab_bg.xml"
     },
     {
         "merged": "G:\\shixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\release\\drawable\\ease_chat_send_btn_selector.xml",
         "source": "G:\\shixun\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable\\ease_chat_send_btn_selector.xml"
+    },
+    {
+        "merged": "G:\\shixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\release\\drawable\\ease_chatting_setmode_keyboard_btn.xml",
+        "source": "G:\\shixun\\TourAssistant\\easeUI_zhu\\src\\main\\res\\drawable\\ease_chatting_setmode_keyboard_btn.xml"
     },
     {
         "merged": "E:\\android\\newshixun\\TourAssistant\\easeUI_zhu\\build\\intermediates\\res\\merged\\release\\drawable\\ease_chat_image_selector.xml",

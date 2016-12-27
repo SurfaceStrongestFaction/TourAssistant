@@ -130,7 +130,7 @@
             android:value="sHp6knsRmIvOd9K3jeNdertbFNAwnGuO" />
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="9bff1fd03c4384063fd1bb793320a9ef" />
+            android:value="a652abd7807a90578f8b6a46cc7aa5b7" />
 
         <activity android:name=".activity.WelcomeActivity">
             <intent-filter>

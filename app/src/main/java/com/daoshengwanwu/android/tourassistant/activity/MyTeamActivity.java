@@ -64,6 +64,7 @@ public class MyTeamActivity extends BaseActivity {
     public String username;
     public String members;
     public String[] names;
+    public String[] chatTeamMembers=new String[20];
     public int i;
     public MyTeamAdapter adapter;
     private ImageView back;
@@ -261,6 +262,7 @@ public class MyTeamActivity extends BaseActivity {
                                 Log.i("zhu", "创建队伍调用方法"+groupName);
                                 EMGroup myGroup = EMClient.getInstance().groupManager().createGroup(groupName, desc, members, reason, option);
                                 Group.CHAT_TEAM_ID = myGroup.getGroupId();
+                                Log.i(TAG, "创建队伍成功，保存team_chat_id: "+Group.CHAT_TEAM_ID);
                                 //创建成功后跳转到群聊页
                                 Log.i("zhu", "onActivityResult:CHAT_TEAM_ID " + Group.CHAT_TEAM_ID);
                                 Intent intent = new Intent(MyTeamActivity.this, ECChatActivity.class);
@@ -271,18 +273,24 @@ public class MyTeamActivity extends BaseActivity {
                                 runOnUiThread(new Runnable() {
                                     public void run() {
                                         Log.i("zhu", "创建队伍错误 " + e.getLocalizedMessage());
-                                        Toast.makeText(MyTeamActivity.this, "创建错误" + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                                        Toast.makeText(MyTeamActivity.this, "创建错误", Toast.LENGTH_LONG).show();
                                     }
                                 });
                             }
                         }else
                         {
                             Log.i("zhu", "创建队伍else "+ Group.CHAT_TEAM_ID);
-//                            try {
-//                                EMClient.getInstance().groupManager().addUsersToGroup(Group.CHAT_TEAM_ID, names);
-//                            } catch (HyphenateException e) {
-//                                e.printStackTrace();
-//                            }
+                            for(int i=0;i<items.size();i++){
+                                Log.i(TAG, "chatTeamMembers: "+items.get(i).getUserId());
+                                chatTeamMembers[i]=items.get(i).getUserId();
+                                Log.i(TAG, "chatTeamMembers: "+chatTeamMembers[i]);
+
+                            }
+                           try {
+                                EMClient.getInstance().groupManager().addUsersToGroup(Group.CHAT_TEAM_ID, chatTeamMembers);
+                           } catch (HyphenateException e) {
+                               e.printStackTrace();
+                           }
                             Intent intent = new Intent(MyTeamActivity.this, ECChatActivity.class);
                             intent.putExtra("chatType", EaseConstant.CHATTYPE_GROUP);
                             intent.putExtra("userId", Group.CHAT_TEAM_ID);

@@ -10,6 +10,12 @@ android {
             storeFile file('E:/Santa.jks')
             storePassword 'jsd003581.'
         }
+        config1 {
+            keyAlias 'Key'
+            keyPassword '123456'
+            storeFile file('D:/Android/key/keystore.jks')
+            storePassword '123456'
+        }
     }
     compileSdkVersion 24
     buildToolsVersion "24.0.2"

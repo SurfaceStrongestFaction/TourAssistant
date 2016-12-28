@@ -70,7 +70,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
         SharingService.SharingLocationListener, View.OnClickListener,
         AMap.OnMapClickListener, PoiSearch.OnPoiSearchListener
         , AMap.OnMarkerClickListener{
-    //------------------------------胜达-------------------------------
+    //------------------------------鑳滆揪-------------------------------
     private LatLng pos;
     private int i = 0;
     private MyView myView;
@@ -83,16 +83,16 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
     private AMap aMap;
     private TextureMapView mapView;
 
-    private PoiResult poiResult; // poi返回的结果
-    private int currentPage = 0;// 当前页面，从0开始计数
-    private PoiSearch.Query query;// Poi查询条件类
+    private PoiResult poiResult; // poi杩斿洖鐨勭粨鏋�
+    private int currentPage = 0;// 褰撳墠椤甸潰锛屼粠0寮�濮嬭鏁�
+    private PoiSearch.Query query;// Poi鏌ヨ鏉′欢绫�
     private LatLonPoint lp = new LatLonPoint(39.993743, 116.472995);// 116.472995,39.993743
-    private Marker locationMarker; // 选择的点
+    private Marker locationMarker; // 閫夋嫨鐨勭偣
     private Marker detailMarker;
     private Marker mlastMarker;
     private PoiSearch poiSearch;
-    private myPoiOverlay poiOverlay;// poi图层
-    private List<PoiItem> poiItems;// poi数据
+    private myPoiOverlay poiOverlay;// poi鍥惧眰
+    private List<PoiItem> poiItems;// poi鏁版嵁
 
     private RelativeLayout mPoiDetail;
     private TextView mPoiName, mPoiAddress;
@@ -101,7 +101,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
     private Button mQuit_fog_btn;
     //--------------------------------------------------------------------
 
-    //------------------------------浩然-----------------------------------
+    //------------------------------娴╃劧-----------------------------------
     private static final String TAG = "MapsFragment";
     private static final String KEY_BINDER = "MapsFragment.KEY_BINDER";
     private static final int WHAT_LOCATION_CHANGE = 0;
@@ -151,26 +151,26 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
                         double longitude = data.getDouble(MSG_DATA_LONGITUDE);
                         LatLng currentLoc = new LatLng(latitude, longitude);
 
-                        Log.d(TAG, "handleMessage: 接收到坐标信息：latitude：" + latitude + ", longitude:" + longitude);
+                        Log.d(TAG, "handleMessage: 鎺ユ敹鍒板潗鏍囦俊鎭細latitude锛�" + latitude + ", longitude:" + longitude);
 
                         if (mIsFirstLoc) {
-                            Log.d(TAG, "handleMessage: 第一次定位");
+                            Log.d(TAG, "handleMessage: 绗竴娆″畾浣�");
                             aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLoc, 15.0f));
                             mUserMarker = aMap.addMarker(new MarkerOptions().position(currentLoc)
                                     .title(AppUtil.User.USER_NAME)
-                                    .snippet("你在这里"));
+                                    .snippet("浣犲湪杩欓噷"));
                             mMarkerIdReflection.put(mUserMarker, AppUtil.User.USER_ID);
                             mIsFirstLoc = false;
                         }
 
-                        //判断是否掉落糖果
+                        //鍒ゆ柇鏄惁鎺夎惤绯栨灉
                             for (Frag frag : mFrags) {
                                 double distance = Math.sqrt(Math.pow((frag.getLatitude() - latitude), 2) + Math.pow(frag.getLongitude() - longitude, 2));
                                 if (distance <= 0.001) {
                                     mIsDroppingGift = true;
                                     startEmoji();
-                                    new AlertDialog.Builder(getActivity()).setTitle("发现礼物！").setView(R.layout.baihaoran_dialog_baoxiang)
-                                            .setPositiveButton("收入怀中", new DialogInterface.OnClickListener() {
+                                    new AlertDialog.Builder(getActivity()).setTitle("鍙戠幇绀肩墿锛�").setView(R.layout.baihaoran_dialog_baoxiang)
+                                            .setPositiveButton("鏀跺叆鎬�涓�", new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int which) {
 
@@ -207,8 +207,8 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
                                 double[] latlngs = groupMemberLocations.get(user_id);
                                 LatLng currentLoc = new LatLng(latlngs[0], latlngs[1]);
                                 Marker marker = aMap.addMarker(new MarkerOptions().position(currentLoc)
-                                        .title("好友")
-                                        .snippet("你的好友在这里~"));
+                                        .title("濂藉弸")
+                                        .snippet("浣犵殑濂藉弸鍦ㄨ繖閲寏"));
                                 mMarkerIdReflection.put(marker, user_id);
                                 mMemberMarkers.put(user_id, marker);
                             }
@@ -223,10 +223,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
 
 
     private void initFragCoorderData() {
-        mFrags.add(new Frag(37.997633,114.522823,R.drawable.yuanbao));//114.522823,37.997633
-        mFrags.add(new Frag(37.997244,114.518988,R.drawable.yuanbao));//114.518988,37.997244
-        mFrags.add(new Frag(37.99568,114.517968,R.drawable.yuanbao));//114.517968,37.99568
-        mFrags.add(new Frag(37.994361,114.518076,R.drawable.yuanbao));//114.518076,37.994361
+        mFrags.add(new Frag(37.997319,114.521594,R.drawable.yuanbao));//114.521594,37.997319
         mFrags.add(new Frag(37.997293,114.520564,R.drawable.yuanbao));//114.520564,37.997293
 
     }//initFragCoorderData
@@ -242,7 +239,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
-        //-------------------------胜达-------------------------------------------------
+        //-------------------------鑳滆揪-------------------------------------------------
         View v = inflater.inflate(R.layout.jiangshengda_fragment_maps, container, false);
 
         btn = (Button) v.findViewById(R.id.Fog_btn);
@@ -307,7 +304,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
         mSearchText = (EditText) v.findViewById(R.id.input_edittext);
         //aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lp.getLatitude(), lp.getLongitude()), 14));
 
-        //在activity执行onCreate时执行mMapView.onCreate(savedInstanceState)，实现地图生命周期管理
+        //鍦╝ctivity鎵цonCreate鏃舵墽琛宮MapView.onCreate(savedInstanceState)锛屽疄鐜板湴鍥剧敓鍛藉懆鏈熺鐞�
         mapView.onCreate(savedInstanceState);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -323,14 +320,14 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
             }
         });
 
-        removeAMapLogo(); //删除高德logo
-        //设置使用普通地图
-        //aMap.setMapType(AMap.MAP_TYPE_NIGHT);//夜景地图模式
+        removeAMapLogo(); //鍒犻櫎楂樺痉logo
+        //璁剧疆浣跨敤鏅�氬湴鍥�
+        //aMap.setMapType(AMap.MAP_TYPE_NIGHT);//澶滄櫙鍦板浘妯″紡
         aMap.setMapType(AMap.MAP_TYPE_SATELLITE);
         //---------------------------------------------------------------------------------
 
 
-        //-------------------------------浩然----------------------------------------------
+        //-------------------------------娴╃劧----------------------------------------------
         Bundle args = getArguments();
         mSharingBinder = (SharingService.SharingBinder)args.getBinder(KEY_BINDER);
         if (null != mSharingBinder) {
@@ -344,7 +341,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
         mStopUpload = (Button)v.findViewById(R.id.stop_upload);
         mUserNickName = (TextView) v.findViewById(R.id.user_nick_name);
         mGroupName = (TextView)v.findViewById(R.id.group_name);
-        //-------------------------------胜达-----------------------------------------------
+        //-------------------------------鑳滆揪-----------------------------------------------
         mStopLocation.setVisibility(mStopLocation.GONE);
         mStopUpload.setVisibility(mStopUpload.GONE);
         //---------------------------------------------------------------------------------
@@ -378,7 +375,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
             }
         }
 
-//        //获取景点信息
+//        //鑾峰彇鏅偣淇℃伅
 //        String url = "http://" + AppUtil.JFinalServer.HOST + ":" + AppUtil.JFinalServer.PORT + "/spot/getrecommend";
 //        AsyncHttpClient client = new AsyncHttpClient();
 //        RequestParams params = new RequestParams();
@@ -398,8 +395,8 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
 //            }
 //        });
 
-        initFragCoorderData(); //初始化彩蛋的位置信息
-        initEmojiRainData(v); //初始化表情雨的数据信息
+        initFragCoorderData(); //鍒濆鍖栧僵铔嬬殑浣嶇疆淇℃伅
+        initEmojiRainData(v); //鍒濆鍖栬〃鎯呴洦鐨勬暟鎹俊鎭�
 
         return v;
     }
@@ -429,36 +426,36 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
         mIsStartBlack = true;
         myView = new MyView(getActivity().getApplicationContext());
         act_main.addView(myView);
-        i = 0;//初始化计数器
-        aMap.getUiSettings().setAllGesturesEnabled(false);//禁止所有手势操作
+        i = 0;//鍒濆鍖栬鏁板櫒
+        aMap.getUiSettings().setAllGesturesEnabled(false);//绂佹鎵�鏈夋墜鍔挎搷浣�
     }
 
     private void stopFogModel(){
         myView.setVisibility(myView.GONE);
         btn.setVisibility(btn.VISIBLE);
         mQuit_fog_btn.setVisibility(mQuit_fog_btn.GONE);
-        aMap.getUiSettings().setAllGesturesEnabled(true);//允许所有手势操作
-        aMap.getUiSettings().setRotateGesturesEnabled(false);//禁止地图旋转手势
-        aMap.getUiSettings().setTiltGesturesEnabled(false);//禁止倾斜手势
+        aMap.getUiSettings().setAllGesturesEnabled(true);//鍏佽鎵�鏈夋墜鍔挎搷浣�
+        aMap.getUiSettings().setRotateGesturesEnabled(false);//绂佹鍦板浘鏃嬭浆鎵嬪娍
+        aMap.getUiSettings().setTiltGesturesEnabled(false);//绂佹鍊炬枩鎵嬪娍
     }
 
 //-----------------------------Serach--------------------------------------------------
     /*
-     * 开始进行poi搜索
+     * 寮�濮嬭繘琛宲oi鎼滅储
      */
     protected void doSearchQuery() {
         keyWord = mSearchText.getText().toString().trim();
         currentPage = 0;
-        query = new PoiSearch.Query(keyWord, "", "");// 第一个参数表示搜索字符串，第二个参数表示poi搜索类型，第三个参数表示poi搜索区域（空字符串代表全国）
-        query.setPageSize(20);// 设置每页最多返回多少条poiitem
-        query.setPageNum(currentPage);// 设置查第一页
+        query = new PoiSearch.Query(keyWord, "", "");// 绗竴涓弬鏁拌〃绀烘悳绱㈠瓧绗︿覆锛岀浜屼釜鍙傛暟琛ㄧずpoi鎼滅储绫诲瀷锛岀涓変釜鍙傛暟琛ㄧずpoi鎼滅储鍖哄煙锛堢┖瀛楃涓蹭唬琛ㄥ叏鍥斤級
+        query.setPageSize(20);// 璁剧疆姣忛〉鏈�澶氳繑鍥炲灏戞潯poiitem
+        query.setPageNum(currentPage);// 璁剧疆鏌ョ涓�椤�
 
         if (lp != null) {
             poiSearch = new PoiSearch(getActivity(), query);
             poiSearch.setOnPoiSearchListener(this);
             poiSearch.setBound(new PoiSearch.SearchBound(lp, 5000, true));//
-            // 设置搜索区域为以lp点为圆心，其周围5000米范围
-            poiSearch.searchPOIAsyn();// 异步搜索
+            // 璁剧疆鎼滅储鍖哄煙涓轰互lp鐐逛负鍦嗗績锛屽叾鍛ㄥ洿5000绫宠寖鍥�
+            poiSearch.searchPOIAsyn();// 寮傛鎼滅储
         }
     }
 
@@ -472,20 +469,20 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
     @Override
     public void onPoiSearched(PoiResult result, int rcode) {
         if (rcode == AMapException.CODE_AMAP_SUCCESS) {
-            if (result != null && result.getQuery() != null) {// 搜索poi的结果
-                if (result.getQuery().equals(query)) {// 是否是同一条
+            if (result != null && result.getQuery() != null) {// 鎼滅储poi鐨勭粨鏋�
+                if (result.getQuery().equals(query)) {// 鏄惁鏄悓涓�鏉�
                     poiResult = result;
-                    poiItems = poiResult.getPois();// 取得第一页的poiitem数据，页数从数字0开始
+                    poiItems = poiResult.getPois();// 鍙栧緱绗竴椤电殑poiitem鏁版嵁锛岄〉鏁颁粠鏁板瓧0寮�濮�
                     List<SuggestionCity> suggestionCities = poiResult
-                            .getSearchSuggestionCitys();// 当搜索不到poiitem数据时，会返回含有搜索关键字的城市信息
+                            .getSearchSuggestionCitys();// 褰撴悳绱笉鍒皃oiitem鏁版嵁鏃讹紝浼氳繑鍥炲惈鏈夋悳绱㈠叧閿瓧鐨勫煄甯備俊鎭�
                     if (poiItems != null && poiItems.size() > 0) {
-                        //清除POI信息显示
+                        //娓呴櫎POI淇℃伅鏄剧ず
                         whetherToShowDetailInfo(false);
-                        //并还原点击marker样式
+                        //骞惰繕鍘熺偣鍑籱arker鏍峰紡
                         if (mlastMarker != null) {
                             resetlastmarker();
                         }
-                        //清理之前搜索结果的marker
+                        //娓呯悊涔嬪墠鎼滅储缁撴灉鐨刴arker
                         if (poiOverlay !=null) {
                             poiOverlay.removeFromMap();
                         }
@@ -535,7 +532,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
                 if (mlastMarker == null) {
                     mlastMarker = marker;
                 } else {
-                    // 将之前被点击的marker置为原来的状态
+                    // 灏嗕箣鍓嶈鐐瑰嚮鐨刴arker缃负鍘熸潵鐨勭姸鎬�
                     resetlastmarker();
                     mlastMarker = marker;
                 }
@@ -558,7 +555,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
         return true;
     }
 
-    // 将之前被点击的marker置为原来的状态
+    // 灏嗕箣鍓嶈鐐瑰嚮鐨刴arker缃负鍘熸潵鐨勭姸鎬�
     private void resetlastmarker() {
         int index = poiOverlay.getPoiIndex(mlastMarker);
         if (index < 10) {
@@ -612,13 +609,13 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
     }
 
     /*
-     * poi没有搜索到数据，返回一些推荐城市的信息
+     * poi娌℃湁鎼滅储鍒版暟鎹紝杩斿洖涓�浜涙帹鑽愬煄甯傜殑淇℃伅
      */
     private void showSuggestCity(List<SuggestionCity> cities) {
-        String infomation = "推荐城市\n";
+        String infomation = "鎺ㄨ崘鍩庡競\n";
         for (int i = 0; i < cities.size(); i++) {
-            infomation += "城市名称:" + cities.get(i).getCityName() + "城市区号:"
-                    + cities.get(i).getCityCode() + "城市编码:"
+            infomation += "鍩庡競鍚嶇О:" + cities.get(i).getCityName() + "鍩庡競鍖哄彿:"
+                    + cities.get(i).getCityCode() + "鍩庡競缂栫爜:"
                     + cities.get(i).getAdCode() + "\n";
         }
         ToastUtil.show(getActivity(), infomation);
@@ -627,7 +624,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
 
 
     /*
-     * 自定义PoiOverlay
+     * 鑷畾涔塒oiOverlay
      *
      */
 
@@ -641,7 +638,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
         }
 
         /*
-         * 添加Marker到地图中。
+         * 娣诲姞Marker鍒板湴鍥句腑銆�
          * @since V2.1.0
          */
         public void addToMap() {
@@ -654,7 +651,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
         }
 
         /*
-         * 去掉PoiOverlay上所有的Marker。
+         * 鍘绘帀PoiOverlay涓婃墍鏈夌殑Marker銆�
          *
          * @since V2.1.0
          */
@@ -665,7 +662,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
         }
 
         /*
-         * 移动镜头到当前的视角。
+         * 绉诲姩闀滃ご鍒板綋鍓嶇殑瑙嗚銆�
          * @since V2.1.0
          */
         public void zoomToSpan() {
@@ -705,10 +702,10 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
         }
 
         /*
-         * 从marker中得到poi在list的位置。
+         * 浠巑arker涓緱鍒皃oi鍦╨ist鐨勪綅缃��
          *
-         * @param marker 一个标记的对象。
-         * @return 返回该marker对应的poi在list的位置。
+         * @param marker 涓�涓爣璁扮殑瀵硅薄銆�
+         * @return 杩斿洖璇arker瀵瑰簲鐨刾oi鍦╨ist鐨勪綅缃��
          * @since V2.1.0
          */
         public int getPoiIndex(Marker marker) {
@@ -721,9 +718,9 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
         }
 
         /*
-         * 返回第index的poi的信息。
-         * @param index 第几个poi。
-         * @return poi的信息。poi对象详见搜索服务模块的基础核心包（com.amap.api.services.core）中的类 <strong><a href="../../../../../../Search/com/amap/api/services/core/PoiItem.html" title="com.amap.api.services.core中的类">PoiItem</a></strong>。
+         * 杩斿洖绗琲ndex鐨刾oi鐨勪俊鎭��
+         * @param index 绗嚑涓猵oi銆�
+         * @return poi鐨勪俊鎭�俻oi瀵硅薄璇﹁鎼滅储鏈嶅姟妯″潡鐨勫熀纭�鏍稿績鍖咃紙com.amap.api.services.core锛変腑鐨勭被 <strong><a href="../../../../../../Search/com/amap/api/services/core/PoiItem.html" title="com.amap.api.services.core涓殑绫�">PoiItem</a></strong>銆�
          * @since V2.1.0
          */
         public PoiItem getPoiItem(int index) {
@@ -748,26 +745,26 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
 //--------------------------------------------------------------------------------------------------
 
     /*
-    设置一些amap的属性
+    璁剧疆涓�浜沘map鐨勫睘鎬�
      */
     private void setUpMap() {
-        aMap.getUiSettings().setRotateGesturesEnabled(false);//禁止地图旋转手势
-        aMap.getUiSettings().setTiltGesturesEnabled(false);//禁止倾斜手势
-        //aMap.setLocationSource(this);// 设置定位监听
-        aMap.getUiSettings().setMyLocationButtonEnabled(false);// 设置默认定位按钮是否显示
-        aMap.getUiSettings().setScaleControlsEnabled(true);//显示比例尺控件
-        aMap.moveCamera(CameraUpdateFactory.zoomTo(15));//设置比例尺，3-19
-        aMap.setMyLocationEnabled(true);// 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
-        // 设置定位的类型为定位模式 ，可以由定位、跟随或地图根据面向方向旋转几种
-        //aMap.setMyLocationType(AMap.LOCATION_TYPE_MAP_FOLLOW);//跟随模式
-       // aMap.setMyLocationType(AMap.LOCATION_TYPE_LOCATE); //定位模式
-        //aMap.setMyLocationType(AMap.LOCATION_TYPE_MAP_ROTATE); // 设置定位的类型为根据地图面向方向旋转
+        aMap.getUiSettings().setRotateGesturesEnabled(false);//绂佹鍦板浘鏃嬭浆鎵嬪娍
+        aMap.getUiSettings().setTiltGesturesEnabled(false);//绂佹鍊炬枩鎵嬪娍
+        //aMap.setLocationSource(this);// 璁剧疆瀹氫綅鐩戝惉
+        aMap.getUiSettings().setMyLocationButtonEnabled(false);// 璁剧疆榛樿瀹氫綅鎸夐挳鏄惁鏄剧ず
+        aMap.getUiSettings().setScaleControlsEnabled(true);//鏄剧ず姣斾緥灏烘帶浠�
+        aMap.moveCamera(CameraUpdateFactory.zoomTo(15));//璁剧疆姣斾緥灏猴紝3-19
+        aMap.setMyLocationEnabled(true);// 璁剧疆涓簍rue琛ㄧず鏄剧ず瀹氫綅灞傚苟鍙Е鍙戝畾浣嶏紝false琛ㄧず闅愯棌瀹氫綅灞傚苟涓嶅彲瑙﹀彂瀹氫綅锛岄粯璁ゆ槸false
+        // 璁剧疆瀹氫綅鐨勭被鍨嬩负瀹氫綅妯″紡 锛屽彲浠ョ敱瀹氫綅銆佽窡闅忔垨鍦板浘鏍规嵁闈㈠悜鏂瑰悜鏃嬭浆鍑犵
+        //aMap.setMyLocationType(AMap.LOCATION_TYPE_MAP_FOLLOW);//璺熼殢妯″紡
+       // aMap.setMyLocationType(AMap.LOCATION_TYPE_LOCATE); //瀹氫綅妯″紡
+        //aMap.setMyLocationType(AMap.LOCATION_TYPE_MAP_ROTATE); // 璁剧疆瀹氫綅鐨勭被鍨嬩负鏍规嵁鍦板浘闈㈠悜鏂瑰悜鏃嬭浆
     }
 
     private void removeAMapLogo() {
-        //这两行代码可以隐藏高德地图logo
+        //杩欎袱琛屼唬鐮佸彲浠ラ殣钘忛珮寰峰湴鍥緇ogo
         UiSettings uiSettings =  aMap.getUiSettings();
-        uiSettings.setLogoBottomMargin(-50);//隐藏logo
+        uiSettings.setLogoBottomMargin(-50);//闅愯棌logo
     }
 
     @Override
@@ -796,7 +793,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
     @Override
     public void onResume() {
         super.onResume();
-        //在activity执行onResume时执行mMapView.onResume ()，实现地图生命周期管理
+        //鍦╝ctivity鎵цonResume鏃舵墽琛宮MapView.onResume ()锛屽疄鐜板湴鍥剧敓鍛藉懆鏈熺鐞�
         mapView.onResume();
         Log.d(TAG, "onResume: ");
     }
@@ -804,28 +801,28 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
     @Override
     public void onPause() {
         super.onPause();
-        //在activity执行onPause时执行mMapView.onPause ()，实现地图生命周期管理
+        //鍦╝ctivity鎵цonPause鏃舵墽琛宮MapView.onPause ()锛屽疄鐜板湴鍥剧敓鍛藉懆鏈熺鐞�
         mapView.onPause();
         Log.d(TAG, "onPause: ");
     }
 
     /*
-    定位成功后回调函数
+    瀹氫綅鎴愬姛鍚庡洖璋冨嚱鏁�
      */
     @Override
     public void onLocationChanged(AMapLocation amapLocation) {
-        x = amapLocation.getLatitude();//获取纬度
-        y = amapLocation.getLongitude();//获取经度
-        //与高德Demo的接口，通过更改定点lp的值达到不用修改原代码的目的
+        x = amapLocation.getLatitude();//鑾峰彇绾害
+        y = amapLocation.getLongitude();//鑾峰彇缁忓害
+        //涓庨珮寰稤emo鐨勬帴鍙ｏ紝閫氳繃鏇存敼瀹氱偣lp鐨勫�艰揪鍒颁笉鐢ㄤ慨鏀瑰師浠ｇ爜鐨勭洰鐨�
         lp.setLatitude(x);
         lp.setLongitude(y);
         //aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lp.getLatitude(), lp.getLongitude()), 14));
         if (mIsStartBlack) {
             if (amapLocation.getErrorCode() == 0) {
-                //迷雾追踪部分代码
+                //杩烽浘杩借釜閮ㄥ垎浠ｇ爜
                 pos = new LatLng(x,y);
                 Projection projection = aMap.getProjection();
-                //将地图的点，转换为屏幕上的点 
+                //灏嗗湴鍥剧殑鐐癸紝杞崲涓哄睆骞曚笂鐨勭偣聽
                 Point dot = projection.toScreenLocation(pos);
                 dot_x = dot.x;
                 dot_y = dot.y;
@@ -839,21 +836,21 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
                 }
                 //Toast.makeText(getActivity(), "Latitude:" + x + ", Longitude:" + y, Toast.LENGTH_SHORT).show();
 
-                //amapLocation.getLocationType();//获取当前定位结果来源，如网络定位结果，详见定位类型表
-                //amapLocation.getLatitude();//获取纬度
-                //amapLocation.getLongitude();//获取经度
-                //amapLocation.getAccuracy();//获取精度信息
-                //amapLocation.getAddress();//地址，如果option中设置isNeedAddress为false，则没有此结果，网络定位结果中会有地址信息，GPS定位不返回地址信息。
-                //amapLocation.getCountry();//国家信息
-                //amapLocation.getProvince();//省信息
-                //amapLocation.getCity();//城市信息
-                //amapLocation.getDistrict();//城区信息
-                //amapLocation.getStreet();//街道信息
-                //amapLocation.getStreetNum();//街道门牌号信息
-                //amapLocation.getCityCode();//城市编码
-                //amapLocation.getAdCode();//地区编码
-                //amapLocation.getAoiName();//获取当前定位点的AOI信息
-                //amapLocation.getGpsStatus();//获取GPS的当前状态
+                //amapLocation.getLocationType();//鑾峰彇褰撳墠瀹氫綅缁撴灉鏉ユ簮锛屽缃戠粶瀹氫綅缁撴灉锛岃瑙佸畾浣嶇被鍨嬭〃
+                //amapLocation.getLatitude();//鑾峰彇绾害
+                //amapLocation.getLongitude();//鑾峰彇缁忓害
+                //amapLocation.getAccuracy();//鑾峰彇绮惧害淇℃伅
+                //amapLocation.getAddress();//鍦板潃锛屽鏋渙ption涓缃甶sNeedAddress涓篺alse锛屽垯娌℃湁姝ょ粨鏋滐紝缃戠粶瀹氫綅缁撴灉涓細鏈夊湴鍧�淇℃伅锛孏PS瀹氫綅涓嶈繑鍥炲湴鍧�淇℃伅銆�
+                //amapLocation.getCountry();//鍥藉淇℃伅
+                //amapLocation.getProvince();//鐪佷俊鎭�
+                //amapLocation.getCity();//鍩庡競淇℃伅
+                //amapLocation.getDistrict();//鍩庡尯淇℃伅
+                //amapLocation.getStreet();//琛楅亾淇℃伅
+                //amapLocation.getStreetNum();//琛楅亾闂ㄧ墝鍙蜂俊鎭�
+                //amapLocation.getCityCode();//鍩庡競缂栫爜
+                //amapLocation.getAdCode();//鍦板尯缂栫爜
+                //amapLocation.getAoiName();//鑾峰彇褰撳墠瀹氫綅鐐圭殑AOI淇℃伅
+                //amapLocation.getGpsStatus();//鑾峰彇GPS鐨勫綋鍓嶇姸鎬�
             }
         }
 
@@ -871,10 +868,10 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
 
     private void updateCurrentInfomation() {
         if (null != USER_NAME && !USER_NAME.equals("")) {
-            mUserNickName.setText("当前用户：" + USER_NAME);
+            mUserNickName.setText("褰撳墠鐢ㄦ埛锛�" + USER_NAME);
         }
         if (null != GROUP_NAME && !GROUP_NAME.equals("")) {
-            mGroupName.setText("所在分组：" + GROUP_NAME);
+            mGroupName.setText("鎵�鍦ㄥ垎缁勶細" + GROUP_NAME);
         }
     }
 
@@ -910,7 +907,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
                 doSearchQuery();
                 break;
             case R.id.start_location:
-                //-------------------------胜达-------------------------------------
+                //-------------------------鑳滆揪-------------------------------------
                 btn.setVisibility(btn.VISIBLE);
                 mStartLocation.setVisibility(mStartLocation.GONE);
                 mStopLocation.setVisibility(mStopLocation.VISIBLE);
@@ -918,15 +915,15 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
                 updateCurrentInfomation();
 
                 if (mIsStartLocation) {
-                    Toast.makeText(getActivity(), "您开启定位服务无需重复开启...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "鎮ㄥ紑鍚畾浣嶆湇鍔℃棤闇�閲嶅寮�鍚�...", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(getActivity(), "定位服务开启中...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "瀹氫綅鏈嶅姟寮�鍚腑...", Toast.LENGTH_SHORT).show();
                     mSharingBinder.startLocationService();
                     mIsStartLocation = true;
                 }
                 break;
             case R.id.stop_location:
-                //-------------------------胜达-------------------------------------
+                //-------------------------鑳滆揪-------------------------------------
                 if (btn.getVisibility() == View.GONE){
                     myView.setVisibility(myView.GONE);
                     mQuit_fog_btn.setVisibility(btn.GONE);
@@ -935,9 +932,9 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
                 }
                 mStartLocation.setVisibility(mStartLocation.VISIBLE);
                 mStopLocation.setVisibility(mStopLocation.GONE);
-                aMap.getUiSettings().setAllGesturesEnabled(true);//允许所有手势操作
-                aMap.getUiSettings().setRotateGesturesEnabled(false);//禁止地图旋转手势
-                aMap.getUiSettings().setTiltGesturesEnabled(false);//禁止倾斜手势
+                aMap.getUiSettings().setAllGesturesEnabled(true);//鍏佽鎵�鏈夋墜鍔挎搷浣�
+                aMap.getUiSettings().setRotateGesturesEnabled(false);//绂佹鍦板浘鏃嬭浆鎵嬪娍
+                aMap.getUiSettings().setTiltGesturesEnabled(false);//绂佹鍊炬枩鎵嬪娍
                 //-----------------------------------------------------------------
                 if (mIsStartLocation) {
                     mSharingBinder.stopLocationService();
@@ -945,13 +942,13 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
                     mUserMarker = null;
                     mIsFirstLoc = true;
                     mIsStartLocation = false;
-                    Toast.makeText(getActivity(), "关闭定位服务...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "鍏抽棴瀹氫綅鏈嶅姟...", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(getActivity(), "您尚未开启定位服务...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "鎮ㄥ皻鏈紑鍚畾浣嶆湇鍔�...", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.start_upload:
-                //-----------------------胜达------------------------------------------------
+                //-----------------------鑳滆揪------------------------------------------------
                 mStartUpload.setVisibility(mStartUpload.GONE);
                 mStopUpload.setVisibility(mStopUpload.VISIBLE);
                 //--------------------------------------------------------------------------
@@ -960,28 +957,28 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
                 if (!AppUtil.User.USER_ID.equals("") && !AppUtil.Group.GROUP_ID.equals("")) {
                     try {
                         if (!mIsStartUpload) {
-                            Toast.makeText(getActivity(), "开启位置共享...", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "寮�鍚綅缃叡浜�...", Toast.LENGTH_SHORT).show();
                             mSharingBinder.startUploadLocation();
                             mIsStartUpload = true;
                         } else {
-                            Toast.makeText(getActivity(), "您已开启位置共享,无需重复开启...", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "鎮ㄥ凡寮�鍚綅缃叡浜�,鏃犻渶閲嶅寮�鍚�...", Toast.LENGTH_SHORT).show();
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 } else  if (AppUtil.User.USER_ID.equals("")){
-                    Toast.makeText(getActivity(), "请先登录再开启此功能...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "璇峰厛鐧诲綍鍐嶅紑鍚鍔熻兘...", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(getActivity(), "请先加入队伍再开启此功能", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "璇峰厛鍔犲叆闃熶紞鍐嶅紑鍚鍔熻兘", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.stop_upload:
-                //-----------------------胜达------------------------------------------------
+                //-----------------------鑳滆揪------------------------------------------------
                 mStartUpload.setVisibility(mStartUpload.VISIBLE);
                 mStopUpload.setVisibility(mStopUpload.GONE);
                 //--------------------------------------------------------------------------
                 if (mIsStartUpload) {
-                    Toast.makeText(getActivity(), "正在关闭位置共享...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "姝ｅ湪鍏抽棴浣嶇疆鍏变韩...", Toast.LENGTH_SHORT).show();
                     mSharingBinder.stopUploadLocation();
                     for (String user_id : mMemberMarkers.keySet()) {
                         mMemberMarkers.get(user_id).remove();
@@ -990,7 +987,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
                     }
                     mIsStartUpload = false;
                 } else {
-                    Toast.makeText(getActivity(), "您尚未开启位置共享", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "鎮ㄥ皻鏈紑鍚綅缃叡浜�", Toast.LENGTH_SHORT).show();
                 }
                 break;
             default:
@@ -1007,7 +1004,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        //在activity执行onSaveInstanceState时执行mMapView.onSaveInstanceState (outState)，实现地图生命周期管理
+        //鍦╝ctivity鎵цonSaveInstanceState鏃舵墽琛宮MapView.onSaveInstanceState (outState)锛屽疄鐜板湴鍥剧敓鍛藉懆鏈熺鐞�
         mapView.onSaveInstanceState(outState);
 
         outState.putBoolean(KEY_START_BLACK, mIsStartBlack);

@@ -155,6 +155,7 @@ public class SharingService extends Service {
                                 jObj = new JSONObject(responseData);
 
                                 AppUtil.Group.CHAT_TEAM_ID = jObj.getString("chat_team_id");
+                                Log.i("zhu", "实时请求的chat_team_id: "+jObj.getString("chat_team_id"));
 
                                 String membersInfo = jObj.getString("members");
                                 List<String> memInfos = generateMemIdsList(membersInfo.split(","));

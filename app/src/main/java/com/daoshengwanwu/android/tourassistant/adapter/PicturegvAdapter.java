@@ -1,6 +1,9 @@
 package com.daoshengwanwu.android.tourassistant.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +13,9 @@ import android.widget.ImageView;
 import com.daoshengwanwu.android.tourassistant.R;
 import com.daoshengwanwu.android.tourassistant.item.picgv.PicgvItem;
 
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,9 +54,9 @@ public class PicturegvAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(context).inflate(R.layout.shenyue_activity_picgvitem, null);
         }
         ImageView img = (ImageView)convertView.findViewById(R.id.picgvitem_picture_img);
-        img.setImageResource(picgv.get(position).getImgsrc());
+        Drawable a = picgv.get(position).getImgsrc();
+        img.setImageDrawable(a);
+        System.out.println("aa+"+picgv.get(position).getImgsrc());
         return convertView;
     }
-
-
 }

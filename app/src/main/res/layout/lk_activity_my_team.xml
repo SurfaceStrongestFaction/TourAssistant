@@ -31,64 +31,11 @@
             android:gravity="center"
             android:layout_marginRight="30dp"/>
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:id="@+id/myTeam_bottom"
-        android:layout_alignParentBottom="true"
-        android:orientation="vertical"
-        android:layout_marginBottom="50dp">
-        <Button
-            android:id="@+id/myTeam_button1"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:background="@drawable/shap_button"
-            android:text="发出集合提示"
-            android:textAlignment="center"
-            android:textSize="18sp"
-            android:textColor="#4d4d4d"
-            android:layout_marginTop="10dp" />
-        <Button
-            android:id="@+id/group_chat"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:background="@drawable/shap_button"
-            android:text="队伍群聊"
-            android:textAlignment="center"
-            android:textSize="18sp"
-            android:textColor="#4d4d4d"
-            android:layout_marginTop="10dp" />
-        <Button
-            android:id="@+id/myTeam_button2"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:background="@drawable/shap_button2"
-            android:text="解散队伍"
-            android:textAlignment="center"
-            android:textSize="18sp"
-            android:textColor="#ffffff"
-            android:layout_marginTop="10dp"/>
-    </LinearLayout>
+
     <LinearLayout
         android:layout_below="@id/myTeam_top"
-        android:layout_above="@id/myTeam_bottom"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/myTeam_center"
         android:orientation="vertical">
         <LinearLayout
@@ -131,7 +78,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:id="@+id/myTeam_leader"
+                android:id="@+id/team_captain"
                 android:text="白浩然"
                 android:textSize="18sp"
                 android:textColor="#4d4d4d"/>
@@ -218,4 +165,58 @@
         </RelativeLayout>
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_below="@id/myTeam_center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/myTeam_bottom"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+        <Button
+            android:id="@+id/myTeam_button1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:background="@drawable/shap_button"
+            android:text="发出集合提示"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:textColor="#4d4d4d"
+            android:layout_marginTop="40dp" />
+        <Button
+            android:id="@+id/group_chat"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:background="@drawable/shap_button"
+            android:text="队伍群聊"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:textColor="#4d4d4d"
+            android:layout_marginTop="15dp" />
+        <Button
+            android:id="@+id/myTeam_button2"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:background="@drawable/shap_button2"
+            android:text="解散队伍"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:textColor="#ffffff"/>
+    </LinearLayout>
 </RelativeLayout>

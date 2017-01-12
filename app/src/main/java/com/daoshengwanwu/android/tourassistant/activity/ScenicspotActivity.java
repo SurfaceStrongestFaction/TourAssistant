@@ -2,12 +2,18 @@ package com.daoshengwanwu.android.tourassistant.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.daoshengwanwu.android.tourassistant.R;
 import com.daoshengwanwu.android.tourassistant.activity.BaseActivity;
@@ -20,6 +26,13 @@ import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class ScenicspotActivity extends BaseActivity {
     private static final String SCENICSPOTEXTRA_ID = "ScenicspotActivity.EXTRA_ID";
@@ -57,8 +70,8 @@ public class ScenicspotActivity extends BaseActivity {
         setContentView(R.layout.shenyue_activity_scenicspot);
         getViews();
         setListener();
-        synhttprequest();
         getintent();
+        synhttprequest();
     }
     public  void getintent(){
         Intent i = getIntent();
@@ -67,7 +80,6 @@ public class ScenicspotActivity extends BaseActivity {
     public void synhttprequest(){
         AsyncHttpClient client = new AsyncHttpClient();
         String Url = "http://"+ AppUtil.JFinalServer.HOST+":"+AppUtil.JFinalServer.PORT+ "/spot/getrecommend";
-
         RequestParams params = new RequestParams();
         params.add("id", scenicspotid);
         client.get(Url, params, new JsonHttpResponseHandler() {
@@ -83,18 +95,8 @@ public class ScenicspotActivity extends BaseActivity {
                     time = response.getString("time");
                     introduction = response.getString("introduction");
                     imgs = response.getString("imgs");
-                    urls = imgs.split(",");
+                    urls = imgs.split("\\|\\|\\|");
                     num = urls.length;
-//                    System.out.println(recommendimgs);
-//                    System.out.println(cnname);
-//                    System.out.println(recommendindex);
-//                    System.out.println(position);
-//                    System.out.println(price);
-//                    System.out.println(time);
-//                    System.out.println(introduction);
-//                    System.out.println(imgs);
-//                    System.out.println(urls);
-//                    System.out.println(num);
                     setViews();
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -107,7 +109,6 @@ public class ScenicspotActivity extends BaseActivity {
     public static Intent actionStartActivity(Context packageContext, String id) {
         Intent i = new Intent(packageContext, ScenicspotActivity.class);
         i.putExtra(SCENICSPOTEXTRA_ID, id);
-
         return i;
     }
     /**
@@ -131,6 +132,36 @@ public class ScenicspotActivity extends BaseActivity {
         gotv = (TextView)findViewById(R.id.scenicspot_go_tv);
         findtv = (TextView)findViewById(R.id.scenicspot_find_tv);
     }
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case 1:
+                    showimg.setImageDrawable(drawable);
+                    break;
+            }
+
+        }
+    };
+    Thread r = new Thread(){
+        @Override
+        public void run() {
+            try {
+                URL url = new URL(urls[0]);
+                HttpURLConnection con = null;
+                con = (HttpURLConnection)url.openConnection();
+                InputStream is = con.getInputStream();
+                drawable = Drawable.createFromStream(is, null);
+                Message msg = handler.obtainMessage();
+                msg.what = 1;
+                handler.sendMessage(msg);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            super.run();
+        }
+    };
     /**
      * 给界面控件赋值
      */
@@ -141,6 +172,8 @@ public class ScenicspotActivity extends BaseActivity {
         pricenumtv.setText(price);
         timeinf.setText(time);
         introducetv.setText(introduction);
+        r.start();
+
         int i=0;
         if (recommendindex.equals("0")){
             i=0;
@@ -208,7 +241,7 @@ public class ScenicspotActivity extends BaseActivity {
                     LauncherActivity.actionStartActivity(ScenicspotActivity.this);
                     break;
                 case R.id.scenicspot_picture_rl:
-                    PictureActivity.actionStartActivity(ScenicspotActivity.this, scenicspotid);
+                    PictureActivity.actionStartActivity(ScenicspotActivity.this, imgs, scenicspotid);
                     break;
                 case R.id.scenicspot_go_tv:
 

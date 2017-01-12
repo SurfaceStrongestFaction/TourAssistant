@@ -399,12 +399,13 @@ public class HomeFragment extends Fragment {
             mSpotEnName.setText(spot.getSpotEnName());
             mDistance.setText("距离：" + spot.getDistance());
             mSpotId = spot.getId();
-            mRatingBar.setRating(spot.getRecommandNum() * 2.0f);
+            mRatingBar.setRating(spot.getRecommandNum());
         }
 
         @Override
         public void onClick(View v) {
             Intent intent = ScenicspotActivity.actionStartActivity(getActivity(), mSpotId);
+            System.out.println("lal:"+mSpotId);
             getActivity().overridePendingTransition(R.anim.zoom_enter,R.anim.zoom_exit);
             startActivity(intent);
         }

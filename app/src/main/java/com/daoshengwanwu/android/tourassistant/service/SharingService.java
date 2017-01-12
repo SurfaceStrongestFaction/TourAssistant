@@ -13,6 +13,7 @@ import android.util.Log;
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationListener;
+import com.daoshengwanwu.android.tourassistant.model.UserWarehouse;
 import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
 import com.daoshengwanwu.android.tourassistant.utils.AppUtil.SharingServer;
 
@@ -153,12 +154,17 @@ public class SharingService extends Service {
                                 Log.d(TAG, "run: team:" + responseData);
                                 jObj = new JSONObject(responseData);
 
+                                AppUtil.Group.CHAT_TEAM_ID = jObj.getString("chat_team_id");
+                                Log.i("zhu", "实时请求的chat_team_id: "+jObj.getString("chat_team_id"));
+
                                 String membersInfo = jObj.getString("members");
                                 List<String> memInfos = generateMemIdsList(membersInfo.split(","));
 
                                 Log.d(TAG, "run: membersInfo: " + membersInfo);
                                 if (!memInfos.equals(oldMemInfo)) {
-                                    Log.d(TAG, "run: 进入if");
+                                    //Log.d(TAG, "run: 进入if");
+                                   // Log.d(TAG, "run: memInfos:" + memInfos);
+                                    //UserWarehouse.getInstance(getApplicationContext()).updateUsersInfo(memInfos, null);
                                     for (OnTeamMemberChangeListener listener : mOnTeamMemberChangeListeners) {
                                         listener.onTeamMemberChange(team_id, memInfos);
                                     }

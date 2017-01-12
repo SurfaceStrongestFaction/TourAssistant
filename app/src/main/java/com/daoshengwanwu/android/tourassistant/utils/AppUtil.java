@@ -1,12 +1,10 @@
 package com.daoshengwanwu.android.tourassistant.utils;
 
 
-import android.graphics.Bitmap;
-
 public class AppUtil {
     public static final class SharingServer {
-        public static final String HOST = "139.199.28.184";//192.168.1.125
-        public static final int PORT = 8088;
+        public static final String HOST = "123.206.34.83";//192.168.1.125
+        public static final int PORT = 9688;
         public static final String COMMAND_SET_LOCATION = "set_location";
         public static final String REQUEST_MEMBER_LOCATION = "request_location";
         public static final String REQUEST_STOP = "over";
@@ -20,8 +18,8 @@ public class AppUtil {
     }
 
     public static final class JFinalServer {
-        public static final String HOST = "139.199.28.184";//192.168.1.125
-        public static final int PORT = 8083;
+        public static final String HOST = "123.206.34.83";//192.168.1.125
+        public static final int PORT = 9638;
         public static final String xyurl = "http://"+AppUtil.JFinalServer.HOST+":"+AppUtil.JFinalServer.PORT+ "/user/getInformation";
         public static final String xyurl2 = "http://"+AppUtil.JFinalServer.HOST+":"+AppUtil.JFinalServer.PORT+ "/team/getInformation";
         public static final String xyurl3 = "http://"+AppUtil.JFinalServer.HOST+":"+AppUtil.JFinalServer.PORT+ "/team/joinTeam";

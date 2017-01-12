@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.daoshengwanwu.android.tourassistant.R;
 import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
+import com.hyphenate.easeui.widget.LoaderImage;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
@@ -91,6 +92,7 @@ public class PersonalDataActivity extends BaseActivity {
         nickname.setOnClickListener(myListener);
         password.setOnClickListener(myListener);
         sex.setOnClickListener(myListener);
+        imageView_back.setOnClickListener(myListener);
     }
 
     private void findView() {
@@ -123,6 +125,8 @@ public class PersonalDataActivity extends BaseActivity {
                     pri_userpwd = response.getString("user_pwd");
                     name.setText(nick_name);
                     usersex.setText(sex);
+                    LoaderImage loaderImage=new LoaderImage(PersonalDataActivity.this,imageView,response.getString("head_pic"));
+                    loaderImage.start();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -190,7 +194,6 @@ public class PersonalDataActivity extends BaseActivity {
                                         @Override
                                         public void onSuccess(int statusCode, Header[] headers, byte[] bytes) {
                                             String result = new String (bytes);
-                                            Toast.makeText(PersonalDataActivity.this,result,Toast.LENGTH_LONG).show();
                                         }
                                         @Override
                                         public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
@@ -225,7 +228,7 @@ public class PersonalDataActivity extends BaseActivity {
                                     String input_pwd1 =Et_pwd2.getText().toString();
                                     if(!input_pwd0.equals(input_pwd1)){
                                         finish();
-                                        Toast.makeText(PersonalDataActivity.this,"新密码不一致",Toast.LENGTH_SHORT);
+                                        Toast.makeText(PersonalDataActivity.this,"密码不一致",Toast.LENGTH_SHORT);
                                     }
                                     //建立连接
                                     AsyncHttpClient client=new AsyncHttpClient();
@@ -239,7 +242,6 @@ public class PersonalDataActivity extends BaseActivity {
                                         @Override
                                         public void onSuccess(int statusCode, Header[] headers, byte[] bytes) {
                                             String result = new String (bytes);
-                                            Toast.makeText(PersonalDataActivity.this,result,Toast.LENGTH_LONG).show();
                                         }
                                         @Override
                                         public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
@@ -276,7 +278,6 @@ public class PersonalDataActivity extends BaseActivity {
                                         @Override
                                         public void onSuccess(int statusCode, Header[] headers, byte[] bytes) {
                                             String result = new String (bytes);
-                                            Toast.makeText(PersonalDataActivity.this,result,Toast.LENGTH_LONG).show();
                                         }
                                         @Override
                                         public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {

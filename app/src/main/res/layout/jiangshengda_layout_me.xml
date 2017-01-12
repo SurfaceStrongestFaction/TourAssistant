@@ -20,7 +20,7 @@
             <com.daoshengwanwu.android.tourassistant.view.CircleImageView
                 android:layout_width="@dimen/santa_100dp"
                 android:layout_height="@dimen/santa_100dp"
-                android:src="@drawable/head"
+                android:src="@drawable/rggame"
                 android:id="@+id/mImg" />
             <ImageView
                 android:layout_width="@dimen/santa_30dp"

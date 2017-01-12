@@ -44,16 +44,14 @@ import com.amap.api.services.poisearch.PoiSearch;
 import com.daoshengwanwu.android.tourassistant.R;
 import com.daoshengwanwu.android.tourassistant.model.Frag;
 import com.daoshengwanwu.android.tourassistant.model.MapsFragmentSaveData;
+import com.daoshengwanwu.android.tourassistant.model.User;
+import com.daoshengwanwu.android.tourassistant.model.UserWarehouse;
 import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
 import com.daoshengwanwu.android.tourassistant.service.SharingService;
 import com.daoshengwanwu.android.tourassistant.utils.ToastUtil;
 import com.daoshengwanwu.android.tourassistant.view.MyView;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.luolc.emojirain.EmojiRainLayout;
-
-import org.apache.http.Header;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -70,9 +68,8 @@ import static com.daoshengwanwu.android.tourassistant.utils.AppUtil.User.USER_NA
 
 public class MapsFragment extends Fragment implements AMapLocationListener,
         SharingService.SharingLocationListener, View.OnClickListener,
-        AMap.OnMapClickListener, AMap.OnInfoWindowClickListener,
-        AMap.InfoWindowAdapter, AMap.OnMarkerClickListener,
-        PoiSearch.OnPoiSearchListener {
+        AMap.OnMapClickListener, PoiSearch.OnPoiSearchListener
+        , AMap.OnMarkerClickListener{
     //------------------------------胜达-------------------------------
     private LatLng pos;
     private int i = 0;
@@ -86,16 +83,16 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
     private AMap aMap;
     private TextureMapView mapView;
 
-    private PoiResult poiResult; // poi返回的结果
-    private int currentPage = 0;// 当前页面，从0开始计数
-    private PoiSearch.Query query;// Poi查询条件类
+    private PoiResult poiResult;
+    private int currentPage = 0;
+    private PoiSearch.Query query;
     private LatLonPoint lp = new LatLonPoint(39.993743, 116.472995);// 116.472995,39.993743
-    private Marker locationMarker; // 选择的点
+    private Marker locationMarker;
     private Marker detailMarker;
     private Marker mlastMarker;
     private PoiSearch poiSearch;
-    private myPoiOverlay poiOverlay;// poi图层
-    private List<PoiItem> poiItems;// poi数据
+    private myPoiOverlay poiOverlay;
+    private List<PoiItem> poiItems;
 
     private RelativeLayout mPoiDetail;
     private TextView mPoiName, mPoiAddress;
@@ -135,6 +132,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
     private TextView mGroupName = null;
     private String mSpotId = "";
     private EmojiRainLayout mEmojiRainLayout = null;
+    private Map<Marker, String> mMarkerIdReflection = new HashMap<>();
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -161,13 +159,14 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
                             mUserMarker = aMap.addMarker(new MarkerOptions().position(currentLoc)
                                     .title(AppUtil.User.USER_NAME)
                                     .snippet("你在这里"));
+                            mMarkerIdReflection.put(mUserMarker, AppUtil.User.USER_ID);
                             mIsFirstLoc = false;
                         }
 
-                        //判断是否掉落糖果
+                        //鍒ゆ柇鏄惁鎺夎惤绯栨灉
                             for (Frag frag : mFrags) {
                                 double distance = Math.sqrt(Math.pow((frag.getLatitude() - latitude), 2) + Math.pow(frag.getLongitude() - longitude, 2));
-                                if (distance <= 0.002) {
+                                if (distance <= 0.001) {
                                     mIsDroppingGift = true;
                                     startEmoji();
                                     new AlertDialog.Builder(getActivity()).setTitle("发现礼物！").setView(R.layout.baihaoran_dialog_baoxiang)
@@ -210,7 +209,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
                                 Marker marker = aMap.addMarker(new MarkerOptions().position(currentLoc)
                                         .title("好友")
                                         .snippet("你的好友在这里~"));
-
+                                mMarkerIdReflection.put(marker, user_id);
                                 mMemberMarkers.put(user_id, marker);
                             }
                         }
@@ -224,11 +223,8 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
 
 
     private void initFragCoorderData() {
-        mFrags.add(new Frag(37.997633,114.522823,R.drawable.yuanbao));//114.522823,37.997633
-        mFrags.add(new Frag(37.997244,114.518988,R.drawable.yuanbao));//114.518988,37.997244
-        mFrags.add(new Frag(37.99568,114.517968,R.drawable.yuanbao));//114.517968,37.99568
-        mFrags.add(new Frag(37.994361,114.518076,R.drawable.yuanbao));//114.518076,37.994361
-        mFrags.add(new Frag(37.995414,114.518671,R.drawable.yuanbao));//114.518671,37.995414
+        mFrags.add(new Frag(37.997319,114.521594,R.drawable.yuanbao));//114.521594,37.997319
+        mFrags.add(new Frag(37.997293,114.520564,R.drawable.yuanbao));//114.520564,37.997293
 
     }//initFragCoorderData
 
@@ -242,8 +238,8 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        //-------------------------胜达-------------------------------------------------
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
+        //-------------------------胜达------------------------------------------------
         View v = inflater.inflate(R.layout.jiangshengda_fragment_maps, container, false);
 
         btn = (Button) v.findViewById(R.id.Fog_btn);
@@ -254,10 +250,31 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
         mapView = (TextureMapView) v.findViewById(R.id.map);
         if (aMap == null) {
             aMap = mapView.getMap();
+            aMap.setInfoWindowAdapter(new AMap.InfoWindowAdapter() {
+                @Override
+                public View getInfoWindow(Marker marker) {
+                    View infoWindow = getLayoutInflater(savedInstanceState).inflate(
+                            R.layout.custom_marker, null, false);
+
+                    ImageView img = (ImageView)infoWindow.findViewById(R.id.head_pic);
+                    TextView nickName = (TextView)infoWindow.findViewById(R.id.nick_name);
+
+                    User user = UserWarehouse.getInstance(getActivity()).getUserById(mMarkerIdReflection.get(marker));
+                    if (null != user) {
+                        nickName.setText(UserWarehouse.getInstance(getActivity()).getUserById(mMarkerIdReflection.get(marker)).getNickName());
+                        ImageLoader.getInstance().displayImage(UserWarehouse.getInstance(getActivity()).getUserById(mMarkerIdReflection.get(marker)).getHeadPicUrl(), img);
+                    }
+
+                    return infoWindow;
+                }
+
+                @Override
+                public View getInfoContents(Marker marker) {
+                    return null;
+                }
+            });
+
             aMap.setOnMapClickListener(this);
-            aMap.setOnMarkerClickListener(this);
-            aMap.setOnInfoWindowClickListener(this);
-            aMap.setInfoWindowAdapter(this);
             TextView searchButton = (TextView) v.findViewById(R.id.btn_search);
             searchButton.setOnClickListener(this);
             /*
@@ -285,9 +302,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
         mPoiName = (TextView) v.findViewById(R.id.poi_name);
         mPoiAddress = (TextView) v.findViewById(R.id.poi_address);
         mSearchText = (EditText) v.findViewById(R.id.input_edittext);
-        //aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lp.getLatitude(), lp.getLongitude()), 14));
 
-        //在activity执行onCreate时执行mMapView.onCreate(savedInstanceState)，实现地图生命周期管理
         mapView.onCreate(savedInstanceState);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -303,14 +318,13 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
             }
         });
 
-        removeAMapLogo(); //删除高德logo
-        //设置使用普通地图
-        //aMap.setMapType(AMap.MAP_TYPE_NIGHT);//夜景地图模式
-        //aMap.setMapType(AMap.MAP_TYPE_NORMAL);
+        removeAMapLogo();
+        //aMap.setMapType(AMap.MAP_TYPE_NIGHT);
+        aMap.setMapType(AMap.MAP_TYPE_SATELLITE);
         //---------------------------------------------------------------------------------
 
 
-        //-------------------------------浩然----------------------------------------------
+        //-----------------------------------------------------------------------------
         Bundle args = getArguments();
         mSharingBinder = (SharingService.SharingBinder)args.getBinder(KEY_BINDER);
         if (null != mSharingBinder) {
@@ -324,7 +338,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
         mStopUpload = (Button)v.findViewById(R.id.stop_upload);
         mUserNickName = (TextView) v.findViewById(R.id.user_nick_name);
         mGroupName = (TextView)v.findViewById(R.id.group_name);
-        //-------------------------------胜达-----------------------------------------------
+        //------------------------------------------------------------------------------
         mStopLocation.setVisibility(mStopLocation.GONE);
         mStopUpload.setVisibility(mStopUpload.GONE);
         //---------------------------------------------------------------------------------
@@ -358,7 +372,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
             }
         }
 
-//        //获取景点信息
+
 //        String url = "http://" + AppUtil.JFinalServer.HOST + ":" + AppUtil.JFinalServer.PORT + "/spot/getrecommend";
 //        AsyncHttpClient client = new AsyncHttpClient();
 //        RequestParams params = new RequestParams();
@@ -379,7 +393,12 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
 //        });
 
         initFragCoorderData();
+        initEmojiRainData(v);
 
+        return v;
+    }
+
+    private void initEmojiRainData(View v) {
         mEmojiRainLayout = (EmojiRainLayout)v.findViewById(R.id.emoji_rain_layout);
         mEmojiRainLayout.addEmoji(R.drawable.emoji_1_3);
         mEmojiRainLayout.addEmoji(R.drawable.emoji_2_3);
@@ -387,8 +406,6 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
         mEmojiRainLayout.addEmoji(R.drawable.emoji_4_3);
         mEmojiRainLayout.addEmoji(R.drawable.emoji_5_3);
         mEmojiRainLayout.addEmoji(R.drawable.yuanbao);
-
-        return v;
     }
 
     private void startEmoji() {
@@ -406,36 +423,36 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
         mIsStartBlack = true;
         myView = new MyView(getActivity().getApplicationContext());
         act_main.addView(myView);
-        i = 0;//初始化计数器
-        aMap.getUiSettings().setAllGesturesEnabled(false);//禁止所有手势操作
+        i = 0;
+        aMap.getUiSettings().setAllGesturesEnabled(false);
     }
 
     private void stopFogModel(){
         myView.setVisibility(myView.GONE);
         btn.setVisibility(btn.VISIBLE);
         mQuit_fog_btn.setVisibility(mQuit_fog_btn.GONE);
-        aMap.getUiSettings().setAllGesturesEnabled(true);//允许所有手势操作
-        aMap.getUiSettings().setRotateGesturesEnabled(false);//禁止地图旋转手势
-        aMap.getUiSettings().setTiltGesturesEnabled(false);//禁止倾斜手势
+        aMap.getUiSettings().setAllGesturesEnabled(true);
+        aMap.getUiSettings().setRotateGesturesEnabled(false);
+        aMap.getUiSettings().setTiltGesturesEnabled(false);
     }
 
 //-----------------------------Serach--------------------------------------------------
     /*
-     * 开始进行poi搜索
+     * 寮�濮嬭繘琛宲oi鎼滅储
      */
     protected void doSearchQuery() {
         keyWord = mSearchText.getText().toString().trim();
         currentPage = 0;
-        query = new PoiSearch.Query(keyWord, "", "");// 第一个参数表示搜索字符串，第二个参数表示poi搜索类型，第三个参数表示poi搜索区域（空字符串代表全国）
-        query.setPageSize(20);// 设置每页最多返回多少条poiitem
-        query.setPageNum(currentPage);// 设置查第一页
+        query = new PoiSearch.Query(keyWord, "", "");
+        query.setPageSize(20);
+        query.setPageNum(currentPage);
 
         if (lp != null) {
             poiSearch = new PoiSearch(getActivity(), query);
             poiSearch.setOnPoiSearchListener(this);
             poiSearch.setBound(new PoiSearch.SearchBound(lp, 5000, true));//
-            // 设置搜索区域为以lp点为圆心，其周围5000米范围
-            poiSearch.searchPOIAsyn();// 异步搜索
+
+            poiSearch.searchPOIAsyn();
         }
     }
 
@@ -449,20 +466,20 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
     @Override
     public void onPoiSearched(PoiResult result, int rcode) {
         if (rcode == AMapException.CODE_AMAP_SUCCESS) {
-            if (result != null && result.getQuery() != null) {// 搜索poi的结果
-                if (result.getQuery().equals(query)) {// 是否是同一条
+            if (result != null && result.getQuery() != null) {
+                if (result.getQuery().equals(query)) {
                     poiResult = result;
-                    poiItems = poiResult.getPois();// 取得第一页的poiitem数据，页数从数字0开始
+                    poiItems = poiResult.getPois();
                     List<SuggestionCity> suggestionCities = poiResult
-                            .getSearchSuggestionCitys();// 当搜索不到poiitem数据时，会返回含有搜索关键字的城市信息
+                            .getSearchSuggestionCitys();
                     if (poiItems != null && poiItems.size() > 0) {
-                        //清除POI信息显示
+
                         whetherToShowDetailInfo(false);
-                        //并还原点击marker样式
+
                         if (mlastMarker != null) {
                             resetlastmarker();
                         }
-                        //清理之前搜索结果的marker
+
                         if (poiOverlay !=null) {
                             poiOverlay.removeFromMap();
                         }
@@ -512,7 +529,6 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
                 if (mlastMarker == null) {
                     mlastMarker = marker;
                 } else {
-                    // 将之前被点击的marker置为原来的状态
                     resetlastmarker();
                     mlastMarker = marker;
                 }
@@ -535,7 +551,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
         return true;
     }
 
-    // 将之前被点击的marker置为原来的状态
+
     private void resetlastmarker() {
         int index = poiOverlay.getPoiIndex(mlastMarker);
         if (index < 10) {
@@ -555,27 +571,6 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
     private void setPoiItemDisplayContent(final PoiItem mCurrentPoi) {
         mPoiName.setText(mCurrentPoi.getTitle());
         mPoiAddress.setText(mCurrentPoi.getSnippet()+mCurrentPoi.getDistance());
-    }
-
-
-    @Override
-    public View getInfoContents(Marker arg0) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-
-    @Override
-    public View getInfoWindow(Marker arg0) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-
-    @Override
-    public void onInfoWindowClick(Marker arg0) {
-        // TODO Auto-generated method stub
-
     }
 
     private int[] markers = {R.drawable.poi_marker_1,
@@ -609,9 +604,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
         }
     }
 
-    /*
-     * poi没有搜索到数据，返回一些推荐城市的信息
-     */
+
     private void showSuggestCity(List<SuggestionCity> cities) {
         String infomation = "推荐城市\n";
         for (int i = 0; i < cities.size(); i++) {
@@ -624,11 +617,6 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
     }
 
 
-    /*
-     * 自定义PoiOverlay
-     *
-     */
-
     private class myPoiOverlay {
         private AMap mamap;
         private List<PoiItem> mPois;
@@ -638,10 +626,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
             mPois = pois;
         }
 
-        /*
-         * 添加Marker到地图中。
-         * @since V2.1.0
-         */
+
         public void addToMap() {
             for (int i = 0; i < mPois.size(); i++) {
                 Marker marker = mamap.addMarker(getMarkerOptions(i));
@@ -651,21 +636,14 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
             }
         }
 
-        /*
-         * 去掉PoiOverlay上所有的Marker。
-         *
-         * @since V2.1.0
-         */
+
         public void removeFromMap() {
             for (Marker mark : mPoiMarks) {
                 mark.remove();
             }
         }
 
-        /*
-         * 移动镜头到当前的视角。
-         * @since V2.1.0
-         */
+
         public void zoomToSpan() {
             if (mPois != null && mPois.size() > 0) {
                 if (mamap == null)
@@ -702,13 +680,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
             return mPois.get(index).getSnippet();
         }
 
-        /*
-         * 从marker中得到poi在list的位置。
-         *
-         * @param marker 一个标记的对象。
-         * @return 返回该marker对应的poi在list的位置。
-         * @since V2.1.0
-         */
+
         public int getPoiIndex(Marker marker) {
             for (int i = 0; i < mPoiMarks.size(); i++) {
                 if (mPoiMarks.get(i).equals(marker)) {
@@ -718,12 +690,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
             return -1;
         }
 
-        /*
-         * 返回第index的poi的信息。
-         * @param index 第几个poi。
-         * @return poi的信息。poi对象详见搜索服务模块的基础核心包（com.amap.api.services.core）中的类 <strong><a href="../../../../../../Search/com/amap/api/services/core/PoiItem.html" title="com.amap.api.services.core中的类">PoiItem</a></strong>。
-         * @since V2.1.0
-         */
+
         public PoiItem getPoiItem(int index) {
             if (index < 0 || index >= mPois.size()) {
                 return null;
@@ -746,26 +713,24 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
 //--------------------------------------------------------------------------------------------------
 
     /*
-    设置一些amap的属性
+    璁剧疆涓�浜沘map鐨勫睘鎬�
      */
     private void setUpMap() {
-        aMap.getUiSettings().setRotateGesturesEnabled(false);//禁止地图旋转手势
-        aMap.getUiSettings().setTiltGesturesEnabled(false);//禁止倾斜手势
-        //aMap.setLocationSource(this);// 设置定位监听
-        aMap.getUiSettings().setMyLocationButtonEnabled(false);// 设置默认定位按钮是否显示
-        aMap.getUiSettings().setScaleControlsEnabled(true);//显示比例尺控件
-        aMap.moveCamera(CameraUpdateFactory.zoomTo(15));//设置比例尺，3-19
-        aMap.setMyLocationEnabled(true);// 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
-        // 设置定位的类型为定位模式 ，可以由定位、跟随或地图根据面向方向旋转几种
-        //aMap.setMyLocationType(AMap.LOCATION_TYPE_MAP_FOLLOW);//跟随模式
-       // aMap.setMyLocationType(AMap.LOCATION_TYPE_LOCATE); //定位模式
-        //aMap.setMyLocationType(AMap.LOCATION_TYPE_MAP_ROTATE); // 设置定位的类型为根据地图面向方向旋转
+        aMap.getUiSettings().setRotateGesturesEnabled(false);
+        aMap.getUiSettings().setTiltGesturesEnabled(false);
+        //aMap.setLocationSource(this);
+        aMap.getUiSettings().setMyLocationButtonEnabled(false);
+        aMap.getUiSettings().setScaleControlsEnabled(true);
+        aMap.moveCamera(CameraUpdateFactory.zoomTo(15));
+        aMap.setMyLocationEnabled(true); //aMap.setMyLocationType(AMap.LOCATION_TYPE_MAP_FOLLOW);
+       // aMap.setMyLocationType(AMap.LOCATION_TYPE_LOCATE);
+        //aMap.setMyLocationType(AMap.LOCATION_TYPE_MAP_ROTATE);
     }
 
     private void removeAMapLogo() {
-        //这两行代码可以隐藏高德地图logo
+
         UiSettings uiSettings =  aMap.getUiSettings();
-        uiSettings.setLogoBottomMargin(-50);//隐藏logo
+        uiSettings.setLogoBottomMargin(-50);
     }
 
     @Override
@@ -794,7 +759,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
     @Override
     public void onResume() {
         super.onResume();
-        //在activity执行onResume时执行mMapView.onResume ()，实现地图生命周期管理
+
         mapView.onResume();
         Log.d(TAG, "onResume: ");
     }
@@ -802,28 +767,25 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
     @Override
     public void onPause() {
         super.onPause();
-        //在activity执行onPause时执行mMapView.onPause ()，实现地图生命周期管理
+
         mapView.onPause();
         Log.d(TAG, "onPause: ");
     }
 
-    /*
-    定位成功后回调函数
-     */
     @Override
     public void onLocationChanged(AMapLocation amapLocation) {
-        x = amapLocation.getLatitude();//获取纬度
-        y = amapLocation.getLongitude();//获取经度
-        //与高德Demo的接口，通过更改定点lp的值达到不用修改原代码的目的
+        x = amapLocation.getLatitude();
+        y = amapLocation.getLongitude();
+
         lp.setLatitude(x);
         lp.setLongitude(y);
         //aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lp.getLatitude(), lp.getLongitude()), 14));
         if (mIsStartBlack) {
             if (amapLocation.getErrorCode() == 0) {
-                //迷雾追踪部分代码
+
                 pos = new LatLng(x,y);
                 Projection projection = aMap.getProjection();
-                //将地图的点，转换为屏幕上的点 
+
                 Point dot = projection.toScreenLocation(pos);
                 dot_x = dot.x;
                 dot_y = dot.y;
@@ -835,23 +797,6 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
                     }
                     i++;
                 }
-                //Toast.makeText(getActivity(), "Latitude:" + x + ", Longitude:" + y, Toast.LENGTH_SHORT).show();
-
-                //amapLocation.getLocationType();//获取当前定位结果来源，如网络定位结果，详见定位类型表
-                //amapLocation.getLatitude();//获取纬度
-                //amapLocation.getLongitude();//获取经度
-                //amapLocation.getAccuracy();//获取精度信息
-                //amapLocation.getAddress();//地址，如果option中设置isNeedAddress为false，则没有此结果，网络定位结果中会有地址信息，GPS定位不返回地址信息。
-                //amapLocation.getCountry();//国家信息
-                //amapLocation.getProvince();//省信息
-                //amapLocation.getCity();//城市信息
-                //amapLocation.getDistrict();//城区信息
-                //amapLocation.getStreet();//街道信息
-                //amapLocation.getStreetNum();//街道门牌号信息
-                //amapLocation.getCityCode();//城市编码
-                //amapLocation.getAdCode();//地区编码
-                //amapLocation.getAoiName();//获取当前定位点的AOI信息
-                //amapLocation.getGpsStatus();//获取GPS的当前状态
             }
         }
 
@@ -908,7 +853,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
                 doSearchQuery();
                 break;
             case R.id.start_location:
-                //-------------------------胜达-------------------------------------
+                //--------------------------------------------------------------
                 btn.setVisibility(btn.VISIBLE);
                 mStartLocation.setVisibility(mStartLocation.GONE);
                 mStopLocation.setVisibility(mStopLocation.VISIBLE);
@@ -924,7 +869,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
                 }
                 break;
             case R.id.stop_location:
-                //-------------------------胜达-------------------------------------
+                //-------------------------鑳滆揪-------------------------------------
                 if (btn.getVisibility() == View.GONE){
                     myView.setVisibility(myView.GONE);
                     mQuit_fog_btn.setVisibility(btn.GONE);
@@ -933,9 +878,9 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
                 }
                 mStartLocation.setVisibility(mStartLocation.VISIBLE);
                 mStopLocation.setVisibility(mStopLocation.GONE);
-                aMap.getUiSettings().setAllGesturesEnabled(true);//允许所有手势操作
-                aMap.getUiSettings().setRotateGesturesEnabled(false);//禁止地图旋转手势
-                aMap.getUiSettings().setTiltGesturesEnabled(false);//禁止倾斜手势
+                aMap.getUiSettings().setAllGesturesEnabled(true);
+                aMap.getUiSettings().setRotateGesturesEnabled(false);
+                aMap.getUiSettings().setTiltGesturesEnabled(false);
                 //-----------------------------------------------------------------
                 if (mIsStartLocation) {
                     mSharingBinder.stopLocationService();
@@ -949,7 +894,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
                 }
                 break;
             case R.id.start_upload:
-                //-----------------------胜达------------------------------------------------
+                //-----------------------鑳滆揪------------------------------------------------
                 mStartUpload.setVisibility(mStartUpload.GONE);
                 mStopUpload.setVisibility(mStopUpload.VISIBLE);
                 //--------------------------------------------------------------------------
@@ -974,7 +919,7 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
                 }
                 break;
             case R.id.stop_upload:
-                //-----------------------胜达------------------------------------------------
+                //-----------------------鑳滆揪------------------------------------------------
                 mStartUpload.setVisibility(mStartUpload.VISIBLE);
                 mStopUpload.setVisibility(mStopUpload.GONE);
                 //--------------------------------------------------------------------------
@@ -1005,7 +950,6 @@ public class MapsFragment extends Fragment implements AMapLocationListener,
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        //在activity执行onSaveInstanceState时执行mMapView.onSaveInstanceState (outState)，实现地图生命周期管理
         mapView.onSaveInstanceState(outState);
 
         outState.putBoolean(KEY_START_BLACK, mIsStartBlack);

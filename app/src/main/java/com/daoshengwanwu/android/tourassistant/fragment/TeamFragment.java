@@ -1,5 +1,6 @@
 package com.daoshengwanwu.android.tourassistant.fragment;
 
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +23,7 @@ import com.daoshengwanwu.android.tourassistant.R;
 import com.daoshengwanwu.android.tourassistant.activity.ConversationActivity;
 import com.daoshengwanwu.android.tourassistant.activity.MyTeamActivity;
 import com.daoshengwanwu.android.tourassistant.activity.ScanActivity;
+import com.daoshengwanwu.android.tourassistant.model.UserWarehouse;
 import com.daoshengwanwu.android.tourassistant.service.SharingService;
 import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
 import com.hyphenate.chat.EMClient;
@@ -37,6 +40,8 @@ import org.json.JSONObject;
 /**
  * Created by LK on 2016/12/14.
  */
+
+
 public class TeamFragment extends Fragment {
     private static final String KEY_BINDER = "TeamFragment.KEY_BINDER";
     private static final int WHAT_ALERT_DIALOG = 1024;
@@ -58,7 +63,8 @@ public class TeamFragment extends Fragment {
             switch (msg.what) {
                 case WHAT_ALERT_DIALOG:
                     String teamid = msg.getData().getString(MSG_DATA_TEAM_ID);
-                    Toast.makeText(getActivity(), "teamid:" + teamid, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(), "teamid:" + teamid, Toast.LENGTH_SHORT).show();
+                    Log.i("zhu", "创建队伍: "+teamid);
                     alertDialog(teamid);
                     break;
                 default: break;
@@ -83,7 +89,9 @@ public class TeamFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
+             //   Toast.makeText(getActivity(),AppUtil.Group.GROUP_ID,Toast.LENGTH_LONG).show();
+                if (AppUtil.Group.GROUP_ID.equals("null") || AppUtil.Group.GROUP_ID.isEmpty()){//还未创建队伍
+                    AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
                 final View myDialog = getActivity().getLayoutInflater().inflate(R.layout.lk_dialogxml, null);
                 ab.setView(myDialog);
                 final AlertDialog dialog = ab.show();
@@ -114,11 +122,11 @@ public class TeamFragment extends Fragment {
                                 AppUtil.Group.GROUP_CAPTIAN = AppUtil.User.USER_ID;
                                 AppUtil.Group.GROUP_ID = str1;
                                 AppUtil.Group.GROUP_NAME = str;
-                                String text = "id:\n" + AppUtil.Group.GROUP_ID + "captian:" + AppUtil.Group.GROUP_CAPTIAN;
-                                Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
+                              //  String text = "id:\n" + AppUtil.Group.GROUP_ID + "captian:" + AppUtil.Group.GROUP_CAPTIAN;
+                                //Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
                                 if (!str1.equals("创建队伍失败,请重新创建") && !str1.equals("只能创建一个队伍")) {
-                                    AppUtil.Group.GROUP_ID = str1;
-                                    Toast.makeText(getActivity(), " AppUtil.Group.GROUP_ID:" + AppUtil.Group.GROUP_ID, Toast.LENGTH_SHORT).show();
+                                   // AppUtil.Group.GROUP_ID = str1;
+                                  //  Toast.makeText(getActivity(), " AppUtil.Group.GROUP_ID:" + AppUtil.Group.GROUP_ID, Toast.LENGTH_SHORT).show();
                                 }
                             }
 
@@ -139,15 +147,31 @@ public class TeamFragment extends Fragment {
                     }
                 });
 
+            }else{//否则弹出框你已加入队伍或创建队伍不能创建
+
+                       AlertDialog.Builder ab=new AlertDialog.Builder(getActivity());
+                       ab.setTitle("请求失败");
+                       ab.setMessage("你已经加入或创建了队伍");
+                       ab.create().show();
+                }
 
             }
         });
+
         joinTeam = (RelativeLayout) view.findViewById(R.id.lk_joinTeam);
         joinTeam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), ScanActivity.class);
-                startActivityForResult(intent, 0);
+                if (AppUtil.Group.GROUP_ID.equals("null") || AppUtil.Group.GROUP_ID.isEmpty()) {//还未加入队伍
+                    Intent intent = new Intent(getActivity(), ScanActivity.class);
+                    startActivityForResult(intent, 0);
+                }else{
+
+                    AlertDialog.Builder ab=new AlertDialog.Builder(getActivity());
+                    ab.setTitle("请求失败");
+                    ab.setMessage("你已经加入或创建了队伍");
+                    ab.create().show();
+                }
 
             }
         });
@@ -236,7 +260,10 @@ public class TeamFragment extends Fragment {
                         try {
                             result = response.getString("result");
                             AppUtil.Group.GROUP_ID = teamid;
-                            Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
+                            UserWarehouse.getInstance(getActivity().getApplicationContext()).updateUsersInfo(teamid, null);
+                          //  Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
+                            Log.i("zhu", "alertDialog:result: "+result);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -245,7 +272,7 @@ public class TeamFragment extends Fragment {
 
                     @Override
                     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                        Toast.makeText(getActivity(), "error", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getActivity(), "error", Toast.LENGTH_SHORT).show();
                     }
                 });
             }

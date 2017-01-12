@@ -3,6 +3,7 @@ package com.daoshengwanwu.android.tourassistant.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
@@ -14,10 +15,18 @@ import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.EaseConstant;
 import com.hyphenate.easeui.ui.EaseChatFragment;
 import com.hyphenate.easeui.widget.chatrow.EaseCustomChatRowProvider;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.apache.http.Header;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
 public class ECChatActivity extends AppCompatActivity {
+    private final String xyurl1="http://"+AppUtil.JFinalServer.HOST+":"+AppUtil.JFinalServer.PORT+ "/team/creatChat";
 
     // 当前聊天的 ID
     private String mChatId;
@@ -37,6 +46,8 @@ public class ECChatActivity extends AppCompatActivity {
         chatFragment.setArguments(getIntent().getExtras());
         Log.i("zhu", "ECChat: "+getIntent().getExtras());
         getSupportFragmentManager().beginTransaction().add(R.id.ec_layout_container, chatFragment).commit();
+
+        save();
 
 
 
@@ -101,6 +112,27 @@ public class ECChatActivity extends AppCompatActivity {
 
 
         initView();
+    }
+
+    private void save() {
+        //保存myGroupId
+        AsyncHttpClient gclient = new AsyncHttpClient();
+        RequestParams params = new RequestParams();
+        params.add("team_id", AppUtil.Group.GROUP_ID);
+        params.add("chat_team_id", AppUtil.Group.CHAT_TEAM_ID);
+        gclient.get(getApplicationContext(),xyurl1,params,new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                try {
+                    if(!TextUtils.isEmpty(response.getString("chat_team_id "))){
+                        Log.i("zhu", "onSuccess: "+"保存AppUtil.Group.CHAT_TEAM_ID成功");
+                    };
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     /**

@@ -162,8 +162,9 @@ public class SharingService extends Service {
 
                                 Log.d(TAG, "run: membersInfo: " + membersInfo);
                                 if (!memInfos.equals(oldMemInfo)) {
-                                    Log.d(TAG, "run: 进入if");
-                                    UserWarehouse.getInstance(getApplicationContext()).updateUsersInfo(memInfos, null);
+                                    //Log.d(TAG, "run: 进入if");
+                                   // Log.d(TAG, "run: memInfos:" + memInfos);
+                                    //UserWarehouse.getInstance(getApplicationContext()).updateUsersInfo(memInfos, null);
                                     for (OnTeamMemberChangeListener listener : mOnTeamMemberChangeListeners) {
                                         listener.onTeamMemberChange(team_id, memInfos);
                                     }

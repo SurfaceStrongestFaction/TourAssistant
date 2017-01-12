@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.daoshengwanwu.android.tourassistant.R;
 import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
+import com.hyphenate.easeui.widget.LoaderImage;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
@@ -124,6 +125,8 @@ public class PersonalDataActivity extends BaseActivity {
                     pri_userpwd = response.getString("user_pwd");
                     name.setText(nick_name);
                     usersex.setText(sex);
+                    LoaderImage loaderImage=new LoaderImage(PersonalDataActivity.this,imageView,response.getString("head_pic"));
+                    loaderImage.start();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

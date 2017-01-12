@@ -89,7 +89,7 @@ public class TeamFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(),AppUtil.Group.GROUP_ID,Toast.LENGTH_LONG).show();
+             //   Toast.makeText(getActivity(),AppUtil.Group.GROUP_ID,Toast.LENGTH_LONG).show();
                 if (AppUtil.Group.GROUP_ID.equals("null") || AppUtil.Group.GROUP_ID.isEmpty()){//还未创建队伍
                     AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
                 final View myDialog = getActivity().getLayoutInflater().inflate(R.layout.lk_dialogxml, null);
@@ -122,11 +122,11 @@ public class TeamFragment extends Fragment {
                                 AppUtil.Group.GROUP_CAPTIAN = AppUtil.User.USER_ID;
                                 AppUtil.Group.GROUP_ID = str1;
                                 AppUtil.Group.GROUP_NAME = str;
-                                String text = "id:\n" + AppUtil.Group.GROUP_ID + "captian:" + AppUtil.Group.GROUP_CAPTIAN;
-                                Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
+                              //  String text = "id:\n" + AppUtil.Group.GROUP_ID + "captian:" + AppUtil.Group.GROUP_CAPTIAN;
+                                //Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
                                 if (!str1.equals("创建队伍失败,请重新创建") && !str1.equals("只能创建一个队伍")) {
-                                    AppUtil.Group.GROUP_ID = str1;
-                                    Toast.makeText(getActivity(), " AppUtil.Group.GROUP_ID:" + AppUtil.Group.GROUP_ID, Toast.LENGTH_SHORT).show();
+                                   // AppUtil.Group.GROUP_ID = str1;
+                                  //  Toast.makeText(getActivity(), " AppUtil.Group.GROUP_ID:" + AppUtil.Group.GROUP_ID, Toast.LENGTH_SHORT).show();
                                 }
                             }
 
@@ -261,7 +261,7 @@ public class TeamFragment extends Fragment {
                             result = response.getString("result");
                             AppUtil.Group.GROUP_ID = teamid;
                             UserWarehouse.getInstance(getActivity().getApplicationContext()).updateUsersInfo(teamid, null);
-                            Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
+                          //  Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
                             //Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
                             Log.i("zhu", "alertDialog:result: "+result);
                         } catch (JSONException e) {

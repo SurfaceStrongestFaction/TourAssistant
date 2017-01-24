@@ -10,6 +10,7 @@ import android.os.IBinder;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.daoshengwanwu.android.tourassistant.R;
+import com.daoshengwanwu.android.tourassistant.fragment.SuperHomeFragment;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.controller.EaseUI;
 import com.daoshengwanwu.android.tourassistant.fragment.HomeFragment;
@@ -29,6 +31,7 @@ import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
 
 
 public class LauncherActivity extends BaseActivity {
+    private static final String TAG = "LauncherActivity";
     static public boolean fog_draw_pause_judge = true;
     private ImageView mTabsHomeImg;
     private ImageView mTabsMapImg;
@@ -57,7 +60,7 @@ public class LauncherActivity extends BaseActivity {
 
         @Override
         public void onServiceDisconnected(ComponentName componentName) {
-
+            //do nothing
         }
     };
 
@@ -66,6 +69,8 @@ public class LauncherActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.baihaoran_activity_launcher);
+
+        Log.d(TAG, "onCreate: LauncherActivity");
 
         //环信easeUI初始化
         EaseUI.getInstance().init(this,null);
@@ -93,18 +98,20 @@ public class LauncherActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         fog_draw_pause_judge = true;
+        Log.d(TAG, "onResume: LauncherActivity");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d(TAG, "onRestart: LauncherActivity");
     }
 //--------------------------------------------------------------------------------------------------
 
     private void initFragment() {
-        mHomeFragment = HomeFragment.newInstance();
+        Fragment fragment = new SuperHomeFragment();
 
-        Fragment fragment = mFragmentManager.findFragmentById(R.id.launcher_fragment_container);
-        if (null != fragment) {
-            mFragmentManager.beginTransaction().replace(R.id.launcher_fragment_container, mHomeFragment).commit();
-        } else {
-            mFragmentManager.beginTransaction().add(R.id.launcher_fragment_container, mHomeFragment).commit();
-        }
+        mFragmentManager.beginTransaction().replace(R.id.launcher_fragment_container, fragment).commit();
     }
 
     private void getWidgetsReferences() {
@@ -161,8 +168,8 @@ public class LauncherActivity extends BaseActivity {
                         break;
                     }
 
-                    mHomeFragment = HomeFragment.newInstance();
-                    mFragmentManager.beginTransaction().replace(R.id.launcher_fragment_container, mHomeFragment).commit();
+                    fragment = new SuperHomeFragment();
+                    mFragmentManager.beginTransaction().replace(R.id.launcher_fragment_container, fragment).commit();
                     break;
                 case R.id.tabs_map_page:
                     clearIcon();

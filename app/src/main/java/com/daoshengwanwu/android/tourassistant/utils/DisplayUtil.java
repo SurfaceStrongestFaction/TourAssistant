@@ -5,10 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Paint;
 import android.graphics.Point;
-import android.support.v4.content.ContextCompat;
 import android.view.WindowManager;
-
-import com.daoshengwanwu.android.tourassistant.R;
 
 
 public class DisplayUtil {
@@ -36,13 +33,20 @@ public class DisplayUtil {
         return (int) (spValue * fontScale + 0.5f);
     }
 
-    public static float getTextHeight(Context context, float textSpSize) {
+    public static float getTextHeightFromSp(Context context, float textSpSize) {
         Paint paint = new Paint();
         paint.setTextSize(sp2px(context, textSpSize));
         Paint.FontMetrics metrics = paint.getFontMetrics();
-        float lineHeight = metrics.descent - metrics.top; //文字高度
 
-        return lineHeight;
+        return metrics.descent - metrics.top; //返回文字高度
+    }
+
+    public static float getTextHeightFromPx(Context context, float textPxSize) {
+        Paint paint = new Paint();
+        paint.setTextSize(textPxSize);
+        Paint.FontMetrics metrics = paint.getFontMetrics();
+
+        return metrics.descent - metrics.top;
     }
 
     public static int getScreenWidth(Activity activity) {

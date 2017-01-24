@@ -36,6 +36,7 @@ import com.daoshengwanwu.android.tourassistant.model.HomeModel;
 import com.daoshengwanwu.android.tourassistant.model.Spot;
 import com.daoshengwanwu.android.tourassistant.utils.AppUtil;
 import com.daoshengwanwu.android.tourassistant.utils.DisplayUtil;
+import com.daoshengwanwu.android.tourassistant.utils.GlideImageLoader;
 import com.example.www.library.PullToRefreshView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -117,13 +118,6 @@ public class HomeFragment extends Fragment {
 
         getWidgetsReferences(v);
         initView();
-
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getContext())
-                .threadPriority(Thread.NORM_PRIORITY - 2)
-                .denyCacheImageMultipleSizesInMemory()
-                .tasksProcessingOrder(QueueProcessingType.LIFO)
-                .build();
-        com.nostra13.universalimageloader.core.ImageLoader.getInstance().init(config);
 
         new Thread() {
             @Override
@@ -244,7 +238,7 @@ public class HomeFragment extends Fragment {
 
     private void initView() {
         //获取文字高度
-        float lineHeight = DisplayUtil.getTextHeight(getActivity(), 12.0f);
+        float lineHeight = DisplayUtil.getTextHeightFromSp(getActivity(), 12.0f);
 
         //设置下拉图标高度
         ImageView img = (ImageView)mAreaSelBtn.findViewById(R.id.bhr_home_area_img);
@@ -267,7 +261,7 @@ public class HomeFragment extends Fragment {
         mSearchEditText.setCompoundDrawables(drawStart, null, null, null);
 
         //设置hide-show中drawableEnd
-        lineHeight = DisplayUtil.getTextHeight(getActivity(), 18.0f);
+        lineHeight = DisplayUtil.getTextHeightFromSp(getActivity(), 18.0f);
         Drawable drawEnd = ContextCompat.getDrawable(getActivity(), R.drawable.like);
         drawHNW = (int)(lineHeight * 0.8);
         drawEnd.setBounds(0, 0, drawHNW, drawHNW);
@@ -285,14 +279,14 @@ public class HomeFragment extends Fragment {
         mBanner.setLayoutParams(params);
 
         //设置Banner轮播图
-        mBanner.setImageLoader(new GlideImageLoader());
+        mBanner.setImageLoader(GlideImageLoader.getInstance());
 //        List<Integer> images = new ArrayList<>();
 //        images.add(R.drawable.banner_1);
 //        images.add(R.drawable.banner_2);
 //        mBanner.setImages(images);
 
         //设置scroll的drawableEnd
-        lineHeight = DisplayUtil.getTextHeight(getActivity(), 18.0f);
+        lineHeight = DisplayUtil.getTextHeightFromSp(getActivity(), 18.0f);
         drawEnd = ContextCompat.getDrawable(getActivity(), R.drawable.like);
         drawHNW = (int)(lineHeight * 0.8);
         drawEnd.setBounds(0, 0, drawHNW, drawHNW);
@@ -430,13 +424,6 @@ public class HomeFragment extends Fragment {
         @Override
         public int getItemCount() {
             return mListData.size();
-        }
-    }
-
-    public class GlideImageLoader extends ImageLoader {
-        @Override
-        public void displayImage(Context context, Object path, ImageView imageView) {
-            Glide.with(context).load(path).into(imageView);
         }
     }
 

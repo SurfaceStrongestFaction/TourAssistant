@@ -85,7 +85,7 @@
                 <com.youth.banner.Banner
                     android:id="@+id/bhr_home_banner"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp" />
+                    android:layout_height="200dp" />
 
                 <LinearLayout
                     android:id="@+id/bhr_home_scroll_linear_layout"
